@@ -1,0 +1,32 @@
+This README file describes the files available. 
+
+These data contain the full ALMA 1.3 mm (233 GHz) dust polarization results.   A full description of the data products and data imaging can be found in Sadavoy et al. (2019).
+
+The data are available to download for individual target fields in 29 separate tar files.  There are 28 unique pointings and one mosaic field (c2d_1008).  Note that fields vla1623a & vla1623b and c2d_1008a & c2d_1008b each overlap, but only the c2d_1008a and c2d_1008b fields are mosaicked.  
+
+There are 13 FITS images within each tar file using the same naming convention: FIELD_TYPE_233GHz (see below).  These FITS images contain the full data products and estimated errors.
+
+All polarization products have been debiased.  All maps have been primary beam corrected.
+
+For the error maps, we report statistical errors only.  The Stokes I, Q, and U error maps are obtained from their respective map rms scaled by the primary beam.  The error on polarization intensity is an average of the Stokes Q and U errors.  The error for polarization angle and polarization fraction are obtained from error propogation.
+
+FIELD
+- the name of the field as given in Table 2
+- see Table 3 for a list of continuum objects detected in each field
+
+TYPE
+- the type of image
+StokesI = the Stokes I image
+StokesIerr = error map for Stokes I 
+StokesQ = the Stokes Q image
+StokesQerr = error map for Stokes Q 
+StokesU = the Stokes U image 
+StokesUerr = error map for Stokes U
+pbeam = primary beam
+POLI = polarized intensity image
+POLIerr = error map for polarized intensity 
+POLA = polarization position angle
+POLAerr = error map for polarization position angle
+POLF = polarization fraction
+POLFerr = error on polarization fraction
+
