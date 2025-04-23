@@ -1,5 +1,12 @@
 import numpy as np
 
+
+
+def convert_jy_to_mjy(jy_value):
+    """Convert flux density from Jansky (Jy) to milliJansky (mJy)."""
+    return 1000 * jy_value
+
+
 # -----------------------------------------------------------------------------------------------------------------------------
 def string_to_int_symbol(string_symbol):
     """

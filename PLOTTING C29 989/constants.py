@@ -26,13 +26,29 @@ band6_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/
 functions_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FUNCTIONS/"
 
 
-# Band 6 constants
-min_str_band6 = 'J163135.570-240131.200'
-max_str_band6 = 'J163135.750-240128.700'
+# Minimum, maximum and centre constants
+# ---------------------------------------------
+# Band 6 
+# ---------------------------------------------
+min_str_band6    = 'J163135.570-240131.200'
+max_str_band6    = 'J163135.750-240128.700'
 centre_str_band6 = 'J163135.657-240129.935'
+# ---------------------------------------------
+# Band 4
+# ---------------------------------------------
+# min_str_band4    = 'J163135.570-240131.200'                  
+# max_str_band4    = 'J163135.750-240128.700'
+centre_str_band4 = 'J163135.656-240129.992' # This value is from CASA            
+# ---------------------------------------------
 
 
-# Band 6 PA angle constants
+
+
+
+# Position, Minor and Major angles
+# ---------------------------------------------
+# Band 6 
+# ---------------------------------------------
 PA_deg_sky_band6 = 148
 
 # The positional angle is the major axis 
@@ -52,11 +68,17 @@ minor_angle_deg_cartesian_band6 = minor_angle_deg_sky_band6 - 90
 # We can turn the plotted angles into radians
 minor_angle_rad_cartesian_band6 = np.radians(minor_angle_deg_cartesian_band6)
 major_angle_rad_cartesian_band6 = np.radians(major_angle_deg_cartesian_band6)
+# ---------------------------------------------
+# Band 4
+# ---------------------------------------------
+PA_deg_sky_band4 = 145.9 # This value is frmom CASA 
+# ---------------------------------------------
+ 
 
 
 
 
-# Refefence Lengths and such (for band 6 but same fort band 4?)
+
 
 # Vector Constants
 # ------------------------------------------------------------------------------------------
@@ -65,7 +87,7 @@ max_length_pix = 400  # Maximum length of the vector in pixels for 100% polariza
 reference_fraction = 0.03
 step = 7 
 vector_length_pix_const = 4
-
+# ------------------------------------------------------------------------------------------
 
 
 
