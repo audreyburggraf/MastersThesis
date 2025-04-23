@@ -16,6 +16,8 @@ functions_folder_path = constants.functions_folder_path
 # Load in the function:
 # ------------------------------------------
 from FITS_Image_Functions import * 
+from PolarizationFunctions import *
+from PlottingWithFunction import * 
 # ------------------------------------------
 
 
@@ -37,6 +39,13 @@ StokesI_data_2d_mJy = StokesI_data_2d_Jy * 1000
 # Define min/max for plotting
 StokesI_custom_vmin_band6 = -0.2
 StokesI_custom_vmax_band6 = 89.85
+
+
+StokesI_stretched, StokesI_unstretched_cbar_ticks = normalize_stokesI_for_cmap(StokesI_data_2d_mJy,
+                                                                              custom_min = StokesI_custom_vmin_band6, 
+                                                                              custom_max = StokesI_custom_vmax_band6)
+
+
 
 # # Clip and stretch data
 # StokesI_clipped = np.clip(StokesI_data_2d_mJy, StokesI_vmin, StokesI_vmax)
@@ -68,3 +77,12 @@ PolarizedIntensity_data_2d_mJy = PolarizedIntensity_data_2d_Jy * 1000
 
 PolarizedIntensity_err_header, _, PolarizedIntensity_err_data_2d_Jy, PolarizedIntensity_err_wcs = read_in_file(PolarizedIntensity_err_file)
 PolarizedIntensity_err_data_2d_mJy = PolarizedIntensity_err_data_2d_Jy * 1000
+
+
+
+
+calculated_polarization_angle_rad = calculate_polarization_angle(StokesQ_data_2d_Jy, StokesU_data_2d_Jy)
+calc_polarized_frac = calculate_polarized_fraction(StokesQ_data_2d_mJy, StokesU_data_2d_mJy, StokesI_data_2d_mJy)
+calculated_polarized_intensity = calculate_polarized_intensity(StokesQ_data_2d_mJy, StokesU_data_2d_mJy)
+
+nx, ny = StokesI_data_2d_mJy.shape

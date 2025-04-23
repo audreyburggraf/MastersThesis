@@ -16,6 +16,7 @@ functions_folder_path = constants.functions_folder_path
 # Load in the function:
 # ------------------------------------------
 from FITS_Image_Functions import * 
+from PolarizationFunctions import *
 # ------------------------------------------
 
 

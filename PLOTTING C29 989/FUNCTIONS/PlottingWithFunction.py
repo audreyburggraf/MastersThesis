@@ -480,10 +480,10 @@ def create_base_plot(StokesI_wcs, plotting_data, cbar_label, soft_colormap_v2,
 # ---------------------------------------------------------------------------------------------
 
 
-def create_blank_grid(i, j, fs_scale, ax, data_plotting, StokesI_wcs, StokesI_stretched, soft_colormap_v2, 
-                      normalized_cbar_ticks, StokesI_unstretched_cbar_ticks, 
+def create_blank_grid(i, j, ax,
+                      data_plotting, cbar_label, fs_scale, 
+                      StokesI_wcs, soft_colormap_v2, 
                       xmin, xmax, ymin, ymax, reference_length_pix, reference_length_AU,
-                      text_fs, axis_label_fs, axis_num_fs, cbar_fs,
                       BMAJ_pix, BMIN_pix, BPA_deg_cartesian, 
                       max_length_pix, reference_fraction):
     
@@ -494,11 +494,9 @@ def create_blank_grid(i, j, fs_scale, ax, data_plotting, StokesI_wcs, StokesI_st
     # Colorbar for every rightmost column (in a 6x2 grid) to avoid redundancy
     if j == 1:
         cbar = plt.colorbar(im, ax=ax, pad=0.02, fraction=0.05)
-        cbar.set_label(r'Stokes I (mJy/beam)', fontsize=cbar_fs* fs_scale)
-        cbar.ax.tick_params(labelsize=axis_num_fs* fs_scale, which='major', length=7, direction="in")
+        cbar.set_label(cbar_label, fontsize= cbar_fs)
+        cbar.ax.tick_params(labelsize=axis_num_fs, which='major', length=7, direction="in")
         cbar.ax.tick_params(which='minor', length=4, direction="in")
-        cbar.set_ticks(normalized_cbar_ticks)
-        cbar.set_ticklabels([f"{val:.2f}" for val in StokesI_unstretched_cbar_ticks])
 
     # Set axis labels
     ax.set_xlabel('Right Ascension', fontsize=axis_label_fs * fs_scale)
@@ -931,44 +929,44 @@ def plot_slices_along_axes(
         # Major axis
         ax[0].plot(my_major_offset, my_major_data, 
                    color=slices_color_my_major, ls='-', lw=my_data_lw, 
-                   label="My Major Axis Data")
+                   label="Mine")
 
         ax[0].plot(carta_major_offset, carta_major_data, 
                    color=slices_color_carta_major, ls='--', lw=carta_data_lw, 
-                   label="CARTA Major Axis Data")
+                   label="CARTA")
 
         # Minor axis
         ax[1].plot(my_minor_offset, my_minor_data, 
                    color=slices_color_my_minor, ls='-', lw=my_data_lw, 
-                   label="My Minor Axis Data")
+                   label="Mine")
 
         ax[1].plot(carta_minor_offset, carta_minor_data, 
                    color=slices_color_carta_minor, ls='--', lw=carta_data_lw, 
-                   label="CARTA Minor Axis Data")
+                   label="CARTA")
 
     elif type_of_plot == "Scatter":
         # Major axis
         ax[0].scatter(my_major_offset, my_major_data, 
                       color=slices_color_my_major, marker='o', 
-                      label="My Major Axis Data")
+                      label="Mine")
 
         ax[0].scatter(carta_major_offset, carta_major_data, 
                       color=slices_color_carta_major, marker='x', 
-                      label="CARTA Major Axis Data")
+                      label="CARTA")
 
         # Minor axis
         ax[1].scatter(my_minor_offset, my_minor_data, 
                       color=slices_color_my_minor, marker='o', 
-                      label="My Minor Axis Data")
+                      label="Mine")
 
         ax[1].scatter(carta_minor_offset, carta_minor_data, 
                       color=slices_color_carta_minor, marker='x', 
-                      label="CARTA Minor Axis Data")
+                      label="CARTA")
 
     # Add vertical lines at x = 0
     if vline:
-        ax[0].axvline(0, color = vline_color, linestyle='-', linewidth=1)
-        ax[1].axvline(0, color = vline_color, linestyle='-', linewidth=1)
+        ax[0].axvline(0, color = vline_color, linestyle='-', linewidth=3)
+        ax[1].axvline(0, color = vline_color, linestyle='-', linewidth=3)
         
         
         

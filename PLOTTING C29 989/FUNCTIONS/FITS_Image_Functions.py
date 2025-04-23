@@ -595,72 +595,7 @@ def unstretch(stretched_value, vmin, vmax, base=100):
 
 
 
-def extract_axis_data(axis_x, axis_y, data_2d, minor_or_major, centre_pix, gridsize, header):
-    """
-    Extracts data along a specified axis (major or minor) and returns the data along with valid positions.
 
-    Parameters:
-    - axis_x: Array of x positions along the axis (e.g., major_x or minor_x)
-    - axis_y: Array of y positions along the axis (e.g., major_y or minor_y)
-    - data_2d: 2D array representing the data (e.g., StokesI_data_2d_mJy)
-    - centre_pix: Tuple (RA_centre_pix, Dec_centre_pix) specifying the center pixel position
-    - gridsize: Tuple representing the dimensions of the grid (data_2d.shape)
-    - header: FITS header to extract the plate scale for arcsecond conversion
-
-    Returns:
-    - axis_data: List of extracted data values
-    - offset_pixels: List of pixel offsets (positive and negative)
-    - offset_arcsec: List of arcsecond offsets (positive and negative)
-    """
-    axis_data = []
-    offset_pixels = []
-    offset_arcsec = []
-
-    RA_centre_pix, Dec_centre_pix = centre_pix  # Unpack center coordinates
-
-    # Extract pixel scale from header (arcsec per pixel)
-    if 'CDELT1' in header:
-        pixel_scale_arcsec = abs(header['CDELT1']) * 3600  # Convert degrees to arcsec
-    elif 'CD1_1' in header:
-        pixel_scale_arcsec = abs(header['CD1_1']) * 3600  # Alternative plate scale
-    else:
-        raise ValueError("Could not determine plate scale from FITS header.")
-
-    for i in range(len(axis_x)):
-        # Round to nearest integer for pixel indexing
-        xi, yi = int(round(axis_x[i])), int(round(axis_y[i]))
-
-        # Ensure indices are within bounds
-        if 0 <= xi < gridsize[1] and 0 <= yi < gridsize[0]:
-            # Extract data
-            axis_data.append(data_2d[yi, xi])
-
-            # Compute pixel offsets
-            delta_x = xi - RA_centre_pix
-            delta_y = yi - Dec_centre_pix
-            offset_pixel = np.sqrt(delta_x**2 + delta_y**2)
-            
-            # Determine offset based on 'major' or 'minor'
-            if minor_or_major == 'major':
-                # If both delta_x and delta_y are negative, the offset is negative
-                if delta_x < 0: #and delta_y < 0:
-                    offset_pixels.append(offset_pixel)  # Negative offset in pixels
-                    offset_arcsec.append(offset_pixel * pixel_scale_arcsec)  # Negative offset in arcseconds
-                else:
-                    offset_pixels.append(-offset_pixel)  # Positive offset in pixels
-                    offset_arcsec.append(-offset_pixel * pixel_scale_arcsec)  # Positive offset in arcseconds
-
-            elif minor_or_major == 'minor':
-                # If delta_x is negative, the offset is negative
-                if delta_x < 0:
-                    offset_pixels.append(offset_pixel)  # Negative offset in pixels
-                    offset_arcsec.append(offset_pixel * pixel_scale_arcsec)  # Negative offset in arcseconds
-                else:
-                    offset_pixels.append(-offset_pixel)  # Positive offset in pixels
-                    offset_arcsec.append(-offset_pixel * pixel_scale_arcsec)  # Positive offset in arcseconds
-
-
-    return axis_data, offset_pixels, offset_arcsec
 
 
 

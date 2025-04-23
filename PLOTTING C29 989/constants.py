@@ -65,12 +65,6 @@ max_length_pix = 400  # Maximum length of the vector in pixels for 100% polariza
 reference_fraction = 0.03
 step = 7 
 vector_length_pix_const = 4
-# ------------------------------------------------------------------------------------------
-step_band4 = 7
-vector_length_pix_const_band4 = 4
-# ------------------------------------------------------------------------------------------
-
-
 
 
 

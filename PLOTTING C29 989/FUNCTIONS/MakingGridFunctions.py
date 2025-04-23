@@ -10,8 +10,8 @@ sys.path.append("/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING 
 
 import constants
 
-step_band4 = constants.step_band4
-vector_length_pix_const_band4 = constants.vector_length_pix_const_band4
+step = constants.step
+vector_length_pix_const = constants.vector_length_pix_const
 # -----------------------------------------------------------------------------------------
 
 
@@ -40,28 +40,94 @@ def make_PA_grid_100Azimuthal(ny, nx, RA_centre_pix, Dec_centre_pix):
     return PA_grid_100Azimuthal
 
 
-def make_vectors_band4(ny, nx,  
-                       POLI_mJy, POLI_err_mJy,
-                       PA_grid, PA_err_data_2d_deg):
-    
-    vectors_cartesian_band4 = []
-    vector_angles_sky_band4 = []
-    
-    for x in range(0, nx, step_band4):
-        for y in range(0, ny, step_band4):
-            if (POLI_mJy[y, x] / POLI_err_mJy[y, x] > 3
-                and PA_err_data_2d_deg[y, x] < 10
-            ):
-                # Extract the polarization angle at this location
-                PA_rad_sky = PA_grid[y, x] 
 
-                # Compute vector components
-                dx = vector_length_pix_const_band4 * np.cos(PA_rad_sky + np.pi/2)
-                dy = vector_length_pix_const_band4 * np.sin(PA_rad_sky + np.pi/2)
+# --------------------------------------------------------------------------
+def compute_polarization_vector(x, y, PA_grid):
+    """
+    Compute the vector components for polarization at the given (x, y) position.
 
-                # Append to the list in the format [x_start, x_end, y_start, y_end]
-                vectors_cartesian_band4.append([x - dx / 2, x + dx / 2, y - dy / 2, y + dy / 2])
+    Parameters:
+    x, y: pixel indices
+    PA_grid: 2D array of polarization angles in radians
 
-                vector_angles_sky_band4.append(PA_rad_sky)
+    Returns:
+    A list containing [x_start, x_end, y_start, y_end] for the polarization vector,
+    and the polarization angle in radians.
+    """
+    # Extract the polarization angle at this location
+    PA_rad_sky = PA_grid[y, x] 
+
+    # Compute vector components
+    dx = vector_length_pix_const * np.cos(PA_rad_sky + np.pi/2)
+    dy = vector_length_pix_const * np.sin(PA_rad_sky + np.pi/2)
     
-    return vectors_cartesian_band4, vector_angles_sky_band4
+    # Vector in Cartesian coordinates
+    vector_cartesian = [x - dx / 2, x + dx / 2, y - dy / 2, y + dy / 2]
+    
+    return vector_cartesian, PA_rad_sky
+# --------------------------------------------------------------------------
+
+def make_vectors_band4(ny, nx, POLI_mJy, POLI_err_mJy, PA_grid, PA_err_deg):
+    """
+    Generate vectors for Band 4 polarization data.
+    
+    Parameters:
+    ny, nx: Dimensions of the grid
+    POLI_mJy: Polarization intensity
+    POLI_err_mJy: Error on polarization intensity
+    PA_grid: Polarization angle grid
+    PA_err_deg: Polarization angle error
+    
+    Returns:
+    vectors_cartesian: List of vectors in Cartesian coordinates
+    vector_angles_sky: List of polarization angles
+    """
+    vectors_cartesian = []
+    vector_angles_sky = []
+    
+    for x in range(0, nx, step):
+        for y in range(0, ny, step):
+            if (POLI_mJy[y, x] / POLI_err_mJy[y, x] > 3 
+                and PA_err_deg[y, x] < 10):
+                # Use the helper function to compute the vector
+                vector_cartesian, PA_rad_sky = compute_polarization_vector(x, y, PA_grid)
+                vectors_cartesian.append(vector_cartesian)
+                vector_angles_sky.append(PA_rad_sky)
+    
+    return vectors_cartesian, vector_angles_sky
+# --------------------------------------------------------------------------
+def make_vectors_band6(ny, nx, 
+                       StokesI_mJy, StokesI_err_mJy, 
+                       POLI_mJy, POLI_err_mJy, 
+                       PA_grid, PA_err_deg):
+    """
+    Generate vectors for Band 6 polarization data.
+    
+    Parameters:
+    ny, nx: Dimensions of the grid
+    StokesI_mJy: Stokes I intensity
+    StokesI_err_mJy: Error on Stokes I intensity
+    POLI_mJy: Polarization intensity
+    POLI_err_mJy: Error on polarization intensity
+    PA_grid: Polarization angle grid
+    PA_err_deg: Polarization angle error
+    
+    Returns:
+    vectors_cartesian: List of vectors in Cartesian coordinates
+    vector_angles_sky: List of polarization angles
+    """
+    vectors_cartesian = []
+    vector_angles_sky = []
+    
+    for x in range(0, nx, step):
+        for y in range(0, ny, step):
+            if (StokesI_mJy[y, x] / StokesI_err_mJy[y, x] > 3 and 
+                POLI_mJy[y, x] / POLI_err_mJy[y, x] > 3 and 
+                PA_err_deg[y, x] < 10):
+                # Use the helper function to compute the vector
+                vector_cartesian, PA_rad_sky = compute_polarization_vector(x, y, PA_grid)
+                vectors_cartesian.append(vector_cartesian)
+                vector_angles_sky.append(PA_rad_sky)
+    
+    return vectors_cartesian, vector_angles_sky
+# --------------------------------------------------------------------------
