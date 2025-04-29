@@ -186,33 +186,4 @@ def generate_polarization_vectors_band6(ny, nx,
     
     
     
-def get_minor_major_angles(PA_deg_sky):
-    
-    # The major angle in sky coordinates is the position angle
-    major_angle_deg_sky = PA_deg_sky
-    
-    # The minor angle in sky coordinates is 90 degrees less then major
-    minor_angle_deg_sky = major_angle_deg_sky - 90
-    
-    # Convert from sky to cartesian corrdinates by subtracting 90 degrees
-    major_angle_deg_cartesian = major_angle_deg_sky - 90
-    minor_angle_deg_cartesian = minor_angle_deg_sky - 90
-    
-    # Convert from degrees to radians
-    minor_angle_rad_sky = np.radians(minor_angle_deg_sky)
-    major_angle_rad_sky = np.radians(major_angle_deg_sky)
-    
-    minor_angle_rad_cartesian = np.radians(minor_angle_deg_cartesian)
-    major_angle_rad_cartesian = np.radians(major_angle_deg_cartesian)
-
-
-    
-    return {
-        "minor_rad_sky": minor_angle_rad_sky,
-        "major_rad_sky": major_angle_rad_sky,
-        "minor_rad_cartesian": minor_angle_rad_cartesian,
-        "major_rad_cartesian": major_angle_rad_cartesian,
-    }
-
-    
     

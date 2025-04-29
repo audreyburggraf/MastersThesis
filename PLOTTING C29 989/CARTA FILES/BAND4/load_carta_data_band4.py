@@ -55,3 +55,8 @@ carta_minor_df_POLI = pd.read_csv(carta_image_path_band4 + "c2d_989_POLI_233GHz_
 carta_minor_offset_POLI = np.array(carta_minor_df_POLI["Offset (arcsec)"])
 carta_minor_data_mJy_POLI = np.array(carta_minor_df_POLI["Value (Jy/beam)"]) * 1000
 # ------------------------------------------------------------------------------------------------------
+
+
+
+
+

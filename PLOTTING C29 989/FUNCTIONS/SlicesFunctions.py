@@ -78,102 +78,116 @@ def extract_axis_data(axis_x, axis_y, data_2d, minor_or_major, centre_pix, grids
                     offset_arcsec.append(-offset_pixel * pixel_scale_arcsec)  # Positive offset in arcseconds
 
 
+
     return axis_data, offset_pixels, offset_arcsec
 
 
 
+# -----------------------------------------------------------------------------------------
 
-def run_slices(data_2d_mJy, StokesI_header, StokesI_wcs, length_of_carta, xmin, xmax, ymin, ymax, band):
+def run_slices(data, StokesI_header, StokesI_wcs, carta_minor_data, carta_major_data,
+               carta_minor_offset, carta_major_offset, band, print_statement = False):
     """
-    Generate slice data along the major and minor axes for a given ALMA band.
-    
-    Parameters:
-    - StokesI_header: FITS header of the Stokes I image
-    - StokesI_wcs: WCS of the Stokes I image
-    - length_of_carta: Number of points to sample along the axes (from CARTA)
-    - xmin, xmax, ymin, ymax: Image bounds in pixels
-    - band: ALMA band number (4 or 6)
+    Generate and compare slice data along the major and minor axes of an image
+    for a given ALMA band, optionally computing chi-squared values between the 
+    slices and reference CARTA data.
 
-    Returns:
-    - major_data: Values along the major axis
-    - major_offset_arcsec: Offsets along the major axis (arcsec)
-    - minor_data: Values along the minor axis
-    - minor_offset_arcsec: Offsets along the minor axis (arcsec)
+    Parameters
+    ----------
+    data : 2D numpy array
+        Image data (e.g., Stokes I).
+    StokesI_header : FITS header
+        Header from the Stokes I FITS image.
+    StokesI_wcs : astropy.wcs.WCS
+        World Coordinate System for the image.
+    carta_minor_data : 1D array-like
+        CARTA-provided intensity values along the minor axis.
+    carta_major_data : 1D array-like
+        CARTA-provided intensity values along the major axis.
+    xmin, xmax, ymin, ymax : int
+        Bounds of the image (in pixels).
+    band : int
+        ALMA band number. Currently supports band 4 and 6.
+
+    Returns
+    -------
+    major_data : 1D numpy array
+        Extracted pixel values along the major axis.
+    major_offset_arcsec : 1D numpy array
+        Offset positions along the major axis (in arcseconds).
+    minor_data : 1D numpy array
+        Extracted pixel values along the minor axis.
+    minor_offset_arcsec : 1D numpy array
+        Offset positions along the minor axis (in arcseconds).
     """
 
-    # Get band-specific constants
+    # Select band-specific parameters
     if band == 6:
-        centre_str  = constants.centre_str_band6
+        centre_str = constants.centre_str_band6
         major_angle_rad_cartesian = constants.major_angle_rad_cartesian_band6
         minor_angle_rad_cartesian = constants.minor_angle_rad_cartesian_band6
         line_length_arcsec = 1.4
-
     elif band == 4:
-        centre_str  = constants.centre_str_band4
+        centre_str = constants.centre_str_band4
         major_angle_rad_cartesian = constants.major_angle_rad_cartesian_band4
         minor_angle_rad_cartesian = constants.minor_angle_rad_cartesian_band4
-        line_length_arcsec = 1.4  # <-- TODO: change this if needed
-
+        line_length_arcsec = 1.4  # Adjust this if needed for Band 4
     else:
         raise ValueError("Unsupported band. Only Band 4 and Band 6 are currently supported.")
         
-    # Normalize angles
+    
+
+    # Normalize angles to standard range
     major_angle_rad_cartesian = normalize_angle(major_angle_rad_cartesian)
     minor_angle_rad_cartesian = normalize_angle(minor_angle_rad_cartesian)
 
-    # Convert centre from string to pixel coordinates
+
+    # Convert centre position from string to pixel coordinates
     centre_pix = list(string_to_pixel(centre_str, StokesI_wcs))
-#     print(f'My centre point: ({centre_pix[0]:.3f} px, {centre_pix[1]:.3f} px)')
-#     print(f'Carta centre point: (858.123 px, 827.024 px)')
-
-    # Convert line length to pixels
-    line_length_pix = arcsec_to_pixels(StokesI_header, line_length_arcsec)
-#     print(f"Line length in pixels: {line_length_pix:.2f}")
-
-    # Define the number of sampling points (assumes CARTA has already been loaded)
-    num_points = length_of_carta
-    gridsize = data_2d_mJy.shape
-#     print("the gridside is:", gridsize)
     
-#     print(" ")
-    # print([major_angle_rad_cartesian * (180/np.pi), minor_angle_rad_cartesian* (180/np.pi)])
+#     centre_pix = [513.472, 510.353]
 
-    # Define x and y components along the major axis
+
+    # Convert desired line length from arcsec to pixels
+    line_length_pix = arcsec_to_pixels(StokesI_header, line_length_arcsec)
+
+    # Sampling points (based on CARTA slice length)
+    num_points = len(carta_major_data)
+    gridsize = data.shape
+
+    # Define coordinates along the major axis
     delta = np.linspace(-line_length_pix / 2, line_length_pix / 2, num_points)
     major_x = centre_pix[0] + delta * np.cos(major_angle_rad_cartesian)
     major_y = centre_pix[1] + delta * np.sin(major_angle_rad_cartesian)
 
-    # Define x and y components along the minor axis
+    # Define coordinates along the minor axis
     minor_x = centre_pix[0] + delta * np.cos(minor_angle_rad_cartesian)
     minor_y = centre_pix[1] + delta * np.sin(minor_angle_rad_cartesian)
-    
-#     print("centre_pix[0] = ", centre_pix[0])
-#     print("centre_pix[1] = ", centre_pix[1])
-    
-#     print(" ")
-#     print(f'Major start: ({major_x[-1]:.3f}, {major_y[-1]:.3f})')
-#     print(f'Major end:   ({major_x[0]:.3f}, {major_y[0]:.3f})')
-#     print(f'Minor start: ({minor_x[-1]:.3f}, {minor_y[-1]:.3f})')
-#     print(f'Minor end:   ({minor_x[0]:.3f}, {minor_y[0]:.3f})')
 
-    # Extract data along the major axis
-    major_data, _, major_offset_arcsec = extract_axis_data(
-        major_x, major_y, 
-        data_2d_mJy, 
-        'major', 
-        centre_pix, 
-        gridsize, 
-        StokesI_header
-    )
+    # Extract image values along the defined axes
+    major_data, _, major_offset_arcsec = extract_axis_data(major_x, major_y, 
+                                                           data, 'major', 
+                                                           centre_pix, gridsize, 
+                                                           StokesI_header)
+    
+    minor_data, _, minor_offset_arcsec = extract_axis_data(minor_x, minor_y, 
+                                                           data, 'minor', 
+                                                           centre_pix, gridsize, 
+                                                           StokesI_header)
+    
+    if print_statement:
+        print(rf"The major angle (cartesian) is: {major_angle_rad_cartesian * 180/np.pi:.1f} degrees")
+        print(rf"The minor angle (cartesian) is: {minor_angle_rad_cartesian * 180/np.pi:.1f} degrees")
+        print(" ")
+        print(f'Major start: ({major_x[-1]:.3f}, {major_y[-1]:.3f}) pixels')
+        print(f'Major end:   ({major_x[0]:.3f}, {major_y[0]:.3f}) pixels')
+        print(f'Minor start: ({minor_x[-1]:.3f}, {minor_y[-1]:.3f}) pixels')
+        print(f'Minor end:   ({minor_x[0]:.3f}, {minor_y[0]:.3f}) pixels')
+        print(rf" ")
+        print("RA_centre_pix = ", centre_pix[0])
+        print("Dec_centre_pix = ", centre_pix[1])
 
-    # Extract data along the minor axis
-    minor_data, _, minor_offset_arcsec = extract_axis_data(
-        minor_x, minor_y, 
-        data_2d_mJy, 
-        'minor', 
-        centre_pix, 
-        gridsize, 
-        StokesI_header
-    )
 
     return major_data, major_offset_arcsec, minor_data, minor_offset_arcsec
+# -----------------------------------------------------------------------------------------
+

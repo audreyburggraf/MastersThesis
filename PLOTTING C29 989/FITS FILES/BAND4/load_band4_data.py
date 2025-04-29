@@ -43,7 +43,7 @@ StokesI_stretched_mJy, StokesI_unstretched_cbar_ticks = normalize_stokesI_for_cm
 
 # Polarization Intensity
 # -------------------------------------------------------------------------------------------------------
-POLI_header, _, POLI_Jy, _ = read_in_file(POLI_file, dimensions = 2)
+_, _, POLI_Jy, _ = read_in_file(POLI_file, dimensions = 2)
 
 POLI_mJy = convert_jy_to_mjy(POLI_Jy)
 # -------------------------------------------------------------------------------------------------------
@@ -51,7 +51,7 @@ POLI_mJy = convert_jy_to_mjy(POLI_Jy)
 
 # Polarized Intensity Error
 # -------------------------------------------------------------------------------------------------------
-POLI_err_header, _, POLI_err_Jy, _ = read_in_file(POLI_err_file, dimensions = 2)
+_, _, POLI_err_Jy, _ = read_in_file(POLI_err_file, dimensions = 2)
 
 POLI_err_mJy = convert_jy_to_mjy(POLI_err_Jy)
 # -------------------------------------------------------------------------------------------------------
@@ -59,7 +59,7 @@ POLI_err_mJy = convert_jy_to_mjy(POLI_err_Jy)
 
 # Polarization Angle
 # -------------------------------------------------------------------------------------------------------
-PA_header, _, PA_deg, _ = read_in_file(PA_file, dimensions = 2)
+_, _, PA_deg, _ = read_in_file(PA_file, dimensions = 2)
 
 PA_rad = np.radians(PA_deg)
 # -------------------------------------------------------------------------------------------------------
@@ -67,7 +67,7 @@ PA_rad = np.radians(PA_deg)
 
 # Polarization Angle Error
 # -------------------------------------------------------------------------------------------------------
-PA_err_header, _, PA_err_deg, _ = read_in_file(PA_err_file, dimensions = 2)
+_, _, PA_err_deg, _ = read_in_file(PA_err_file, dimensions = 2)
 # -------------------------------------------------------------------------------------------------------
 
 
@@ -78,10 +78,38 @@ BMAJ_pix, BMIN_pix, BPA_deg_cartesian, reference_length_pix, RA_centre_pix, Dec_
 nx, ny = StokesI_mJy.shape
 
 
-angles_results = get_minor_major_angles(constants.PA_deg_sky_band4)
 
-minor_angle_rad_sky_band4       = angles_results["minor_rad_sky"]
-major_angle_rad_sky_band4       = angles_results["major_rad_sky"]
-minor_angle_rad_cartesian_band4 = angles_results["minor_rad_cartesian"]
-major_angle_rad_cartesian_band4 = angles_results["major_rad_cartesian"]
+
+
+
+# Find the vectors
+# -------------------------------------------------------------------------------------------------------
+results = generate_polarization_vectors_band4(ny, nx,
+                                              RA_centre_pix, Dec_centre_pix,
+                                              constants.minor_angle_rad_sky_band4,
+                                              StokesI_mJy,
+                                              POLI_mJy, POLI_err_mJy,
+                                              PA_rad, PA_err_deg)
+# -------------------------------------------------------------------------------------------------------
+
+# Accessing the actual vector data and angles
+vector_data_actual_cartesian = results['vector_data_actual_cartesian']
+vector_angle_actual_sky = results['vector_angle_actual_sky']
+
+
+vector_data_100Uniform_cartesian = results['vector_data_100Uniform_cartesian']
+vector_angle_100Uniform_sky = results['vector_angle_100Uniform_sky']
+
+
+vector_data_100Azimuthal_cartesian = results['vector_data_100Azimuthal_cartesian']
+vector_angle_100Azimuthal_sky      = results['vector_angle_100Azimuthal_sky']
+
+StokesQ_grid_100Uniform  = results['StokesQ_grid_100Uniform']
+StokesU_grid_100Uniform  = results['StokesU_grid_100Uniform']
+
+StokesQ_grid_100Azimuthal = results['StokesQ_grid_100Azimuthal']
+StokesU_grid_100Azimuthal = results['StokesU_grid_100Azimuthal']
+# -------------------------------------------------------------------------------------------------------
+
+
 

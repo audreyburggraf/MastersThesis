@@ -1,5 +1,7 @@
 import numpy as np
 from scipy.stats import norm
+from collections import defaultdict
+
 
 
 import sys
@@ -15,7 +17,6 @@ from FITS_Image_Functions import *
 from PolarizationFunctions import *
 from PlottingWithFunction import *
 from DataAnalysisFunctions import *
-from GaussianFunctions import *
 
 from custom_colormap import *
 
@@ -259,71 +260,283 @@ def gaussian_2d_flat_topped_tilted_model(nx, ny, theta_rad, phi, BMAJ_pix, BMIN_
 
 
 
+# ----------------------------------------------------------------------------------------
+def run_gaussian_model_band4(theta_rad, phi_values, BMAJ_values_pix, BMIN_values_pix, RA_centre_pix, Dec_centre_pix, 
+                             StokesQ_grid_100Uniform, StokesU_grid_100Uniform,
+                             StokesQ_grid_100Azimuthal, StokesU_grid_100Azimuthal,
+                             vector_angle_actual_sky,
+                             ny, nx, 
+                             POLI_mJy, POLI_err_mJy, 
+                             PA_err_deg,
+                             print_statements = True):
+    
+    # Dictionary to store results
+    results = {}
+    values = []
+
+    for phi_val in phi_values: 
+        for BMAJ_val in BMAJ_values_pix:
+            for BMIN_val in BMIN_values_pix:
+
+                # Run the gaussian model function
+                # -------------------------------------------------------------------------------------------------------------
+                GaussianUniformRatios, GaussianAzimuthalRatios, _, _ = gaussian_2d_flat_topped_tilted_model(nx, ny, 
+                                                                                                            theta_rad, phi_val, 
+                                                                                                            BMIN_val,
+                                                                                                            BMAJ_val, 
+                                                                                                            RA_centre_pix,
+                                                                                                            Dec_centre_pix)
+                # -------------------------------------------------------------------------------------------------------------
+
+
+                # Recover the Q, U and vector angle
+                # -------------------------------------------------------------------------------------------------------------
+                _, _, _, vectors_data, vectors_angle = mix_StokesQU_and_generate_vectors_band4(GaussianUniformRatios,
+                                                                                               GaussianAzimuthalRatios, 
+                                                                                               StokesQ_grid_100Uniform, 
+                                                                                               StokesU_grid_100Uniform,
+                                                                                               StokesQ_grid_100Azimuthal, 
+                                                                                               StokesU_grid_100Azimuthal,
+                                                                                               ny, nx, 
+                                                                                               POLI_mJy, POLI_err_mJy, 
+                                                                                               PA_err_deg)
+                # -------------------------------------------------------------------------------------------------------------
+                # Create a key for the dictionary based on the values
+                value_str = f"{int(phi_val)}_{int(BMAJ_val)}_{int(BMIN_val)}"  
+
+                # Save the results in the dictionary
+                results[f"vectors_data_{value_str}"] = vectors_data
+                # -------------------------------------------------------------------------------------------------------------
 
 
 
-# def mix_StokesQU_and_generate_vectors_gaussian(GaussianUniform_ratio, GaussianAzimuthal_ratio, 
-#                                                StokesQ_uniform, StokesU_uniform, 
-#                                                StokesQ_azimuthal, StokesU_azimuthal,
-#                                                ny, nx, 
-#                                                step, vector_length_pix_const, 
-#                                                StokesI_data_2d_mJy, StokesIerr_data_2d_mJy,
-#                                                calculated_polarized_intensity, PolarizedIntensity_err_data_2d_mJy,
-#                                                PolarizationAngle_err_data_2d_deg):
+                # Calculate and append chi squared 
+                # --------------------------------------------------------------
+                chi_squared = calculate_chi_squared_v2(vectors_angle, vector_angle_actual_sky) # (observed, expected)
+                # --------------------------------------------------------------
+                
+                values.append((phi_val, BMAJ_val, BMIN_val, chi_squared))
+                
+    
+    
+    # Find the index of the minimum chi-squared value
+    chi_values = [entry[3] for entry in values]
+    min_index = chi_values.index(min(chi_values))
+
+    # Extract the best values
+    best_phi, best_BMAJ, best_BMIN, best_chi_squared = values[min_index]
+
+    # Print the results
+    if print_statements:
+        print(f'The lowest chi-squared value is: χ² = {best_chi_squared:.3f} when')
+        print(f'    phi  = {best_phi:.2f}')
+        print(f'    BMAJ = {best_BMAJ:.2f}')
+        print(f'    BMIN = {best_BMIN:.2f}')
+    
+    # Access the best vector data from the dictionary
+    best_key = f"vectors_data_{int(best_phi)}_{int(best_BMAJ)}_{int(best_BMIN)}"
+    vector_data_gaussian_best = results[best_key]
+
+    return values, results, vector_data_gaussian_best
+    
+    
+# ----------------------------------------------------------------------------------------
+
+
+
+
+
+
+# ----------------------------------------------------------------------------------------
+def run_gaussian_model_band6(theta_rad, phi_values, BMAJ_values_pix, BMIN_values_pix, RA_centre_pix, Dec_centre_pix, 
+                             StokesQ_grid_100Uniform, StokesU_grid_100Uniform,
+                             StokesQ_grid_100Azimuthal, StokesU_grid_100Azimuthal,
+                             vector_angle_actual_sky,
+                             ny, nx, 
+                             StokesI_mJy, StokesI_err_mJy,
+                             POLI_mJy, POLI_err_mJy, 
+                             PA_err_deg,
+                             print_statements = True):
+    
+    # Dictionary to store results
+    results = {}
+    values = []
+
+    for phi_val in phi_values: 
+        for BMAJ_val in BMAJ_values_pix:
+            for BMIN_val in BMIN_values_pix:
+
+                # Run the gaussian model function
+                # -------------------------------------------------------------------------------------------------------------
+                GaussianUniformRatios, GaussianAzimuthalRatios, _, _ = gaussian_2d_flat_topped_tilted_model(nx, ny, 
+                                                                                                            theta_rad, phi_val, 
+                                                                                                            BMIN_val,
+                                                                                                            BMAJ_val, 
+                                                                                                            RA_centre_pix,
+                                                                                                            Dec_centre_pix)
+                # -------------------------------------------------------------------------------------------------------------
+
+
+                # Recover the Q, U and vector angle
+                # -------------------------------------------------------------------------------------------------------------
+                _, _, _, vectors_data, vectors_angle = mix_StokesQU_and_generate_vectors_band6(GaussianUniformRatios,
+                                                                                               GaussianAzimuthalRatios, 
+                                                                                               StokesQ_grid_100Uniform, 
+                                                                                               StokesU_grid_100Uniform,
+                                                                                               StokesQ_grid_100Azimuthal, 
+                                                                                               StokesU_grid_100Azimuthal,
+                                                                                               ny, nx, 
+                                                                                               StokesI_mJy, StokesI_err_mJy,
+                                                                                               POLI_mJy, POLI_err_mJy, 
+                                                                                               PA_err_deg)
+                # -------------------------------------------------------------------------------------------------------------
+                # Create a key for the dictionary based on the values
+                value_str = f"{int(phi_val)}_{int(BMAJ_val)}_{int(BMIN_val)}"  
+
+                # Save the results in the dictionary
+                results[f"vectors_data_{value_str}"] = vectors_data
+                # -------------------------------------------------------------------------------------------------------------
+
+
+
+                # Calculate and append chi squared 
+                # --------------------------------------------------------------
+                chi_squared = calculate_chi_squared_v2(vectors_angle, vector_angle_actual_sky) # (observed, expected)
+                # --------------------------------------------------------------
+                
+                values.append((phi_val, BMAJ_val, BMIN_val, chi_squared))
+                
+    
+    
+    # Find the index of the minimum chi-squared value
+    chi_values = [entry[3] for entry in values]
+    min_index = chi_values.index(min(chi_values))
+
+    # Extract the best values
+    best_phi, best_BMAJ, best_BMIN, best_chi_squared = values[min_index]
+
+    # Print the results
+    if print_statements:
+        print(f'The lowest chi-squared value is: χ² = {best_chi_squared:.3f} when')
+        print(f'    phi  = {best_phi:.2f}')
+        print(f'    BMAJ = {best_BMAJ:.2f}')
+        print(f'    BMIN = {best_BMIN:.2f}')
+    
+    # Access the best vector data from the dictionary
+    best_key = f"vectors_data_{int(best_phi)}_{int(best_BMAJ)}_{int(best_BMIN)}"
+    vector_data_gaussian_best = results[best_key]
+
+    return values, results, vector_data_gaussian_best
+    
+    
+# ----------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+# ----------------------------------------------------------------------------------------
+def make_gaussian_grids(gaussian_values, phi_values, BMAJ_values_pix, BMIN_values_pix):
+    """
+    Parameters:
+    -----------
+    gaussian_values : list of tuples
+        Each tuple should contain (phi, BMAJ, BMIN, chi^2).
+    phi_values : array-like
+        Unique values of phi used in the fit grid.
+    BMAJ_values_pix : array-like
+        Unique values of BMAJ used in the fit grid.
+    BMIN_values_pix : array-like
+        Unique values of BMIN used in the fit grid.
+    """
+    
+    # Unpack the fit results into individual lists
+    phi_list, BMAJ_list, BMIN_list, chi_list = zip(*gaussian_values)
+
+    # Reshape the lists into 3D grids for later use (optional)
+    phi_grid  = np.array(phi_list).reshape(len(phi_values),  len(BMAJ_values_pix), len(BMIN_values_pix))
+    BMAJ_grid = np.array(BMAJ_list).reshape(len(phi_values), len(BMAJ_values_pix), len(BMIN_values_pix))
+    BMIN_grid = np.array(BMIN_list).reshape(len(phi_values), len(BMAJ_values_pix), len(BMIN_values_pix))
+    chi_grid  = np.array(chi_list).reshape(len(phi_values),  len(BMAJ_values_pix), len(BMIN_values_pix))
+    
+    return phi_grid, BMAJ_grid, BMIN_grid, chi_grid
+# ----------------------------------------------------------------------------------------
+
+
+
+
+
+# # ----------------------------------------------------------------------------------------
+# def analyze_gaussian_averages_vs_chi2(gaussian_values, phi_values, BMAJ_pix_values, BMIN_pix_values):
 #     """
-#     Blend Stokes Q and U grids using specified ratios, compute polarization angle (PA), 
-#     and generate mixed polarization vectors based on selection criteria.
+#     Analyzes chi-squared values from Gaussian fitting results and plots their averages
+#     as functions of phi, BMAJ, and BMIN.
 
 #     Parameters:
-#     Uniform_ratio (float): Fraction of uniform component (between 0 and 1).
-#     Azimuthal_ratio (float): Fraction of azimuthal component (between 0 and 1). 
-#                              Must satisfy Uniform_ratio + Azimuthal_ratio = 1.
-#     StokesQ_uniform (numpy.ndarray): 2D array of Stokes Q values from the uniform grid.
-#     StokesQ_azimuthal (numpy.ndarray): 2D array of Stokes Q values from the azimuthal grid.
-#     StokesU_uniform (numpy.ndarray): 2D array of Stokes U values from the uniform grid.
-#     StokesU_azimuthal (numpy.ndarray): 2D array of Stokes U values from the azimuthal grid.
+#     -----------
+#     gaussian_values : list of tuples
+#         Each tuple should contain (phi, BMAJ, BMIN, chi^2).
+#     phi_values : array-like
+#         Unique values of phi used in the fit grid.
+#     BMAJ_pix_values : array-like
+#         Unique values of BMAJ used in the fit grid.
+#     BMIN_pix_values : array-like
+#         Unique values of BMIN used in the fit grid.
+#     """
 
-#     Returns:
-#     tuple: (PA_grid_mixed, StokesQ_grid_mixed, StokesU_grid_mixed, vector_mixed)
-#     """    
-# #     # Ensure the ratios sum to 1 (for safety)
-# #     if not np.isclose(GaussianUniform_ratio + GaussianAzimuthal_ratio, 1.0):
-# #         raise ValueError("Uniform_ratio and Azimuthal_ratio must sum to 1.")
+#     phi_grid, BMAJ_grid, BMIN_grid, chi_grid = make_gaussian_grids(gaussian_values, phi_values, BMAJ_pix_values, BMIN_pix_values)
 
-#     # Compute weighted sum of Stokes Q and U
-#     StokesQ_grid_mixed = GaussianUniform_ratio * StokesQ_uniform + GaussianAzimuthal_ratio * StokesQ_azimuthal
-#     StokesU_grid_mixed = GaussianUniform_ratio * StokesU_uniform + GaussianAzimuthal_ratio * StokesU_azimuthal
+#     # Create dictionaries to group chi^2 values by phi, BMAJ, and BMIN
+#     phi_dict  = defaultdict(list)
+#     bmaj_dict = defaultdict(list)
+#     bmin_dict = defaultdict(list)
 
-#     # Compute polarization angle (theta = 1/2 * arctan(U/Q))
-#     PA_grid_mixed_rad_astronomy = calculate_polarization_angle(StokesQ_grid_mixed, StokesU_grid_mixed)
-#                               # = 0.5 * np.arctan2(StokesU_grid_mixed, StokesQ_grid_mixed)
-    
-#     #PA_grid_mixed_rad_astronomy = castesian_to_astronomy_rad(PA_grid_mixed_rad_cartesian)
+#     # Populate the dictionaries
+#     for phi, BMAJ, BMIN, chi in gaussian_values:
+#         phi_dict[phi].append(chi)
+#         bmaj_dict[BMAJ].append(chi)
+#         bmin_dict[BMIN].append(chi)
 
-#     # Generate polarization vectors based on selection criteria
-#     vector_mixed_cartesian = []
-#     vector_mixed_angle_rad_astronomy = []
-    
-#     for x in range(0, nx, step):
-#         for y in range(0, ny, step):
-#             if (
-#                 StokesI_data_2d_mJy[y, x] / StokesIerr_data_2d_mJy[y, x] > 3
-#                 and calculated_polarized_intensity[y, x] / PolarizedIntensity_err_data_2d_mJy[y, x] > 3
-#                 and PolarizationAngle_err_data_2d_deg[y, x] < 10
-#             ):
-#                 # Extract the polarization angle at this location
-#                 PA_angle_rad_astronomoy = PA_grid_mixed_rad_astronomy[y, x] 
-                
-#                 # Compute vector components
-#                 dx = vector_length_pix_const * np.cos(PA_angle_rad_astronomoy + np.pi/2)
-#                 dy = vector_length_pix_const * np.sin(PA_angle_rad_astronomoy + np.pi/2)
+#     # Compute average chi^2 values for each parameter value
+#     phi_avg  = {phi: np.mean(chi_values) for phi, chi_values in phi_dict.items()}
+#     bmaj_avg = {BMAJ: np.mean(chi_values) for BMAJ, chi_values in bmaj_dict.items()}
+#     bmin_avg = {BMIN: np.mean(chi_values) for BMIN, chi_values in bmin_dict.items()}
 
-#                 # Append to the list in the format [x_start, x_end, y_start, y_end]
-#                 vector_mixed_cartesian.append([x - dx / 2, x + dx / 2, y - dy / 2, y + dy / 2])
-                
-#                 vector_mixed_angle_rad_astronomy.append(PA_angle_rad_astronomoy)
+#     # Plot the averaged results
+#     def plot_gaussian_averages(phi_avg, bmaj_avg, bmin_avg):
+#     # Create figure
+#     fig, ax = plt.subplots(1, 3, figsize=(18, 5))
 
-#     return PA_grid_mixed_rad_astronomy, StokesQ_grid_mixed, StokesU_grid_mixed, vector_mixed_cartesian, vector_mixed_angle_rad_astronomy
+#     # Plot phi vs chi^2
+#     ax[0].plot(list(phi_avg.keys()), list(phi_avg.values()), marker='o', linestyle='-', color = 'blue', lw = 4, ms = 15)
+#     ax[0].set_xlabel(r'$\phi$', fontsize = axis_label_fs)
+#     ax[0].set_title(r'$\phi$ vs $\chi^2$', fontsize = title_fs)
 
+#     # Plot BMAJ vs chi^2
+#     ax[1].plot(list(bmaj_avg.keys()), list(bmaj_avg.values()), marker='o', linestyle='-', color = 'red', lw = 4, ms = 15)
+#     ax[1].set_xlabel('BMAJ', fontsize = axis_label_fs)
+#     ax[1].set_title(r'BMAJ vs $\chi^2$', fontsize = title_fs)
 
+#     # Plot BMIN vs chi^2
+#     ax[2].plot(list(bmin_avg.keys()), list(bmin_avg.values()), marker='o', linestyle='-', color = 'forestgreen', lw = 4, ms = 15)
+#     ax[2].set_xlabel('BMIN', fontsize = axis_label_fs)
+#     ax[2].set_title(r'BMIN vs $\chi^2$', fontsize = title_fs)
 
+#     for i in range (3):
+#         # they all have the same y-axis label as chi^2
+#         ax[i].set_ylabel(r'$\chi^2$', fontsize = axis_label_fs)
+
+#         # Set minor and major ticks
+#         ax[i].minorticks_on()
+#         ax[i].tick_params(axis="x", which="major", direction="in", length=7, labelsize=axis_num_fs)
+#         ax[i].tick_params(axis="y", which="major", direction="in", length=7, labelsize=axis_num_fs)
+
+#     plt.tight_layout()
+# # ----------------------------------------------------------------------------------------

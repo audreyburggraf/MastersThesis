@@ -75,6 +75,11 @@ def read_in_file(file_name, dimensions = 4):
 
 
 
+def convert_jy_to_mjy(jy_value):
+    """Convert flux density from Jansky (Jy) to milliJansky (mJy)."""
+    return 1000 * jy_value
+
+
 
 
 # ---------------------------------------------------------------------------------------------------------
@@ -149,6 +154,16 @@ def astronomy_to_cartesian(astronomy_angle):
         
     return astronomy_angle + 90
 # ---------------------------------------------------------------------------------------------------------
+
+
+# ---------------------------------------------------------------------------------------------------------
+def sky_to_cartesian_angle_deg(sky_angle_deg):
+    
+    cartesian_angle_deg = (90 - sky_angle_deg) % 360
+    
+    return cartesian_angle_deg
+# ---------------------------------------------------------------------------------------------------------
+
 
 
 
@@ -309,87 +324,6 @@ def find_ra_and_dec(ID):
     return ra, dec
 
 
-# -----------------------------------------------------------------------------------------------------------------------------
-# def find_ra(ID):
-#     """
-#     Extracts Right Ascension (RA) and Declination (Dec) from a formatted source identifier 
-#     and converts them into degrees using pre-defined conversion functions.
-
-#     Args:
-#         ID (str): A source identifier in the format:
-#                   "Jhhmmss.ss+/-ddmmss.ss"
-#                   where:
-#                   - 'hhmmss.ss' represents RA (hours, minutes, seconds).
-#                   - '+/-ddmmss.ss' represents Dec (degrees, arcminutes, arcseconds).
-
-#     Returns:
-#         tuple: A tuple containing:
-#                - ra (float): Right Ascension in degrees.
-#                - dec (float): Declination in degrees.
-
-#     Notes:
-#         - RA is converted using `convert_ra_parts_into_degrees`.
-#         - Dec is converted using `convert_dec_parts_into_degrees`.
-
-#     Example:
-#         For the source ID "J105339.70-771233.00":
-#             RA: 10h 53m 39.70s
-#             Dec: -77° 12' 33.00"
-#             The function returns:
-#             (163.415, -77.209167)
-#     """
-
-#     # Parse RA components
-#     RA_hours = int(ID[1:3])                       # Extract hours from position 1-3
-#     RA_min = int(ID[3:5])                         # Extract minutes from position 3-5
-#     RA_seconds = int(ID[5:7]) + 0.1 * int(ID[8])  # Extract seconds including tenths
-
-#     # Calculate RA in degrees
-#     ra = convert_ra_parts_into_degrees(RA_hours, RA_min, RA_seconds)
-
-#     return ra
-# -----------------------------------------------------------------------------------------------------------------------------
-# def find_dec(ID):
-#     """
-#     Extracts Right Ascension (RA) and Declination (Dec) from a formatted source identifier 
-#     and converts them into degrees using pre-defined conversion functions.
-
-#     Args:
-#         ID (str): A source identifier in the format:
-#                   "Jhhmmss.ss+/-ddmmss.ss"
-#                   where:
-#                   - 'hhmmss.ss' represents RA (hours, minutes, seconds).
-#                   - '+/-ddmmss.ss' represents Dec (degrees, arcminutes, arcseconds).
-
-#     Returns:
-#         tuple: A tuple containing:
-#                - ra (float): Right Ascension in degrees.
-#                - dec (float): Declination in degrees.
-
-#     Notes:
-#         - RA is converted using `convert_ra_parts_into_degrees`.
-#         - Dec is converted using `convert_dec_parts_into_degrees`.
-
-#     Example:
-#         For the source ID "J105339.70-771233.00":
-#             RA: 10h 53m 39.70s
-#             Dec: -77° 12' 33.00"
-#             The function returns:
-#             (163.415, -77.209167)
-#     """
-
-#     # Parse Dec components
-#     Dec_sign = string_to_int_symbol(ID[9])  # Get sign as an integer (+1 or -1)
-#     Dec_deg = int(ID[10:12])                # Extract degrees from position 10-12
-#     Dec_arcmin = int(ID[12:14])            # Extract arcminutes from position 12-14
-#     Dec_arcsec = int(ID[14:17])            # Extract arcseconds from position 14-17
-
-#     # Calculate Dec in degrees
-#     dec = convert_dec_parts_into_degrees(Dec_sign, Dec_deg, Dec_arcmin, Dec_arcsec)
-
-#     return dec  
-# -----------------------------------------------------------------------------------------------------------------------------
-
 
 
 
@@ -430,6 +364,7 @@ def degrees_to_pixels(ra_deg, dec_deg, head):
 
     return x_pixel, y_pixel
 # -----------------------------------------------------------------------------------------------------------------------------
+
 def string_to_pixel(string, wcs):
     """
     Converts a string containing RA and Dec coordinates into pixel coordinates.
@@ -457,6 +392,8 @@ def string_to_pixel(string, wcs):
     
     # Convert the RA and Dec into a SkyCoord object
     sky_coord = SkyCoord(ra=RA_deg * u.deg, dec=Dec_deg * u.deg, frame='icrs')
+#     sky_coord = SkyCoord(string, frame='icrs')
+
 
     # Use the WCS object to convert world coordinates (RA, Dec) to pixel coordinates
     pix = wcs.world_to_pixel(sky_coord)
@@ -464,6 +401,10 @@ def string_to_pixel(string, wcs):
     # Extract and convert pixel values to integers for use in image plots
     RA_pix = int(pix[0])
     Dec_pix = int(pix[1])
+
+
+#     RA_pix = pix[0]
+#     Dec_pix = pix[1]
     
     return RA_pix, Dec_pix
 

@@ -164,7 +164,7 @@ def mix_StokesQU_and_generate_vectors(Uniform_ratio, Azimuthal_ratio,
 
 
 
-# def mix_StokesQU_and_generate_vectors_band4(Uniform_ratio, Azimuthal_ratio, 
+# def mix_StokesQU_and_generate_vectors_band6(Uniform_ratio, Azimuthal_ratio, 
 #                                       StokesQ_uniform, StokesU_uniform, 
 #                                       StokesQ_azimuthal, StokesU_azimuthal,
 #                                       ny, nx, 
@@ -227,6 +227,61 @@ def mix_StokesQU_and_generate_vectors(Uniform_ratio, Azimuthal_ratio,
 #                 vector_mixed_angle_rad_astronomy.append(PA_angle_rad_astronomoy)
 
 #     return PA_grid_mixed_rad_astronomy, StokesQ_grid_mixed, StokesU_grid_mixed, vector_mixed_cartesian, vector_mixed_angle_rad_astronomy
+
+
+
+def mix_StokesQU_and_generate_vectors_band6(Uniform_ratio, Azimuthal_ratio, 
+                                            StokesQ_uniform, StokesU_uniform, 
+                                            StokesQ_azimuthal, StokesU_azimuthal,
+                                            ny, nx, 
+                                            StokesI_mJy, StokesI_err_mJy,
+                                            POLI_mJy, POLI_err_mJy,
+                                            PA_err_deg):
+    """
+    Blend Stokes Q and U grids using specified ratios, compute polarization angle (PA), 
+    and generate mixed polarization vectors based on selection criteria.
+
+    Parameters:
+    Uniform_ratio (float): Fraction of the uniform component (between 0 and 1).
+    Azimuthal_ratio (float): Fraction of the azimuthal component (between 0 and 1). 
+                             Must satisfy Uniform_ratio + Azimuthal_ratio = 1.
+    StokesQ_uniform (np.ndarray): 2D array of Stokes Q values from the uniform grid.
+    StokesU_uniform (np.ndarray): 2D array of Stokes U values from the uniform grid.
+    StokesQ_azimuthal (np.ndarray): 2D array of Stokes Q values from the azimuthal grid.
+    StokesU_azimuthal (np.ndarray): 2D array of Stokes U values from the azimuthal grid.
+    ny (int): Number of pixels along the y-axis.
+    nx (int): Number of pixels along the x-axis.
+    POLI_mJy (np.ndarray): 2D array of polarization intensity in mJy.
+    POLI_err_mJy (np.ndarray): 2D array of polarization intensity errors in mJy.
+    PA_err_deg (np.ndarray): 2D array of polarization angle errors in degrees.
+
+    Returns:
+    tuple: 
+        - PA_grid_mixed_rad_sky (np.ndarray): Polarization angle map (radians, sky frame).
+        - StokesQ_grid_mixed (np.ndarray): Mixed Stokes Q map.
+        - StokesU_grid_mixed (np.ndarray): Mixed Stokes U map.
+        - vector_mixed_cartesian (list): List of vectors in [x0, x1, y0, y1] format.
+        - vector_mixed_angle_rad_sky (list): List of vector angles in radians (sky frame).
+    """
+
+    # Compute weighted sum of Stokes Q and U
+    StokesQ_grid_mixed = Uniform_ratio * StokesQ_uniform + Azimuthal_ratio * StokesQ_azimuthal
+    StokesU_grid_mixed = Uniform_ratio * StokesU_uniform + Azimuthal_ratio * StokesU_azimuthal
+
+    # Compute polarization angle (theta = 1/2 * arctan(U/Q))
+    PA_grid_mixed_rad_sky = calculate_polarization_angle(StokesQ_grid_mixed, StokesU_grid_mixed)
+                             
+    # Generate polarization vectors
+    vector_mixed_cartesian, vector_mixed_angle_rad_sky = make_vectors_band6(ny, nx, 
+                                                                            StokesI_mJy, StokesI_err_mJy, 
+                                                                            POLI_mJy, POLI_err_mJy, 
+                                                                            PA_grid_mixed_rad_sky, PA_err_deg)
+
+    return PA_grid_mixed_rad_sky, StokesQ_grid_mixed, StokesU_grid_mixed, vector_mixed_cartesian, vector_mixed_angle_rad_sky
+
+
+
+
 
 
 

@@ -67,11 +67,20 @@ def normalize_angle(angle_rad):
 
 
 
-def calculate_chi_squared_v2(observed_value, expected_value, tolerance=1e-6):
+def calculate_chi_squared_v2(observed_value, expected_value, tolerance=1e-6, single_value = False):
     
     # Normalize both observed and expected angles
     observed_value = np.array([normalize_angle(angle) for angle in observed_value])
     expected_value = np.array([normalize_angle(angle) for angle in expected_value])
+    
+    # Calculate the squared differences between normalized observed and expected values
+    chi_squared = np.sum((observed_value - expected_value) ** 2)
+    
+    
+    return chi_squared
+
+
+def calculate_chi_squared(observed_value, expected_value, tolerance=1e-6):
     
     # Calculate the squared differences between normalized observed and expected values
     chi_squared = np.sum((observed_value - expected_value) ** 2)

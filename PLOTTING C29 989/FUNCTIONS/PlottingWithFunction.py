@@ -2,10 +2,13 @@
 import matplotlib.pyplot as plt
 from matplotlib.patches import Ellipse
 import seaborn as sns
+import math
 
 # Import Functions
 from FITS_Image_Functions import *
 from PolarizationFunctions import *
+from DataAnalysisFunctions import *
+from GaussianFunctions import *
 
 # Import the constants
 # -----------------------------------------------------------------------------------------
@@ -72,294 +75,10 @@ def normalize_stokesI_for_cmap(StokesI_data_2d_mJy, custom_min=None, custom_max=
 # -----------------------------------------------------------------------------------------
 
 
-# # Define the general 'read_in' function
-# def read_in(group_dict):
-#     """
-#     Takes a dictionary of key-value pairs and unpacks them into variables.
-#     """
-#     # Unpack the dictionary keys and values dynamically into local variables
-#     for key, value in group_dict.items():
-#         globals()[key] = value
-
-
-# # Make function
-# def plot_fits_data(plotting_data, what_i_am_plotting, units, StokesI_header, StokesI_wcs, StokesI_vmin_custom, StokesI_vmax_custom, data_files, min_str, max_str, distance_pc, reference_length_AU, reference_fraction, max_length_pix, cmap, font_sizes):
-    
-#     # Now you can call read_in for either font_sizes or constants
-#     read_in(font_sizes)  # This will create variables like title_fs, axis_label_fs, etc.
-#     # read_in(constants)  # This will create variables like distance_pc, reference_length_AU, etc.
-
-    
-    
-#     # Maximum and minimum of the plot
-#     # ------------------------------------------------------------------------------------
-#     RA_min_pix, Dec_min_pix = string_to_pixel(min_str, StokesI_wcs)
-#     RA_max_pix, Dec_max_pix = string_to_pixel(max_str, StokesI_wcs)
-
-#     xmin = RA_max_pix
-#     xmax = RA_min_pix
-
-#     ymin = Dec_min_pix
-#     ymax = Dec_max_pix
-#     # ------------------------------------------------------------------------------------
-
-
-#     # Create a figure with the WCS projection
-#     # ------------------------------------------------------------------------------------
-#     fig, ax = plt.subplots(figsize=(14, 12), subplot_kw={'projection': StokesI_wcs})
-#     # ------------------------------------------------------------------------------------
-
-#     # Add data
-#     # ------------------------------------------------------------------------------------
-#     im = ax.imshow(plotting_data, 
-#                    cmap = cmap) 
-#     # ------------------------------------------------------------------------------------
-
-
-#     # Colorbar
-#     # ------------------------------------------------------------------------------------
-#     cbar = plt.colorbar(im, ax=ax)
-
-#     cbar.set_label(f'{what_i_am_plotting} ({units})', 
-#                    fontsize = font_sizes['cbar_fs'])
-
-#     cbar.ax.tick_params(labelsize= font_sizes['axis_num_fs'] , which='major', length=7, direction="in")
-#     cbar.ax.tick_params(which='minor', length=4, direction="in")
-
-#     # Update colorbar ticks and labels
-#     if what_i_am_plotting == 'Stokes I':
-        
-#         normalized_cbar_ticks = np.array([0, 0.2, 0.4, 0.6, 0.8, 1])
-
-       
-#         StokesI_unstretched_cbar_ticks = unstretch(normalized_cbar_ticks, StokesI_vmin_custom, StokesI_vmax_custom)
-        
-       
-        
-#         cbar.set_ticks(normalized_cbar_ticks)  # Set tick locations in stretched space
-        
-#         cbar.set_ticklabels([f"{val:.2f}" for val in StokesI_unstretched_cbar_ticks])
-# #     # ------------------------------------------------------------------------------------
-
-
-#     # Add title and axis labels
-#     # ------------------------------------------------------------------------------------
-#     # ax.set_title('Title', fontsize=title_fs, fontweight='bold')
-#     ax.set_xlabel('Right Ascension', fontsize = font_sizes['axis_label_fs'])
-#     ax.set_ylabel('Declination', fontsize = font_sizes['axis_label_fs'])
-#     # ------------------------------------------------------------------------------------
-
-
-#     # Set x and y limits using ax.set_xlim() and ax.set_ylim()
-#     # ------------------------------------------------------------------------------------------
-#     ax.set_xlim(xmin, xmax)
-#     ax.set_ylim(ymin, ymax)
-#     # ------------------------------------------------------------------------------------------
-
-
-#     # Add line and text for reference_length AU 
-#     # ------------------------------------------------------------------------------------
-#     reference_length_pix = length_in_pixels(reference_length_AU, distance_pc, StokesI_header)
-#     # ------------------------------------------------------------------------------------------
-#     # Plot the line in axes coordinates
-#     line_x_pos = xmax - 0.05 * (xmax - xmin) # 5% in from the right
-#     line_y_pos = ymax - 0.1  * (ymax - ymin) # 10% down from the top
-
-#     ax.plot([(line_x_pos - reference_length_pix), (line_x_pos)], 
-#             [line_y_pos, line_y_pos],
-#             color='black', 
-#             linewidth=3)
-
-#     # Add the text label centered below the line
-#     ax.text((line_x_pos - reference_length_pix/2), 
-#             (line_y_pos - 2), 
-#             f'{reference_length_AU} AU', 
-#             fontsize = font_sizes['text_fs'], 
-#             ha='center', 
-#             va='top') 
-#     # ------------------------------------------------------------------------------------
-
-
-#     # Beam
-#     # ----------------------------------------------------------------------------------------
-#     # Get the beam information
-#     beam_info = get_beam_info(StokesI_header)
-
-#     BMAJ_deg, BMIN_deg, BMAJ_pix, BMIN_pix, BPA_astronomy_deg, BPA_deg_cartesian = beam_info
-#     # ----------------------------------------------------------------------------------------
-#     # Get the position of the beam
-#     beam_x_pos = xmin - 0.1 * (xmin - xmax) # 10% in from the left
-#     beam_y_pos = ymin - 0.1 * (ymin - ymax) # 10% up from the bottom
-#     # ----------------------------------------------------------------------------------------
-#     # Add the beam to the plot
-#     beam = Ellipse(
-#         (beam_x_pos, beam_y_pos),                      
-#         width = BMAJ_pix, 
-#         height = BMIN_pix,   
-#         angle = BPA_deg_cartesian,
-#         edgecolor='black',                 # Edge color
-#         facecolor='none',                  # Fill color
-#         alpha=1,
-#         lw = 2)                           # Transparency
-    
-#     ax.add_patch(beam)
-#     # ------------------------------------------------------------------------------------
-
-
-
-#     # Vectors
-#     # ------------------------------------------------------------------------------------
-#     # Set parameters
-#     step = 7  # Plot vectors every step-th pixel
-#     nx, ny = data_files['StokesI_data_2d_mJy'].shape
-#     # ------------------------------------------------------------------------------------
-#     # Loop over values in x and y
-#     for x in range(0, nx, step):
-#         for y in range(0, ny, step):
-#             # Check if the conditions are met
-#             if (data_files['StokesI_data_2d_mJy'][y, x] / data_files['StokesIerr_data_2d_mJy'][y, x] > 3 and 
-#                 data_files['calculated_polarized_intensity'][y, x] / data_files['PolarizedIntensity_err_data_2d_mJy'][y, x] > 3 and 
-#                 data_files['PolarizationAngle_err_data_2d_deg'][y, x] < 10): 
-
-
-#                 # Get the polarization angle at this pixel
-#                 angle_rad = data_files['calculated_polarization_angle_rad'][y, x] + np.pi / 2
-
-#                 # Get the polarization fraction at this pixel
-#                 polarization_fraction = data_files['calc_polarized_frac'][y, x]  # Add your data source
-
-#                 # Scale vector length by polarization fraction
-#                 vector_length_pix = max_length_pix * polarization_fraction
-
-#                 # Compute the vector components
-#                 dx = vector_length_pix * np.cos(angle_rad)
-#                 dy = vector_length_pix * np.sin(angle_rad)
-
-#                 # Plot the vector
-#                 ax.plot([x - dx / 2, x + dx / 2], [y - dy / 2, y + dy / 2], color='black')
-#     # ------------------------------------------------------------------------------------
-
-
-
-#     # Draw the reference vector line
-#     # ------------------------------------------------------------------------------------
-#     vector_x_pos = xmax - 0.05 * (xmax - xmin)  # 5% in from the right
-#     vector_y_pos = ymin - 0.1 * (ymin - ymax)  # 10% up from the bottom
-
-#     ax.plot([(vector_x_pos - max_length_pix * reference_fraction), vector_x_pos], 
-#             [vector_y_pos, vector_y_pos],
-#             color='black', 
-#             linewidth=3)
-
-#     # Add the text label centered below the line
-#     ax.text(vector_x_pos - max_length_pix * reference_fraction / 2,  # Midpoint of the line
-#             vector_y_pos - 2,  # Adjusted position below the line
-#             f'{reference_fraction * 100:.0f}%',  # Format the fraction as a percentage
-#             fontsize= font_sizes['text_fs'], 
-#             ha='center', 
-#             va='top')
-#     # ------------------------------------------------------------------------------------
-
-
-#     # Adjust ticks and numbers for bottom and left axes
-#     # ------------------------------------------------------------------------------------
-#     ax.minorticks_on()
-
-#     ax.tick_params(axis="x", which="major", direction="in", bottom=True, top=True, length=7, labelsize= font_sizes['axis_num_fs'])
-    
-#     ax.tick_params(axis="y", which="major", direction="in", left=True, right=True, length=7, labelsize=font_sizes['axis_num_fs'])
-#     # ------------------------------------------------------------------------------------
-
-
-#     # Tight layout and show the plot
-#     # ------------------------------------------------------------------------------------------
-#     # plt.tight_layout()
-#     plt.show()
-#     # ------------------------------------------------------------------------------------------
-
-#     return 
-
-
-
-
-# ---------------------------------------------------------------------------------------------
-
-# def create_base_plot(StokesI_wcs, StokesI_stretched, soft_colormap_v2, 
-#                      normalized_cbar_ticks, StokesI_unstretched_cbar_ticks, 
-#                      xmin, xmax, ymin, ymax, reference_length_pix, reference_length_AU,
-#                      text_fs, axis_label_fs, axis_num_fs, cbar_fs,
-#                      BMAJ_pix, BMIN_pix, BPA_deg_cartesian, 
-#                      max_length_pix, reference_fraction):
-    
-#     # Create a figure with the WCS projection
-#     fig, ax = plt.subplots(figsize=(14, 12), subplot_kw={'projection': StokesI_wcs})
-
-#     # Add data
-#     im = ax.imshow(StokesI_stretched, cmap=soft_colormap_v2)
-
-#     # Colorbar
-#     cbar = plt.colorbar(im, ax=ax)
-#     cbar.set_label(r'Stokes I (mJy/beam)', fontsize=cbar_fs)
-#     cbar.ax.tick_params(labelsize=axis_num_fs, which='major', length=7, direction="in")
-#     cbar.ax.tick_params(which='minor', length=4, direction="in")
-#     cbar.set_ticks(normalized_cbar_ticks)
-#     cbar.set_ticklabels([f"{val:.2f}" for val in StokesI_unstretched_cbar_ticks])
-
-#     # Add axis labels
-#     ax.set_xlabel('Right Ascension', fontsize=axis_label_fs)
-#     ax.set_ylabel('Declination', fontsize=axis_label_fs)
-
-#     # Set x and y limits
-#     ax.set_xlim(xmin, xmax)
-#     ax.set_ylim(ymin, ymax)
-
-#     # Add line and text for 100 AU 
-#     line_x_pos = xmax - 0.05 * (xmax - xmin) 
-#     line_y_pos = ymax - 0.1  * (ymax - ymin) 
-
-#     ax.plot([(line_x_pos - reference_length_pix), (line_x_pos)], 
-#             [line_y_pos, line_y_pos],
-#             color='black', linewidth=3)
-
-#     ax.text((line_x_pos - reference_length_pix/2), (line_y_pos - 2), 
-#             f'{reference_length_AU} AU', fontsize=text_fs, ha='center', va='top') 
-
-#     # Create and add the circular beam
-#     beam_x_pos = xmin - 0.1 * (xmin - xmax)
-#     beam_y_pos = ymin - 0.1 * (ymin - ymax)
-
-#     beam = Ellipse((beam_x_pos, beam_y_pos), width=BMAJ_pix, height=BMIN_pix,  
-#                    angle=BPA_deg_cartesian, edgecolor='black', facecolor='none', alpha=1, lw=2)
-
-#     ax.add_patch(beam)
-
-# #     # Draw the reference vector line
-# #     vector_x_pos = xmax - 0.05 * (xmax - xmin)
-# #     vector_y_pos = ymin - 0.1 * (ymin - ymax)
-
-# #     ax.plot([(vector_x_pos - max_length_pix * reference_fraction), vector_x_pos], 
-# #             [vector_y_pos, vector_y_pos], color='black', linewidth=3)
-
-# #     ax.text(vector_x_pos - max_length_pix * reference_fraction / 2,  
-# #             vector_y_pos - 2,  
-# #             f'{reference_fraction * 100:.0f}%',  
-# #             fontsize=text_fs, ha='center', va='top')
-
-#     # Adjust ticks
-#     ax.minorticks_on()
-#     ax.tick_params(axis="x", which="major", direction="in", bottom=True, top=True, length=7, labelsize=axis_num_fs)
-#     ax.tick_params(axis="y", which="major", direction="in", left=True, right=True, length=7, labelsize=axis_num_fs)
-
-#     return fig, ax
-
-
-
-
-
 
 
 # ---------------------------------------------------------------------------------------------------------------
-def create_stokes_i_base_plot(StokesI_wcs, StokesI_stretched, soft_colormap_v2, 
+def create_stokes_i_base_plot(StokesI_wcs, StokesI_stretched, cmap, 
                               normalized_cbar_ticks, StokesI_unstretched_cbar_ticks, 
                               xmin, xmax, ymin, ymax, reference_length_pix, reference_length_AU,
                               BMAJ_pix, BMIN_pix, BPA_deg_cartesian, 
@@ -373,7 +92,7 @@ def create_stokes_i_base_plot(StokesI_wcs, StokesI_stretched, soft_colormap_v2,
     fig, ax = plt.subplots(figsize=(14, 12), subplot_kw={'projection': StokesI_wcs})
 
     # Add data
-    im = ax.imshow(StokesI_stretched, cmap=soft_colormap_v2)
+    im = ax.imshow(StokesI_stretched, cmap=cmap)
 
     # Colorbar
     cbar = plt.colorbar(im, ax=ax)
@@ -481,11 +200,12 @@ def create_base_plot(StokesI_wcs, plotting_data, cbar_label, soft_colormap_v2,
 
 
 def create_blank_grid(i, j, ax,
-                      data_plotting, cbar_label, fs_scale, 
+                      data_plotting, cbar_label, 
                       StokesI_wcs, soft_colormap_v2, 
                       xmin, xmax, ymin, ymax, reference_length_pix, reference_length_AU,
                       BMAJ_pix, BMIN_pix, BPA_deg_cartesian, 
-                      max_length_pix, reference_fraction):
+                      max_length_pix, reference_fraction,
+                      fs_scale = 0.5):
     
     
     # Plot the data on the given ax
@@ -732,7 +452,7 @@ def create_stokes_i_plus_one_base_plot(StokesI_wcs, StokesI_stretched,
 
 
 
-
+# ----------------------------------------------------------------------------------------------------------------------
 def plot_grids_4x3(data_list, soft_colormap_v2, StokesI_wcs, axis_label_fs, axis_num_fs, cbar_fs, xmin, xmax, ymin, ymax, BMAJ_pix, BMIN_pix, BPA_deg_cartesian):
     grid_titles = ['Actual Data', '100% U', '50% U 50% A', '100% A']  # Updated to 4 columns
     cb_titles = [
@@ -820,6 +540,8 @@ def plot_grids_4x3(data_list, soft_colormap_v2, StokesI_wcs, axis_label_fs, axis
 
     return axes  # Return axes for further modifications
 
+
+
 def plot_grids_test(data_list, soft_colormap_v2, StokesI_wcs, axis_label_fs, axis_num_fs, cbar_fs, xmin, xmax, ymin, ymax, ncols, nrows, grid_titles, cb_titles, top_cb_pad, middle_cb_pad, bottom_cb_pad):
     
     
@@ -876,10 +598,94 @@ def plot_grids_test(data_list, soft_colormap_v2, StokesI_wcs, axis_label_fs, axi
         cbar.ax.tick_params(which='minor', length=4, direction="in")
     
     return axes
+# ----------------------------------------------------------------------------------------------------------------------
 
 
 
 
+
+
+
+
+
+# ----------------------------------------------------------------------------------------------------------------------
+# Adding titles to each subplot
+ratio_grid_plot_titles = [
+    "100% Uniform 0% Azimuthal", "0% Uniform 100% Azimuthal", 
+    "90% Uniform 10% Azimuthal", "10% Uniform 90% Azimuthal",
+    "80% Uniform 20% Azimuthal", "20% Uniform 80% Azimuthal",
+    "70% Uniform 30% Azimuthal", "30% Uniform 70% Azimuthal",
+    "60% Uniform 40% Azimuthal", "40% Uniform 60% Azimuthal",
+    "50% Uniform 50% Azimuthal", "50% Uniform 50% Azimuthal"
+]
+
+
+def plot_ratio_grid(POLI_mJy, 
+                    StokesI_wcs, soft_colormap_v2, 
+                    xmin, xmax, ymin, ymax, reference_length_pix, reference_length_AU,
+                    BMAJ_pix, BMIN_pix, BPA_deg_cartesian, 
+                    max_length_pix, reference_fraction,
+                    vector_data_actual_cartesian, vector_data_plotting_grid, 
+                    fs_scale = 0.5):
+    
+    # Define the figure and subplots
+    nrows, ncols = 6, 2
+    fig, axes = plt.subplots(nrows, ncols, figsize=(20, 38), constrained_layout=True, 
+                             subplot_kw={'projection': StokesI_wcs},
+                             gridspec_kw={'wspace': -1})
+
+
+    # Loop through subplots
+    for i, ax in enumerate(axes.flat):
+        if i >= len(ratio_grid_plot_titles):
+            ax.axis("off")  # Hide empty subplots if there is extra space
+            continue
+
+        # Create blank grid
+        row, col = divmod(i, ncols)
+        create_blank_grid(row, col, ax, 
+                          POLI_mJy, 'Polarized Intensity (mJy/beam)',  
+                          StokesI_wcs, soft_colormap_v2, 
+                          xmin, xmax, ymin, ymax, reference_length_pix, reference_length_AU,
+                          BMAJ_pix, BMIN_pix, BPA_deg_cartesian, 
+                          max_length_pix, reference_fraction, fs_scale = fs_scale)
+
+        ax.set_title(ratio_grid_plot_titles[i], fontsize=20)
+
+        # Add vector plots
+        for row in vector_data_plotting_grid[i]:
+            ax.plot([row[0], row[1]], [row[2], row[3]], color='black', lw = 3, label = 'Model')
+
+        # Plot vector data on the first subplot (axes[0, 0])
+        for row in vector_data_actual_cartesian:
+            ax.plot([row[0], row[1]], [row[2], row[3]], color='red', lw = 3, label = 'Real')
+
+        # Set axis labels and ticks
+        if col == 0:
+            ax.set_ylabel('Dec', fontsize=axis_label_fs)
+            ax.tick_params(axis="y", which="both", left=True, labelleft=True)
+        else:
+            ax.tick_params(axis="y", which="both", left=True, labelleft=False)
+
+        if row == nrows - 1:
+            ax.set_xlabel('RA', fontsize=axis_label_fs)
+            ax.tick_params(axis="x", which="both", bottom=True, labelbottom=True)
+        else:
+            ax.tick_params(axis="x", which="both", bottom=True, labelbottom=False)
+
+
+        # ax.text(xmin + 5, ymax - 5, f"{i}", fontsize=16, color='blue', ha='left', va='top')
+
+
+        ax.set_xlim(xmin, xmax)
+        ax.set_ylim(ymin, ymax)
+        ax.minorticks_on()
+        ax.tick_params(axis="x", which="major", direction="in", bottom=True, top=True, length=7, labelsize=axis_num_fs - 10)
+        ax.tick_params(axis="y", which="major", direction="in", left=True, right=True, length=7, labelsize=axis_num_fs)
+
+    
+    return ax
+# ----------------------------------------------------------------------------------------------------------------------
 
 
 # Plot CARTA slices along major and minor axis
@@ -891,7 +697,8 @@ def plot_slices_along_axes(
     carta_major_offset, carta_minor_offset,
     y_label, type_of_plot="Line", 
     cb_friendly=False,
-    vline = True
+    vline = True,
+    chi_sq = True,
 ):
     """
     Plot data along major and minor axes.
@@ -903,7 +710,26 @@ def plot_slices_along_axes(
     - type_of_plot: "Line" or "Scatter" to determine plot style.
     - cb_friendly: Whether to use a colorblind-friendly palette.
     - vline: Whether to draw a vertical line at x = 0.
+    chi_sq : bool, optional
+        If True, compute and print chi-squared values between user and CARTA slices.
+
     """
+    
+    # Compute chi-squared if requested
+    if chi_sq:
+        chi_squared_minor_values = calculate_chi_squared(my_minor_data, carta_minor_data)
+        chi_squared_major_values = calculate_chi_squared(my_major_data, carta_major_data)
+        
+        chi_squared_minor_offset = calculate_chi_squared(my_minor_offset, carta_minor_offset)
+        chi_squared_major_offset = calculate_chi_squared(my_major_offset, carta_major_offset)
+
+        print("Chi-squared comparison between user and CARTA slices:")
+        print(f"  Minor axis values χ²: {chi_squared_minor_values:.3f}")
+        print(f"  Major axis values χ²: {chi_squared_major_values:.3f}")
+        print(f"  Minor axis offset χ²: {chi_squared_minor_offset:.3f}")
+        print(f"  Major axis offset χ²: {chi_squared_major_offset:.3f}")
+        
+        
     
     if cb_friendly:
         palette = sns.color_palette("colorblind", 4)
@@ -994,6 +820,194 @@ def plot_slices_along_axes(
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+# ----------------------------------------------------------------------------------------------------------------------
+def analyze_gaussian_averages_vs_chi2(gaussian_values, phi_values, BMAJ_pix_values, BMIN_pix_values):
+    """
+    Analyzes chi-squared values from Gaussian fitting results and plots their averages
+    as functions of phi, BMAJ, and BMIN.
+
+    Parameters:
+    -----------
+    gaussian_values : list of tuples
+        Each tuple should contain (phi, BMAJ, BMIN, chi^2).
+    phi_values : array-like
+        Unique values of phi used in the fit grid.
+    BMAJ_pix_values : array-like
+        Unique values of BMAJ used in the fit grid.
+    BMIN_pix_values : array-like
+        Unique values of BMIN used in the fit grid.
+    """
+
+    phi_grid, BMAJ_grid, BMIN_grid, chi_grid = make_gaussian_grids(gaussian_values, phi_values, BMAJ_pix_values, BMIN_pix_values)
+
+    # Create dictionaries to group chi^2 values by phi, BMAJ, and BMIN
+    phi_dict  = defaultdict(list)
+    bmaj_dict = defaultdict(list)
+    bmin_dict = defaultdict(list)
+
+    # Populate the dictionaries
+    for phi, BMAJ, BMIN, chi in gaussian_values:
+        phi_dict[phi].append(chi)
+        bmaj_dict[BMAJ].append(chi)
+        bmin_dict[BMIN].append(chi)
+
+    # Compute average chi^2 values for each parameter value
+    phi_avg  = {phi: np.mean(chi_values) for phi, chi_values in phi_dict.items()}
+    bmaj_avg = {BMAJ: np.mean(chi_values) for BMAJ, chi_values in bmaj_dict.items()}
+    bmin_avg = {BMIN: np.mean(chi_values) for BMIN, chi_values in bmin_dict.items()}
+    # Create figure
+    fig, ax = plt.subplots(1, 3, figsize=(18, 5))
+
+    # Plot phi vs chi^2
+    ax[0].plot(list(phi_avg.keys()), list(phi_avg.values()), marker='o', linestyle='-', color = 'blue', lw = 4, ms = 15)
+    ax[0].set_xlabel(r'$\phi$', fontsize = axis_label_fs)
+    ax[0].set_title(r'$\phi$ vs $\chi^2$', fontsize = title_fs)
+
+    # Plot BMAJ vs chi^2
+    ax[1].plot(list(bmaj_avg.keys()), list(bmaj_avg.values()), marker='o', linestyle='-', color = 'red', lw = 4, ms = 15)
+    ax[1].set_xlabel('BMAJ', fontsize = axis_label_fs)
+    ax[1].set_title(r'BMAJ vs $\chi^2$', fontsize = title_fs)
+
+    # Plot BMIN vs chi^2
+    ax[2].plot(list(bmin_avg.keys()), list(bmin_avg.values()), marker='o', linestyle='-', color = 'forestgreen', lw = 4, ms = 15)
+    ax[2].set_xlabel('BMIN', fontsize = axis_label_fs)
+    ax[2].set_title(r'BMIN vs $\chi^2$', fontsize = title_fs)
+
+    for i in range (3):
+        # they all have the same y-axis label as chi^2
+        ax[i].set_ylabel(r'$\chi^2$', fontsize = axis_label_fs)
+
+        # Set minor and major ticks
+        ax[i].minorticks_on()
+        ax[i].tick_params(axis="x", which="major", direction="in", length=7, labelsize=axis_num_fs)
+        ax[i].tick_params(axis="y", which="major", direction="in", length=7, labelsize=axis_num_fs)
+
+    plt.tight_layout()
+# ----------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+# ----------------------------------------------------------------------------------------------------------------------
+def plot_2d_contours_for_gaussian(gaussian_values, phi_values, BMAJ_values_pix, BMIN_values_pix, constant_parameter_name,
+                                 cmap):
+    
+    
+    phi_grid, BMAJ_grid, BMIN_grid, chi_grid = make_gaussian_grids(gaussian_values, phi_values, BMAJ_values_pix, BMIN_values_pix)
+        
+        
+    if constant_parameter_name == 'phi':
+        constant_parameter_name = '$\phi$'
+        const_param_values = phi_values
+        x_axis_label = 'BMAJ'
+        y_axis_label = 'BMIN'
+        x_axis_grid = BMAJ_grid
+        y_axis_grid = BMIN_grid
+
+    elif constant_parameter_name == 'BMAJ':
+        const_param_values = BMAJ_values_pix
+        x_axis_label = 'BMIN'
+        y_axis_label = '$\phi$'
+        x_axis_grid = BMIN_grid
+        y_axis_grid = phi_grid
+
+    elif constant_parameter_name == 'BMIN':
+        const_param_values = BMIN_values_pix
+        x_axis_label = 'BMAJ'
+        y_axis_label = '$\phi$'
+        x_axis_grid = BMAJ_grid
+        y_axis_grid = phi_grid
+
+    else:
+        print("The constant_parameter options are 'phi', 'BMAJ', and 'BMIN'")
+        return
+    
+    
+    
+    n_cols = 2
+    n_vals = len(const_param_values)
+    n_rows = math.ceil(n_vals / n_cols)
+    
+    # Plotting the result
+    fig, ax = plt.subplots(n_rows, n_cols, figsize=(20, 18))
+
+
+    # Loop over the first `num_plots` values of phi
+    for i, fixed_index in enumerate(range(len(const_param_values))): 
+    
+
+        if constant_parameter_name == '$\phi$':
+            x_axis_vals  = x_axis_grid[fixed_index, :, :]
+            y_axis_vals  = y_axis_grid[fixed_index, :, :]
+            chi          = chi_grid[fixed_index, :, :]
+
+        elif constant_parameter_name == 'BMAJ':
+            x_axis_vals  = x_axis_grid[:, fixed_index, :]
+            y_axis_vals  = y_axis_grid[:, fixed_index, :]
+            chi          = chi_grid[:, fixed_index, :]
+
+        elif constant_parameter_name == 'BMIN':
+            x_axis_vals  = x_axis_grid[:, :, fixed_index]
+            y_axis_vals  = y_axis_grid[:, :, fixed_index]
+            chi          = chi_grid[:, :, fixed_index]
+
+
+
+#         x_axis_vals  = x_axis_grid[fixed_index, :, :]
+#         y_axis_vals  = y_axis_grid[fixed_index, :, :]
+#         chi          = chi_grid[fixed_index, :, :]
+
+        row = i // n_cols  # Row index (0 or 1)
+        col = i % n_cols   # Column index (0 or 1)
+
+        # Create the contour plot
+        contour = ax[row, col].contourf(x_axis_vals, y_axis_vals, chi, 50, cmap = cmap)
+
+        # Add colorbar
+        cbar = fig.colorbar(contour, ax=ax[row, col], orientation='vertical')
+        cbar.set_label(fr'$\chi^2$', fontsize=cbar_fs)
+        cbar.ax.tick_params(labelsize=axis_num_fs, which='major', length=7, direction="in")
+        cbar.ax.tick_params(which='minor', length=4, direction="in")
+
+        # Set title with actual c-value
+        ax[row, col].set_title(fr'{constant_parameter_name} = {const_param_values[fixed_index]}', fontsize=title_fs)  
+
+        # Labels
+        ax[row, col].set_xlabel(x_axis_label, fontsize = axis_label_fs)
+        ax[row, col].set_ylabel(y_axis_label, fontsize = axis_label_fs)
+
+        # Ticks
+        ax[row, col].minorticks_on()
+        ax[row, col].tick_params(axis="x", which="major", direction="in", bottom=True, top=True, length=7, labelsize=axis_num_fs)
+        ax[row, col].tick_params(axis="y", which="major", direction="in", left=True, right=True, length=7, labelsize=axis_num_fs)
+
+    plt.tight_layout()
+    plt.show()
+    
+
+# ----------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
 # ----------------------------------------------------------------------------------------------------------------------
 background_colours = ['#f8f9fa', '#e9ecef', '#dee2e6', '#ced4da']
 
@@ -1070,4 +1084,3 @@ def plot_3d_contours(df,
     plt.show()
 
 # ----------------------------------------------------------------------------------------------------------------------
-

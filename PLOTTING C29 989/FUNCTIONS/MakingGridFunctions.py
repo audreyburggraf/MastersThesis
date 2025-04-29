@@ -87,7 +87,7 @@ def make_vectors_band4(ny, nx, POLI_mJy, POLI_err_mJy, PA_grid, PA_err_deg):
     
     for x in range(0, nx, step):
         for y in range(0, ny, step):
-            if (POLI_mJy[y, x] / POLI_err_mJy[y, x] > 3 
+            if (POLI_mJy[y, x] / POLI_err_mJy[y, x] > 3.3
                 and PA_err_deg[y, x] < 10):
                 # Use the helper function to compute the vector
                 vector_cartesian, PA_rad_sky = compute_polarization_vector(x, y, PA_grid)
