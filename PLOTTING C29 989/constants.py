@@ -105,7 +105,8 @@ minor_angle_rad_sky_band4, major_angle_rad_sky_band4, minor_angle_rad_cartesian_
 reference_length_AU = 100
 max_length_pix = 400  # Maximum length of the vector in pixels for 100% polarization
 reference_fraction = 0.03
-step = 7 
+# step = 6
+# step_band4 = 4
 vector_length_pix_const = 4
 # ------------------------------------------------------------------------------------------
 

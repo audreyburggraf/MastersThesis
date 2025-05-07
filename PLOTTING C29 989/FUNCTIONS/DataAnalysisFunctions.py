@@ -73,8 +73,12 @@ def calculate_chi_squared_v2(observed_value, expected_value, tolerance=1e-6, sin
     observed_value = np.array([normalize_angle(angle) for angle in observed_value])
     expected_value = np.array([normalize_angle(angle) for angle in expected_value])
     
-    # Calculate the squared differences between normalized observed and expected values
-    chi_squared = np.sum((observed_value - expected_value) ** 2)
+#     # Calculate the squared differences between normalized observed and expected values
+#     chi_squared = np.sum((observed_value - expected_value) ** 2)
+
+    diff_sq = (observed_value - expected_value)**2 
+
+    chi_squared = np.sum(diff_sq / expected_value)
     
     
     return chi_squared

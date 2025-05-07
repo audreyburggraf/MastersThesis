@@ -83,6 +83,41 @@ def extract_axis_data(axis_x, axis_y, data_2d, minor_or_major, centre_pix, grids
 
 
 
+
+
+# -----------------------------------------------------------------------------------------
+def fit_slices_slope(beam_area_arcsec2, intensity_mJy_beam, offsets_arcsec): 
+    
+    intensity_mJy_arcsec2 = np.array(intensity_mJy_beam) /beam_area_arcsec2
+    
+    # Convert inputs to numpy arrays
+    # ------------------------------------------------------
+    offsets_arcsec = np.array(offsets_arcsec)
+    intensity_mJy_arcsec2 = np.array(intensity_mJy_arcsec2)
+    # ------------------------------------------------------
+    
+    # Mask to separate positive and negative side
+    mask_pos = (intensity_mJy_arcsec2 > 0) & (offsets_arcsec > 0)  # Positive side
+    mask_neg = (intensity_mJy_arcsec2 > 0) & (offsets_arcsec < 0)  # Negative side
+
+
+    # Log-log fit
+    log_r_pos = np.log10(np.abs(offsets_arcsec[mask_pos]))
+    log_I_pos = np.log10(intensity_mJy_arcsec2[mask_pos])
+    
+    log_r_neg = np.log10(np.abs(offsets_arcsec[mask_neg]))
+    log_I_neg = np.log10(intensity_mJy_arcsec2[mask_neg])
+    
+    # Linear fit in log-log space
+    slope_pos, intercept_pos = np.polyfit(log_r_pos, log_I_pos, 1)
+    slope_neg, intercept_neg = np.polyfit(log_r_neg, log_I_neg, 1)
+    
+    return -slope_pos, intercept_pos, -slope_neg, intercept_neg
+# -----------------------------------------------------------------------------------------
+
+
+
+
 # -----------------------------------------------------------------------------------------
 
 def run_slices(data, StokesI_header, StokesI_wcs, carta_minor_data, carta_major_data,
@@ -144,8 +179,6 @@ def run_slices(data, StokesI_header, StokesI_wcs, carta_minor_data, carta_major_
 
     # Convert centre position from string to pixel coordinates
     centre_pix = list(string_to_pixel(centre_str, StokesI_wcs))
-    
-#     centre_pix = [513.472, 510.353]
 
 
     # Convert desired line length from arcsec to pixels
@@ -175,6 +208,8 @@ def run_slices(data, StokesI_header, StokesI_wcs, carta_minor_data, carta_major_
                                                            centre_pix, gridsize, 
                                                            StokesI_header)
     
+    points = [major_x, major_y, minor_x, minor_y]
+    
     if print_statement:
         print(rf"The major angle (cartesian) is: {major_angle_rad_cartesian * 180/np.pi:.1f} degrees")
         print(rf"The minor angle (cartesian) is: {minor_angle_rad_cartesian * 180/np.pi:.1f} degrees")
@@ -187,7 +222,15 @@ def run_slices(data, StokesI_header, StokesI_wcs, carta_minor_data, carta_major_
         print("RA_centre_pix = ", centre_pix[0])
         print("Dec_centre_pix = ", centre_pix[1])
 
-
-    return major_data, major_offset_arcsec, minor_data, minor_offset_arcsec
+    return major_data, major_offset_arcsec, minor_data, minor_offset_arcsec, points
 # -----------------------------------------------------------------------------------------
+
+
+
+    
+    
+    
+    
+    
+    
 

@@ -51,7 +51,7 @@ def get_plotting_parameters(StokesI_header, StokesI_wcs, band):
     xmin, xmax = RA_max_pix, RA_min_pix
     ymin, ymax = Dec_min_pix, Dec_max_pix
     
-    return BMAJ_pix, BMIN_pix, BPA_deg_cartesian, reference_length_pix, RA_centre_pix, Dec_centre_pix, xmin, xmax, ymin, ymax
+    return BMAJ_deg, BMIN_deg, BMAJ_pix, BMIN_pix, BPA_deg_cartesian, reference_length_pix, RA_centre_pix, Dec_centre_pix, xmin, xmax, ymin, ymax
 
 
 

@@ -9,6 +9,7 @@ from FITS_Image_Functions import *
 from PolarizationFunctions import *
 from DataAnalysisFunctions import *
 from GaussianFunctions import *
+from SlicesFunctions import * 
 
 # Import the constants
 # -----------------------------------------------------------------------------------------
@@ -139,7 +140,7 @@ def create_stokes_i_base_plot(StokesI_wcs, StokesI_stretched, cmap,
 # ---------------------------------------------------------------------------------------------------------------
 
 
-def create_base_plot(StokesI_wcs, plotting_data, cbar_label, soft_colormap_v2, 
+def create_base_plot(StokesI_wcs, plotting_data, cbar_label, cmap, 
                      xmin, xmax, ymin, ymax, reference_length_pix, reference_length_AU,
                      BMAJ_pix, BMIN_pix, BPA_deg_cartesian, 
                      max_length_pix, reference_fraction,
@@ -152,7 +153,7 @@ def create_base_plot(StokesI_wcs, plotting_data, cbar_label, soft_colormap_v2,
     fig, ax = plt.subplots(figsize=(14, 12), subplot_kw={'projection': StokesI_wcs})
 
     # Add data
-    im = ax.imshow(plotting_data, cmap=soft_colormap_v2)
+    im = ax.imshow(plotting_data, cmap=cmap)
 
     # Colorbar
     cbar = plt.colorbar(im, ax=ax)
@@ -448,6 +449,83 @@ def create_stokes_i_plus_one_base_plot(StokesI_wcs, StokesI_stretched,
 
 
 
+# ----------------------------------------------------------------------------------------------------------------------
+def create_two_plots(StokesI_wcs,  
+                     plot1_data, plot1_label, 
+                     plot2_data, plot2_label, 
+                     cmap, 
+                     xmin, xmax, ymin, ymax, reference_length_pix, reference_length_AU,
+                     BMAJ_pix, BMIN_pix, BPA_deg_cartesian, 
+                     max_length_pix, reference_fraction,
+                     text_fs = constants.text_fs , 
+                     axis_label_fs = constants.axis_label_fs, 
+                     axis_num_fs = constants.axis_num_fs, 
+                     cbar_fs = constants.cbar_fs):
+
+    fig, ax = plt.subplots(1, 2, figsize=(28, 12),
+                           gridspec_kw={'wspace': -0.5},  # Increase wspace for more horizontal space
+                           subplot_kw={'projection': StokesI_wcs})
+
+
+    im0 = ax[0].imshow(plot1_data, cmap=cmap)
+    im1 = ax[1].imshow(plot2_data, cmap=cmap)
+
+    
+    # Colorbar for other plot
+    cbar1 = plt.colorbar(im0, ax=ax[0], orientation='horizontal', shrink=0.4)
+    cbar1.set_label(plot1_label, fontsize=cbar_fs)
+    cbar1.ax.tick_params(labelsize=axis_num_fs, which='major', length=7, direction="in")
+    
+    cbar2 = plt.colorbar(im1, ax=ax[1], orientation='horizontal', shrink=0.4)
+    cbar2.set_label(plot2_label, fontsize=cbar_fs)
+    cbar2.ax.tick_params(labelsize=axis_num_fs, which='major', length=7, direction="in")
+
+    # Add AU scalebar
+    line_x_pos = xmax - 0.05 * (xmax - xmin) 
+    line_y_pos = ymax - 0.1  * (ymax - ymin) 
+
+
+    # Add beam ellipse
+    beam_x_pos = xmin - 0.1 * (xmin - xmax)
+    beam_y_pos = ymin - 0.1 * (ymin - ymax)
+
+
+
+    # --- Shared formatting for all axes ---
+    for i in range(2):
+        # Axis limits and labels
+        ax[i].set_xlim(xmin, xmax)
+        ax[i].set_ylim(ymin, ymax)
+    
+    
+        ax[i].plot([(line_x_pos - reference_length_pix), (line_x_pos)], 
+               [line_y_pos, line_y_pos], color='black', linewidth=3)
+
+        ax[i].text((line_x_pos - reference_length_pix / 2), (line_y_pos - 2), 
+                   f'{reference_length_AU} AU', fontsize=text_fs, ha='center', va='top')
+    
+        
+        beam = Ellipse((beam_x_pos, beam_y_pos), width=BMAJ_pix, height=BMIN_pix,  
+                   angle=BPA_deg_cartesian, edgecolor='black', facecolor='none', alpha=1, lw=2)
+        
+        ax[i].add_patch(beam)
+        
+        ax[i].set_xlabel('Right Ascension', fontsize=axis_label_fs)
+        ax[i].set_ylabel('Declination', fontsize=axis_label_fs)
+        
+        ax[i].minorticks_on()
+
+        ax[i].tick_params(axis="x", which="major", direction="in", bottom=True, top=True, length=7, labelsize=axis_num_fs)
+        ax[i].tick_params(axis="y", which="major", direction="in", left=True, right=True, length=7, labelsize=axis_num_fs)
+
+    ax[1].tick_params(axis='y', labelleft=False)
+    
+    return fig, ax
+# ----------------------------------------------------------------------------------------------------------------------
+
+
+
+
 
 
 
@@ -695,10 +773,12 @@ def plot_slices_along_axes(
     carta_major_data, carta_minor_data, 
     my_major_offset, my_minor_offset, 
     carta_major_offset, carta_minor_offset,
+    BMAJ_deg, BMIN_deg, 
     y_label, type_of_plot="Line", 
     cb_friendly=False,
     vline = True,
     chi_sq = True,
+    fit_slices = True
 ):
     """
     Plot data along major and minor axes.
@@ -728,6 +808,45 @@ def plot_slices_along_axes(
         print(f"  Major axis values χ²: {chi_squared_major_values:.3f}")
         print(f"  Minor axis offset χ²: {chi_squared_minor_offset:.3f}")
         print(f"  Major axis offset χ²: {chi_squared_major_offset:.3f}")
+        
+        
+    if fit_slices:
+        
+        # Find the area of the beam
+        BMAJ_arcsec = deg_to_arcsec(BMAJ_deg)
+        BMIN_arcsec = deg_to_arcsec(BMIN_deg)
+
+        # Find the area of the beam in arcsec^2
+        beam_area_arcsec2 = 1.1331 * BMAJ_arcsec * BMIN_arcsec 
+    
+    
+        alpha_major_pos, _ , alpha_major_neg, _ = fit_slices_slope(beam_area_arcsec2, 
+                                                                   my_major_data, 
+                                                                   my_major_offset)
+        
+        alpha_minor_pos, _ , alpha_minor_neg, _ = fit_slices_slope(beam_area_arcsec2, 
+                                                                   my_minor_data, 
+                                                                   my_minor_offset)
+        
+        alpha_major_pos_carta, _ , alpha_major_neg_carta, _ = fit_slices_slope(beam_area_arcsec2, 
+                                                                               carta_major_data, 
+                                                                               carta_major_offset)
+        
+        alpha_minor_pos_carta, _ , alpha_minor_neg_carta, _ = fit_slices_slope(beam_area_arcsec2, 
+                                                                               carta_minor_data, 
+                                                                               carta_minor_offset)
+        
+        
+        
+        print(" ")
+        print("Fitting the slope of the slices:")
+        print(rf"  Major Axis α:")
+        print(rf"    Mine : {alpha_major_pos:.1f} (pos) and {alpha_major_neg:.1f} (neg)")
+        print(rf"    CARTA: {alpha_major_pos_carta:.1f} (pos) and {alpha_major_neg_carta:.1f} (neg)")
+        print(rf"  Minor Axis α:")
+        print(rf"    Mine : {alpha_minor_pos:.1f} (pos) and {alpha_minor_neg:.1f} (neg)")
+        print(rf"    CARTA: {alpha_minor_pos_carta:.1f} (pos) and {alpha_minor_neg_carta:.1f} (neg)")
+        
         
         
     
