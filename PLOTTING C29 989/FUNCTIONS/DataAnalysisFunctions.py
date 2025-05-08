@@ -67,21 +67,29 @@ def normalize_angle(angle_rad):
 
 
 
-def calculate_chi_squared_v2(observed_value, expected_value, tolerance=1e-6, single_value = False):
+def calculate_chi_squared_v2(observed_value, expected_value):
     
     # Normalize both observed and expected angles
-    observed_value = np.array([normalize_angle(angle) for angle in observed_value])
-    expected_value = np.array([normalize_angle(angle) for angle in expected_value])
+    observed_value_norm = np.array([normalize_angle(angle) for angle in observed_value])
+    expected_value_norm = np.array([normalize_angle(angle) for angle in expected_value])
     
-#     # Calculate the squared differences between normalized observed and expected values
-#     chi_squared = np.sum((observed_value - expected_value) ** 2)
+    observed_value = np.array(observed_value)
+    expected_value = np.array(expected_value)
+                       
 
-    diff_sq = (observed_value - expected_value)**2 
+    # Option 1: Raw chi-squared
+    diff_sq_raw = (observed_value - expected_value) ** 2
+    chi_squared_raw = np.sum(diff_sq_raw)
 
-    chi_squared = np.sum(diff_sq / expected_value)
-    
-    
-    return chi_squared
+    # Option 2: Chi-squared with normalized angles
+    observed_value_norm = np.array([normalize_angle(angle) for angle in observed_value])
+    expected_value_norm = np.array([normalize_angle(angle) for angle in expected_value])
+
+    diff_sq_norm = (observed_value_norm - expected_value_norm) ** 2
+    chi_squared_norm = np.sum(diff_sq_norm)
+
+    # Return the minimum of the two
+    return min(chi_squared_raw, chi_squared_norm)
 
 
 def calculate_chi_squared(observed_value, expected_value, tolerance=1e-6):

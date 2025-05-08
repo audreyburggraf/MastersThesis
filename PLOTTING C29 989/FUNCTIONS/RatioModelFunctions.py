@@ -38,10 +38,14 @@ def unpack_results(results, ratios):
 def ratio_model_band6(StokesQ_grid_100Uniform, StokesU_grid_100Uniform,
                       StokesQ_grid_100Azimuthal, StokesU_grid_100Azimuthal,
                       ny, nx,
-                      step, vector_length_pix_const,
+                      vector_length_pix_const,
                       StokesI_mJy, StokesI_err_mJy, 
                       POLI_mJy, POLI_err_mJy,
-                      PA_err_deg):
+                      PA_err_deg,
+                      step = None):
+    
+    if step is None:
+        step = constants.step_band6
 
     results = {}
 
@@ -53,7 +57,8 @@ def ratio_model_band6(StokesQ_grid_100Uniform, StokesU_grid_100Uniform,
             ny, nx,
             StokesI_mJy, StokesI_err_mJy, 
             POLI_mJy, POLI_err_mJy,
-            PA_err_deg)
+            PA_err_deg,
+            step)
 
         key = generate_ratio_key(ratio1, ratio2)
 
@@ -139,9 +144,13 @@ def ratio_model_band6(StokesQ_grid_100Uniform, StokesU_grid_100Uniform,
 def ratio_model_band4(StokesQ_grid_100Uniform, StokesU_grid_100Uniform,
                       StokesQ_grid_100Azimuthal, StokesU_grid_100Azimuthal,
                       ny, nx,
-                      step, vector_length_pix_const, 
+                      vector_length_pix_const, 
                       POLI_mJy, POLI_err_mJy,
-                      PA_err_deg):
+                      PA_err_deg,
+                      step = None):
+    if step is None:
+        step = constants.step_band4
+        
 
     results = {}
 
@@ -152,7 +161,8 @@ def ratio_model_band4(StokesQ_grid_100Uniform, StokesU_grid_100Uniform,
             StokesQ_grid_100Azimuthal, StokesU_grid_100Azimuthal,
             ny, nx,
             POLI_mJy, POLI_err_mJy,
-            PA_err_deg)
+            PA_err_deg,
+            step)
 
         key = generate_ratio_key(ratio1, ratio2)
 

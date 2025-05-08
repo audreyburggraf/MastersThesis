@@ -25,6 +25,10 @@ distance_pc = 132
 # File locations
 band4_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND4/"
 band6_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND6/"
+
+band4_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND4/"
+band6_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND6/"
+
 functions_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FUNCTIONS/"
 
 
@@ -105,9 +109,12 @@ minor_angle_rad_sky_band4, major_angle_rad_sky_band4, minor_angle_rad_cartesian_
 reference_length_AU = 100
 max_length_pix = 400  # Maximum length of the vector in pixels for 100% polarization
 reference_fraction = 0.03
-# step = 6
-# step_band4 = 4
-vector_length_pix_const = 4
+step_band6 = 6
+step_band4 = 4
+
+vector_length_pix_const = 0 
+vector_len_pix_band6 = 4
+vector_len_pix_band4 = 2
 # ------------------------------------------------------------------------------------------
 
 

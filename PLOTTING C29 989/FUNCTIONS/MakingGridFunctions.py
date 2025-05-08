@@ -10,9 +10,6 @@ sys.path.append("/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING 
 
 import constants
 
-step = constants.step
-step_band4 = constants.step_band4
-vector_length_pix_const = constants.vector_length_pix_const
 # -----------------------------------------------------------------------------------------
 
 
@@ -43,7 +40,8 @@ def make_PA_grid_100Azimuthal(ny, nx, RA_centre_pix, Dec_centre_pix):
 
 
 # --------------------------------------------------------------------------
-def compute_polarization_vector(x, y, PA_grid):
+def compute_polarization_vector(x, y, PA_grid, band):
+
     """
     Compute the vector components for polarization at the given (x, y) position.
 
@@ -55,12 +53,22 @@ def compute_polarization_vector(x, y, PA_grid):
     A list containing [x_start, x_end, y_start, y_end] for the polarization vector,
     and the polarization angle in radians.
     """
+    
+    if band == 6:
+        vector_len_pix = constants.vector_len_pix_band6
+    elif band == 4:
+        vector_len_pix = constants.vector_len_pix_band4
+    else:
+        raise ValueError(f"Unrecognized band: {band}")
+
+    
+    
     # Extract the polarization angle at this location
     PA_rad_sky = PA_grid[y, x] 
 
     # Compute vector components
-    dx = vector_length_pix_const * np.cos(PA_rad_sky + np.pi/2)
-    dy = vector_length_pix_const * np.sin(PA_rad_sky + np.pi/2)
+    dx = vector_len_pix * np.cos(PA_rad_sky + np.pi/2)
+    dy = vector_len_pix * np.sin(PA_rad_sky + np.pi/2)
     
     # Vector in Cartesian coordinates
     vector_cartesian = [x - dx / 2, x + dx / 2, y - dy / 2, y + dy / 2]
@@ -69,7 +77,7 @@ def compute_polarization_vector(x, y, PA_grid):
 # --------------------------------------------------------------------------
 
 def make_vectors_band4(ny, nx, POLI_mJy, POLI_err_mJy, PA_grid, PA_err_deg,
-                       step = 4):
+                       step = None):
     """
     Generate vectors for Band 4 polarization data.
     
@@ -84,6 +92,11 @@ def make_vectors_band4(ny, nx, POLI_mJy, POLI_err_mJy, PA_grid, PA_err_deg,
     vectors_cartesian: List of vectors in Cartesian coordinates
     vector_angles_sky: List of polarization angles
     """
+    
+    if step is None:
+        step = constants.step_band4
+        
+        
     vectors_cartesian = []
     vector_angles_sky = []
     
@@ -92,7 +105,7 @@ def make_vectors_band4(ny, nx, POLI_mJy, POLI_err_mJy, PA_grid, PA_err_deg,
             if (POLI_mJy[y, x] / POLI_err_mJy[y, x] > 4
                 and PA_err_deg[y, x] < 10):
                 # Use the helper function to compute the vector
-                vector_cartesian, PA_rad_sky = compute_polarization_vector(x, y, PA_grid)
+                vector_cartesian, PA_rad_sky = compute_polarization_vector(x, y, PA_grid, band = 4)
                 vectors_cartesian.append(vector_cartesian)
                 vector_angles_sky.append(PA_rad_sky)
     
@@ -101,8 +114,8 @@ def make_vectors_band4(ny, nx, POLI_mJy, POLI_err_mJy, PA_grid, PA_err_deg,
 def make_vectors_band6(ny, nx, 
                        StokesI_mJy, StokesI_err_mJy, 
                        POLI_mJy, POLI_err_mJy, 
-                       PA_grid, PA_err_deg
-                       step = 6):
+                       PA_grid, PA_err_deg,
+                       step = None):
     """
     Generate vectors for Band 6 polarization data.
     
@@ -119,6 +132,11 @@ def make_vectors_band6(ny, nx,
     vectors_cartesian: List of vectors in Cartesian coordinates
     vector_angles_sky: List of polarization angles
     """
+    
+    if step is None:
+        step = constants.step_band6
+        
+        
     vectors_cartesian = []
     vector_angles_sky = []
     
@@ -128,7 +146,7 @@ def make_vectors_band6(ny, nx,
                 POLI_mJy[y, x] / POLI_err_mJy[y, x] > 3 and 
                 PA_err_deg[y, x] < 10):
                 # Use the helper function to compute the vector
-                vector_cartesian, PA_rad_sky = compute_polarization_vector(x, y, PA_grid)
+                vector_cartesian, PA_rad_sky = compute_polarization_vector(x, y, PA_grid, band = 6)
                 vectors_cartesian.append(vector_cartesian)
                 vector_angles_sky.append(PA_rad_sky)
     

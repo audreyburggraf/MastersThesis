@@ -236,7 +236,8 @@ def mix_StokesQU_and_generate_vectors_band6(Uniform_ratio, Azimuthal_ratio,
                                             ny, nx, 
                                             StokesI_mJy, StokesI_err_mJy,
                                             POLI_mJy, POLI_err_mJy,
-                                            PA_err_deg):
+                                            PA_err_deg,
+                                            step = None):
     """
     Blend Stokes Q and U grids using specified ratios, compute polarization angle (PA), 
     and generate mixed polarization vectors based on selection criteria.
@@ -263,6 +264,9 @@ def mix_StokesQU_and_generate_vectors_band6(Uniform_ratio, Azimuthal_ratio,
         - vector_mixed_cartesian (list): List of vectors in [x0, x1, y0, y1] format.
         - vector_mixed_angle_rad_sky (list): List of vector angles in radians (sky frame).
     """
+    
+    if step is None:
+        step = constants.step_band6 
 
     # Compute weighted sum of Stokes Q and U
     StokesQ_grid_mixed = Uniform_ratio * StokesQ_uniform + Azimuthal_ratio * StokesQ_azimuthal
@@ -275,7 +279,8 @@ def mix_StokesQU_and_generate_vectors_band6(Uniform_ratio, Azimuthal_ratio,
     vector_mixed_cartesian, vector_mixed_angle_rad_sky = make_vectors_band6(ny, nx, 
                                                                             StokesI_mJy, StokesI_err_mJy, 
                                                                             POLI_mJy, POLI_err_mJy, 
-                                                                            PA_grid_mixed_rad_sky, PA_err_deg)
+                                                                            PA_grid_mixed_rad_sky, PA_err_deg,
+                                                                            step)
 
     return PA_grid_mixed_rad_sky, StokesQ_grid_mixed, StokesU_grid_mixed, vector_mixed_cartesian, vector_mixed_angle_rad_sky
 
@@ -292,7 +297,8 @@ def mix_StokesQU_and_generate_vectors_band4(Uniform_ratio, Azimuthal_ratio,
                                             StokesQ_azimuthal, StokesU_azimuthal,
                                             ny, nx, 
                                             POLI_mJy, POLI_err_mJy,
-                                            PA_err_deg):
+                                            PA_err_deg,
+                                            step = None):
     """
     Blend Stokes Q and U grids using specified ratios, compute polarization angle (PA), 
     and generate mixed polarization vectors based on selection criteria.
@@ -319,6 +325,10 @@ def mix_StokesQU_and_generate_vectors_band4(Uniform_ratio, Azimuthal_ratio,
         - vector_mixed_cartesian (list): List of vectors in [x0, x1, y0, y1] format.
         - vector_mixed_angle_rad_sky (list): List of vector angles in radians (sky frame).
     """
+    
+    if step is None:
+        step = constants.step_band4 
+        
 
     # Compute weighted sum of Stokes Q and U
     StokesQ_grid_mixed = Uniform_ratio * StokesQ_uniform + Azimuthal_ratio * StokesQ_azimuthal
@@ -330,7 +340,8 @@ def mix_StokesQU_and_generate_vectors_band4(Uniform_ratio, Azimuthal_ratio,
     # Generate polarization vectors
     vector_mixed_cartesian, vector_mixed_angle_rad_sky = make_vectors_band4(ny, nx, 
                                                                             POLI_mJy, POLI_err_mJy, 
-                                                                            PA_grid_mixed_rad_sky, PA_err_deg)
+                                                                            PA_grid_mixed_rad_sky, PA_err_deg,
+                                                                            step)
 
     return PA_grid_mixed_rad_sky, StokesQ_grid_mixed, StokesU_grid_mixed, vector_mixed_cartesian, vector_mixed_angle_rad_sky
 
