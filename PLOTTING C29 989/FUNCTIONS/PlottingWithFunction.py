@@ -147,33 +147,73 @@ def create_base_plot(StokesI_wcs, plotting_data, cbar_label, cmap,
                      text_fs = constants.text_fs , 
                      axis_label_fs = constants.axis_label_fs, 
                      axis_num_fs = constants.axis_num_fs, 
-                     cbar_fs = constants.cbar_fs):
+                     cbar_fs = constants.cbar_fs,
+                     cbar_num_fs = constants.cbar_num_fs,
+                     cbar_orientation = 'vertical',
+                     cbar_pad = 0.1,
+                     cbar_shrink = 1,
+                     fig_size_x = 14,
+                     fig_size_y = 12,
+                     axis_labels = True,
+                     x_label = True,
+                     y_label = True,
+                     x_num = True,
+                     y_num = True,
+                     full_axis_labels = True,
+                     line_x_frac = 0.05,
+                     line_y_frac = 0.1):
+   
     
     # Create a figure with the WCS projection
-    fig, ax = plt.subplots(figsize=(14, 12), subplot_kw={'projection': StokesI_wcs})
+    fig, ax = plt.subplots(figsize=(fig_size_x, fig_size_y), subplot_kw={'projection': StokesI_wcs})
+   
+    
 
     # Add data
     im = ax.imshow(plotting_data, cmap=cmap)
 
+
     # Colorbar
-    cbar = plt.colorbar(im, ax=ax)
+    if cbar_orientation == 'vertical':
+        cbar = fig.colorbar(im, ax=ax, orientation='vertical', pad=cbar_pad, shrink = cbar_shrink)
+        
+    elif cbar_orientation == 'horizontal':
+        cbar = fig.colorbar(im, ax=ax, orientation='horizontal', pad=cbar_pad, shrink = cbar_shrink)
+    
+#     cbar = plt.colorbar(im, ax=ax)
     cbar.set_label(cbar_label, fontsize=cbar_fs)
-    cbar.ax.tick_params(labelsize=axis_num_fs, which='major', length=7, direction="in")
+    cbar.ax.tick_params(labelsize=cbar_num_fs, which='major', length=7, direction="in")
     cbar.ax.tick_params(which='minor', length=4, direction="in")
-    #cbar.set_ticks(normalized_cbar_ticks)
-    #cbar.set_ticklabels([f"{val:.2f}" for val in StokesI_unstretched_cbar_ticks])
 
     # Add axis labels
-    ax.set_xlabel('Right Ascension', fontsize=axis_label_fs)
-    ax.set_ylabel('Declination', fontsize=axis_label_fs)
+    # Add x-axis label or remove it
+    if x_label == True:
+        if full_axis_labels == True:
+            ax.set_xlabel('Right Ascension', fontsize=axis_label_fs)
+        else:
+            ax.set_xlabel('RA', fontsize=axis_label_fs)
+    else:
+        ax.set_xlabel('')  # This removes the label text
+        
+    # Add x-axis label or remove it
+    if y_label == True:
+        if full_axis_labels == True:
+            ax.set_ylabel('Declination', fontsize=axis_label_fs)
+        else:
+            ax.set_ylabel('Dec', fontsize=axis_label_fs)
+    else:
+        ax.set_ylabel('')  # This removes the label text
+
+        
+   
 
     # Set x and y limits
     ax.set_xlim(xmin, xmax)
     ax.set_ylim(ymin, ymax)
 
     # Add line and text for 100 AU 
-    line_x_pos = xmax - 0.05 * (xmax - xmin) 
-    line_y_pos = ymax - 0.1  * (ymax - ymin) 
+    line_x_pos = xmax - line_x_frac  * (xmax - xmin) 
+    line_y_pos = ymax - line_y_frac  * (ymax - ymin) 
 
     ax.plot([(line_x_pos - reference_length_pix), (line_x_pos)], 
             [line_y_pos, line_y_pos],
@@ -193,8 +233,32 @@ def create_base_plot(StokesI_wcs, plotting_data, cbar_label, cmap,
 
     # Adjust ticks
     ax.minorticks_on()
-    ax.tick_params(axis="x", which="major", direction="in", bottom=True, top=True, length=7, labelsize=axis_num_fs)
-    ax.tick_params(axis="y", which="major", direction="in", left=True, right=True, length=7, labelsize=axis_num_fs)
+   #  ax.tick_params(axis="x", which="major", direction="in", bottom=True, top=True, length=7, labelsize=axis_num_fs)
+    # ax.tick_params(axis="y", which="major", direction="in", bottom=True, top=True, length=7, labelsize=axis_num_fs)
+   
+        
+        
+    # Turn off x-axis labels but keep ticks
+    # X-axis
+    if x_num == True:
+        ax.tick_params(axis="x", which="major", direction="in", bottom=True, top=True,
+                       length=7, labelsize=axis_num_fs)
+    else:
+        # Keep ticks but hide labels
+        ax.tick_params(axis="x", which="major", direction="in", bottom=True, top=True,
+                       length=7, labelsize=0)
+
+    # Y-axis
+    if y_num == True:
+        ax.tick_params(axis="y", which="major", direction="in", left=True, right=True,
+                       length=7, labelsize=axis_num_fs)
+    else:
+        # Keep ticks but hide labels
+        ax.tick_params(axis="y", which="major", direction="in", left=True, right=True,
+                       length=7, labelsize=0)
+
+
+
 
     return fig, ax
 # ---------------------------------------------------------------------------------------------

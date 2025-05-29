@@ -27,10 +27,13 @@ from IntroductionFunctions import *
 StokesI_file      = band6_data_folder_path + "c2d_989_StokesI_233GHz.fits"
 StokesI_err_file  = band6_data_folder_path + "c2d_989_StokesIerr_233GHz.fits"
 StokesQ_file      = band6_data_folder_path + "c2d_989_StokesQ_233GHz.fits"
+StokesQ_err_file  = band6_data_folder_path + "c2d_989_StokesQerr_233GHz.fits"
+StokesU_err_file  = band6_data_folder_path + "c2d_989_StokesUerr_233GHz.fits"
 StokesU_file      = band6_data_folder_path + "c2d_989_StokesU_233GHz.fits"
 PA_file           = band6_data_folder_path + "c2d_989_POLA_233GHz.fits"
 PA_err_file       = band6_data_folder_path + "c2d_989_POLAerr_233GHz.fits"
 POLF_file         = band6_data_folder_path + "c2d_989_POLF_233GHz.fits"
+POLF_err_file     = band6_data_folder_path + "c2d_989_POLFerr_233GHz.fits"
 POLI_file         = band6_data_folder_path + "c2d_989_POLI_233GHz.fits"
 POLI_err_file     = band6_data_folder_path + "c2d_989_POLIerr_233GHz.fits"
 
@@ -62,6 +65,9 @@ StokesI_err_mJy = convert_jy_to_mjy(StokesI_err_Jy)
 # -------------------------------------------------------------------------------------------------------
 _, _, StokesQ_Jy, _ = read_in_file(StokesQ_file)
 StokesQ_mJy = convert_jy_to_mjy(StokesQ_Jy)
+
+_, _, StokesQ_err_Jy, _ = read_in_file(StokesQ_err_file, dimensions=2)
+StokesQ_err_mJy = convert_jy_to_mjy(StokesQ_err_Jy)
 # -------------------------------------------------------------------------------------------------------
 
 
@@ -69,6 +75,9 @@ StokesQ_mJy = convert_jy_to_mjy(StokesQ_Jy)
 # -------------------------------------------------------------------------------------------------------
 _, _, StokesU_Jy, _ = read_in_file(StokesU_file)
 StokesU_mJy = convert_jy_to_mjy(StokesU_Jy)
+
+_, _, StokesU_err_Jy, _ = read_in_file(StokesU_err_file, dimensions=2)
+StokesU_err_mJy = convert_jy_to_mjy(StokesU_err_Jy)
 # -------------------------------------------------------------------------------------------------------
 
 
@@ -101,17 +110,16 @@ _, _, PA_err_deg, _ = read_in_file(PA_err_file)
 # -------------------------------------------------------------------------------------------------------
 
 
-# Polarization Fraction
+# Polarized Fraction
 # -------------------------------------------------------------------------------------------------------
 _, _, POLF, _ = read_in_file(POLF_file)
 # -------------------------------------------------------------------------------------------------------
 
 
-# Polarization Fraction error
+# Polarized Fraction Error
 # -------------------------------------------------------------------------------------------------------
-
+_, _, POLF_err, _ = read_in_file(POLF_err_file)
 # -------------------------------------------------------------------------------------------------------
-
 
 
 PA_calc_rad = calculate_polarization_angle(StokesQ_Jy, StokesU_Jy)

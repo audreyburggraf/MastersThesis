@@ -27,6 +27,8 @@ def get_plotting_parameters(StokesI_header, StokesI_wcs, band):
 
     elif band == 4:
         centre_str = constants.centre_str_band4  # Changed to band 4   
+    elif band == 7:
+        centre_str = constants.centre_str_band7 
     else:
         return "Invalid band option"
     
@@ -43,25 +45,41 @@ def get_plotting_parameters(StokesI_header, StokesI_wcs, band):
     RA_centre_pix, Dec_centre_pix = string_to_pixel(centre_str, StokesI_wcs)
     
     
-    if band == 6:
-        RA_min_pix, Dec_min_pix = string_to_pixel(min_str, StokesI_wcs)
-        RA_max_pix, Dec_max_pix = string_to_pixel(max_str, StokesI_wcs)
+#     if band == 6:
+#         RA_min_pix, Dec_min_pix = string_to_pixel(min_str, StokesI_wcs)
+#         RA_max_pix, Dec_max_pix = string_to_pixel(max_str, StokesI_wcs)
         
-        # Define the plot boundaries (xmin, xmax, ymin, ymax)
-        xmin, xmax = RA_max_pix, RA_min_pix
-        ymin, ymax = Dec_min_pix, Dec_max_pix
+#         # Define the plot boundaries (xmin, xmax, ymin, ymax)
+#         xmin, xmax = RA_max_pix, RA_min_pix
+#         ymin, ymax = Dec_min_pix, Dec_max_pix
         
-    elif band == 4:
-        x_val = 40
-        y_val = 40
+#     elif band == 4:
+#         x_val = 40
+#         y_val = 40
         
-        xmin = RA_centre_pix - x_val
-        xmax = RA_centre_pix + x_val
-        ymin = Dec_centre_pix - y_val
-        ymax = Dec_centre_pix + y_val
+#         xmin = RA_centre_pix - x_val
+#         xmax = RA_centre_pix + x_val
+#         ymin = Dec_centre_pix - y_val
+#         ymax = Dec_centre_pix + y_val
+#     elif band == 7:
+#         x_val = 40
+#         y_val = 40
         
-    else:
-        return "Invalid band option"
+#         xmin = RA_centre_pix - x_val
+#         xmax = RA_centre_pix + x_val
+#         ymin = Dec_centre_pix - y_val
+#         ymax = Dec_centre_pix + y_val
+        
+#     else:
+#         return "Invalid band option"
+
+    x_val = 50
+    y_val = 50
+
+    xmin = RA_centre_pix - x_val
+    xmax = RA_centre_pix + x_val
+    ymin = Dec_centre_pix - y_val
+    ymax = Dec_centre_pix + y_val
     
     
     
@@ -72,12 +90,13 @@ def get_plotting_parameters(StokesI_header, StokesI_wcs, band):
 
 
 
-def generate_polarization_vectors_band4(ny, nx,
-                                        RA_centre_pix, Dec_centre_pix,
-                                        uniform_angle,
-                                        StokesI_mJy, 
-                                        POLI_mJy, POLI_err_mJy,
-                                        PA_real_sky_rad, PA_err_deg):
+def generate_polarization_vectors_band47(ny, nx,
+                                         RA_centre_pix, Dec_centre_pix,
+                                         uniform_angle,
+                                         StokesI_mJy, 
+                                         POLI_mJy, POLI_err_mJy,
+                                         PA_real_sky_rad, PA_err_deg,
+                                         band):
     """
     Generates polarization vectors for different grid configurations and calculates the Stokes U and Q grids.
 
@@ -93,23 +112,26 @@ def generate_polarization_vectors_band4(ny, nx,
     """
     
     # Get vector and angles for the actual data
-    vector_data_actual_cartesian, vector_angle_actual_sky = make_vectors_band4(ny, nx,  
-                                                                               POLI_mJy, POLI_err_mJy,
-                                                                               PA_real_sky_rad, PA_err_deg)
+    vector_data_actual_cartesian, vector_angle_actual_sky = make_vectors_band47(ny, nx,  
+                                                                                POLI_mJy, POLI_err_mJy,
+                                                                                PA_real_sky_rad, PA_err_deg,
+                                                                                band)
     
     # Make the PA grids for uniform and Azimuthal
     PA_grid_100Uniform   = make_PA_grid_100Uniform(ny,   nx, uniform_angle)
     PA_grid_100Azimuthal = make_PA_grid_100Azimuthal(ny, nx, RA_centre_pix, Dec_centre_pix)  
     
     # Get the vector and angle data for the 100 Uniform case 
-    vector_data_100Uniform_cartesian, vector_angle_100Uniform_sky = make_vectors_band4(ny, nx,  
+    vector_data_100Uniform_cartesian, vector_angle_100Uniform_sky = make_vectors_band47(ny, nx,  
                                                                                        POLI_mJy, POLI_err_mJy,
-                                                                                       PA_grid_100Uniform, PA_err_deg)
+                                                                                       PA_grid_100Uniform, PA_err_deg,
+                                                                                       band)
     
     # Get the vector and angle data for the 100 Azimuthal case 
-    vector_data_100Azimuthal_cartesian, vector_angle_100Azimuthal_sky = make_vectors_band4(ny, nx,  
+    vector_data_100Azimuthal_cartesian, vector_angle_100Azimuthal_sky = make_vectors_band47(ny, nx,  
                                                                                            POLI_mJy, POLI_err_mJy,
-                                                                                           PA_grid_100Azimuthal, PA_err_deg)
+                                                                                           PA_grid_100Azimuthal, PA_err_deg,
+                                                                                           band)
     
     # Get Stokes Q and U grids
     StokesQ_grid_100Uniform,   StokesU_grid_100Uniform   = recover_StokesQU(PA_grid_100Uniform,   StokesI_mJy, ny, nx)
