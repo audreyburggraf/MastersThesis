@@ -27,6 +27,8 @@ POLI_file     = band4_data_folder_path + "IRS63_selfcal_POLI_debiased_J2000.fits
 POLI_err_file = band4_data_folder_path + "IRS63_selfcal_POLIrms_debiased_J2000.fits"
 PA_file       = band4_data_folder_path + "IRS63_selfcal_POLA_debiased_J2000.fits"
 PA_err_file   = band4_data_folder_path + "IRS63_selfcal_POLArms_debiased_J2000.fits"
+POLF_file     = band4_data_folder_path + "IRS63_selfcal_POLF_debiased_J2000.fits"
+POLF_err_file = band4_data_folder_path + "IRS63_selfcal_POLFrms_debiased_J2000.fits"
 
 
 
@@ -72,6 +74,20 @@ _, _, PA_err_deg, _ = read_in_file(PA_err_file, dimensions = 2)
 
 
 
+# Polarized Fraction
+# -------------------------------------------------------------------------------------------------------
+_, _, POLF, _ = read_in_file(POLF_file, dimensions = 2)
+# -------------------------------------------------------------------------------------------------------
+
+
+# Polarized Fraction Error
+# -------------------------------------------------------------------------------------------------------
+_, _, POLF_err, _ = read_in_file(POLF_err_file, dimensions = 2)
+# -------------------------------------------------------------------------------------------------------
+
+
+
+
 BMAJ_deg, BMIN_deg, BMAJ_pix, BMIN_pix, BPA_deg_cartesian, reference_length_pix, RA_centre_pix, Dec_centre_pix, xmin, xmax, ymin, ymax = get_plotting_parameters(StokesI_header, StokesI_wcs, 4)
 
 nx, ny = StokesI_mJy.shape
@@ -83,12 +99,13 @@ nx, ny = StokesI_mJy.shape
 
 # Find the vectors
 # -------------------------------------------------------------------------------------------------------
-results = generate_polarization_vectors_band4(ny, nx,
-                                              RA_centre_pix, Dec_centre_pix,
-                                              constants.minor_angle_rad_sky_band4,
-                                              StokesI_mJy,
-                                              POLI_mJy, POLI_err_mJy,
-                                              PA_rad, PA_err_deg)
+results = generate_polarization_vectors_band47(ny, nx,
+                                               RA_centre_pix, Dec_centre_pix,
+                                               constants.minor_angle_rad_sky_band4,
+                                               StokesI_mJy,
+                                               POLI_mJy, POLI_err_mJy,
+                                               PA_rad, PA_err_deg,
+                                               'band 4')
 # -------------------------------------------------------------------------------------------------------
 
 # Accessing the actual vector data and angles

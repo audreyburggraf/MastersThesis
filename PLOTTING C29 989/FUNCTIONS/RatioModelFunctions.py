@@ -141,28 +141,34 @@ def ratio_model_band6(StokesQ_grid_100Uniform, StokesU_grid_100Uniform,
 
 
 
-def ratio_model_band4(StokesQ_grid_100Uniform, StokesU_grid_100Uniform,
-                      StokesQ_grid_100Azimuthal, StokesU_grid_100Azimuthal,
-                      ny, nx,
-                      vector_length_pix_const, 
-                      POLI_mJy, POLI_err_mJy,
-                      PA_err_deg,
-                      step = None):
+def ratio_model_band47(StokesQ_grid_100Uniform, StokesU_grid_100Uniform,
+                       StokesQ_grid_100Azimuthal, StokesU_grid_100Azimuthal,
+                       ny, nx,
+                       vector_length_pix_const, 
+                       POLI_mJy, POLI_err_mJy,
+                       PA_err_deg,
+                       band, 
+                       step = None):
     if step is None:
-        step = constants.step_band4
+        if band == 'band 4':
+            step = constants.step_band4
+        elif band == 'band 7':
+             step = constants.step_band7
+        else:
+            raise ValueError("Unsupported band. Only Band 4 and Band 7 are currently supported.")
         
 
     results = {}
 
     for ratio1, ratio2 in testing_ratios:
-        PA_grid, StokesQ_grid, StokesU_grid, vectors_data, vectors_angle = mix_StokesQU_and_generate_vectors_band4(
+        PA_grid, StokesQ_grid, StokesU_grid, vectors_data, vectors_angle = mix_StokesQU_and_generate_vectors_band47(
             ratio1, ratio2,
             StokesQ_grid_100Uniform, StokesU_grid_100Uniform,
             StokesQ_grid_100Azimuthal, StokesU_grid_100Azimuthal,
             ny, nx,
             POLI_mJy, POLI_err_mJy,
             PA_err_deg,
-            step)
+            band, step)
 
         key = generate_ratio_key(ratio1, ratio2)
 
@@ -266,7 +272,8 @@ def find_best_fit_ratio_model(expected_angles, observed_angle_list, print_result
     chi_squared_values = []
 
     for observed_angles in observed_angle_list:
-        chi_squared = calculate_chi_squared_v2(observed_angles, expected_angles)
+        chi_squared = calculate_chi_squared_reduced(observed_angles, expected_angles, 1)
+#         chi_squared = calculate_chi_squared_v2(observed_angles, expected_angles)
         chi_squared_values.append(chi_squared)
        
     print('the length of chi_squared_values is :', len(chi_squared_values))

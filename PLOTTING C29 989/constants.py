@@ -13,6 +13,7 @@ legend_title_fs = 20
 legend_text_fs = 15
 cbar_fs = 20
 text_fs = 28
+cbar_num_fs = 20
 
 normalized_cbar_ticks = np.array([0, 0.2, 0.4, 0.6, 0.8, 1])
 
@@ -25,13 +26,17 @@ distance_pc = 132
 # File locations
 band4_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND4/"
 band6_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND6/"
+band7_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND7/"
 
 band4_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND4/"
 band6_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND6/"
+band7_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND7/"
 
 functions_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FUNCTIONS/"
 
 image_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/WRITEUP_AND_IMAGES/IMAGES/"
+
+slideshow_image_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/WRITEUP_AND_IMAGES/IMAGES/SLIDESHOW/"
 
 # Load in necessary functions
 # ---------------------------------------------
@@ -56,8 +61,10 @@ centre_str_band6 = 'J163135.657-240129.935'
 # max_str_band4    = 'J163135.750-240128.700'
 centre_str_band4 = 'J163135.656-240129.992' # This value is from CASA            
 # ---------------------------------------------
-
-
+# Band 7
+# ---------------------------------------------
+centre_str_band7 = 'J163135.656-240130.089'
+# ---------------------------------------------
 
 
 
@@ -98,11 +105,32 @@ PA_deg_sky_band4 = 145.9 # This value is frmom CASA
 
 minor_angle_rad_sky_band4, major_angle_rad_sky_band4, minor_angle_rad_cartesian_band4, major_angle_rad_cartesian_band4 = get_minor_major_angles(PA_deg_sky_band4)
 # ---------------------------------------------
- 
+# Band 4
+# ---------------------------------------------
+PA_deg_sky_band7 = 139.7 
+
+minor_angle_rad_sky_band7, major_angle_rad_sky_band7, minor_angle_rad_cartesian_band7, major_angle_rad_cartesian_band7 = get_minor_major_angles(PA_deg_sky_band7)
+# ---------------------------------------------
 
 
 
+# Rms errors
+# ------------------------------------------------------------------------------------------
+# Band 7
+# ---------------------------------------------
 
+# Get these values using STDEV on CARTA
+# StokesI_err_mJy_band7 = np.mean([])
+StokesQ_err_mJy_band7 = 30
+StokesU_err_mJy_band7 = 30
+# PA_err_UNITS_band7 = 
+POLI_err_mJy_band7 = 50 
+
+
+StokesI_err_mJy_band7_v0 = np.mean([0.0646, 0.0580, 0.0636, 0.056])
+StokesQ_err_mJy_band7_v0 = np.mean([0.0317, 0.0311, 0.0398, 0.034])
+StokesU_err_mJy_band7_v0 = np.mean([0.0247, 0.0249, 0.0255, 0.024])
+# ------------------------------------------------------------------------------------------
 
 
 # Vector Constants
@@ -112,10 +140,12 @@ max_length_pix = 400  # Maximum length of the vector in pixels for 100% polariza
 reference_fraction = 0.03
 step_band6 = 6
 step_band4 = 4
+step_band7 = 6
 
 vector_length_pix_const = 0 
 vector_len_pix_band6 = 4
 vector_len_pix_band4 = 2
+vector_len_pix_band7 = 4
 # ------------------------------------------------------------------------------------------
 
 
