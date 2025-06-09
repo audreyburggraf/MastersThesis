@@ -52,7 +52,7 @@ nx, ny = StokesI_mJy.shape
 
 # Stokes I error
 # -------------------------------------------------------------------------------------------------------
-StokesI_err_mJy = np.full((ny, nx), constants.StokesI_err_mJy_band7)
+# StokesI_err_mJy = np.full((ny, nx), constants.StokesI_err_mJy_band7)
 
 
 # _, _, StokesI_err_Jy, _ = read_in_file(StokesI_err_file, dimensions=2)
@@ -62,7 +62,7 @@ StokesI_err_mJy = np.full((ny, nx), constants.StokesI_err_mJy_band7)
 
 # Stokes Q
 # -------------------------------------------------------------------------------------------------------
-_, _, StokesQ_Jy, _ = read_in_file(StokesQ_file)
+_, _, StokesQ_Jy, _ = read_in_file(StokesQ_file, dimensions = 2)
 StokesQ_mJy = convert_jy_to_mjy(StokesQ_Jy)
 
 
@@ -77,7 +77,7 @@ StokesQ_err_mJy = np.full((ny, nx), constants.StokesQ_err_mJy_band7)
 
 # Stokes U
 # -------------------------------------------------------------------------------------------------------
-_, _, StokesU_Jy, _ = read_in_file(StokesU_file)
+_, _, StokesU_Jy, _ = read_in_file(StokesU_file, dimensions = 2)
 StokesU_mJy = convert_jy_to_mjy(StokesU_Jy)
 # -------------------------------------------------------------------------------------------------------
 
@@ -154,8 +154,8 @@ POLF = calculate_polarized_fraction(StokesQ_mJy, StokesU_mJy, StokesI_mJy)
 
 # Polarized Fraction Error
 # -------------------------------------------------------------------------------------------------------
-POLF_err = calculate_polarized_fraction_err(StokesQ_mJy, StokesU_mJy, StokesI_mJy, 
-                                            StokesQ_err_mJy, StokesU_err_mJy, StokesI_err_mJy)
+# POLF_err = calculate_polarized_fraction_err(StokesQ_mJy, StokesU_mJy, StokesI_mJy, 
+#                                             StokesQ_err_mJy, StokesU_err_mJy, StokesI_err_mJy)
 
 # _, _, POLF_err, _ = read_in_file(POLF_err_file)
 # -------------------------------------------------------------------------------------------------------
@@ -174,7 +174,7 @@ results = generate_polarization_vectors_band47(ny, nx,
                                                RA_centre_pix, Dec_centre_pix,
                                                constants.minor_angle_rad_sky_band7,
                                                StokesI_mJy, 
-                                               POLI_calc, POLI_err_mJy,
+                                               POLI_mJy, POLI_err_mJy,
                                                PA_rad, PA_err_deg,
                                                'band 7')
 # -------------------------------------------------------------------------------------------------------

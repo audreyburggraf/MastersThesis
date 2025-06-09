@@ -8,7 +8,7 @@ sys.path.append("/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING 
 import constants
 
 # Use the variable from constants.py
-band7_data_folder_path = constants.band7_data_folder_path
+band7_v0_data_folder_path = constants.band7_v0_data_folder_path
 functions_folder_path = constants.functions_folder_path
 
 
@@ -25,10 +25,10 @@ from IntroductionFunctions import *
 
 
 # Define file paths
-StokesI_file      = band7_data_folder_path + "irs63_selfcal_p4_BAND7_I.fits"
+StokesI_file      = band7_v0_data_folder_path + "irs63_selfcal_p4_BAND7_I.fits"
 # StokesI_err_file  = band7_data_folder_path + "c2d_989_StokesIerr_233GHz.fits"
-StokesQ_file      = band7_data_folder_path + "irs63_deep_clean_p4_BAND7_Q.fits"
-StokesU_file      = band7_data_folder_path + "irs63_deep_clean_p4_BAND7_U.fits"
+StokesQ_file      = band7_v0_data_folder_path + "irs63_deep_clean_p4_BAND7_Q.fits"
+StokesU_file      = band7_v0_data_folder_path + "irs63_deep_clean_p4_BAND7_U.fits"
 # PA_file           = band7_data_folder_path + "c2d_989_POLA_233GHz.fits"
 # PA_err_file       = band7_data_folder_path + "c2d_989_POLAerr_233GHz.fits"
 # POLF_file         = band7_data_folder_path + "c2d_989_POLF_233GHz.fits"
@@ -52,7 +52,7 @@ nx, ny = StokesI_mJy.shape
 
 # Stokes I error
 # -------------------------------------------------------------------------------------------------------
-StokesI_err_mJy = np.full((ny, nx), constants.StokesI_err_mJy_band7)
+StokesI_err_mJy = np.full((ny, nx), constants.StokesI_err_mJy_band7_v0)
 
 
 # _, _, StokesI_err_Jy, _ = read_in_file(StokesI_err_file, dimensions=2)
@@ -68,7 +68,7 @@ StokesQ_mJy = convert_jy_to_mjy(StokesQ_Jy)
 
 # Stokes Q Error
 # -------------------------------------------------------------------------------------------------------
-StokesQ_err_mJy = np.full((ny, nx), constants.StokesQ_err_mJy_band7)
+StokesQ_err_mJy = np.full((ny, nx), constants.StokesQ_err_mJy_band7_v0)
 
 # _, _, StokesQ_err_Jy, _ = read_in_file(StokesQ_err_file, dimensions=2)
 # StokesQ_err_mJy = convert_jy_to_mjy(StokesQ_err_Jy)
@@ -83,7 +83,7 @@ StokesU_mJy = convert_jy_to_mjy(StokesU_Jy)
 
 # Stokes U Error
 # -------------------------------------------------------------------------------------------------------
-StokesU_err_mJy = np.full((ny, nx), constants.StokesQ_err_mJy_band7)
+StokesU_err_mJy = np.full((ny, nx), constants.StokesQ_err_mJy_band7_v0)
 
 # _, _, StokesU_err_Jy, _ = read_in_file(StokesU_err_file, dimensions=2)
 # StokesU_err_mJy = convert_jy_to_mjy(StokesU_err_Jy)
@@ -103,7 +103,7 @@ POLI_mJy_resized = POLI_mJy[:ny, :nx]
 
 # Save data
 hdu = fits.PrimaryHDU(data=POLI_mJy, header=StokesI_header)
-hdu.writeto(band7_data_folder_path + "POLI_mJy_calculated_BAND7.fits", overwrite=True)
+hdu.writeto(band7_v0_data_folder_path + "POLI_mJy_calculated_BAND7.fits", overwrite=True)
 
 # _, _, POLI_Jy, _ = read_in_file(POLI_file)
 # POLI_mJy = convert_jy_to_mjy(POLI_Jy)

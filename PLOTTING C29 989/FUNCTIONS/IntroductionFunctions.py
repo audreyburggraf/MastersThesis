@@ -21,8 +21,6 @@ def get_plotting_parameters(StokesI_header, StokesI_wcs, band):
     # Dictionary for band constants
     # Get the constants depending on what band of data we are using:
     if band == 6:
-        min_str    = constants.min_str_band6
-        max_str    = constants.max_str_band6
         centre_str = constants.centre_str_band6
 
     elif band == 4:
@@ -44,7 +42,17 @@ def get_plotting_parameters(StokesI_header, StokesI_wcs, band):
     # Get the centre pixel values
     RA_centre_pix, Dec_centre_pix = string_to_pixel(centre_str, StokesI_wcs)
     
-    
+    min_str    = constants.min_str_band6
+    max_str    = constants.max_str_band6
+    RA_min_pix, Dec_min_pix = string_to_pixel(min_str, StokesI_wcs)
+    RA_max_pix, Dec_max_pix = string_to_pixel(max_str, StokesI_wcs)
+
+    # Define the plot boundaries (xmin, xmax, ymin, ymax)
+    xmin, xmax = RA_max_pix, RA_min_pix
+    ymin, ymax = Dec_min_pix, Dec_max_pix
+
+
+
 #     if band == 6:
 #         RA_min_pix, Dec_min_pix = string_to_pixel(min_str, StokesI_wcs)
 #         RA_max_pix, Dec_max_pix = string_to_pixel(max_str, StokesI_wcs)
@@ -73,13 +81,13 @@ def get_plotting_parameters(StokesI_header, StokesI_wcs, band):
 #     else:
 #         return "Invalid band option"
 
-    x_val = 50
-    y_val = 50
+#     x_val = 50
+#     y_val = 50
 
-    xmin = RA_centre_pix - x_val
-    xmax = RA_centre_pix + x_val
-    ymin = Dec_centre_pix - y_val
-    ymax = Dec_centre_pix + y_val
+#     xmin = RA_centre_pix - x_val
+#     xmax = RA_centre_pix + x_val
+#     ymin = Dec_centre_pix - y_val
+#     ymax = Dec_centre_pix + y_val
     
     
     

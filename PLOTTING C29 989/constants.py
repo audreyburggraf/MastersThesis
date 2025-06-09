@@ -27,6 +27,7 @@ distance_pc = 132
 band4_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND4/"
 band6_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND6/"
 band7_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND7/"
+band7_v0_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND7_v0/"
 
 band4_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND4/"
 band6_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND6/"
@@ -121,10 +122,10 @@ minor_angle_rad_sky_band7, major_angle_rad_sky_band7, minor_angle_rad_cartesian_
 
 # Get these values using STDEV on CARTA
 # StokesI_err_mJy_band7 = np.mean([])
-StokesQ_err_mJy_band7 = 30
-StokesU_err_mJy_band7 = 30
+StokesQ_err_mJy_band7 = 0.03
+StokesU_err_mJy_band7 = 0.03
 # PA_err_UNITS_band7 = 
-POLI_err_mJy_band7 = 50 
+POLI_err_mJy_band7 = 0.05 
 
 
 StokesI_err_mJy_band7_v0 = np.mean([0.0646, 0.0580, 0.0636, 0.056])
@@ -140,12 +141,12 @@ max_length_pix = 400  # Maximum length of the vector in pixels for 100% polariza
 reference_fraction = 0.03
 step_band6 = 6
 step_band4 = 4
-step_band7 = 6
+step_band7 = 3
 
 vector_length_pix_const = 0 
 vector_len_pix_band6 = 4
 vector_len_pix_band4 = 2
-vector_len_pix_band7 = 4
+vector_len_pix_band7 = 1.5
 # ------------------------------------------------------------------------------------------
 
 
