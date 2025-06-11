@@ -20,4 +20,4 @@ from RatioModelFunctions import *
 from MakingGridFunctions import * 
 from SlicesFunctions import * 
 from IntroductionFunctions import *
-from DiskDustFunctions import * 
+from DustModelFunctions import * 
