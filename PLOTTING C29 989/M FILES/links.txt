@@ -1,0 +1,10 @@
+water ice (Warren & Brandt 2008):
+
+astronomical silicates (draaine 2003):
+https://www.astro.princeton.edu/~draine/dust/dust.diel.html
+
+troilite (Henning & Stognienko 1996):
+http://www2.mpia-hd.mpg.de/home/henning/Dust_opacities/Opacities/RI/troilitek.lnk
+
+refractory organics (Henning & Stognienko 1996):
+http://www2.mpia-hd.mpg.de/home/henning/Dust_opacities/Opacities/RI/organicsk.lnk
