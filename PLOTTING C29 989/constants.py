@@ -41,6 +41,8 @@ writeup_image_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEAR
 slideshow_image_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/WRITEUP_AND_IMAGES/IMAGES/SLIDESHOW/"
 poster_image_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/WRITEUP_AND_IMAGES/IMAGES/POSTER/"
 
+m_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/M FILES/"
+
 # Load in necessary functions
 # ---------------------------------------------
 sys.path.append(functions_folder_path)

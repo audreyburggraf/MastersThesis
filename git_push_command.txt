@@ -1,3 +1,5 @@
+# might need to add: git pull origin main --rebase
+
 git add .
-git commit -m "Add comment here"
+git commit -m "Add comment"
 git push origin main
