@@ -1,5 +1,8 @@
 import numpy as np 
 import miepython
+from scipy.interpolate import interp1d
+import dsharp_opac as do
+
 
 def get_average_POLF_where_scattered(UniformRatios, POLF, tolerance=0.001):
     # Convert inputs to numpy arrays in case they aren't already
@@ -17,6 +20,7 @@ def get_average_POLF_where_scattered(UniformRatios, POLF, tolerance=0.001):
     
     # Compute and return the average
     POLF_average = np.mean(matching_POLF)
+    
     return POLF_average
 
 
@@ -27,28 +31,37 @@ def get_average_POLF_where_scattered(UniformRatios, POLF, tolerance=0.001):
 # Function to convert micron to cm
 # --------------------------------------------------------------------------------------
 def micron_to_cm(value_micron):
+    value_micron = np.array(value_micron)  # convert input to numpy array
+    return value_micron * 1e-4  # 1 micron = 1e-4 cm
+# --------------------------------------------------------------------------------------
 
-    return value_micron / 1000
+# Function to convert mm to cm
+# --------------------------------------------------------------------------------------
+def mm_to_cm(value_mm):
+    value_mm = np.array(value_mm)  # convert input to numpy array
+    return value_mm * 1e-1  # 1 mm = 0.1 cm = 1e-1 cm
 # --------------------------------------------------------------------------------------
 
 
 
-# Function to find the mass of a spherical dust grain based on size and density
+
 # --------------------------------------------------------------------------------------
-def calculate_grain_mass(a_micron, density_g_cm3):
+def calculate_grain_mass(a, density_g_cm3, a_units):
+    if a_units == "cm":
+        a_cm = a
+    elif a_units == "micron":
+        a_cm = micron_to_cm(a)
+    else:
+        raise ValueError("Only 'cm' and 'micron' units are supported for grain size")
     
-    # Convert a_micron to a_cm
-    a_cm = micron_to_cm(a_micron)
-    
-    # Calculate the volume
+    # Calculate the volume of the sphere in cm³
     volume_cm3 = (4/3) * np.pi * a_cm**3
     
-    # Find mass using p = m/V
-    mass_grams = density_g_cm3 * volume_cm3 
+    # Calculate the mass in grams (mass = density × volume)
+    mass_grams = density_g_cm3 * volume_cm3
     
-    return mass_grams 
+    return mass_grams
 # --------------------------------------------------------------------------------------
-
 
 
 # Size distribution of n(a) prop to a^-3.5 from Kataoka et al, 2015
@@ -102,16 +115,62 @@ def size_parameter(a_micron, lambda_micron):
 import pandas as pd
 m_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/M FILES/"
 # --------------------------------------------------------------------------------------
+def load_optical_constants():
+    
+    # Water ice: Warren & Brandt 2008
+    # --------------------------------------------
+    df_wi = pd.read_csv(m_data_folder_path + 'm_table_water_ice_warren2008.txt', delim_whitespace=True, header=None)
+    df_wi.columns = ['lambda_micron', 'n', 'k']
+    # --------------------------------------------
+    
+    
+    # Astronomical silicates: Draine 2003
+    # --------------------------------------------
+    df_as = pd.read_csv(
+        m_data_folder_path + 'm_table_astronomical_silicate_draine2003.txt',
+        delim_whitespace=True,
+        header=None,
+        skiprows=9,  # skip the metadata header
+        comment='#'
+    )
+
+    # Assign column names from the data header
+    df_as.columns = ['lambda_micron', 'Re_eps_minus_1', 'Im_eps', 'Re_m_minus_1', 'Im_m']
+
+    # Calculate n and k
+    df_as['n'] = df_as['Re_m_minus_1'] + 1.0
+    df_as['k'] = df_as['Im_m']
+
+    # Keep just the relevant columns
+    df_as = df_as[['lambda_micron', 'n', 'k']]
+    # --------------------------------------------
+   
+    
+    # Troilite: Henning & Stognienko 1996
+    # --------------------------------------------
+    df_tr = pd.read_csv(m_data_folder_path + 'm_table_troilite_henning1996.txt', delim_whitespace=True, header=None)
+    df_tr.columns = ['lambda_micron', 'n', 'k']
+    # --------------------------------------------
+    
+    
+    # Refractory organics: Henning & Stognienko 1996
+    # --------------------------------------------
+    df_ro = pd.read_csv(m_data_folder_path + 'm_table_refractory_organics_henning1996.txt', delim_whitespace=True, header=None)
+    df_ro.columns = ['lambda_micron', 'n', 'k']
+    # --------------------------------------------
+    
+    return df_wi, df_tr, df_as, df_ro
+# --------------------------------------------------------------------------------------
 def get_complex_m(wavelengths_micron, material):
 # Map material to filename
     if material == 'wi':
-        file_name = "m_table_water_ice.txt"
+        file_name = "m_table_water_ice_warren2008.txt"
     elif material == 'tr':
-        file_name = "m_table_troilite.txt"
+        file_name = "m_table_troilite_henning1996.txt"
     elif material == 'as':
-        file_name = "m_table_astronomical_silicate.txt"
+        file_name = "m_table_astronomical_silicate_draine2003.txt"
     elif material == 'ro':
-        file_name = "m_table_refractory_organics.txt"
+        file_name = "m_table_refractory_organics_henning1996.txt"
     else:
         raise ValueError(f"Unknown material '{material}'. Choose from 'wi', 'tr', 'as', 'ro'.")
 
@@ -121,7 +180,7 @@ def get_complex_m(wavelengths_micron, material):
             m_data_folder_path + file_name,
             delim_whitespace=True,
             header=None,
-            skiprows=10,  # adjust if needed
+            skiprows=9,  # adjust if needed
             comment='#'
         )
         df.columns = ["wavelength (microns)", "Re_eps_minus_1", "Im_eps", "Re_m_minus_1", "Im_m"]

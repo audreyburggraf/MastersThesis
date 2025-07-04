@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Ellipse
 import seaborn as sns
 import math
+from matplotlib.ticker import ScalarFormatter
 
 # Import Functions
 from FITS_Image_Functions import *

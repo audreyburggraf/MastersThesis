@@ -21,3 +21,4 @@ from MakingGridFunctions import *
 from SlicesFunctions import * 
 from IntroductionFunctions import *
 from DustModelFunctions import * 
+from DustModelPlots import * 
