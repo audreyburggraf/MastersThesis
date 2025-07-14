@@ -144,6 +144,7 @@ def calculate_polarization_angle(StokesQ, StokesU):
 # ------------------------------------------------------------------------------------
 # Error
 # ------------------------------------------------------------------------------------
+# pretty sure this is wrong - giving crazy values
 def calculate_polarization_angle_error(StokesQ, StokesU, StokesQ_err, StokesU_err):
     """
     Calculate the uncertainty in the polarization angle in radians.
@@ -260,6 +261,7 @@ def mix_StokesQU_and_generate_vectors(Uniform_ratio, Azimuthal_ratio,
     
     for x in range(0, nx, step):
         for y in range(0, ny, step):
+            
             if (
                 StokesI_data_2d_mJy[y, x] / StokesIerr_data_2d_mJy[y, x] > 3
                 and calculated_polarized_intensity[y, x] / PolarizedIntensity_err_data_2d_mJy[y, x] > 3

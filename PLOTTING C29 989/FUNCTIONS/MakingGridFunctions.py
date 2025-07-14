@@ -40,7 +40,7 @@ def make_PA_grid_100Azimuthal(ny, nx, RA_centre_pix, Dec_centre_pix):
 
 
 # --------------------------------------------------------------------------
-def compute_polarization_vector(x, y, PA_grid, band):
+def compute_polarization_vector(x, y, PA_grid, band, vector_len_pix = None):
 
     """
     Compute the vector components for polarization at the given (x, y) position.
@@ -54,19 +54,22 @@ def compute_polarization_vector(x, y, PA_grid, band):
     and the polarization angle in radians.
     """
     
-    if band == 'band 6':
-        vector_len_pix = constants.vector_len_pix_band6
-    elif band == 'band 4':
-        vector_len_pix = constants.vector_len_pix_band4
-    elif band == 'band 7':
-        vector_len_pix = constants.vector_len_pix_band7
-    else:
-        raise ValueError(f"Currently only accepting Band 4, Band 6, and Band 7")
+    if vector_len_pix is None:
+        if band == 'band 6':
+            vector_len_pix = constants.vector_len_pix_band6
+        elif band == 'band 4':
+            vector_len_pix = constants.vector_len_pix_band4
+        elif band == 'band 7':
+            vector_len_pix = constants.vector_len_pix_band7
+        else:
+            raise ValueError("Band must be 'band 4', 'band 6', or 'band 7'")
 
     
     
     # Extract the polarization angle at this location
     PA_rad_sky = PA_grid[y, x] 
+    
+#     print(rf'PA_rad_sky = {PA_rad_sky}')
 
     # Compute vector components
     dx = vector_len_pix * np.cos(PA_rad_sky + np.pi/2)
@@ -79,7 +82,7 @@ def compute_polarization_vector(x, y, PA_grid, band):
 # --------------------------------------------------------------------------
 
 def make_vectors_band47(ny, nx, POLI_mJy, POLI_err_mJy, PA_grid, PA_err_deg, band, 
-                        step = None):
+                        step = None, vector_len_pix = None):
     """
     Generate vectors for Band 4 polarization data.
     
@@ -111,7 +114,7 @@ def make_vectors_band47(ny, nx, POLI_mJy, POLI_err_mJy, PA_grid, PA_err_deg, ban
             if (POLI_mJy[y, x] / POLI_err_mJy[y, x] > 4
                 and PA_err_deg[y, x] < 10):
                 # Use the helper function to compute the vector
-                vector_cartesian, PA_rad_sky = compute_polarization_vector(x, y, PA_grid, band)
+                vector_cartesian, PA_rad_sky = compute_polarization_vector(x, y, PA_grid, band, vector_len_pix)
                 vectors_cartesian.append(vector_cartesian)
                 vector_angles_sky.append(PA_rad_sky)
     
