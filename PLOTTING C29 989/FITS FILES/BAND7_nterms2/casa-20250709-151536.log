@@ -1,0 +1,306 @@
+
+2025-07-09 15:15:38	INFO	::casa	
+2025-07-09 15:15:38	INFO	::casa	Checking telemetry submission interval
+2025-07-09 15:15:38	INFO	::casa	Telemetry submit interval not reached. Not submitting data.
+2025-07-09 15:15:38	INFO	::casa	Next telemetry data submission in: 3:47:45.969032
+2025-07-09 15:15:38	INFO	::casa	CASA Version PIPELINE 5.6.1-8  
+2025-07-09 15:24:54	INFO	tclean::::	
+2025-07-09 15:24:54	INFO	tclean::::+	##########################################
+2025-07-09 15:24:54	INFO	tclean::::+	##### Begin Task: tclean             #####
+2025-07-09 15:24:54	INFO	tclean::::	tclean(vis="calibrated_final_irs63.ms",selectdata=True,field="",spw="",timerange="",
+2025-07-09 15:24:54	INFO	tclean::::+	        uvrange="",antenna="",scan="",observation="",intent="",
+2025-07-09 15:24:54	INFO	tclean::::+	        datacolumn="corrected",imagename="irs63_c561_noclean_nomask_stokesQ",imsize=[1024, 1024],cell="0.018arcsec",phasecenter="",
+2025-07-09 15:24:54	INFO	tclean::::+	        stokes="Q",projection="SIN",startmodel="",specmode="mfs",reffreq="",
+2025-07-09 15:24:54	INFO	tclean::::+	        nchan=-1,start="",width="",outframe="LSRK",veltype="radio",
+2025-07-09 15:24:54	INFO	tclean::::+	        restfreq=[],interpolation="linear",perchanweightdensity=True,gridder="standard",facets=1,
+2025-07-09 15:24:54	INFO	tclean::::+	        psfphasecenter="",chanchunks=1,wprojplanes=1,vptable="",mosweight=True,
+2025-07-09 15:24:54	INFO	tclean::::+	        aterm=True,psterm=False,wbawp=True,conjbeams=False,cfcache="",
+2025-07-09 15:24:54	INFO	tclean::::+	        usepointing=False,computepastep=360.0,rotatepastep=360.0,pointingoffsetsigdev=0.0,pblimit=-0.2,
+2025-07-09 15:24:54	INFO	tclean::::+	        normtype="flatnoise",deconvolver="mtmfs",scales=[],nterms=1,smallscalebias=0.0,
+2025-07-09 15:24:54	INFO	tclean::::+	        restoration=True,restoringbeam=[],pbcor=False,outlierfile="",weighting="briggs",
+2025-07-09 15:24:54	INFO	tclean::::+	        robust=0.5,noise="1.0Jy",npixels=0,uvtaper=[],niter=10000,
+2025-07-09 15:24:54	INFO	tclean::::+	        gain=0.1,threshold="0.05mJy",nsigma=0.0,cycleniter=-1,cyclefactor=1.0,
+2025-07-09 15:24:54	INFO	tclean::::+	        minpsffraction=0.05,maxpsffraction=0.8,interactive=False,usemask="user",mask=" ",
+2025-07-09 15:24:54	INFO	tclean::::+	        pbmask=0.0,sidelobethreshold=3.0,noisethreshold=5.0,lownoisethreshold=1.5,negativethreshold=0.0,
+2025-07-09 15:24:54	INFO	tclean::::+	        smoothfactor=1.0,minbeamfrac=0.3,cutthreshold=0.01,growiterations=75,dogrowprune=True,
+2025-07-09 15:24:54	INFO	tclean::::+	        minpercentchange=-1.0,verbose=False,fastnoise=True,restart=True,savemodel="modelcolumn",
+2025-07-09 15:24:54	INFO	tclean::::+	        calcres=True,calcpsf=True,parallel=False)
+2025-07-09 15:24:54	INFO	tclean::::	Verifying Input Parameters
+2025-07-09 15:24:54	INFO		Clearing all model records in MS header.
+2025-07-09 15:24:55	INFO	SynthesisImagerVi2::selectData 	MS : calibrated_final_irs63.ms | [Opened with scratch model column]
+2025-07-09 15:24:55	INFO	SynthesisImagerVi2::selectData 	  NRows selected : 3850200
+2025-07-09 15:24:55	INFO	MeasIERS::fillMeas(MeasIERS::Files, Double) 	Requested JD 59812 is outside the range of the IERS (Earth axis data) table.
+2025-07-09 15:24:55	INFO	MeasIERS::fillMeas(MeasIERS::Files, Double) +	Calculations will proceed with less precision
+2025-07-09 15:24:55	SEVERE	MeasTable::dUTC(Double) (file ../../measures/Measures/MeasTable.cc, line 4290)	Leap second table TAI_UTC seems out-of-date.
+2025-07-09 15:24:55	SEVERE	MeasTable::dUTC(Double) (file ../../measures/Measures/MeasTable.cc, line 4290)+	Until the table is updated (see the CASA documentation or your system admin),
+2025-07-09 15:24:55	SEVERE	MeasTable::dUTC(Double) (file ../../measures/Measures/MeasTable.cc, line 4290)+	times and coordinates derived from UTC could be wrong by 1s or more.
+2025-07-09 15:24:58	INFO	SynthesisImagerVi2::defineImage 	Define image coordinates for [irs63_c561_noclean_nomask_stokesQ] : 
+2025-07-09 15:24:59	INFO	SynthesisImagerVi2::defineImage 	Impars : start 
+2025-07-09 15:24:59	INFO	SynthesisImagerVi2::defineImage 	Shape : [1024, 1024, 1, 1]Spectral : [3.43521e+11] at [0] with increment [1.59592e+10]
+2025-07-09 15:24:59	INFO	SynthesisImagerVi2::defineImage 	Set Gridding options for [irs63_c561_noclean_nomask_stokesQ] with ftmachine : gridft
+2025-07-09 15:24:59	INFO	SynthesisImagerVi2::weight() 	Set imaging weights : Briggs weighting: sidelobes will be suppressed over full image
+2025-07-09 15:25:20	INFO	VisSetUtil::VisImagingWeight() 	Normal robustness, robust = 0.5
+2025-07-09 15:25:20	INFO	task_tclean::SynthesisDeconvolver::setupDeconvolution 	Set Deconvolution Options for [irs63_c561_noclean_nomask_stokesQ] : mtmfs
+2025-07-09 15:25:20	INFO	SynthesisIterBot::setupIteration 	Set Iteration Control Options
+2025-07-09 15:25:20	INFO	task_tclean::SynthesisImager::makePSF 	----------------------------------------------------------- Make PSF ---------------------------------------------
+2025-07-09 15:26:04	INFO	task_tclean::SIImageStoreMultiTerm::calcSensitivity 	Multi-Term Hessian Matrix : Axis Lengths: [1, 1]  (NB: Matrix in Row/Column order)
+2025-07-09 15:26:04	INFO	task_tclean::SIImageStoreMultiTerm::calcSensitivity +	[7.33095e+09]
+2025-07-09 15:26:04	INFO	task_tclean::SIImageStoreMultiTerm::calcSensitivity 	Multi-Term Covariance Matrix : Axis Lengths: [1, 1]  (NB: Matrix in Row/Column order)
+2025-07-09 15:26:04	INFO	task_tclean::SIImageStoreMultiTerm::calcSensitivity +	[1.36408e-10]
+2025-07-09 15:26:04	INFO	task_tclean::SIImageStoreMultiTerm::calcSensitivity 	[irs63_c561_noclean_nomask_stokesQ][Taylor0] Theoretical sensitivity (Jy/bm):1.16794e-05
+2025-07-09 15:26:04	INFO	task_tclean::SIImageStoreMultiTerm::calcFractionalBandwidth 	MFS frequency range : 335.542 GHz -> 351.501GHz.Fractional Bandwidth : 4.64578 %.Reference Frequency for Taylor Expansion : 343.521GHz.
+2025-07-09 15:26:04	INFO	task_tclean::SIImageStore::printBeamSet 	Beam : 0.280604 arcsec, 0.171454 arcsec, -81.0524 deg
+2025-07-09 15:26:04	INFO	task_tclean::SynthesisImagerVi2::makePrimaryBeam 	vi2 : Evaluating Primary Beam model onto image grid(s)
+2025-07-09 15:26:06	INFO	task_tclean::SynthesisImager::executeMajorCycle 	----------------------------------------------------------- Run Major Cycle 1 -------------------------------------
+2025-07-09 15:27:00	INFO	task_tclean::SIImageStoreMultiTerm::printImageStats 	[irs63_c561_noclean_nomask_stokesQ] Peak residual (max,min) within mask : (0,9924.59) over full image : (0.00156267,-0.000221542)
+2025-07-09 15:27:00	INFO	task_tclean::SIImageStoreMultiTerm::printImageStats 	[irs63_c561_noclean_nomask_stokesQ] Total Model Flux : 0(tt0)
+2025-07-09 15:27:00	INFO	task_tclean::SynthesisDeconvolver::setupMask 	[irs63_c561_noclean_nomask_stokesQ] Setting up a mask from [ ]
+2025-07-09 15:27:00	INFO	task_tclean::CasacRegionManager::fromBCS	No directional region specified. Using full positional plane.
+2025-07-09 15:27:00	INFO	task_tclean::CasacRegionManager::fromBCS	Using all spectral channels.
+2025-07-09 15:27:00	INFO	task_tclean::CasacRegionManager::fromBCS	Using polarizations ALL
+2025-07-09 15:27:00	INFO	task_tclean::::	You've specified explicitly that the spectral axis should be regridded. However, the input image has a degenerate spectral axis and so it cannot be regridded. Instead, the resulting single output channel will be replicated 1 times in the output image.
+2025-07-09 15:27:00	INFO	task_tclean::ImageMaskAttacher::makeMask	Created and initialized mask `mask0'
+2025-07-09 15:27:00	INFO	task_tclean::SDMaskHandler::fillMask 	IT'S A CONCATImage
+2025-07-09 15:27:00	INFO	task_tclean::SDMaskHandler::fillMask 	Reading text mask:  
+2025-07-09 15:27:00	SEVERE	task_tclean::SDMaskHandler::regionTextToImageRegion (file ../../synthesis/ImagerObjects/SDMaskHandler.cc, line 490)	Exception: Input mask, ' ' does not exist if it is inteded as a mask file name.Or invalid CRTF syntax if it is intended as a direct region specification.
+2025-07-09 15:27:00	INFO	task_tclean::SynthesisDeconvolver::setupMask 	----------------------------------------------------------------------------------------------------------------------------------------
+2025-07-09 15:27:00	INFO	task_tclean::SynthesisDeconvolver::setupMask 	[irs63_c561_noclean_nomask_stokesQ] Number of pixels in the clean mask : 0 out of a total of 1.04858e+06 pixels. [ 0 % ]
+2025-07-09 15:27:00	INFO	task_tclean::SIImageStoreMultiTerm::printImageStats 	[irs63_c561_noclean_nomask_stokesQ] Peak residual (max,min) over full image : (0.00156267,-0.000221542)
+2025-07-09 15:27:00	INFO	task_tclean::SIImageStoreMultiTerm::printImageStats 	[irs63_c561_noclean_nomask_stokesQ] Total Model Flux : 0(tt0)
+2025-07-09 15:27:00	INFO	tclean::::	Reached global stopping criterion : zero mask
+2025-07-09 15:27:00	INFO	MultiTermMatrixCleaner::verifyScaleSizes() 	Scale sizes to be used for deconvolution : [0]
+2025-07-09 15:27:00	INFO	MultiTermMatrixCleaner::initialise() 	Using a PSF patch of 80 pixels on each side for minor-cycle updates.
+2025-07-09 15:27:00	INFO	MatrixCleaner::validatePsf() 	Peak of PSF = 1 at [512, 512]
+2025-07-09 15:27:00	INFO	MultiTermMatrixCleaner::computeprincipalsolution() 	MTMC :: Computing principal solution on residuals
+2025-07-09 15:27:00	INFO	MultiTermMatrixCleaner::computeHessianPeak 	Calculating PSF and Scale convolutions 
+2025-07-09 15:27:00	INFO	MultiTermMatrixCleaner::computeHessianPeak 	The Matrix [H] for 0 pixel scale is : Axis Lengths: [1, 1]  (NB: Matrix in Row/Column order)
+2025-07-09 15:27:00	INFO	MultiTermMatrixCleaner::computeHessianPeak +	[1]
+2025-07-09 15:27:00	INFO	SDAlgorithmBase::restore 	[irs63_c561_noclean_nomask_stokesQ] : Restoring model image.
+2025-07-09 15:27:00	WARN	SIImageStore::restore (file ../../synthesis/ImagerObjects/SIImageStore.cc, line 2068)	Restoring with an empty model image. Only residuals will be processed to form the output restored image.
+2025-07-09 15:27:00	INFO	SIImageStore::restore 	Beam for chan : 0 : 0.280604 arcsec, 0.171454 arcsec, -81.0524 deg
+2025-07-09 15:27:00	INFO	SIImageStoreMultiTerm::calculateAlphaBeta 	Alpha and Beta images will not be computed for images that contain anything other than stokes I in them.
+2025-07-09 15:27:00	WARN	tclean::task_tclean::	Please check the casa log file for a message confirming that the model was saved after the last major cycle. If it doesn't exist, please re-run tclean with niter=0,calcres=False,calcpsf=False in order to trigger a 'predict model' step that obeys the savemodel parameter.
+2025-07-09 15:27:00	INFO	tclean::::	##### End Task: tclean               #####
+2025-07-09 15:27:00	INFO	tclean::::+	##########################################
+2025-07-09 15:27:39	INFO	tclean::::	
+2025-07-09 15:27:39	INFO	tclean::::+	##########################################
+2025-07-09 15:27:39	INFO	tclean::::+	##### Begin Task: tclean             #####
+2025-07-09 15:27:39	INFO	tclean::::	tclean(vis="calibrated_final_irs63.ms",selectdata=True,field="",spw="",timerange="",
+2025-07-09 15:27:39	INFO	tclean::::+	        uvrange="",antenna="",scan="",observation="",intent="",
+2025-07-09 15:27:39	INFO	tclean::::+	        datacolumn="corrected",imagename="irs63_c561_noclean_nomask_stokesU",imsize=[1024, 1024],cell="0.018arcsec",phasecenter="",
+2025-07-09 15:27:39	INFO	tclean::::+	        stokes="U",projection="SIN",startmodel="",specmode="mfs",reffreq="",
+2025-07-09 15:27:39	INFO	tclean::::+	        nchan=-1,start="",width="",outframe="LSRK",veltype="radio",
+2025-07-09 15:27:39	INFO	tclean::::+	        restfreq=[],interpolation="linear",perchanweightdensity=True,gridder="standard",facets=1,
+2025-07-09 15:27:39	INFO	tclean::::+	        psfphasecenter="",chanchunks=1,wprojplanes=1,vptable="",mosweight=True,
+2025-07-09 15:27:39	INFO	tclean::::+	        aterm=True,psterm=False,wbawp=True,conjbeams=False,cfcache="",
+2025-07-09 15:27:39	INFO	tclean::::+	        usepointing=False,computepastep=360.0,rotatepastep=360.0,pointingoffsetsigdev=0.0,pblimit=-0.2,
+2025-07-09 15:27:39	INFO	tclean::::+	        normtype="flatnoise",deconvolver="mtmfs",scales=[],nterms=1,smallscalebias=0.0,
+2025-07-09 15:27:39	INFO	tclean::::+	        restoration=True,restoringbeam=[],pbcor=False,outlierfile="",weighting="briggs",
+2025-07-09 15:27:39	INFO	tclean::::+	        robust=0.5,noise="1.0Jy",npixels=0,uvtaper=[],niter=10000,
+2025-07-09 15:27:39	INFO	tclean::::+	        gain=0.1,threshold="0.05mJy",nsigma=0.0,cycleniter=-1,cyclefactor=1.0,
+2025-07-09 15:27:39	INFO	tclean::::+	        minpsffraction=0.05,maxpsffraction=0.8,interactive=False,usemask="user",mask=" ",
+2025-07-09 15:27:39	INFO	tclean::::+	        pbmask=0.0,sidelobethreshold=3.0,noisethreshold=5.0,lownoisethreshold=1.5,negativethreshold=0.0,
+2025-07-09 15:27:39	INFO	tclean::::+	        smoothfactor=1.0,minbeamfrac=0.3,cutthreshold=0.01,growiterations=75,dogrowprune=True,
+2025-07-09 15:27:39	INFO	tclean::::+	        minpercentchange=-1.0,verbose=False,fastnoise=True,restart=True,savemodel="modelcolumn",
+2025-07-09 15:27:39	INFO	tclean::::+	        calcres=True,calcpsf=True,parallel=False)
+2025-07-09 15:27:39	INFO	tclean::::	Verifying Input Parameters
+2025-07-09 15:27:39	INFO		Clearing all model records in MS header.
+2025-07-09 15:27:39	INFO	SynthesisImagerVi2::selectData 	MS : calibrated_final_irs63.ms | [Opened with scratch model column]
+2025-07-09 15:27:39	INFO	SynthesisImagerVi2::selectData 	  NRows selected : 3850200
+2025-07-09 15:27:42	INFO	SynthesisImagerVi2::defineImage 	Define image coordinates for [irs63_c561_noclean_nomask_stokesU] : 
+2025-07-09 15:27:43	INFO	SynthesisImagerVi2::defineImage 	Impars : start 
+2025-07-09 15:27:43	INFO	SynthesisImagerVi2::defineImage 	Shape : [1024, 1024, 1, 1]Spectral : [3.43521e+11] at [0] with increment [1.59592e+10]
+2025-07-09 15:27:43	INFO	SynthesisImagerVi2::defineImage 	Set Gridding options for [irs63_c561_noclean_nomask_stokesU] with ftmachine : gridft
+2025-07-09 15:27:43	INFO	SynthesisImagerVi2::weight() 	Set imaging weights : Briggs weighting: sidelobes will be suppressed over full image
+2025-07-09 15:28:05	INFO	VisSetUtil::VisImagingWeight() 	Normal robustness, robust = 0.5
+2025-07-09 15:28:05	INFO	task_tclean::SynthesisDeconvolver::setupDeconvolution 	Set Deconvolution Options for [irs63_c561_noclean_nomask_stokesU] : mtmfs
+2025-07-09 15:28:05	INFO	SynthesisIterBot::setupIteration 	Set Iteration Control Options
+2025-07-09 15:28:05	INFO	task_tclean::SynthesisImager::makePSF 	----------------------------------------------------------- Make PSF ---------------------------------------------
+2025-07-09 15:28:49	INFO	task_tclean::SIImageStoreMultiTerm::calcSensitivity 	Multi-Term Hessian Matrix : Axis Lengths: [1, 1]  (NB: Matrix in Row/Column order)
+2025-07-09 15:28:49	INFO	task_tclean::SIImageStoreMultiTerm::calcSensitivity +	[7.33095e+09]
+2025-07-09 15:28:49	INFO	task_tclean::SIImageStoreMultiTerm::calcSensitivity 	Multi-Term Covariance Matrix : Axis Lengths: [1, 1]  (NB: Matrix in Row/Column order)
+2025-07-09 15:28:49	INFO	task_tclean::SIImageStoreMultiTerm::calcSensitivity +	[1.36408e-10]
+2025-07-09 15:28:49	INFO	task_tclean::SIImageStoreMultiTerm::calcSensitivity 	[irs63_c561_noclean_nomask_stokesU][Taylor0] Theoretical sensitivity (Jy/bm):1.16794e-05
+2025-07-09 15:28:49	INFO	task_tclean::SIImageStoreMultiTerm::calcFractionalBandwidth 	MFS frequency range : 335.542 GHz -> 351.501GHz.Fractional Bandwidth : 4.64578 %.Reference Frequency for Taylor Expansion : 343.521GHz.
+2025-07-09 15:28:49	INFO	task_tclean::SIImageStore::printBeamSet 	Beam : 0.280604 arcsec, 0.171454 arcsec, -81.0524 deg
+2025-07-09 15:28:49	INFO	task_tclean::SynthesisImagerVi2::makePrimaryBeam 	vi2 : Evaluating Primary Beam model onto image grid(s)
+2025-07-09 15:28:51	INFO	task_tclean::SynthesisImager::executeMajorCycle 	----------------------------------------------------------- Run Major Cycle 1 -------------------------------------
+2025-07-09 15:29:44	INFO	task_tclean::SIImageStoreMultiTerm::printImageStats 	[irs63_c561_noclean_nomask_stokesU] Peak residual (max,min) within mask : (0,9356.56) over full image : (0.000129234,-0.000444013)
+2025-07-09 15:29:44	INFO	task_tclean::SIImageStoreMultiTerm::printImageStats 	[irs63_c561_noclean_nomask_stokesU] Total Model Flux : 0(tt0)
+2025-07-09 15:29:44	INFO	task_tclean::SynthesisDeconvolver::setupMask 	[irs63_c561_noclean_nomask_stokesU] Setting up a mask from [ ]
+2025-07-09 15:29:44	INFO	task_tclean::CasacRegionManager::fromBCS	No directional region specified. Using full positional plane.
+2025-07-09 15:29:44	INFO	task_tclean::CasacRegionManager::fromBCS	Using all spectral channels.
+2025-07-09 15:29:44	INFO	task_tclean::CasacRegionManager::fromBCS	Using polarizations ALL
+2025-07-09 15:29:44	INFO	task_tclean::::	You've specified explicitly that the spectral axis should be regridded. However, the input image has a degenerate spectral axis and so it cannot be regridded. Instead, the resulting single output channel will be replicated 1 times in the output image.
+2025-07-09 15:29:44	INFO	task_tclean::ImageMaskAttacher::makeMask	Created and initialized mask `mask0'
+2025-07-09 15:29:44	INFO	task_tclean::SDMaskHandler::fillMask 	IT'S A CONCATImage
+2025-07-09 15:29:44	INFO	task_tclean::SDMaskHandler::fillMask 	Reading text mask:  
+2025-07-09 15:29:44	SEVERE	task_tclean::SDMaskHandler::regionTextToImageRegion (file ../../synthesis/ImagerObjects/SDMaskHandler.cc, line 490)	Exception: Input mask, ' ' does not exist if it is inteded as a mask file name.Or invalid CRTF syntax if it is intended as a direct region specification.
+2025-07-09 15:29:44	INFO	task_tclean::SynthesisDeconvolver::setupMask 	----------------------------------------------------------------------------------------------------------------------------------------
+2025-07-09 15:29:44	INFO	task_tclean::SynthesisDeconvolver::setupMask 	[irs63_c561_noclean_nomask_stokesU] Number of pixels in the clean mask : 0 out of a total of 1.04858e+06 pixels. [ 0 % ]
+2025-07-09 15:29:44	INFO	task_tclean::SIImageStoreMultiTerm::printImageStats 	[irs63_c561_noclean_nomask_stokesU] Peak residual (max,min) over full image : (0.000129234,-0.000444013)
+2025-07-09 15:29:44	INFO	task_tclean::SIImageStoreMultiTerm::printImageStats 	[irs63_c561_noclean_nomask_stokesU] Total Model Flux : 0(tt0)
+2025-07-09 15:29:44	INFO	tclean::::	Reached global stopping criterion : zero mask
+2025-07-09 15:29:44	INFO	MultiTermMatrixCleaner::verifyScaleSizes() 	Scale sizes to be used for deconvolution : [0]
+2025-07-09 15:29:44	INFO	MultiTermMatrixCleaner::initialise() 	Using a PSF patch of 80 pixels on each side for minor-cycle updates.
+2025-07-09 15:29:44	INFO	MatrixCleaner::validatePsf() 	Peak of PSF = 1 at [512, 512]
+2025-07-09 15:29:44	INFO	MultiTermMatrixCleaner::computeprincipalsolution() 	MTMC :: Computing principal solution on residuals
+2025-07-09 15:29:44	INFO	MultiTermMatrixCleaner::computeHessianPeak 	Calculating PSF and Scale convolutions 
+2025-07-09 15:29:44	INFO	MultiTermMatrixCleaner::computeHessianPeak 	The Matrix [H] for 0 pixel scale is : Axis Lengths: [1, 1]  (NB: Matrix in Row/Column order)
+2025-07-09 15:29:44	INFO	MultiTermMatrixCleaner::computeHessianPeak +	[1]
+2025-07-09 15:29:44	INFO	SDAlgorithmBase::restore 	[irs63_c561_noclean_nomask_stokesU] : Restoring model image.
+2025-07-09 15:29:44	WARN	SIImageStore::restore (file ../../synthesis/ImagerObjects/SIImageStore.cc, line 2068)	Restoring with an empty model image. Only residuals will be processed to form the output restored image.
+2025-07-09 15:29:44	INFO	SIImageStore::restore 	Beam for chan : 0 : 0.280604 arcsec, 0.171454 arcsec, -81.0524 deg
+2025-07-09 15:29:44	INFO	SIImageStoreMultiTerm::calculateAlphaBeta 	Alpha and Beta images will not be computed for images that contain anything other than stokes I in them.
+2025-07-09 15:29:45	WARN	tclean::task_tclean::	Please check the casa log file for a message confirming that the model was saved after the last major cycle. If it doesn't exist, please re-run tclean with niter=0,calcres=False,calcpsf=False in order to trigger a 'predict model' step that obeys the savemodel parameter.
+2025-07-09 15:29:45	INFO	tclean::::	##### End Task: tclean               #####
+2025-07-09 15:29:45	INFO	tclean::::+	##########################################
+2025-07-09 15:31:47	INFO	tclean::::	
+2025-07-09 15:31:47	INFO	tclean::::+	##########################################
+2025-07-09 15:31:47	INFO	tclean::::+	##### Begin Task: tclean             #####
+2025-07-09 15:31:47	INFO	tclean::::	tclean(vis="calibrated_final_irs63_c561_p3.ms",selectdata=True,field="",spw="",timerange="",
+2025-07-09 15:31:47	INFO	tclean::::+	        uvrange="",antenna="",scan="",observation="",intent="",
+2025-07-09 15:31:47	INFO	tclean::::+	        datacolumn="corrected",imagename="irs63_c561_p3_stokesQ",imsize=[1024, 1024],cell="0.018arcsec",phasecenter="",
+2025-07-09 15:31:47	INFO	tclean::::+	        stokes="Q",projection="SIN",startmodel="",specmode="mfs",reffreq="",
+2025-07-09 15:31:47	INFO	tclean::::+	        nchan=-1,start="",width="",outframe="LSRK",veltype="radio",
+2025-07-09 15:31:47	INFO	tclean::::+	        restfreq=[],interpolation="linear",perchanweightdensity=True,gridder="standard",facets=1,
+2025-07-09 15:31:47	INFO	tclean::::+	        psfphasecenter="",chanchunks=1,wprojplanes=1,vptable="",mosweight=True,
+2025-07-09 15:31:47	INFO	tclean::::+	        aterm=True,psterm=False,wbawp=True,conjbeams=False,cfcache="",
+2025-07-09 15:31:47	INFO	tclean::::+	        usepointing=False,computepastep=360.0,rotatepastep=360.0,pointingoffsetsigdev=0.0,pblimit=-0.2,
+2025-07-09 15:31:47	INFO	tclean::::+	        normtype="flatnoise",deconvolver="mtmfs",scales=[],nterms=1,smallscalebias=0.0,
+2025-07-09 15:31:47	INFO	tclean::::+	        restoration=True,restoringbeam=[],pbcor=False,outlierfile="",weighting="briggs",
+2025-07-09 15:31:47	INFO	tclean::::+	        robust=0.5,noise="1.0Jy",npixels=0,uvtaper=[],niter=10000,
+2025-07-09 15:31:47	INFO	tclean::::+	        gain=0.1,threshold="0.05mJy",nsigma=0.0,cycleniter=-1,cyclefactor=1.0,
+2025-07-09 15:31:47	INFO	tclean::::+	        minpsffraction=0.05,maxpsffraction=0.8,interactive=False,usemask="user",mask=" ",
+2025-07-09 15:31:47	INFO	tclean::::+	        pbmask=0.0,sidelobethreshold=3.0,noisethreshold=5.0,lownoisethreshold=1.5,negativethreshold=0.0,
+2025-07-09 15:31:47	INFO	tclean::::+	        smoothfactor=1.0,minbeamfrac=0.3,cutthreshold=0.01,growiterations=75,dogrowprune=True,
+2025-07-09 15:31:47	INFO	tclean::::+	        minpercentchange=-1.0,verbose=False,fastnoise=True,restart=True,savemodel="modelcolumn",
+2025-07-09 15:31:47	INFO	tclean::::+	        calcres=True,calcpsf=True,parallel=False)
+2025-07-09 15:31:47	INFO	tclean::::	Verifying Input Parameters
+2025-07-09 15:31:47	INFO		Clearing all model records in MS header.
+2025-07-09 15:31:47	INFO	SynthesisImagerVi2::selectData 	MS : calibrated_final_irs63_c561_p3.ms | [Opened with scratch model column]
+2025-07-09 15:31:48	INFO	SynthesisImagerVi2::selectData 	  NRows selected : 3850200
+2025-07-09 15:31:50	INFO	SynthesisImagerVi2::defineImage 	Define image coordinates for [irs63_c561_p3_stokesQ] : 
+2025-07-09 15:31:51	INFO	SynthesisImagerVi2::defineImage 	Impars : start 
+2025-07-09 15:31:51	INFO	SynthesisImagerVi2::defineImage 	Shape : [1024, 1024, 1, 1]Spectral : [3.43521e+11] at [0] with increment [1.59592e+10]
+2025-07-09 15:31:51	INFO	SynthesisImagerVi2::defineImage 	Set Gridding options for [irs63_c561_p3_stokesQ] with ftmachine : gridft
+2025-07-09 15:31:51	INFO	SynthesisImagerVi2::weight() 	Set imaging weights : Briggs weighting: sidelobes will be suppressed over full image
+2025-07-09 15:32:16	INFO	VisSetUtil::VisImagingWeight() 	Normal robustness, robust = 0.5
+2025-07-09 15:32:16	INFO	task_tclean::SynthesisDeconvolver::setupDeconvolution 	Set Deconvolution Options for [irs63_c561_p3_stokesQ] : mtmfs
+2025-07-09 15:32:16	INFO	SynthesisIterBot::setupIteration 	Set Iteration Control Options
+2025-07-09 15:32:16	INFO	task_tclean::SynthesisImager::makePSF 	----------------------------------------------------------- Make PSF ---------------------------------------------
+2025-07-09 15:33:00	INFO	task_tclean::SIImageStoreMultiTerm::calcSensitivity 	Multi-Term Hessian Matrix : Axis Lengths: [1, 1]  (NB: Matrix in Row/Column order)
+2025-07-09 15:33:00	INFO	task_tclean::SIImageStoreMultiTerm::calcSensitivity +	[7.37169e+09]
+2025-07-09 15:33:00	INFO	task_tclean::SIImageStoreMultiTerm::calcSensitivity 	Multi-Term Covariance Matrix : Axis Lengths: [1, 1]  (NB: Matrix in Row/Column order)
+2025-07-09 15:33:00	INFO	task_tclean::SIImageStoreMultiTerm::calcSensitivity +	[1.35654e-10]
+2025-07-09 15:33:00	INFO	task_tclean::SIImageStoreMultiTerm::calcSensitivity 	[irs63_c561_p3_stokesQ][Taylor0] Theoretical sensitivity (Jy/bm):1.16471e-05
+2025-07-09 15:33:00	INFO	task_tclean::SIImageStoreMultiTerm::calcFractionalBandwidth 	MFS frequency range : 335.542 GHz -> 351.501GHz.Fractional Bandwidth : 4.64578 %.Reference Frequency for Taylor Expansion : 343.521GHz.
+2025-07-09 15:33:00	INFO	task_tclean::SIImageStore::printBeamSet 	Beam : 0.281661 arcsec, 0.171967 arcsec, -81.2044 deg
+2025-07-09 15:33:00	INFO	task_tclean::SynthesisImagerVi2::makePrimaryBeam 	vi2 : Evaluating Primary Beam model onto image grid(s)
+2025-07-09 15:33:02	INFO	task_tclean::SynthesisImager::executeMajorCycle 	----------------------------------------------------------- Run Major Cycle 1 -------------------------------------
+2025-07-09 15:34:11	INFO	task_tclean::SIImageStoreMultiTerm::printImageStats 	[irs63_c561_p3_stokesQ] Peak residual (max,min) within mask : (0,19190.9) over full image : (0.00162113,-0.000225331)
+2025-07-09 15:34:11	INFO	task_tclean::SIImageStoreMultiTerm::printImageStats 	[irs63_c561_p3_stokesQ] Total Model Flux : 0(tt0)
+2025-07-09 15:34:11	INFO	task_tclean::SynthesisDeconvolver::setupMask 	[irs63_c561_p3_stokesQ] Setting up a mask from [ ]
+2025-07-09 15:34:12	INFO	task_tclean::CasacRegionManager::fromBCS	No directional region specified. Using full positional plane.
+2025-07-09 15:34:12	INFO	task_tclean::CasacRegionManager::fromBCS	Using all spectral channels.
+2025-07-09 15:34:12	INFO	task_tclean::CasacRegionManager::fromBCS	Using polarizations ALL
+2025-07-09 15:34:12	INFO	task_tclean::::	You've specified explicitly that the spectral axis should be regridded. However, the input image has a degenerate spectral axis and so it cannot be regridded. Instead, the resulting single output channel will be replicated 1 times in the output image.
+2025-07-09 15:34:12	INFO	task_tclean::ImageMaskAttacher::makeMask	Created and initialized mask `mask0'
+2025-07-09 15:34:12	INFO	task_tclean::SDMaskHandler::fillMask 	IT'S A CONCATImage
+2025-07-09 15:34:12	INFO	task_tclean::SDMaskHandler::fillMask 	Reading text mask:  
+2025-07-09 15:34:12	SEVERE	task_tclean::SDMaskHandler::regionTextToImageRegion (file ../../synthesis/ImagerObjects/SDMaskHandler.cc, line 490)	Exception: Input mask, ' ' does not exist if it is inteded as a mask file name.Or invalid CRTF syntax if it is intended as a direct region specification.
+2025-07-09 15:34:12	INFO	task_tclean::SynthesisDeconvolver::setupMask 	----------------------------------------------------------------------------------------------------------------------------------------
+2025-07-09 15:34:12	INFO	task_tclean::SynthesisDeconvolver::setupMask 	[irs63_c561_p3_stokesQ] Number of pixels in the clean mask : 0 out of a total of 1.04858e+06 pixels. [ 0 % ]
+2025-07-09 15:34:12	INFO	task_tclean::SIImageStoreMultiTerm::printImageStats 	[irs63_c561_p3_stokesQ] Peak residual (max,min) over full image : (0.00162113,-0.000225331)
+2025-07-09 15:34:12	INFO	task_tclean::SIImageStoreMultiTerm::printImageStats 	[irs63_c561_p3_stokesQ] Total Model Flux : 0(tt0)
+2025-07-09 15:34:12	INFO	tclean::::	Reached global stopping criterion : zero mask
+2025-07-09 15:34:12	INFO	MultiTermMatrixCleaner::verifyScaleSizes() 	Scale sizes to be used for deconvolution : [0]
+2025-07-09 15:34:12	INFO	MultiTermMatrixCleaner::initialise() 	Using a PSF patch of 80 pixels on each side for minor-cycle updates.
+2025-07-09 15:34:12	INFO	MatrixCleaner::validatePsf() 	Peak of PSF = 1 at [512, 512]
+2025-07-09 15:34:12	INFO	MultiTermMatrixCleaner::computeprincipalsolution() 	MTMC :: Computing principal solution on residuals
+2025-07-09 15:34:12	INFO	MultiTermMatrixCleaner::computeHessianPeak 	Calculating PSF and Scale convolutions 
+2025-07-09 15:34:12	INFO	MultiTermMatrixCleaner::computeHessianPeak 	The Matrix [H] for 0 pixel scale is : Axis Lengths: [1, 1]  (NB: Matrix in Row/Column order)
+2025-07-09 15:34:12	INFO	MultiTermMatrixCleaner::computeHessianPeak +	[1]
+2025-07-09 15:34:12	INFO	SDAlgorithmBase::restore 	[irs63_c561_p3_stokesQ] : Restoring model image.
+2025-07-09 15:34:12	WARN	SIImageStore::restore (file ../../synthesis/ImagerObjects/SIImageStore.cc, line 2068)	Restoring with an empty model image. Only residuals will be processed to form the output restored image.
+2025-07-09 15:34:12	INFO	SIImageStore::restore 	Beam for chan : 0 : 0.281661 arcsec, 0.171967 arcsec, -81.2044 deg
+2025-07-09 15:34:12	INFO	SIImageStoreMultiTerm::calculateAlphaBeta 	Alpha and Beta images will not be computed for images that contain anything other than stokes I in them.
+2025-07-09 15:34:12	WARN	tclean::task_tclean::	Please check the casa log file for a message confirming that the model was saved after the last major cycle. If it doesn't exist, please re-run tclean with niter=0,calcres=False,calcpsf=False in order to trigger a 'predict model' step that obeys the savemodel parameter.
+2025-07-09 15:34:12	INFO	tclean::::	##### End Task: tclean               #####
+2025-07-09 15:34:12	INFO	tclean::::+	##########################################
+2025-07-09 15:35:58	INFO	tclean::::	
+2025-07-09 15:35:58	INFO	tclean::::+	##########################################
+2025-07-09 15:35:58	INFO	tclean::::+	##### Begin Task: tclean             #####
+2025-07-09 15:35:58	INFO	tclean::::	tclean(vis="calibrated_final_irs63_c561_p3.ms",selectdata=True,field="",spw="",timerange="",
+2025-07-09 15:35:58	INFO	tclean::::+	        uvrange="",antenna="",scan="",observation="",intent="",
+2025-07-09 15:35:58	INFO	tclean::::+	        datacolumn="corrected",imagename="irs63_c561_p3_stokesU",imsize=[1024, 1024],cell="0.018arcsec",phasecenter="",
+2025-07-09 15:35:58	INFO	tclean::::+	        stokes="U",projection="SIN",startmodel="",specmode="mfs",reffreq="",
+2025-07-09 15:35:58	INFO	tclean::::+	        nchan=-1,start="",width="",outframe="LSRK",veltype="radio",
+2025-07-09 15:35:58	INFO	tclean::::+	        restfreq=[],interpolation="linear",perchanweightdensity=True,gridder="standard",facets=1,
+2025-07-09 15:35:58	INFO	tclean::::+	        psfphasecenter="",chanchunks=1,wprojplanes=1,vptable="",mosweight=True,
+2025-07-09 15:35:58	INFO	tclean::::+	        aterm=True,psterm=False,wbawp=True,conjbeams=False,cfcache="",
+2025-07-09 15:35:58	INFO	tclean::::+	        usepointing=False,computepastep=360.0,rotatepastep=360.0,pointingoffsetsigdev=0.0,pblimit=-0.2,
+2025-07-09 15:35:58	INFO	tclean::::+	        normtype="flatnoise",deconvolver="mtmfs",scales=[],nterms=1,smallscalebias=0.0,
+2025-07-09 15:35:58	INFO	tclean::::+	        restoration=True,restoringbeam=[],pbcor=False,outlierfile="",weighting="briggs",
+2025-07-09 15:35:58	INFO	tclean::::+	        robust=0.5,noise="1.0Jy",npixels=0,uvtaper=[],niter=10000,
+2025-07-09 15:35:58	INFO	tclean::::+	        gain=0.1,threshold="0.05mJy",nsigma=0.0,cycleniter=-1,cyclefactor=1.0,
+2025-07-09 15:35:58	INFO	tclean::::+	        minpsffraction=0.05,maxpsffraction=0.8,interactive=False,usemask="user",mask=" ",
+2025-07-09 15:35:58	INFO	tclean::::+	        pbmask=0.0,sidelobethreshold=3.0,noisethreshold=5.0,lownoisethreshold=1.5,negativethreshold=0.0,
+2025-07-09 15:35:58	INFO	tclean::::+	        smoothfactor=1.0,minbeamfrac=0.3,cutthreshold=0.01,growiterations=75,dogrowprune=True,
+2025-07-09 15:35:58	INFO	tclean::::+	        minpercentchange=-1.0,verbose=False,fastnoise=True,restart=True,savemodel="modelcolumn",
+2025-07-09 15:35:58	INFO	tclean::::+	        calcres=True,calcpsf=True,parallel=False)
+2025-07-09 15:35:58	INFO	tclean::::	Verifying Input Parameters
+2025-07-09 15:35:58	INFO		Clearing all model records in MS header.
+2025-07-09 15:35:58	INFO	SynthesisImagerVi2::selectData 	MS : calibrated_final_irs63_c561_p3.ms | [Opened with scratch model column]
+2025-07-09 15:35:59	INFO	SynthesisImagerVi2::selectData 	  NRows selected : 3850200
+2025-07-09 15:36:01	INFO	SynthesisImagerVi2::defineImage 	Define image coordinates for [irs63_c561_p3_stokesU] : 
+2025-07-09 15:36:02	INFO	SynthesisImagerVi2::defineImage 	Impars : start 
+2025-07-09 15:36:02	INFO	SynthesisImagerVi2::defineImage 	Shape : [1024, 1024, 1, 1]Spectral : [3.43521e+11] at [0] with increment [1.59592e+10]
+2025-07-09 15:36:02	INFO	SynthesisImagerVi2::defineImage 	Set Gridding options for [irs63_c561_p3_stokesU] with ftmachine : gridft
+2025-07-09 15:36:02	INFO	SynthesisImagerVi2::weight() 	Set imaging weights : Briggs weighting: sidelobes will be suppressed over full image
+2025-07-09 15:36:24	INFO	VisSetUtil::VisImagingWeight() 	Normal robustness, robust = 0.5
+2025-07-09 15:36:24	INFO	task_tclean::SynthesisDeconvolver::setupDeconvolution 	Set Deconvolution Options for [irs63_c561_p3_stokesU] : mtmfs
+2025-07-09 15:36:24	INFO	SynthesisIterBot::setupIteration 	Set Iteration Control Options
+2025-07-09 15:36:24	INFO	task_tclean::SynthesisImager::makePSF 	----------------------------------------------------------- Make PSF ---------------------------------------------
+2025-07-09 15:37:08	INFO	task_tclean::SIImageStoreMultiTerm::calcSensitivity 	Multi-Term Hessian Matrix : Axis Lengths: [1, 1]  (NB: Matrix in Row/Column order)
+2025-07-09 15:37:08	INFO	task_tclean::SIImageStoreMultiTerm::calcSensitivity +	[7.37169e+09]
+2025-07-09 15:37:08	INFO	task_tclean::SIImageStoreMultiTerm::calcSensitivity 	Multi-Term Covariance Matrix : Axis Lengths: [1, 1]  (NB: Matrix in Row/Column order)
+2025-07-09 15:37:08	INFO	task_tclean::SIImageStoreMultiTerm::calcSensitivity +	[1.35654e-10]
+2025-07-09 15:37:08	INFO	task_tclean::SIImageStoreMultiTerm::calcSensitivity 	[irs63_c561_p3_stokesU][Taylor0] Theoretical sensitivity (Jy/bm):1.16471e-05
+2025-07-09 15:37:08	INFO	task_tclean::SIImageStoreMultiTerm::calcFractionalBandwidth 	MFS frequency range : 335.542 GHz -> 351.501GHz.Fractional Bandwidth : 4.64578 %.Reference Frequency for Taylor Expansion : 343.521GHz.
+2025-07-09 15:37:08	INFO	task_tclean::SIImageStore::printBeamSet 	Beam : 0.281661 arcsec, 0.171967 arcsec, -81.2044 deg
+2025-07-09 15:37:08	INFO	task_tclean::SynthesisImagerVi2::makePrimaryBeam 	vi2 : Evaluating Primary Beam model onto image grid(s)
+2025-07-09 15:37:10	INFO	task_tclean::SynthesisImager::executeMajorCycle 	----------------------------------------------------------- Run Major Cycle 1 -------------------------------------
+2025-07-09 15:38:03	INFO	task_tclean::SIImageStoreMultiTerm::printImageStats 	[irs63_c561_p3_stokesU] Peak residual (max,min) within mask : (0,1.86649) over full image : (0.000129678,-0.000467256)
+2025-07-09 15:38:03	INFO	task_tclean::SIImageStoreMultiTerm::printImageStats 	[irs63_c561_p3_stokesU] Total Model Flux : 0(tt0)
+2025-07-09 15:38:03	INFO	task_tclean::SynthesisDeconvolver::setupMask 	[irs63_c561_p3_stokesU] Setting up a mask from [ ]
+2025-07-09 15:38:03	INFO	task_tclean::CasacRegionManager::fromBCS	No directional region specified. Using full positional plane.
+2025-07-09 15:38:03	INFO	task_tclean::CasacRegionManager::fromBCS	Using all spectral channels.
+2025-07-09 15:38:03	INFO	task_tclean::CasacRegionManager::fromBCS	Using polarizations ALL
+2025-07-09 15:38:03	INFO	task_tclean::::	You've specified explicitly that the spectral axis should be regridded. However, the input image has a degenerate spectral axis and so it cannot be regridded. Instead, the resulting single output channel will be replicated 1 times in the output image.
+2025-07-09 15:38:03	INFO	task_tclean::ImageMaskAttacher::makeMask	Created and initialized mask `mask0'
+2025-07-09 15:38:03	INFO	task_tclean::SDMaskHandler::fillMask 	IT'S A CONCATImage
+2025-07-09 15:38:03	INFO	task_tclean::SDMaskHandler::fillMask 	Reading text mask:  
+2025-07-09 15:38:03	SEVERE	task_tclean::SDMaskHandler::regionTextToImageRegion (file ../../synthesis/ImagerObjects/SDMaskHandler.cc, line 490)	Exception: Input mask, ' ' does not exist if it is inteded as a mask file name.Or invalid CRTF syntax if it is intended as a direct region specification.
+2025-07-09 15:38:03	INFO	task_tclean::SynthesisDeconvolver::setupMask 	----------------------------------------------------------------------------------------------------------------------------------------
+2025-07-09 15:38:03	INFO	task_tclean::SynthesisDeconvolver::setupMask 	[irs63_c561_p3_stokesU] Number of pixels in the clean mask : 0 out of a total of 1.04858e+06 pixels. [ 0 % ]
+2025-07-09 15:38:03	INFO	task_tclean::SIImageStoreMultiTerm::printImageStats 	[irs63_c561_p3_stokesU] Peak residual (max,min) over full image : (0.000129678,-0.000467256)
+2025-07-09 15:38:03	INFO	task_tclean::SIImageStoreMultiTerm::printImageStats 	[irs63_c561_p3_stokesU] Total Model Flux : 0(tt0)
+2025-07-09 15:38:03	INFO	tclean::::	Reached global stopping criterion : zero mask
+2025-07-09 15:38:03	INFO	MultiTermMatrixCleaner::verifyScaleSizes() 	Scale sizes to be used for deconvolution : [0]
+2025-07-09 15:38:03	INFO	MultiTermMatrixCleaner::initialise() 	Using a PSF patch of 80 pixels on each side for minor-cycle updates.
+2025-07-09 15:38:03	INFO	MatrixCleaner::validatePsf() 	Peak of PSF = 1 at [512, 512]
+2025-07-09 15:38:03	INFO	MultiTermMatrixCleaner::computeprincipalsolution() 	MTMC :: Computing principal solution on residuals
+2025-07-09 15:38:03	INFO	MultiTermMatrixCleaner::computeHessianPeak 	Calculating PSF and Scale convolutions 
+2025-07-09 15:38:03	INFO	MultiTermMatrixCleaner::computeHessianPeak 	The Matrix [H] for 0 pixel scale is : Axis Lengths: [1, 1]  (NB: Matrix in Row/Column order)
+2025-07-09 15:38:03	INFO	MultiTermMatrixCleaner::computeHessianPeak +	[1]
+2025-07-09 15:38:03	INFO	SDAlgorithmBase::restore 	[irs63_c561_p3_stokesU] : Restoring model image.
+2025-07-09 15:38:03	WARN	SIImageStore::restore (file ../../synthesis/ImagerObjects/SIImageStore.cc, line 2068)	Restoring with an empty model image. Only residuals will be processed to form the output restored image.
+2025-07-09 15:38:03	INFO	SIImageStore::restore 	Beam for chan : 0 : 0.281661 arcsec, 0.171967 arcsec, -81.2044 deg
+2025-07-09 15:38:03	INFO	SIImageStoreMultiTerm::calculateAlphaBeta 	Alpha and Beta images will not be computed for images that contain anything other than stokes I in them.
+2025-07-09 15:38:04	WARN	tclean::task_tclean::	Please check the casa log file for a message confirming that the model was saved after the last major cycle. If it doesn't exist, please re-run tclean with niter=0,calcres=False,calcpsf=False in order to trigger a 'predict model' step that obeys the savemodel parameter.
+2025-07-09 15:38:04	INFO	tclean::::	##### End Task: tclean               #####
+2025-07-09 15:38:04	INFO	tclean::::+	##########################################
+2025-07-09 15:39:33	INFO	tclean::utils::verify	Verifying arguments....File existence checking failed for vis calibaryed_final_irs63_c561_p5.ms
+2025-07-09 15:39:33	WARN	tclean::utils::verify	Argument vis failed to verify.
+2025-07-09 15:39:33	SEVERE	tclean::::	An error occurred running task tclean.

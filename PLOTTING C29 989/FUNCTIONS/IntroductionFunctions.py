@@ -104,7 +104,7 @@ def generate_polarization_vectors_band47(ny, nx,
                                          StokesI_mJy, 
                                          POLI_mJy, POLI_err_mJy,
                                          PA_real_sky_rad, PA_err_deg,
-                                         band):
+                                         band, step = None, vector_len_pix = None):
     """
     Generates polarization vectors for different grid configurations and calculates the Stokes U and Q grids.
 
@@ -123,7 +123,7 @@ def generate_polarization_vectors_band47(ny, nx,
     vector_data_actual_cartesian, vector_angle_actual_sky = make_vectors_band47(ny, nx,  
                                                                                 POLI_mJy, POLI_err_mJy,
                                                                                 PA_real_sky_rad, PA_err_deg,
-                                                                                band)
+                                                                                band, step, vector_len_pix)
     
     # Make the PA grids for uniform and Azimuthal
     PA_grid_100Uniform   = make_PA_grid_100Uniform(ny,   nx, uniform_angle)
@@ -133,13 +133,13 @@ def generate_polarization_vectors_band47(ny, nx,
     vector_data_100Uniform_cartesian, vector_angle_100Uniform_sky = make_vectors_band47(ny, nx,  
                                                                                        POLI_mJy, POLI_err_mJy,
                                                                                        PA_grid_100Uniform, PA_err_deg,
-                                                                                       band)
+                                                                                       band, step, vector_len_pix)
     
     # Get the vector and angle data for the 100 Azimuthal case 
     vector_data_100Azimuthal_cartesian, vector_angle_100Azimuthal_sky = make_vectors_band47(ny, nx,  
                                                                                            POLI_mJy, POLI_err_mJy,
                                                                                            PA_grid_100Azimuthal, PA_err_deg,
-                                                                                           band)
+                                                                                           band, step, vector_len_pix)
     
     # Get Stokes Q and U grids
     StokesQ_grid_100Uniform,   StokesU_grid_100Uniform   = recover_StokesQU(PA_grid_100Uniform,   StokesI_mJy, ny, nx)
@@ -171,7 +171,7 @@ def generate_polarization_vectors_band6(ny, nx,
                                         uniform_angle,
                                         StokesI_mJy, StokesI_err_mJy,
                                         POLI_mJy, POLI_err_mJy,
-                                        PA_real_sky_rad, PA_err_deg):
+                                        PA_real_sky_rad, PA_err_deg, step = None):
     """
     Generates polarization vectors for different grid configurations and calculates the Stokes U and Q grids.
 

@@ -179,6 +179,36 @@ def ratio_model_band47(StokesQ_grid_100Uniform, StokesU_grid_100Uniform,
         results[f"vectors_angle_{key}"] = vectors_angle
 
     unpacked = unpack_results(results, testing_ratios)
+    
+       # Create clearly named vector data variables
+    PA_grid_100U_0A_rad_sky  = unpacked["1000"]["PA_grid"]
+    PA_grid_90U_10A_rad_sky  = unpacked["9010"]["PA_grid"]
+    PA_grid_80U_20A_rad_sky  = unpacked["8020"]["PA_grid"]
+    PA_grid_70U_30A_rad_sky  = unpacked["7030"]["PA_grid"]
+    PA_grid_60U_40A_rad_sky  = unpacked["6040"]["PA_grid"]
+    PA_grid_50U_50A_rad_sky  = unpacked["5050"]["PA_grid"]
+    PA_grid_40U_60A_rad_sky  = unpacked["4060"]["PA_grid"]
+    PA_grid_30U_70A_rad_sky  = unpacked["3070"]["PA_grid"]
+    PA_grid_20U_80A_rad_sky  = unpacked["2080"]["PA_grid"]
+    PA_grid_10U_90A_rad_sky  = unpacked["1090"]["PA_grid"]
+    PA_grid_0U_100A_rad_sky  = unpacked["0100"]["PA_grid"]
+
+    PA_mixed_grid_ratio_rad_sky = [
+        PA_grid_100U_0A_rad_sky, 
+        PA_grid_90U_10A_rad_sky, 
+        PA_grid_80U_20A_rad_sky, 
+        PA_grid_70U_30A_rad_sky, 
+        PA_grid_60U_40A_rad_sky, 
+        PA_grid_50U_50A_rad_sky, 
+        PA_grid_40U_60A_rad_sky,
+        PA_grid_30U_70A_rad_sky,
+        PA_grid_20U_80A_rad_sky,
+        PA_grid_10U_90A_rad_sky,
+        PA_grid_0U_100A_rad_sky,
+    ]
+    
+    
+    
 
     # Create clearly named vector data variables
     vectors_data_100U_0A_cartesian  = unpacked["1000"]["vectors_data"]
@@ -245,7 +275,7 @@ def ratio_model_band47(StokesQ_grid_100Uniform, StokesU_grid_100Uniform,
     np.array(vectors_angle_0U_100A_rad_astronomy)
     ]
 
-    return vector_data_plotting_grid, vector_data_list_100U_to_100A, testing_vector_angles
+    return PA_mixed_grid_ratio_rad_sky, vector_data_plotting_grid, vector_data_list_100U_to_100A, testing_vector_angles
     
 
     
