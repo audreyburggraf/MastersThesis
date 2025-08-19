@@ -334,7 +334,7 @@ def find_ra_and_dec(ID):
 
 
 # -----------------------------------------------------------------------------------------------------------------------------
-def degrees_to_pixels(ra_deg, dec_deg, head):
+def degrees_to_pixels(ra_deg, dec_deg, header):
     """
     Convert Right Ascension (RA) and Declination (Dec) in degrees to pixel coordinates 
     in a FITS image based on the header.
@@ -356,18 +356,24 @@ def degrees_to_pixels(ra_deg, dec_deg, head):
                - y_pixel (float): Y-coordinate in pixels.
     """
     # Extract header values
-    ra_ref = head['CRVAL1']  # Reference RA in degrees
-    dec_ref = head['CRVAL2']  # Reference Dec in degrees
-    x_ref = head['CRPIX1']  # Reference X pixel
-    y_ref = head['CRPIX2']  # Reference Y pixel
-    ra_inc = np.abs(head['CDELT1'])  # Increment per pixel in RA (degrees/pixel)
-    dec_inc = head['CDELT2']  # Increment per pixel in Dec (degrees/pixel)
+#     ra_ref = header['CRVAL1']  # Reference RA in degrees
+#     dec_ref = header['CRVAL2']  # Reference Dec in degrees
+#     x_ref = header['CRPIX1']  # Reference X pixel
+#     y_ref = header['CRPIX2']  # Reference Y pixel
+#     ra_inc = np.abs(header['CDELT1'])  # Increment per pixel in RA (degrees/pixel)
+#     dec_inc = header['CDELT2']  # Increment per pixel in Dec (degrees/pixel)
 
-    # Calculate pixel coordinates
-    x_pixel = (ra_deg - ra_ref) / ra_inc + x_ref
-    y_pixel = (dec_deg - dec_ref) / dec_inc + y_ref
+#     # Calculate pixel coordinates
+#     x_pixel = (ra_deg - ra_ref) / ra_inc + x_ref
+#     y_pixel = (dec_deg - dec_ref) / dec_inc + y_ref
 
-    return x_pixel, y_pixel
+#     return x_pixel, y_pixel
+
+    wcs = WCS(header)
+    x_pix, y_pix = wcs.wcs_world2pix(ra_deg, dec_deg, 0)
+    return x_pix, y_pix
+
+
 # -----------------------------------------------------------------------------------------------------------------------------
 
 def string_to_pixel(string, wcs):

@@ -59,6 +59,8 @@ def compute_polarization_vector(x, y, PA_grid, band, vector_len_pix = None):
             vector_len_pix = constants.vector_len_pix_band6
         elif band == 'band 4':
             vector_len_pix = constants.vector_len_pix_band4
+        elif band == 'band 5':
+            vector_len_pix = constants.vector_len_pix_band5
         elif band == 'band 7':
             vector_len_pix = constants.vector_len_pix_band7
         else:
@@ -101,6 +103,8 @@ def make_vectors_band47(ny, nx, POLI_mJy, POLI_err_mJy, PA_grid, PA_err_deg, ban
     if step is None:
         if band == 'band 4':
             step = constants.step_band4
+        elif band == 'band 5':
+            step = constants.step_band5
         elif band == 'band 7':
             step = constants.step_band7
         else:
@@ -119,6 +123,7 @@ def make_vectors_band47(ny, nx, POLI_mJy, POLI_err_mJy, PA_grid, PA_err_deg, ban
                 vector_angles_sky.append(PA_rad_sky)
     
     return vectors_cartesian, vector_angles_sky
+
 # --------------------------------------------------------------------------
 def make_vectors_band6(ny, nx, 
                        StokesI_mJy, StokesI_err_mJy, 

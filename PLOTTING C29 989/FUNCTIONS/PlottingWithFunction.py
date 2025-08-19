@@ -33,6 +33,110 @@ text_fs = constants.text_fs
 
 
 
+
+def simple_plot(StokesI_wcs, plotting_data, cbar_label, cmap, 
+                xmin, xmax, ymin, ymax, 
+                text_fs = constants.text_fs , 
+                axis_label_fs = constants.axis_label_fs, 
+                axis_num_fs = constants.axis_num_fs, 
+                cbar_fs = constants.cbar_fs,
+                cbar_num_fs = constants.cbar_num_fs,
+                cbar_orientation = 'vertical',
+                cbar_pad = 0.1,
+                cbar_shrink = 1,
+                fig_size_x = 14,
+                fig_size_y = 12,
+                axis_labels = True,
+                x_label = True,
+                y_label = True,
+                x_num = True,
+                y_num = True,
+                full_axis_labels = True,):
+   
+    
+    # Create a figure with the WCS projection
+    fig, ax = plt.subplots(figsize=(fig_size_x, fig_size_y), subplot_kw={'projection': StokesI_wcs})
+   
+    
+
+    # Add data
+    im = ax.imshow(plotting_data, cmap=cmap)
+
+
+    # Colorbar
+    if cbar_orientation == 'vertical':
+        cbar = fig.colorbar(im, ax=ax, orientation='vertical', pad=cbar_pad, shrink = cbar_shrink)
+        
+    elif cbar_orientation == 'horizontal':
+        cbar = fig.colorbar(im, ax=ax, orientation='horizontal', pad=cbar_pad, shrink = cbar_shrink)
+    
+#     cbar = plt.colorbar(im, ax=ax)
+    cbar.set_label(cbar_label, fontsize=cbar_fs)
+    cbar.ax.tick_params(labelsize=cbar_num_fs, which='major', length=7, direction="in")
+    cbar.ax.tick_params(which='minor', length=4, direction="in")
+
+    # Add axis labels
+    # Add x-axis label or remove it
+    if x_label == True:
+        if full_axis_labels == True:
+            ax.set_xlabel('Right Ascension', fontsize=axis_label_fs)
+        else:
+            ax.set_xlabel('RA', fontsize=axis_label_fs)
+    else:
+        ax.set_xlabel('')  # This removes the label text
+        
+    # Add x-axis label or remove it
+    if y_label == True:
+        if full_axis_labels == True:
+            ax.set_ylabel('Declination', fontsize=axis_label_fs)
+        else:
+            ax.set_ylabel('Dec', fontsize=axis_label_fs)
+    else:
+        ax.set_ylabel('')  # This removes the label text
+
+        
+   
+
+    # Set x and y limits
+    ax.set_xlim(xmin, xmax)
+    ax.set_ylim(ymin, ymax)
+
+
+    # Adjust ticks
+    ax.minorticks_on()
+   #  ax.tick_params(axis="x", which="major", direction="in", bottom=True, top=True, length=7, labelsize=axis_num_fs)
+    # ax.tick_params(axis="y", which="major", direction="in", bottom=True, top=True, length=7, labelsize=axis_num_fs)
+   
+        
+        
+    # Turn off x-axis labels but keep ticks
+    # X-axis
+    if x_num == True:
+        ax.tick_params(axis="x", which="major", direction="in", bottom=True, top=True,
+                       length=7, labelsize=axis_num_fs)
+    else:
+        # Keep ticks but hide labels
+        ax.tick_params(axis="x", which="major", direction="in", bottom=True, top=True,
+                       length=7, labelsize=0)
+
+    # Y-axis
+    if y_num == True:
+        ax.tick_params(axis="y", which="major", direction="in", left=True, right=True,
+                       length=7, labelsize=axis_num_fs)
+    else:
+        # Keep ticks but hide labels
+        ax.tick_params(axis="y", which="major", direction="in", left=True, right=True,
+                       length=7, labelsize=0)
+
+
+
+
+    return fig, ax
+# ---------------------------------------------------------------------------------------------
+
+
+
+
 # Function to make StokesI normalized colorbar ticks 
 # -----------------------------------------------------------------------------------------
 def normalize_stokesI_for_cmap(StokesI_data_2d_mJy, custom_min=None, custom_max=None, base=100):

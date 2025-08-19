@@ -96,6 +96,31 @@ def get_plotting_parameters(StokesI_header, StokesI_wcs, band):
     return BMAJ_deg, BMIN_deg, BMAJ_pix, BMIN_pix, BPA_deg_cartesian, reference_length_pix, RA_centre_pix, Dec_centre_pix, xmin, xmax, ymin, ymax
 
 
+# --------------------------------------------------------------------------------------------    
+def reccomended_step_count(StokesI_header):
+    # Niquist sampling says: sampling distance is no larger than half the size of the beam
+
+    # Extract beam sizes in degrees from header and convert to arcseconds
+    bmaj_arcsec = deg_to_arcsec(StokesI_header["BMAJ"])
+    bmin_arcsec = deg_to_arcsec(StokesI_header["BMIN"])
+
+    # Extract pixel scale (CDELT1) and convert to arcseconds/pixel
+    pixscale_arcsec = deg_to_arcsec(abs(StokesI_header["CDELT1"]))  # arcsec/pixel
+
+    # Convert beam size to pixels
+    bmaj_pix = bmaj_arcsec / pixscale_arcsec
+    bmin_pix = bmin_arcsec / pixscale_arcsec
+    beam_pix = np.sqrt(bmaj_pix * bmin_pix)
+
+    # Sampling recommendation
+    sampling_step = round(beam_pix/2)
+    print(f"Recommended sampling step: every {sampling_step} pixels")
+# -------------------------------------------------------------------------------------------- 
+
+
+
+
+
 
 
 def generate_polarization_vectors_band47(ny, nx,
@@ -104,7 +129,8 @@ def generate_polarization_vectors_band47(ny, nx,
                                          StokesI_mJy, 
                                          POLI_mJy, POLI_err_mJy,
                                          PA_real_sky_rad, PA_err_deg,
-                                         band, step = None, vector_len_pix = None):
+                                         band, 
+                                         step = None, vector_len_pix = None):
     """
     Generates polarization vectors for different grid configurations and calculates the Stokes U and Q grids.
 
@@ -118,6 +144,9 @@ def generate_polarization_vectors_band47(ny, nx,
     Returns:
     - A dictionary containing the vector and angle data for different grid configurations, as well as the Stokes Q and U grids.
     """
+    
+    
+    
     
     # Get vector and angles for the actual data
     vector_data_actual_cartesian, vector_angle_actual_sky = make_vectors_band47(ny, nx,  
@@ -231,5 +260,11 @@ def generate_polarization_vectors_band6(ny, nx,
  
     
     
+
+    
+    
+    
+
+   
     
     
