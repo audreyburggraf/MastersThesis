@@ -26,8 +26,8 @@ from IntroductionFunctions import *
 
 # Define file paths
 StokesI_file = band7_nterms2_data_folder_path + "IRS63_BAND7_StokesI_clean_nopbcorr.fits"
-StokesQ_file = band7_nterms2_data_folder_path + "IRS63_BAND7_StokesU_clean_nopbcorr.fits"
-StokesU_file = band7_nterms2_data_folder_path + "IRS63_BAND7_StokesQ_clean_nopbcorr.fits"
+StokesQ_file = band7_nterms2_data_folder_path + "IRS63_BAND7_StokesQ_clean_nopbcorr.fits"
+StokesU_file = band7_nterms2_data_folder_path + "IRS63_BAND7_StokesU_clean_nopbcorr.fits"
 
 
 # Stokes I

@@ -168,6 +168,11 @@ def run_slices(data, StokesI_header, StokesI_wcs, carta_minor_data, carta_major_
         major_angle_rad_cartesian = constants.major_angle_rad_cartesian_band6
         minor_angle_rad_cartesian = constants.minor_angle_rad_cartesian_band6
         line_length_arcsec = 1.4
+    elif band == 5:
+        centre_str = constants.centre_str_band5
+        major_angle_rad_cartesian = constants.major_angle_rad_cartesian_band5
+        minor_angle_rad_cartesian = constants.minor_angle_rad_cartesian_band5
+        line_length_arcsec = 1.8  # Adjust this if needed for Band 5
     elif band == 4:
         centre_str = constants.centre_str_band4
         major_angle_rad_cartesian = constants.major_angle_rad_cartesian_band4
@@ -177,9 +182,9 @@ def run_slices(data, StokesI_header, StokesI_wcs, carta_minor_data, carta_major_
         centre_str = constants.centre_str_band7
         major_angle_rad_cartesian = constants.major_angle_rad_cartesian_band7
         minor_angle_rad_cartesian = constants.minor_angle_rad_cartesian_band7
-        line_length_arcsec = 1.4  # Adjust this if needed for Band 4
+        line_length_arcsec = 2.0  # Adjust this if needed for Band 7
     else:
-        raise ValueError("Unsupported band. Only Band 4, Band 6 and Band 7 are currently supported.")
+        raise ValueError("Unsupported band. Only Band 4, Band 5, Band 6 and Band 7 are currently supported.")
         
     
 

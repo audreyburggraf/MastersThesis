@@ -276,10 +276,12 @@ def run_gaussian_model_band47(theta_rad, phi_values, BMAJ_values_pix, BMIN_value
     if step is None:
         if band == 'band 4':
             step = constants.step_band4
+        elif band == 'band 5':
+            step = constants.step_band5
         elif band == 'band 7':
              step = constants.step_band7
         else:
-            raise ValueError("Unsupported band. Only Band 4 and Band 7 are currently supported.")
+            raise ValueError("Unsupported band. Only Band 4 , Band 5, and Band 7 are currently supported.")
             
             
     

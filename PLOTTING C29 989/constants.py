@@ -22,26 +22,15 @@ normalized_cbar_ticks = np.array([0, 0.2, 0.4, 0.6, 0.8, 1])
 
 # ALMA Band wavelengths
 # ---------------------------------------------
-# lambda_band1_mm  = 7.0
-# lambda_band1_mm  = 3.1
-# lambda_band4_mm  = 2.0
-# lambda_band6_mm  = 1.3
-# lambda_band7_mm  = 0.87
-# lambda_band10_mm = 0.34
-
-
 lambda_mm = {
     1: 7.0,
     3: 3.1,
     4: 2.0,
+    5: 1.6, # check this 
     6: 1.3,
     7: 0.87,
     10: 0.34
 }
-
-# lambda_band4_micron  = 2.0  * 1000  # mm to microns
-# lambda_band6_micron  = 1.3  * 1000  # mm to microns
-# lambda_band7_micron  = 0.87 * 1000  # mm to microns
 # ---------------------------------------------
 
 
@@ -51,22 +40,30 @@ distance_pc = 132
 
 
 # File locations
+# -------------------------------------------------------------------------------------------------------- 
+# FITS Files
+# -------------------------------------------------------------------------------------------------------- 
 band4_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND4/"
+band5_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND5/"
 band6_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND6/"
 band7_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND7/"
-band7_v0_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND7_v0/"
-band7_redo_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND7_redo/"
-band7_nterms2_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND7_nterms2/"
-band7_uncalibrated_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND7_uncalibrated/"
-
+# band7_v0_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND7_v0/"
+# band7_redo_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND7_redo/"
+# band7_nterms2_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND7_nterms2/"
+# band7_uncalibrated_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND7_uncalibrated/"
+# -------------------------------------------------------------------------------------------------------- 
+# CARTA
+# -------------------------------------------------------------------------------------------------------- 
 band4_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND4/"
+band5_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND5/"
 band6_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND6/"
 band7_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND7/"
-band7_redo_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND7_redo/"
-band7_nterms2_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND7_nterms2/"
-band7_uncalibrated_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND7_uncalibrated/"
-
-
+# band7_redo_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND7_redo/"
+# band7_nterms2_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND7_nterms2/"
+# band7_uncalibrated_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND7_uncalibrated/"
+# -------------------------------------------------------------------------------------------------------- 
+# Other
+# -------------------------------------------------------------------------------------------------------- 
 functions_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FUNCTIONS/"
 
 image_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/WRITEUP_AND_IMAGES/IMAGES/"
@@ -76,6 +73,11 @@ slideshow_image_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESE
 poster_image_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/WRITEUP_AND_IMAGES/IMAGES/POSTER/"
 
 m_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/M FILES/"
+# -------------------------------------------------------------------------------------------------------- 
+
+
+
+
 
 # Load in necessary functions
 # ---------------------------------------------
@@ -94,15 +96,17 @@ min_str_band6    = 'J163135.570-240131.200'
 max_str_band6    = 'J163135.750-240128.700'
 centre_str_band6 = 'J163135.657-240129.935'
 # ---------------------------------------------
+# Band 5
+# ---------------------------------------------
+centre_str_band5 = 'J163135.656-240130.086' # This value is from CASA 
+# ---------------------------------------------
 # Band 4
 # ---------------------------------------------
-# min_str_band4    = 'J163135.570-240131.200'                  
-# max_str_band4    = 'J163135.750-240128.700'
 centre_str_band4 = 'J163135.656-240129.992' # This value is from CASA            
 # ---------------------------------------------
 # Band 7
 # ---------------------------------------------
-centre_str_band7 = 'J163135.656-240130.089' # This value is from CASA
+centre_str_band7 = 'J163135.656-240130.089' # This value is from CASA and was updated to new file
 # ---------------------------------------------
 
 
@@ -132,23 +136,32 @@ def get_minor_major_angles(PA_deg_sky):
     
     return minor_angle_rad_sky, major_angle_rad_sky, minor_angle_rad_cartesian, major_angle_rad_cartesian
 # --------------------------------------------------------------------------------------------------------    
+
+
+
+# ---------------------------------------------
 # Band 6 
 # ---------------------------------------------
 PA_deg_sky_band6 = 148
 
 minor_angle_rad_sky_band6, major_angle_rad_sky_band6, minor_angle_rad_cartesian_band6, major_angle_rad_cartesian_band6 = get_minor_major_angles(PA_deg_sky_band6)
 # ---------------------------------------------
+# Band 5
+# ---------------------------------------------
+PA_deg_sky_band5 = 140.25 # This value is from CASA ****** not updated to band 5
+
+minor_angle_rad_sky_band5, major_angle_rad_sky_band5, minor_angle_rad_cartesian_band5, major_angle_rad_cartesian_band5 = get_minor_major_angles(PA_deg_sky_band5)
+# ---------------------------------------------
 # Band 4
 # ---------------------------------------------
-PA_deg_sky_band4 = 145.9 # This value is frmom CASA 
+PA_deg_sky_band4 = 145.9 # This value is from CASA 
 
 minor_angle_rad_sky_band4, major_angle_rad_sky_band4, minor_angle_rad_cartesian_band4, major_angle_rad_cartesian_band4 = get_minor_major_angles(PA_deg_sky_band4)
 # ---------------------------------------------
 
-
 # Band 7
 # ---------------------------------------------
-PA_deg_sky_band7 = 139.49 # this is from fittiting on casa Band 7 redo, p5
+PA_deg_sky_band7 = 139.65 # This value is from fitting the new band 7 file (image component size, or 148.86 deconvolved)
 
 minor_angle_rad_sky_band7, major_angle_rad_sky_band7, minor_angle_rad_cartesian_band7, major_angle_rad_cartesian_band7 = get_minor_major_angles(PA_deg_sky_band7)
 # ---------------------------------------------
@@ -157,24 +170,37 @@ minor_angle_rad_sky_band7, major_angle_rad_sky_band7, minor_angle_rad_cartesian_
 
 # Rms errors
 # ------------------------------------------------------------------------------------------
+# --------
+# Band 5
+# --------
+StokesI_err_mJy_band5 = np.mean([0.0135, 0.0147, 0.0149, 0.0144])
+StokesQ_err_mJy_band5 = np.mean([0.0127, 0.0137, 0.0129, 0.0128]) 
+StokesU_err_mJy_band5 = np.mean([0.0150, 0.0155, 0.0157, 0.0148]) 
+POLI_err_mJy_band5 = np.mean([StokesQ_err_mJy_band5, StokesU_err_mJy_band5])
+# ------------------------------------------------------------------------------------------
 # Band 7
 # ---------------------------------------------
 # Get these values using STDEV on CARTA
-StokesQ_err_mJy_band7_uncalibrated = 0.03
-StokesU_err_mJy_band7_uncalibrated = 0.03
-POLI_err_mJy_band7_uncalibrated = 0.05 
+# StokesQ_err_mJy_band7_uncalibrated = 0.03
+# StokesU_err_mJy_band7_uncalibrated = 0.03
+# POLI_err_mJy_band7_uncalibrated = 0.05 
 # ------------------------------------------------------------------------------------------
-StokesI_err_mJy_band7_v0 = np.mean([0.0646, 0.0580, 0.0636, 0.056])
-StokesQ_err_mJy_band7_v0 = np.mean([0.0317, 0.0311, 0.0398, 0.034])
-StokesU_err_mJy_band7_v0 = np.mean([0.0247, 0.0249, 0.0255, 0.024])
+StokesI_err_mJy_band7 = np.mean([0.0340, 0.0382, 0.0375, 0.0310])
+StokesQ_err_mJy_band7 = np.mean([0.0256, 0.0266, 0.0268, 0.0260]) 
+StokesU_err_mJy_band7 = np.mean([0.0257, 0.0243, 0.0234, 0.0240]) 
+POLI_err_mJy_band7 = np.mean([StokesQ_err_mJy_band7, StokesU_err_mJy_band7])
+# ------------------------------------------------------------------------------------------
+# StokesI_err_mJy_band7_v0 = np.mean([0.0646, 0.0580, 0.0636, 0.056])
+# StokesQ_err_mJy_band7_v0 = np.mean([0.0317, 0.0311, 0.0398, 0.034])
+# StokesU_err_mJy_band7_v0 = np.mean([0.0247, 0.0249, 0.0255, 0.024])
 # ------------------------------------------------------------------------------------------
 # StokesI_err_mJy_band7_redo = np.mean([0.0398, 0.0599, 0.0370, 0.0478])
 # StokesQ_err_mJy_band7_redo = np.mean([])
 # StokesU_err_mJy_band7_redo = np.mean([])
 # ------------------------------------------------------------------------------------------
-StokesI_err_mJy_band7_nterms2 = np.mean([0.0318, 0.0314, 0.0380, 0.0285])
-StokesQ_err_mJy_band7_nterms2 = np.mean([0.0342, 0.0372, 0.0321, 0.0363])
-StokesU_err_mJy_band7_nterms2 = np.mean([0.0263, 0.0270, 0.0271, 0.0284])
+# StokesI_err_mJy_band7_nterms2 = np.mean([0.0318, 0.0314, 0.0380, 0.0285])
+# StokesQ_err_mJy_band7_nterms2 = np.mean([0.0342, 0.0372, 0.0321, 0.0363])
+# StokesU_err_mJy_band7_nterms2 = np.mean([0.0263, 0.0270, 0.0271, 0.0284])
 # ------------------------------------------------------------------------------------------
 
 
@@ -183,13 +209,16 @@ StokesU_err_mJy_band7_nterms2 = np.mean([0.0263, 0.0270, 0.0271, 0.0284])
 reference_length_AU = 100
 max_length_pix = 400  # Maximum length of the vector in pixels for 100% polarization
 reference_fraction = 0.03
-step_band6 = 6
+
 step_band4 = 4
+step_band5 = 8 
+step_band6 = 6  
 step_band7 = 6
 
 vector_length_pix_const = 0 
-vector_len_pix_band6 = 4
 vector_len_pix_band4 = 2
+vector_len_pix_band5 = 5 # *** not updated 
+vector_len_pix_band6 = 4
 vector_len_pix_band7 = 4
 # ------------------------------------------------------------------------------------------
 

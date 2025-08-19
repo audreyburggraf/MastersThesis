@@ -72,20 +72,31 @@ def calculate_polarized_intensity_err(StokesQ, StokesU, StokesQ_err, StokesU_err
     Returns:
         2D array: Uncertainty in the polarized intensity.
     """
+    # This is what i had before:
+    # -----------------------------------------------------------------------
+#     # Step 1: Calculate error in Q^2 and U^2 using exponent error propagation
+#     Q_sq_err = error_prop_exponent(StokesQ, StokesQ_err, 2)
+#     U_sq_err = error_prop_exponent(StokesU, StokesU_err, 2)
 
-    # Step 1: Calculate error in Q^2 and U^2 using exponent error propagation
-    Q_sq_err = error_prop_exponent(StokesQ, StokesQ_err, 2)
-    U_sq_err = error_prop_exponent(StokesU, StokesU_err, 2)
+#     # Step 2: Sum errors in quadrature (for Q^2 + U^2)
+#     sum_err = error_prop_addition(Q_sq_err, U_sq_err)
 
-    # Step 2: Sum errors in quadrature (for Q^2 + U^2)
-    sum_err = error_prop_addition(Q_sq_err, U_sq_err)
-
-    # Step 3: Calculate total error in sqrt(Q^2 + U^2) using exponent error propagation with n=1/2
-    sum_val = StokesQ**2 + StokesU**2
+#     # Step 3: Calculate total error in sqrt(Q^2 + U^2) using exponent error propagation with n=1/2
+#     sum_val = StokesQ**2 + StokesU**2
     
-    PI_err = error_prop_exponent(sum_val, sum_err, 0.5)
-
-    return PI_err
+#     PI_err = error_prop_exponent(sum_val, sum_err, 0.5)
+    # -----------------------------------------------------------------------
+    
+    # Trying something new: (i asked chat gpt the best way t calculate error!!)
+    # -----------------------------------------------------------------------
+    POLI = calculate_polarized_intensity(StokesQ, StokesU)
+    
+    term1 = (StokesQ * StokesQ_err / POLI)**2
+    term2 = (StokesU * StokesU_err / POLI)**2
+    POLI_err = np.sqrt(term1 + term2)
+    # -----------------------------------------------------------------------
+    
+    return POLI_err
 # ------------------------------------------------------------------------------------
 
 
