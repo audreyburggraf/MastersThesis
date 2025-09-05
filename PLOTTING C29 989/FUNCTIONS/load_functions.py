@@ -9,7 +9,7 @@ import constants
 # Use the variable from constants.py
 functions_folder_path = constants.functions_folder_path
 
-
+from C29_functions import *
 from FITS_Image_Functions import *
 from PlottingWithFunction import * 
 from custom_colormap import *
@@ -24,3 +24,4 @@ from DustModelFunctions import *
 from DustModelPlots import * 
 from POLF_Functions import * 
 from DebiasFunctions import * 
+from GalaxyContaminationFunctions import * 

@@ -2,7 +2,7 @@ import numpy as np
 import seaborn as sns
 import sys
 import pandas as pd
-
+from scipy.optimize import minimize
 
 
 # Font sizes
@@ -73,6 +73,8 @@ slideshow_image_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESE
 poster_image_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/WRITEUP_AND_IMAGES/IMAGES/POSTER/"
 
 m_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/M FILES/"
+
+P_omega_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/DUST MODEL NOTEBOOKS/P_omega_Data/"
 # -------------------------------------------------------------------------------------------------------- 
 
 
@@ -190,19 +192,6 @@ StokesQ_err_mJy_band7 = np.mean([0.0256, 0.0266, 0.0268, 0.0260])
 StokesU_err_mJy_band7 = np.mean([0.0257, 0.0243, 0.0234, 0.0240]) 
 POLI_err_mJy_band7 = np.mean([StokesQ_err_mJy_band7, StokesU_err_mJy_band7])
 # ------------------------------------------------------------------------------------------
-# StokesI_err_mJy_band7_v0 = np.mean([0.0646, 0.0580, 0.0636, 0.056])
-# StokesQ_err_mJy_band7_v0 = np.mean([0.0317, 0.0311, 0.0398, 0.034])
-# StokesU_err_mJy_band7_v0 = np.mean([0.0247, 0.0249, 0.0255, 0.024])
-# ------------------------------------------------------------------------------------------
-# StokesI_err_mJy_band7_redo = np.mean([0.0398, 0.0599, 0.0370, 0.0478])
-# StokesQ_err_mJy_band7_redo = np.mean([])
-# StokesU_err_mJy_band7_redo = np.mean([])
-# ------------------------------------------------------------------------------------------
-# StokesI_err_mJy_band7_nterms2 = np.mean([0.0318, 0.0314, 0.0380, 0.0285])
-# StokesQ_err_mJy_band7_nterms2 = np.mean([0.0342, 0.0372, 0.0321, 0.0363])
-# StokesU_err_mJy_band7_nterms2 = np.mean([0.0263, 0.0270, 0.0271, 0.0284])
-# ------------------------------------------------------------------------------------------
-
 
 # Vector Constants
 # ------------------------------------------------------------------------------------------

@@ -1,4 +1,6 @@
 import numpy as np
+from astropy.io import fits
+from astropy.wcs import WCS
 
 
 
@@ -141,7 +143,7 @@ def find_ra_and_dec(ID):
     return ra, dec
 
 
-
+# -------------------------------------------------------------------------------------------------
 def degrees_to_pixels(ra_deg, dec_deg, head):
     """
     Convert Right Ascension (RA) and Declination (Dec) in degrees to pixel coordinates 
@@ -176,6 +178,70 @@ def degrees_to_pixels(ra_deg, dec_deg, head):
     y_pixel = (dec_deg - dec_ref) / dec_inc + y_ref
 
     return x_pixel, y_pixel
+# -------------------------------------------------------------------------------------------------
+def arcsec_to_degrees(arcsec_val):
+    
+    deg_val = arcsec_val / 3600
+    
+    return deg_val
+# -------------------------------------------------------------------------------------------------
 
 
 
+# -------------------------------------------------------------------------------------------------
+# This function is specifically for GalaxyContamination
+# For some reason the function degrees_to_pixels wasn't working
+# -------------------------------------------------------------------------------------------------
+def find_pix(ra_deg, dec_deg, file):
+   
+    hdu = fits.open(file)
+    header = hdu[0].header
+    wcs = WCS(header)
+
+    # Use reference frequency and Stokes values for the 4D world coordinates
+    freq = header['CRVAL3']
+    stokes = header['CRVAL4']
+
+    # Convert to pixel coordinates
+    x_pix, y_pix, _, _ = wcs.wcs_world2pix(ra_deg, dec_deg, freq, stokes, 0)
+
+    return x_pix, y_pix
+# -------------------------------------------------------------------------------------------------
+
+
+
+
+
+# for the sake of time as this is needed for a quick sanity check I asked chat gpt to write this function!!!
+# i did not write this!!!
+# -------------------------------------------------------------------------------------------------
+def get_fwhm_from_header(header, unit='arcsec'):
+    """
+    Extract the FWHM of the beam from a FITS header.
+
+    Parameters
+    ----------
+    header : astropy.io.fits.Header
+        FITS header object
+    unit : str
+        Output unit: 'arcsec' (default) or 'deg'
+
+    Returns
+    -------
+    fwhm_major, fwhm_minor, pa : float, float, float
+        Beam major axis, minor axis, and position angle
+    """
+    try:
+        bmaj = header['BMAJ']  # in degrees
+        bmin = header['BMIN']  # in degrees
+        bpa  = header.get('BPA', 0.0)  # degrees, default 0 if not present
+
+        if unit == 'arcsec':
+            bmaj *= 3600
+            bmin *= 3600
+
+        return bmaj, bmin, bpa
+
+    except KeyError:
+        raise KeyError("Header does not contain BMAJ/BMIN keys")
+# -------------------------------------------------------------------------------------------------

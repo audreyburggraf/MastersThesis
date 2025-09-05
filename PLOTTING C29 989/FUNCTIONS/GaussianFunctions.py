@@ -259,29 +259,30 @@ def gaussian_2d_flat_topped_tilted_model(nx, ny, theta_rad, phi, BMAJ_pix, BMIN_
 
 
 
-
 # ----------------------------------------------------------------------------------------
-def run_gaussian_model_band47(theta_rad, phi_values, BMAJ_values_pix, BMIN_values_pix, RA_centre_pix, Dec_centre_pix, 
-                              StokesQ_grid_100Uniform, StokesU_grid_100Uniform,
-                              StokesQ_grid_100Azimuthal, StokesU_grid_100Azimuthal,
-                              vector_angle_actual_sky,
-                              ny, nx, 
-                              POLI_mJy, POLI_err_mJy, 
-                              PA_err_deg,
-                              band,
-                              step = None,
-                              print_statements = True):
+def run_gaussian_model(theta_rad, phi_values, BMAJ_values_pix, BMIN_values_pix, RA_centre_pix, Dec_centre_pix, 
+                       StokesQ_grid_100Uniform, StokesU_grid_100Uniform,
+                       StokesQ_grid_100Azimuthal, StokesU_grid_100Azimuthal,
+                       vector_angle_actual_sky,
+                       ny, nx, 
+                       POLI_mJy, POLI_err_mJy, 
+                       PA_err_deg,
+                       band,
+                       step = None,
+                       print_statements = True):
     
     
     if step is None:
-        if band == 'band 4':
+        if band == 'Band 4':
             step = constants.step_band4
-        elif band == 'band 5':
+        elif band == 'Band 5':
             step = constants.step_band5
-        elif band == 'band 7':
+        elif band == 'Band 6':
+            step = constants.step_band6
+        elif band == 'Band 7':
              step = constants.step_band7
         else:
-            raise ValueError("Unsupported band. Only Band 4 , Band 5, and Band 7 are currently supported.")
+            raise ValueError("Unsupported band. Only Band 4, Band 5, Band 6, and Band 7 are currently supported.")
             
             
     
@@ -309,17 +310,17 @@ def run_gaussian_model_band47(theta_rad, phi_values, BMAJ_values_pix, BMIN_value
 
                 # Recover the Q, U and vector angle
                 # -------------------------------------------------------------------------------------------------------------
-                _, _, _, vectors_data, vectors_angle = mix_StokesQU_and_generate_vectors_band47(GaussianUniformRatios,
-                                                                                                GaussianAzimuthalRatios, 
-                                                                                                StokesQ_grid_100Uniform, 
-                                                                                                StokesU_grid_100Uniform,
-                                                                                                StokesQ_grid_100Azimuthal, 
-                                                                                                StokesU_grid_100Azimuthal,
-                                                                                                ny, nx, 
-                                                                                                POLI_mJy, POLI_err_mJy, 
-                                                                                                PA_err_deg,
-                                                                                                band,
-                                                                                                step)
+                _, _, _, vectors_data, vectors_angle = mix_StokesQU_and_generate_vectors(GaussianUniformRatios,
+                                                                                         GaussianAzimuthalRatios, 
+                                                                                         StokesQ_grid_100Uniform, 
+                                                                                         StokesU_grid_100Uniform,
+                                                                                         StokesQ_grid_100Azimuthal, 
+                                                                                         StokesU_grid_100Azimuthal,
+                                                                                         ny, nx, 
+                                                                                         POLI_mJy, POLI_err_mJy, 
+                                                                                         PA_err_deg,
+                                                                                         band,
+                                                                                         step)
                 # -------------------------------------------------------------------------------------------------------------
                 # Create a key for the dictionary based on the values
                 value_str = f"{int(phi_val)}_{int(BMAJ_val)}_{int(BMIN_val)}"  
@@ -362,6 +363,115 @@ def run_gaussian_model_band47(theta_rad, phi_values, BMAJ_values_pix, BMIN_value
     GaussianUniformRatios_best = gaussian_uniform_ratios_dict[best_key_uniform]
 
     return values, results, vector_data_gaussian_best, GaussianUniformRatios_best
+# ----------------------------------------------------------------------------------------
+
+
+
+
+
+
+# ----------------------------------------------------------------------------------------
+# def run_gaussian_model_band47(theta_rad, phi_values, BMAJ_values_pix, BMIN_values_pix, RA_centre_pix, Dec_centre_pix, 
+#                               StokesQ_grid_100Uniform, StokesU_grid_100Uniform,
+#                               StokesQ_grid_100Azimuthal, StokesU_grid_100Azimuthal,
+#                               vector_angle_actual_sky,
+#                               ny, nx, 
+#                               POLI_mJy, POLI_err_mJy, 
+#                               PA_err_deg,
+#                               band,
+#                               step = None,
+#                               print_statements = True):
+    
+    
+#     if step is None:
+#         if band == 'band 4':
+#             step = constants.step_band4
+#         elif band == 'band 5':
+#             step = constants.step_band5
+#         elif band == 'band 7':
+#              step = constants.step_band7
+#         else:
+#             raise ValueError("Unsupported band. Only Band 4 , Band 5, and Band 7 are currently supported.")
+            
+            
+    
+#     # Dictionary to store results
+#     results = {}
+#     gaussian_uniform_ratios_dict = {}
+#     values = []
+
+#     for phi_val in phi_values: 
+#         for BMAJ_val in BMAJ_values_pix:
+#             for BMIN_val in BMIN_values_pix:
+
+#                 # Run the gaussian model function
+#                 # -------------------------------------------------------------------------------------------------------------
+#                 GaussianUniformRatios, GaussianAzimuthalRatios, _, _ = gaussian_2d_flat_topped_tilted_model(nx, ny, 
+#                                                                                                             theta_rad, phi_val, 
+#                                                                                                             BMIN_val,
+#                                                                                                             BMAJ_val, 
+#                                                                                                             RA_centre_pix,
+#                                                                                                             Dec_centre_pix)
+                
+#                 gaussian_uniform_ratios_dict[f"uniform_ratios_{int(phi_val)}_{int(BMAJ_val)}_{int(BMIN_val)}"] = GaussianUniformRatios
+#                 # -------------------------------------------------------------------------------------------------------------
+
+
+#                 # Recover the Q, U and vector angle
+#                 # -------------------------------------------------------------------------------------------------------------
+#                 _, _, _, vectors_data, vectors_angle = mix_StokesQU_and_generate_vectors_band47(GaussianUniformRatios,
+#                                                                                                 GaussianAzimuthalRatios, 
+#                                                                                                 StokesQ_grid_100Uniform, 
+#                                                                                                 StokesU_grid_100Uniform,
+#                                                                                                 StokesQ_grid_100Azimuthal, 
+#                                                                                                 StokesU_grid_100Azimuthal,
+#                                                                                                 ny, nx, 
+#                                                                                                 POLI_mJy, POLI_err_mJy, 
+#                                                                                                 PA_err_deg,
+#                                                                                                 band,
+#                                                                                                 step)
+#                 # -------------------------------------------------------------------------------------------------------------
+#                 # Create a key for the dictionary based on the values
+#                 value_str = f"{int(phi_val)}_{int(BMAJ_val)}_{int(BMIN_val)}"  
+
+#                 # Save the results in the dictionary
+#                 results[f"vectors_data_{value_str}"] = vectors_data
+#                 # -------------------------------------------------------------------------------------------------------------
+
+
+
+#                 # Calculate and append chi squared 
+#                 # --------------------------------------------------------------
+#                 chi_squared = calculate_chi_squared_reduced(vectors_angle, vector_angle_actual_sky, 3)
+# #                 chi_squared = calculate_chi_squared_v2(vectors_angle, vector_angle_actual_sky) # (observed, expected)
+#                 # --------------------------------------------------------------
+                
+#                 values.append((phi_val, BMAJ_val, BMIN_val, chi_squared))
+                
+    
+    
+#     # Find the index of the minimum chi-squared value
+#     chi_values = [entry[3] for entry in values]
+#     min_index = chi_values.index(min(chi_values))
+
+#     # Extract the best values
+#     best_phi, best_BMAJ, best_BMIN, best_chi_squared = values[min_index]
+
+#     # Print the results
+#     if print_statements:
+#         print(f'The lowest chi-squared value is: χ² = {best_chi_squared:.3f} when')
+#         print(f'    phi  = {best_phi:.2f}')
+#         print(f'    BMAJ = {best_BMAJ:.2f}')
+#         print(f'    BMIN = {best_BMIN:.2f}')
+    
+#     # Access the best vector data from the dictionary
+#     best_key_vectors = f"vectors_data_{int(best_phi)}_{int(best_BMAJ)}_{int(best_BMIN)}"
+#     best_key_uniform = f"uniform_ratios_{int(best_phi)}_{int(best_BMAJ)}_{int(best_BMIN)}"
+
+#     vector_data_gaussian_best = results[best_key_vectors]
+#     GaussianUniformRatios_best = gaussian_uniform_ratios_dict[best_key_uniform]
+
+#     return values, results, vector_data_gaussian_best, GaussianUniformRatios_best
     
     
 # ----------------------------------------------------------------------------------------
@@ -372,92 +482,92 @@ def run_gaussian_model_band47(theta_rad, phi_values, BMAJ_values_pix, BMIN_value
 
 
 # ----------------------------------------------------------------------------------------
-def run_gaussian_model_band6(theta_rad, phi_values, BMAJ_values_pix, BMIN_values_pix, RA_centre_pix, Dec_centre_pix, 
-                             StokesQ_grid_100Uniform, StokesU_grid_100Uniform,
-                             StokesQ_grid_100Azimuthal, StokesU_grid_100Azimuthal,
-                             vector_angle_actual_sky,
-                             ny, nx, 
-                             StokesI_mJy, StokesI_err_mJy,
-                             POLI_mJy, POLI_err_mJy, 
-                             PA_err_deg,
-                             print_statements = True):
+# def run_gaussian_model_band6(theta_rad, phi_values, BMAJ_values_pix, BMIN_values_pix, RA_centre_pix, Dec_centre_pix, 
+#                              StokesQ_grid_100Uniform, StokesU_grid_100Uniform,
+#                              StokesQ_grid_100Azimuthal, StokesU_grid_100Azimuthal,
+#                              vector_angle_actual_sky,
+#                              ny, nx, 
+#                              StokesI_mJy, StokesI_err_mJy,
+#                              POLI_mJy, POLI_err_mJy, 
+#                              PA_err_deg,
+#                              print_statements = True):
     
-    # Dictionary to store results
-    results = {}
-    gaussian_uniform_ratios_dict = {}
-    values = []
+#     # Dictionary to store results
+#     results = {}
+#     gaussian_uniform_ratios_dict = {}
+#     values = []
 
-    for phi_val in phi_values: 
-        for BMAJ_val in BMAJ_values_pix:
-            for BMIN_val in BMIN_values_pix:
+#     for phi_val in phi_values: 
+#         for BMAJ_val in BMAJ_values_pix:
+#             for BMIN_val in BMIN_values_pix:
 
-                # Run the gaussian model function
-                # -------------------------------------------------------------------------------------------------------------
-                GaussianUniformRatios, GaussianAzimuthalRatios, _, _ = gaussian_2d_flat_topped_tilted_model(nx, ny, 
-                                                                                                            theta_rad, phi_val, 
-                                                                                                            BMIN_val,
-                                                                                                            BMAJ_val, 
-                                                                                                            RA_centre_pix,
-                                                                                                            Dec_centre_pix)
+#                 # Run the gaussian model function
+#                 # -------------------------------------------------------------------------------------------------------------
+#                 GaussianUniformRatios, GaussianAzimuthalRatios, _, _ = gaussian_2d_flat_topped_tilted_model(nx, ny, 
+#                                                                                                             theta_rad, phi_val, 
+#                                                                                                             BMIN_val,
+#                                                                                                             BMAJ_val, 
+#                                                                                                             RA_centre_pix,
+#                                                                                                             Dec_centre_pix)
                 
-                gaussian_uniform_ratios_dict[f"uniform_ratios_{int(phi_val)}_{int(BMAJ_val)}_{int(BMIN_val)}"] = GaussianUniformRatios
-                # -------------------------------------------------------------------------------------------------------------
+#                 gaussian_uniform_ratios_dict[f"uniform_ratios_{int(phi_val)}_{int(BMAJ_val)}_{int(BMIN_val)}"] = GaussianUniformRatios
+#                 # -------------------------------------------------------------------------------------------------------------
 
 
-                # Recover the Q, U and vector angle
-                # -------------------------------------------------------------------------------------------------------------
-                _, _, _, vectors_data, vectors_angle = mix_StokesQU_and_generate_vectors_band6(GaussianUniformRatios,
-                                                                                               GaussianAzimuthalRatios, 
-                                                                                               StokesQ_grid_100Uniform, 
-                                                                                               StokesU_grid_100Uniform,
-                                                                                               StokesQ_grid_100Azimuthal, 
-                                                                                               StokesU_grid_100Azimuthal,
-                                                                                               ny, nx, 
-                                                                                               StokesI_mJy, StokesI_err_mJy,
-                                                                                               POLI_mJy, POLI_err_mJy, 
-                                                                                               PA_err_deg)
-                # -------------------------------------------------------------------------------------------------------------
-                # Create a key for the dictionary based on the values
-                value_str = f"{int(phi_val)}_{int(BMAJ_val)}_{int(BMIN_val)}"  
+#                 # Recover the Q, U and vector angle
+#                 # -------------------------------------------------------------------------------------------------------------
+#                 _, _, _, vectors_data, vectors_angle = mix_StokesQU_and_generate_vectors_band6(GaussianUniformRatios,
+#                                                                                                GaussianAzimuthalRatios, 
+#                                                                                                StokesQ_grid_100Uniform, 
+#                                                                                                StokesU_grid_100Uniform,
+#                                                                                                StokesQ_grid_100Azimuthal, 
+#                                                                                                StokesU_grid_100Azimuthal,
+#                                                                                                ny, nx, 
+#                                                                                                StokesI_mJy, StokesI_err_mJy,
+#                                                                                                POLI_mJy, POLI_err_mJy, 
+#                                                                                                PA_err_deg)
+#                 # -------------------------------------------------------------------------------------------------------------
+#                 # Create a key for the dictionary based on the values
+#                 value_str = f"{int(phi_val)}_{int(BMAJ_val)}_{int(BMIN_val)}"  
 
-                # Save the results in the dictionary
-                results[f"vectors_data_{value_str}"] = vectors_data
-                # -------------------------------------------------------------------------------------------------------------
+#                 # Save the results in the dictionary
+#                 results[f"vectors_data_{value_str}"] = vectors_data
+#                 # -------------------------------------------------------------------------------------------------------------
 
 
 
-                # Calculate and append chi squared 
-                # --------------------------------------------------------------
-                chi_squared = calculate_chi_squared_reduced(vectors_angle, vector_angle_actual_sky, 3)
-#                 chi_squared = calculate_chi_squared_v2(vectors_angle, vector_angle_actual_sky) # (observed, expected)
-                # --------------------------------------------------------------
+#                 # Calculate and append chi squared 
+#                 # --------------------------------------------------------------
+#                 chi_squared = calculate_chi_squared_reduced(vectors_angle, vector_angle_actual_sky, 3)
+# #                 chi_squared = calculate_chi_squared_v2(vectors_angle, vector_angle_actual_sky) # (observed, expected)
+#                 # --------------------------------------------------------------
                 
-                values.append((phi_val, BMAJ_val, BMIN_val, chi_squared))
+#                 values.append((phi_val, BMAJ_val, BMIN_val, chi_squared))
                 
     
     
-    # Find the index of the minimum chi-squared value
-    chi_values = [entry[3] for entry in values]
-    min_index = chi_values.index(min(chi_values))
+#     # Find the index of the minimum chi-squared value
+#     chi_values = [entry[3] for entry in values]
+#     min_index = chi_values.index(min(chi_values))
 
-    # Extract the best values
-    best_phi, best_BMAJ, best_BMIN, best_chi_squared = values[min_index]
+#     # Extract the best values
+#     best_phi, best_BMAJ, best_BMIN, best_chi_squared = values[min_index]
 
-    # Print the results
-    if print_statements:
-        print(f'The lowest chi-squared value is: χ² = {best_chi_squared:.3f} when')
-        print(f'    phi  = {best_phi:.2f}')
-        print(f'    BMAJ = {best_BMAJ:.2f}')
-        print(f'    BMIN = {best_BMIN:.2f}')
+#     # Print the results
+#     if print_statements:
+#         print(f'The lowest chi-squared value is: χ² = {best_chi_squared:.3f} when')
+#         print(f'    phi  = {best_phi:.2f}')
+#         print(f'    BMAJ = {best_BMAJ:.2f}')
+#         print(f'    BMIN = {best_BMIN:.2f}')
     
-    # Access the best vector data from the dictionary
-    best_key_vectors = f"vectors_data_{int(best_phi)}_{int(best_BMAJ)}_{int(best_BMIN)}"
-    best_key_uniform = f"uniform_ratios_{int(best_phi)}_{int(best_BMAJ)}_{int(best_BMIN)}"
+#     # Access the best vector data from the dictionary
+#     best_key_vectors = f"vectors_data_{int(best_phi)}_{int(best_BMAJ)}_{int(best_BMIN)}"
+#     best_key_uniform = f"uniform_ratios_{int(best_phi)}_{int(best_BMAJ)}_{int(best_BMIN)}"
 
-    vector_data_gaussian_best = results[best_key_vectors]
-    GaussianUniformRatios_best = gaussian_uniform_ratios_dict[best_key_uniform]
+#     vector_data_gaussian_best = results[best_key_vectors]
+#     GaussianUniformRatios_best = gaussian_uniform_ratios_dict[best_key_uniform]
 
-    return values, results, vector_data_gaussian_best, GaussianUniformRatios_best
+#     return values, results, vector_data_gaussian_best, GaussianUniformRatios_best
     
     
 # ----------------------------------------------------------------------------------------

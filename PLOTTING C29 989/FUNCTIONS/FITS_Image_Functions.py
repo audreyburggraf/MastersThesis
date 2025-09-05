@@ -440,8 +440,29 @@ def arcsec_to_pixels(header, line_length_arcsec):
     # Convert line length to pixels
     line_length_pix = line_length_arcsec / plate_scale
     return line_length_pix
+# ---------------------------------------------------------------------------------------------------------
 
+def pixels_to_arcsec(header, line_length_pix):
+    """
+    Converts a length from pixels to arcseconds using the FITS header plate scale.
 
+    Parameters:
+        header (astropy.io.fits.Header): FITS header object.
+        line_length_pix (float): Length in pixels.
+
+    Returns:
+        float: Length in arcseconds.
+    """
+    # Extract plate scale from header (CDELT1 is in degrees per pixel)
+    if "CDELT1" in header:
+        plate_scale = abs(header["CDELT1"]) * 3600  # arcsec/pixel
+    else:
+        raise ValueError("CDELT1 keyword not found in FITS header.")
+
+    # Convert pixels to arcseconds
+    line_length_arcsec = line_length_pix * plate_scale
+    return line_length_arcsec
+# ---------------------------------------------------------------------------------------------------------
 
 
 # log stretching

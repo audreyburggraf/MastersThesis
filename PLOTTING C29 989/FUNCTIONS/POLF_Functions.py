@@ -1,12 +1,20 @@
 import sys
 import numpy as np
 import pandas as pd
+from pathlib import Path
+from scipy.optimize import minimize
 
 # Add the directory where constants.py is located to sys.path
 sys.path.append("/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/")  # Replace with the actual path
 
 # Now you can import constants.py
 import constants
+
+
+from DustModelFunctions import * 
+
+POLF_columns = ['POLF_Gaussian', 'POLF_maxPOLI', 'POLF_maxStokesI']
+
 
 # Function to find 
 # --------------------------------------------------------------------------------------
@@ -91,7 +99,7 @@ def get_all_POLF_and_save(StokesI_mJy, POLI_mJy, POLF, UniformRatios, band, gaus
     if band == 'Band 4':
         path = constants.band4_data_folder_path + "constants_BAND4.csv"
     elif band == 'Band 5':
-        path = constants.band6_data_folder_path + "constants_BAND6.csv"
+        path = constants.band5_data_folder_path + "constants_BAND5.csv"
     elif band == 'Band 6':
         path = constants.band6_data_folder_path + "constants_BAND6.csv"
     elif band == 'Band 7':
@@ -118,6 +126,147 @@ def get_all_POLF_and_save(StokesI_mJy, POLI_mJy, POLF, UniformRatios, band, gaus
 
     # Save to CSV
     df.to_csv(path, index=False)
+
+
+# --------------------------------------------------------------------------------------
+
+
+
+
+# Load POLF
+# --------------------------------------------------------------------------------------
+def load_POLF(bands):
+    # Initialize storage
+    results = {
+        'Band': [],
+        'POLF_Gaussian': [],
+        'POLF_maxPOLI': [],
+        'POLF_maxStokesI': []
+    }
+
+    for band in bands:
+        # Dynamically fetch path from constants.py
+        var_name = f"band{band}_data_folder_path"
+        path = Path(getattr(constants, var_name)) / f"constants_BAND{band}.csv"
+
+        df = pd.read_csv(path)
+
+        results['Band'].append(band)
+        results['POLF_Gaussian'].append(df.at[0, "POLF_Gaussian"] * 100)
+        results['POLF_maxPOLI'].append(df.at[0, "POLF_maxPOLI"] * 100)
+        results['POLF_maxStokesI'].append(df.at[0, "POLF_maxStokesI"] * 100)
+    
+
+    # Convert to DataFrame
+    df_POLF = pd.DataFrame(results)
+
+    df_POLF["POLF_mean"] = df_POLF[["POLF_Gaussian", "POLF_maxPOLI", "POLF_maxStokesI"]].mean(axis=1)
+
+    
+    return df_POLF
+# --------------------------------------------------------------------------------------
+
+
+
+# Find best sf
+# --------------------------------------------------------------------------------------
+def find_best_sf(a_max_f_dist_micron, P_times_omega, df_POLF, print_results = False):
+    
+    # Start a df and test
+    df = pd.DataFrame({'a_max micron': a_max_f_dist_micron})
+    
+    
+    
+    # Loop overl all columns of POLF
+    for j in range(len(POLF_columns)):
+        # Extract the column name
+        col_name = POLF_columns[j]
+        if print_results:
+            print(f'We are minimizing for {col_name}:')
+
+        # Choose the test POLF
+        POLF_test = df_POLF[col_name]
+
+        scale_factors = []
+        diff_array = []
+        
+        # Minimize the sum of squares
+        for i in range(len(a_max_f_dist_micron)):
+            result = minimize(
+                dust_sum_of_sq,
+                x0=0.01,
+                args=(P_times_omega[i, :], POLF_test),
+                bounds=[(0, None)]
+            )
+
+            sf_opt = result.x[0]
+            err = result.fun
+            
+            # Save the data
+            scale_factors.append(sf_opt)
+            diff_array.append(err)
+
+        # Add columns to main df
+        df[f'sf_{col_name}'] = scale_factors
+        df[f'error_{col_name}'] = diff_array
+        
+        
+        best_index_array = []
+        best_error_array = []
+        best_a_max_f_array = []
+        best_sf_array = []
+
+    for col_name in POLF_columns:
+        if print_results:
+            print(f'We are now looking at the results for {col_name}:')
+
+        best_index = np.argmin(df[f'error_{col_name}'])
+        best_error = df[f'error_{col_name}'][best_index]
+        best_a_max_f = a_max_f_dist_micron[best_index]
+        best_sf = df[f'sf_{col_name}'][best_index]
+
+        best_index_array.append(best_index)
+        best_error_array.append(best_error)
+        best_a_max_f_array.append(best_a_max_f)
+        best_sf_array.append(best_sf)
+
+        if print_results:
+            print(f"   The index with the lowest error from minimize is    : {best_index}")
+            print(f"   At this index, the corresponding error is           : {best_error:.3f}")
+            print(f"   At this index, the corresponding a_max * f is       : {best_a_max_f:.1f} micron")
+            print(f"   The scale factor at that a_max * f is               : {best_sf:.5f}")
+            print(' ')
+
+    if print_results:    
+        print(' ')
+        print(' ')
+
+    best_POLF_index = np.argmin(best_error_array)
+    best_POLF_column = POLF_columns[best_POLF_index]
+    best_POLF = df_POLF[best_POLF_column]
+    best_index = best_index_array[best_POLF_index]
+    best_error = best_error_array[best_POLF_index]
+    best_a_max_f = best_a_max_f_array[best_POLF_index]
+    best_sf = best_sf_array[best_POLF_index]
+
+
+    if print_results:
+        print(f'Out of the {len(df_POLF)} POLF options:')
+        print(f"   Lowest error occurs at POLF index of                 : {best_POLF_index}")
+        print(f"   This POLF index corresponds to                       : {best_POLF_column}")   
+        print(f"   The POLFs at this best POLF column are               : {best_POLF[0]:.3f},  {best_POLF[1]:.3f},  {best_POLF[2]:.3f}")
+        print(f"   The index with the lowest error from minimize is     : {best_index}")
+        print(f"   At this index, the corresponding error is            : {best_error:.3f}")
+        print(f"   At this index, the corresponding a_max * f is        : {best_a_max_f:.1f} micron")
+        print(f"   The scale factor at that a_max * f is                : {best_sf:.5f}")
+
+
+    
+    
+    
+    
+    return best_a_max_f, best_POLF, best_sf
+# --------------------------------------------------------------------------------------
 
 
 # --------------------------------------------------------------------------------------
