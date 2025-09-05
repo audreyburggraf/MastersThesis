@@ -99,13 +99,13 @@ nx, ny = StokesI_mJy.shape
 
 # Find the vectors
 # -------------------------------------------------------------------------------------------------------
-results = generate_polarization_vectors_band47(ny, nx,
-                                               RA_centre_pix, Dec_centre_pix,
-                                               constants.minor_angle_rad_sky_band4,
-                                               StokesI_mJy,
-                                               POLI_mJy, POLI_err_mJy,
-                                               PA_rad, PA_err_deg,
-                                               'band 4')
+results = generate_polarization_vectors(ny, nx,
+                                        RA_centre_pix, Dec_centre_pix,
+                                        constants.minor_angle_rad_sky_band4,
+                                        StokesI_mJy,
+                                        POLI_mJy, POLI_err_mJy,
+                                        PA_rad, PA_err_deg,
+                                        'Band 4')
 # -------------------------------------------------------------------------------------------------------
 
 # Accessing the actual vector data and angles

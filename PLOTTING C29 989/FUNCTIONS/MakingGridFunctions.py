@@ -55,16 +55,16 @@ def compute_polarization_vector(x, y, PA_grid, band, vector_len_pix = None):
     """
     
     if vector_len_pix is None:
-        if band == 'band 6':
+        if band == 'Band 6':
             vector_len_pix = constants.vector_len_pix_band6
-        elif band == 'band 4':
+        elif band == 'Band 4':
             vector_len_pix = constants.vector_len_pix_band4
-        elif band == 'band 5':
+        elif band == 'Band 5':
             vector_len_pix = constants.vector_len_pix_band5
-        elif band == 'band 7':
+        elif band == 'Band 7':
             vector_len_pix = constants.vector_len_pix_band7
         else:
-            raise ValueError("Band must be 'band 4', 'band 6', or 'band 7'")
+            raise ValueError("Band must be 'Band 4', 'Band 5', 'Band 6', or 'Band 7'")
 
     
     
@@ -82,9 +82,8 @@ def compute_polarization_vector(x, y, PA_grid, band, vector_len_pix = None):
     
     return vector_cartesian, PA_rad_sky
 # --------------------------------------------------------------------------
-
-def make_vectors_band47(ny, nx, POLI_mJy, POLI_err_mJy, PA_grid, PA_err_deg, band, 
-                        step = None, vector_len_pix = None):
+def make_vectors(ny, nx, POLI_mJy, POLI_err_mJy, PA_grid, PA_err_deg, band, 
+                 step = None, vector_len_pix = None):
     """
     Generate vectors for Band 4 polarization data.
     
@@ -100,22 +99,31 @@ def make_vectors_band47(ny, nx, POLI_mJy, POLI_err_mJy, PA_grid, PA_err_deg, ban
     vector_angles_sky: List of polarization angles
     """
     
+    if band == 'Band 4':
+        default_step = constants.step_band4
+        POLI_err_cutoff = 4
+    elif band == 'Band 5':
+        default_step = constants.step_band5
+        POLI_err_cutoff = 4
+    elif band == 'Band 6':
+        default_step = constants.step_band6
+        POLI_err_cutoff = 3
+    elif band == 'Band 7':
+        default_step = constants.step_band7
+        POLI_err_cutoff = 4
+    else:
+        raise ValueError("Currently only accepting Band 4, Band 5, Band 6, Band 7")
+
+    # If step wasn't passed, use the band default
     if step is None:
-        if band == 'band 4':
-            step = constants.step_band4
-        elif band == 'band 5':
-            step = constants.step_band5
-        elif band == 'band 7':
-            step = constants.step_band7
-        else:
-            return('Currently only accepting Band 4 and Band 7')
+        step = default_step
         
     vectors_cartesian = []
     vector_angles_sky = []
     
     for x in range(0, nx, step):
         for y in range(0, ny, step):
-            if (POLI_mJy[y, x] / POLI_err_mJy[y, x] > 4
+            if (POLI_mJy[y, x] / POLI_err_mJy[y, x] > POLI_err_cutoff
                 and PA_err_deg[y, x] < 10):
                 # Use the helper function to compute the vector
                 vector_cartesian, PA_rad_sky = compute_polarization_vector(x, y, PA_grid, band, vector_len_pix)
@@ -123,46 +131,90 @@ def make_vectors_band47(ny, nx, POLI_mJy, POLI_err_mJy, PA_grid, PA_err_deg, ban
                 vector_angles_sky.append(PA_rad_sky)
     
     return vectors_cartesian, vector_angles_sky
+# --------------------------------------------------------------------------
 
-# --------------------------------------------------------------------------
-def make_vectors_band6(ny, nx, 
-                       StokesI_mJy, StokesI_err_mJy, 
-                       POLI_mJy, POLI_err_mJy, 
-                       PA_grid, PA_err_deg,
-                       step = None):
-    """
-    Generate vectors for Band 6 polarization data.
+
+
+# def make_vectors_band47(ny, nx, POLI_mJy, POLI_err_mJy, PA_grid, PA_err_deg, band, 
+#                         step = None, vector_len_pix = None):
+#     """
+#     Generate vectors for Band 4 polarization data.
     
-    Parameters:
-    ny, nx: Dimensions of the grid
-    StokesI_mJy: Stokes I intensity
-    StokesI_err_mJy: Error on Stokes I intensity
-    POLI_mJy: Polarization intensity
-    POLI_err_mJy: Error on polarization intensity
-    PA_grid: Polarization angle grid
-    PA_err_deg: Polarization angle error
+#     Parameters:
+#     ny, nx: Dimensions of the grid
+#     POLI_mJy: Polarization intensity
+#     POLI_err_mJy: Error on polarization intensity
+#     PA_grid: Polarization angle grid
+#     PA_err_deg: Polarization angle error
     
-    Returns:
-    vectors_cartesian: List of vectors in Cartesian coordinates
-    vector_angles_sky: List of polarization angles
-    """
+#     Returns:
+#     vectors_cartesian: List of vectors in Cartesian coordinates
+#     vector_angles_sky: List of polarization angles
+#     """
     
-    if step is None:
-        step = constants.step_band6
+#     if step is None:
+#         if band == 'band 4':
+#             step = constants.step_band4
+#         elif band == 'band 5':
+#             step = constants.step_band5
+#         elif band == 'band 7':
+#             step = constants.step_band7
+#         else:
+#             return('Currently only accepting Band 4 and Band 7')
+        
+#     vectors_cartesian = []
+#     vector_angles_sky = []
+    
+#     for x in range(0, nx, step):
+#         for y in range(0, ny, step):
+#             if (POLI_mJy[y, x] / POLI_err_mJy[y, x] > 4
+#                 and PA_err_deg[y, x] < 10):
+#                 # Use the helper function to compute the vector
+#                 vector_cartesian, PA_rad_sky = compute_polarization_vector(x, y, PA_grid, band, vector_len_pix)
+#                 vectors_cartesian.append(vector_cartesian)
+#                 vector_angles_sky.append(PA_rad_sky)
+    
+#     return vectors_cartesian, vector_angles_sky
+
+# # --------------------------------------------------------------------------
+# def make_vectors_band6(ny, nx, 
+#                        StokesI_mJy, StokesI_err_mJy, 
+#                        POLI_mJy, POLI_err_mJy, 
+#                        PA_grid, PA_err_deg,
+#                        step = None):
+#     """
+#     Generate vectors for Band 6 polarization data.
+    
+#     Parameters:
+#     ny, nx: Dimensions of the grid
+#     StokesI_mJy: Stokes I intensity
+#     StokesI_err_mJy: Error on Stokes I intensity
+#     POLI_mJy: Polarization intensity
+#     POLI_err_mJy: Error on polarization intensity
+#     PA_grid: Polarization angle grid
+#     PA_err_deg: Polarization angle error
+    
+#     Returns:
+#     vectors_cartesian: List of vectors in Cartesian coordinates
+#     vector_angles_sky: List of polarization angles
+#     """
+    
+#     if step is None:
+#         step = constants.step_band6
         
         
-    vectors_cartesian = []
-    vector_angles_sky = []
+#     vectors_cartesian = []
+#     vector_angles_sky = []
     
-    for x in range(0, nx, step):
-        for y in range(0, ny, step):
-            if (StokesI_mJy[y, x] / StokesI_err_mJy[y, x] > 3 and 
-                POLI_mJy[y, x] / POLI_err_mJy[y, x] > 3 and 
-                PA_err_deg[y, x] < 10):
-                # Use the helper function to compute the vector
-                vector_cartesian, PA_rad_sky = compute_polarization_vector(x, y, PA_grid, band = 'band 6')
-                vectors_cartesian.append(vector_cartesian)
-                vector_angles_sky.append(PA_rad_sky)
+#     for x in range(0, nx, step):
+#         for y in range(0, ny, step):
+#             if (StokesI_mJy[y, x] / StokesI_err_mJy[y, x] > 3 and 
+#                 POLI_mJy[y, x] / POLI_err_mJy[y, x] > 3 and 
+#                 PA_err_deg[y, x] < 10):
+#                 # Use the helper function to compute the vector
+#                 vector_cartesian, PA_rad_sky = compute_polarization_vector(x, y, PA_grid, band = 'band 6')
+#                 vectors_cartesian.append(vector_cartesian)
+#                 vector_angles_sky.append(PA_rad_sky)
     
-    return vectors_cartesian, vector_angles_sky
-# --------------------------------------------------------------------------
+#     return vectors_cartesian, vector_angles_sky
+# # --------------------------------------------------------------------------

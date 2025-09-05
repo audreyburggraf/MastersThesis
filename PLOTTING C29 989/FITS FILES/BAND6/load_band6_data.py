@@ -139,12 +139,13 @@ BMAJ_deg, BMIN_deg, BMAJ_pix, BMIN_pix, BPA_deg_cartesian, reference_length_pix,
 
 # Find the vectors
 # -------------------------------------------------------------------------------------------------------
-results = generate_polarization_vectors_band6(ny, nx,
-                                              RA_centre_pix, Dec_centre_pix,
-                                              constants.minor_angle_rad_sky_band6,
-                                              StokesI_mJy, StokesI_err_mJy, 
-                                              POLI_mJy, POLI_err_mJy,
-                                              PA_rad, PA_err_deg)
+results = generate_polarization_vectors(ny, nx,
+                                        RA_centre_pix, Dec_centre_pix,
+                                        constants.minor_angle_rad_sky_band7,
+                                        StokesI_mJy, 
+                                        POLI_mJy, POLI_err_mJy,
+                                        PA_rad, PA_err_deg,
+                                        'Band 6')
 # -------------------------------------------------------------------------------------------------------
 
 # Accessing the actual vector data and anglesf
