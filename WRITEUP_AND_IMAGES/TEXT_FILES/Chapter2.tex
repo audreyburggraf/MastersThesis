@@ -4,6 +4,10 @@
 \section{IRS 63}
 The distance to the disk is 132 pc away. 
 
+\section{Image Details}
+
+
+\subsection{Cleaning Data}
 
 \begin{table}[h!]
 \centering
@@ -23,13 +27,21 @@ The distance to the disk is 132 pc away.
 \end{table}
 
 
+\subsection{Debiasing}
+
+\subsection{Stream/Jet}
+
+
+
+\subsection{Error Values}
 As of now, Band 4 and Band 6 data was given to me, along with their error files. So Band 4 and Band 6 have error maps for <values>. This might change as I need to to nterms = 2 maybe? But for now, I cleaned Band 5 and Band 7 data myself and did not get error maps or we don't want to use them? So what I do is open the image in CASA viewer or CARTA, and find the maximum value of standard deviation in 4 boxes around the edges of the image (not on the bright disk) and average them together. 
 
+\subsection{Polarization Vectors}
 When we add the polarization vectors to the plot I don't plot one in each pixel. I use niquous <spelling? sampling no determine when we should plot each line, i.e. every $n$th pixel. Additionally, the length of these vectors are all normalized to the same length, and are not scaled based on the strength of the value at their corresponding pixel. The length of these vectors were chosen using guess and check, and just scaled to what looks best. 
 
 \begin{table}[h!]
 \centering
-\caption{\textbf{Band 5, 7}: Errors on Stokes I, Q and U images were done by taking the average of 4 standard deviation values in the background of the image (far away from the disk). The error on POLI was found by taking the mean of Stokes Q and Stokes U errors. The \texttt{np.mean} python function was used.}
+\caption{<caption>}
 \begin{tabular}{ccccccc}
 \toprule
 \multirow{2}{*}{} & \multicolumn{3}{c}{\textbf{Stokes Errors (mJy)}} & \textbf{Step} & \textbf{Vector Length} &  \\
