@@ -1,4 +1,34 @@
 import numpy as np
+import pandas as pd
+
+
+from FITS_Image_Functions import * 
+from C29_functions import * 
+
+
+# Import necessary packages
+import matplotlib.pyplot as plt
+
+# Import the constants
+# -----------------------------------------------------------------------------------------
+import sys
+
+sys.path.append("/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/") 
+
+import constants
+
+normalized_cbar_ticks = constants.normalized_cbar_ticks
+
+title_fs = constants.title_fs
+axis_label_fs = constants.axis_label_fs
+axis_num_fs = constants.axis_num_fs
+legend_title_fs = constants.legend_title_fs
+legend_text_fs = constants.legend_text_fs
+cbar_fs = constants.cbar_fs
+text_fs = constants.text_fs
+# -----------------------------------------------------------------------------------------
+
+
 
 # ------------------------------------------------------
 # This function is based on equation 7 from Sadavoy 2019 
@@ -10,11 +40,317 @@ def galaxy_probability(S, band):
     S in mJy
     """
     if band == 'Band 6':
+        # These values are from Carniani, 2015
+        phi = 1800 # deg^-2
         S0 = 1.7 # mJy
+        alpha = -2.08 # unitless
+    elif band == 'Band 7':
+        # Values from Chen, 2023 Table 3, Cumulativel number counts
+        phi = 9.6 # deg^-2
+        S0 = 2.2 # mJy
+        alpha = -0.6 # unitless
     else:
-        return print('Currently function only supports Band 6')
+        return print('Currently function only supports Band 5 and Band 6')
     
-    dN_dS = 1800 * (S/S0)**(-2.08) * np.exp(-S/S0)
+    dN_dS = phi * (S/S0)**(alpha) * np.exp(-S/S0)
     
     return dN_dS
 # ---------------------------------------------------
+
+
+
+# ---------------------------------------------------
+# This function is used to find N from dN/dS using the trapezoidal rule
+# ---------------------------------------------------
+def find_N_from_dN_dS(S_min):
+
+    S_grid = np.logspace(-2, 2, 1000)  # 0.01 to 100 mJy
+
+    # Compute dN/dS over flux grid
+    dN_dS_grid = np.array([galaxy_probability(s, 'Band 6') for s in S_grid])
+
+    # Select fluxes above threshold
+    mask = S_grid >= S_min
+
+    # Integrate using trapezoidal rule
+    N_per_area = np.trapz(dN_dS_grid[mask], S_grid[mask])
+
+    return N_per_area
+# ---------------------------------------------------
+
+
+
+
+# -----------------------------------------------------------------------------------------
+def run_galaxy_contamination(band, sn_array, dr_arcsec = 0.25, print_things = True):
+    if band == "Band 6":
+        pb_path = constants.band6_data_folder_path + "IRS63_BAND6_pb.fits"
+        
+    elif band == "Band 7":
+        pb_path = constants.band7_data_folder_path + "IRS63_BAND7_pb.fits"
+        
+    else:
+        return print('Currently function only supports Band 5 and Band 6')
+        
+    # Primary Beam
+    # ------------------------------------------------------------------------------------------------
+    header, _, pb_map, wcs = read_in_file(pb_path)
+
+    ny, nx = pb_map.shape
+    
+    flat_index = np.nanargmax(pb_map)   # ignores NaNs, finds max
+    y_cen, x_cen = np.unravel_index(flat_index, pb_map.shape)
+
+    if print_things:
+        print(rf'The centre position is: (y, x) = ({y_cen}, {x_cen}), and at this position pb = {pb_map[y_cen, x_cen]}')
+    # ------------------------------------------------------------------------------------------------
+    
+
+    # Size of annuli
+    # ------------------------------------------------------------------------------------------------
+    dr_deg = arcsec_to_degrees(dr_arcsec)
+
+    dr_pix = arcsec_to_pixels(header, dr_arcsec)
+    # ------------------------------------------------------------------------------------------------
+
+
+    # Radius
+    # ------------------------------------------------------------------------------------------------
+    r_pix = np.arange(0, nx - x_cen, dr_pix)
+    r_arcsec = pixels_to_arcsec(header, r_pix)
+
+
+    df = pd.DataFrame({
+        "r_pix": r_pix,
+        "r_arcsec": r_arcsec,
+        "r_deg": arcsec_to_degrees(r_arcsec)
+    })
+    # ------------------------------------------------------------------------------------------------
+
+    
+    # sigma, area
+    # ------------------------------------------------------------------------------------------------
+    x_pos = x_cen + r_pix.astype(int)
+
+    pb_val_arr = pb_map[y_cen, x_pos].astype(np.float32).newbyteorder('=')  # native endian
+    sigma_r_arr = (0.03 / pb_val_arr).astype(np.float32).newbyteorder('=')
+
+    df["pb_val"] = pb_val_arr
+    df["sigma_r"] = sigma_r_arr
+
+    df["area_annulus"] = 2 * np.pi * df["r_deg"] * dr_deg
+    # ------------------------------------------------------------------------------------------------
+
+    
+    
+    # Dictionary to hold each df
+    dfs_sn = {}
+    dfs_list = [] 
+
+    for sn in sn_array:
+        # Compute flux threshold per annulus
+        S = sn * df["sigma_r"].values
+
+        dN_dS = np.array([galaxy_probability(s, band) for s in S])
+
+        N_per_area_list = []
+
+        # Loop over each annulus
+        for S_min in S:
+            # Use your function to integrate dN/dS above threshold
+            N_per_area = find_N_from_dN_dS(S_min)
+            N_per_area_list.append(N_per_area)
+
+        N = np.array(N_per_area_list)
+
+        # Multiply by annulus area to get expected number per annulus
+        N_expected = N * df["area_annulus"].values
+
+        prob = 100*(1 - np.exp(-N_expected))
+
+        N_cumulative = np.cumsum(N_expected)
+        prob_cumulative = 100 * (1 - np.exp(-N_cumulative))
+
+        df_sn = pd.DataFrame({
+            "r_arcsec": df["r_arcsec"].values,
+            "S_mJy": S,
+            "dN_dS": dN_dS,
+            "N": N,
+            "N_expected": N_expected,
+            "prob": prob,
+            "prob_cumulative": prob_cumulative
+        })
+
+#         # Save in dictionary
+#         dfs_sn[f"df_{sn}sigma"] = df_sn
+        
+        
+        dfs_list.append(df_sn)
+
+
+
+
+
+    return df, dfs_list
+# -----------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+# I will also make some functions to make plotting easier
+
+
+
+
+# -----------------------------------------------------------------------------------------
+# This function makes a plot to replicate Figure 11 and 12 from Sadavoy 2019 
+# (https://iopscience.iop.org/article/10.3847/1538-4365/ab4257)
+# -----------------------------------------------------------------------------------------
+galaxy_ls = ['-', '--', '-.']
+
+
+def recreate_figs_11_12_sadavoy2019(dfs, sn_array, 
+                                    fig_size_x = 20, fig_size_y = 7):
+    
+    # sn_array will usually be [5, 10, 20] but I will leave it open ended 
+    
+        # make the figures
+    fig, ax = plt.subplots(1, 2, figsize=(fig_size_x, fig_size_y))
+    
+    for i in range(len(sn_array)):
+
+        # Plot data on left plot
+        ax[0].plot(dfs[i]["r_arcsec"], dfs[i]["prob"], color = 'black', ls = galaxy_ls[i], label=f'S/N > {sn_array[i]}')
+
+        # Cumulative probability
+        ax[1].plot(dfs[i]["r_arcsec"], dfs[i]["prob_cumulative"], color = 'black', ls = galaxy_ls[i], label=f'S/N > {sn_array[i]}')
+
+    
+    
+    # Set y-axis labels 
+    ax[0].set_ylabel('Probability of Galaxy in Annulus (%)', fontsize = axis_label_fs)
+    ax[1].set_ylabel('Cumulative Probability of Galaxy(%)',  fontsize = axis_label_fs)
+    
+    
+    # Add an x-label, proper ticks on axes and add a legend
+    for i in range(2):
+    
+        # Add axis labels
+        ax[i].set_xlabel(r'Radius (arcsec)', fontsize=axis_label_fs)
+
+
+        # Adjust ticks
+        ax[i].minorticks_on()
+        ax[i].tick_params(axis="x", which="major", direction="in", bottom=True, top=True, length=7, labelsize=axis_num_fs)
+        ax[i].tick_params(axis="y", which="major", direction="in", left=True, right=True, length=7, labelsize=axis_num_fs)
+    
+        ax[i].legend(fontsize = legend_text_fs)
+    
+    
+    return fig, ax
+# -----------------------------------------------------------------------------------------
+
+
+
+
+
+# -----------------------------------------------------------------------------------------
+# This plot is so we can see how pb, sigma and area behave with change in radius
+# -----------------------------------------------------------------------------------------
+def plot_galaxy_contamination_models(df,
+                                     fig_size_x = 18, fig_size_y = 10):
+    
+    # Define the grid and size 
+    fig, ax = plt.subplots(2, 2, figsize=(fig_size_x, fig_size_y))
+    
+    
+    # Top left 
+    ax[0, 0].plot(df["r_arcsec"], df["pb_val"], color = 'tab:orange')
+    ax[0, 0].set_ylabel('pb val', fontsize=axis_label_fs)
+
+
+    # Top right 
+    ax[0, 1].plot(df["r_arcsec"], df["sigma_r"], color = 'tab:blue')
+    ax[0, 1].set_ylabel('$\sigma(r)$ = 0.03/pb val', fontsize=axis_label_fs)
+    
+    # Bottom right 
+    ax[1, 0].plot(df["r_arcsec"], df["area_annulus"], color = 'tab:red')
+    ax[1, 0].set_ylabel('area [deg$^2$]', fontsize=axis_label_fs)
+    
+    
+    for i in range(2):
+        for j in range(2):
+            ax[i, j].minorticks_on()
+            ax[i, j].tick_params(axis="x", which="major", direction="in", bottom=True, top=True, length=7, labelsize=axis_num_fs)
+            ax[i, j].tick_params(axis="y", which="major", direction="in", left=True, right=True, length=7, labelsize=axis_num_fs)
+            ax[i, j].tick_params(which='minor', length=4, direction="in")
+            
+            ax[i, j].set_xlabel('Radius (arcsec)', fontsize=axis_label_fs)  
+    
+    
+    
+    return fig, ax
+# -----------------------------------------------------------------------------------------
+
+
+
+
+
+# -----------------------------------------------------------------------------------------
+# Here we will plot S, dN/dS, N, etc
+# -----------------------------------------------------------------------------------------
+def plot_probability_models(dfs, sn_array,
+                            fig_size_x = 18, fig_size_y = 10):
+    
+    # Define the grid and size 
+    fig, ax = plt.subplots(2, 2, figsize=(fig_size_x, fig_size_y))
+    
+    for i in range(len(sn_array)):
+        # Top left 
+        ax[0, 0].plot(dfs[i]["r_arcsec"],  dfs[i]["S_mJy"], color = 'black', ls = galaxy_ls[i], label=f'S/N > {sn_array[i]}')
+        ax[0, 0].set_ylabel('S_mJy', fontsize=axis_label_fs)
+        ax[0, 0].legend(fontsize = legend_text_fs)
+
+        # TopRight
+        ax[0, 1].plot(dfs[i]["r_arcsec"], dfs[i]["dN_dS"], color = 'black', ls = galaxy_ls[i], label=f'S/N > {sn_array[i]}')
+        ax[0, 1].set_ylabel('dN/dS', fontsize=axis_label_fs)
+        ax[0, 1].legend(fontsize = legend_text_fs)
+
+
+        # Bottom Left
+        ax[1, 0].plot(dfs[i]["r_arcsec"], dfs[i]["N"], color = 'black', ls = galaxy_ls[i], label=f'S/N > {sn_array[i]}')
+        ax[1, 0].set_ylabel('N (from dN/dS using trap. rule)', fontsize=axis_label_fs)
+        ax[1, 0].legend(fontsize = legend_text_fs)
+
+        # Bottom Right
+        ax[1, 1].plot(dfs[i]["r_arcsec"], dfs[i]["N_expected"], color = 'black', ls = galaxy_ls[i], label=f'S/N > {sn_array[i]}')
+        ax[1, 1].set_ylabel('N * area (#, not %)', fontsize=axis_label_fs)
+        ax[1, 1].legend(fontsize = legend_text_fs)
+
+    
+    
+    for i in range(2):
+        for j in range(2):
+            ax[i, j].minorticks_on()
+            ax[i, j].tick_params(axis="x", which="major", direction="in", bottom=True, top=True, length=7, labelsize=axis_num_fs)
+            ax[i, j].tick_params(axis="y", which="major", direction="in", left=True, right=True, length=7, labelsize=axis_num_fs)
+            ax[i, j].tick_params(which='minor', length=4, direction="in")
+            
+            if i == 1:
+                ax[i, j].set_xlabel('Radius (arcsec)', fontsize=axis_label_fs)  
+    
+    
+    fig.subplots_adjust(
+    left=0.08,   # space on left
+    right=0.95,  # space on right
+    bottom=0.10, # space on bottom
+    top=0.92,    # space on top
+    wspace=0.25, # horizontal space between subplots
+    hspace=0.20  # vertical space between subplots
+)
+    
+    return fig, ax
+# -----------------------------------------------------------------------------------------

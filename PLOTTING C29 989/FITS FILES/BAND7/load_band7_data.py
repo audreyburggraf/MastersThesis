@@ -1,3 +1,5 @@
+# ON VNC THIS IS BAND7_new_mistake (POORLY NAMED)
+
 import sys
 from astropy.io import fits
 
