@@ -150,7 +150,7 @@ minor_angle_rad_sky_band6, major_angle_rad_sky_band6, minor_angle_rad_cartesian_
 # ---------------------------------------------
 # Band 5
 # ---------------------------------------------
-PA_deg_sky_band5 = 140.25 # This value is from CASA ****** not updated to band 5
+PA_deg_sky_band5 = 140.25 # This value is from CASA ****** not updated to band 5(still?)
 
 minor_angle_rad_sky_band5, major_angle_rad_sky_band5, minor_angle_rad_cartesian_band5, major_angle_rad_cartesian_band5 = get_minor_major_angles(PA_deg_sky_band5)
 # ---------------------------------------------

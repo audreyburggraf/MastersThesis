@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import math 
 
 
 from FITS_Image_Functions import * 
@@ -40,17 +41,17 @@ def galaxy_probability(S, band):
     S in mJy
     """
     if band == 'Band 6':
-        # These values are from Carniani, 2015
+        # These values are from Carniani, 2015 (dN/dS)
         phi = 1800 # deg^-2
         S0 = 1.7 # mJy
         alpha = -2.08 # unitless
     elif band == 'Band 7':
-        # Values from Chen, 2023 Table 3, Cumulativel number counts
-        phi = 9.6 # deg^-2
-        S0 = 2.2 # mJy
-        alpha = -0.6 # unitless
+        # Values from Statch, 2018 (https://arxiv.org/pdf/1805.05362), page 6, below equation 2
+        phi = 1200 # deg^-2
+        S0 = 5.1 # mJy
+        alpha = -5.9 # unitless
     else:
-        return print('Currently function only supports Band 5 and Band 6')
+        return print('Currently function only supports Band 6 and Band 7')
     
     dN_dS = phi * (S/S0)**(alpha) * np.exp(-S/S0)
     
@@ -84,14 +85,17 @@ def find_N_from_dN_dS(S_min):
 # -----------------------------------------------------------------------------------------
 def run_galaxy_contamination(band, sn_array, dr_arcsec = 0.25, print_things = True):
     if band == "Band 6":
-        pb_path = constants.band6_data_folder_path + "IRS63_BAND6_pb.fits"
+        pb_path = constants.band6_data_folder_path + "c2d_989_pbeam_233GHz.fits"
         
     elif band == "Band 7":
         pb_path = constants.band7_data_folder_path + "IRS63_BAND7_pb.fits"
         
     else:
         return print('Currently function only supports Band 5 and Band 6')
-        
+    
+    print("The dr value is: {dr_arcsec} arcsec")
+    print(" ")
+    
     # Primary Beam
     # ------------------------------------------------------------------------------------------------
     header, _, pb_map, wcs = read_in_file(pb_path)
@@ -191,10 +195,94 @@ def run_galaxy_contamination(band, sn_array, dr_arcsec = 0.25, print_things = Tr
 
 
 
-    return df, dfs_list
+    return y_cen, x_cen, df, dfs_list
 # -----------------------------------------------------------------------------------------
 
 
+
+
+
+
+# Function to find probability
+# -----------------------------------------------------------------------------------------
+def GC_probability(x_cen, y_cen, df, dfs, StokesI_mJy, sn_array, band, distance = "x", print_things = True):
+    
+    # Note: CARTA and the fits maps are different
+    # If on CARTA the source is at Image: (50, 25)
+    # I need to index my StokesI_mJy map as [25, 50]
+    if band == "Band 6":
+        S_source_mJy = 1 * 1000 # From CARTA
+        x_source = 1 # From CARTA
+        y_source = 1 # From CARTA
+        
+        x_dist = 1 # From CARTA
+        y_dist = 1 # From CARTA
+        hypot_dist = 1 # From CARTA
+
+        err_mJy = constants.StokesI_err_mJy_band6
+        
+    elif band == "Band 7":
+        S_source_mJy = 4.008985706605e-4 * 1000 # From CARTA
+        x_source = 773 # From CARTA
+        y_source = 472 # From CARTA
+        
+        x_dist = 4.752000 # From CARTA
+        y_dist = 0.684000 # From CARTA
+        hypot_dist = 4.800975 # From CARTA
+        
+        err_mJy = constants.StokesI_err_mJy_band7
+       
+        
+    else:
+        return print('Currently function only supports Band 5 and Band 6')
+    
+    
+    # Check that the inputted S_mJy at (x_source, y_source) matches my StokesI_mJy array
+    if math.isclose(StokesI_mJy[y_source, x_source], S_source_mJy, rel_tol = 0.001):
+        if print_things: print("     Checkpoint: Stokes I inputted and mapped values match")
+    else: return("The inputted values of Stokes I and the indexed ones do not match within the tolerence")          
+    
+         
+    # Find the S/N ratio of the source
+    S_N_source = S_source_mJy / err_mJy
+    
+    # Now check that the hypotenuse value from CARTA is correct based on x_dist and y_dist 
+    calculated_hypot = np.sqrt(x_dist**2 + y_dist**2)
+                  
+    if math.isclose(np.sqrt(x_dist**2 + y_dist**2), hypot_dist, rel_tol = 0.001):
+        if print_things: print("     Checkpoint: The hypotenuse values match up")
+    else: return("The hypotenuse values do not match within the tolerence")
+                  
+    # Choose what distance value we are looking at based on the input  
+    if distance == "x":
+        d_source = x_dist
+    elif distance == "y": 
+        d_source = y_dist                  
+    elif distance == "h" :
+        d_source = hypot_dist 
+    else:
+        return print("Currently function only supports Distance of 'x', 'y', or 'h'")    
+                  
+    # Print the distance from the centre to the object 
+    if print_things: print(" ")     
+    if print_things: print(rf"The distance to the source in {distance} is  : {d_source} arcsec")
+                  
+    # Find the closest r value to the distance from dr, and its corresponding index
+    closest_r = df["r_arcsec"].iloc[(df["r_arcsec"] - d_source).abs().argmin()]
+    closest_idx = (df["r_arcsec"] - x_dist).abs().argmin()
+                  
+    if print_things: print(rf"The distance to the soruce in df is : {closest_r } arcsec")
+    if print_things: print(" ")            
+                  
+    # Find the probability of an object of the S/N valye at its corresponding distance
+    for i in range(len(sn_array)):
+
+        print(rf"If the source S/N > {sn_array[i]}:")
+        print(rf"     The cumulative prob is: {dfs[i]['prob_cumulative'][closest_idx]:.2f}%")
+        print(" ")              
+                  
+
+# -----------------------------------------------------------------------------------------
 
 
 
@@ -354,3 +442,13 @@ def plot_probability_models(dfs, sn_array,
     
     return fig, ax
 # -----------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
