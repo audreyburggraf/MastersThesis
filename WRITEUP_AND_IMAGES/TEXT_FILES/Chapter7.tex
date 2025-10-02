@@ -1,25 +1,39 @@
 \chapter{Galaxy Contamination}
 \label{ch7}
 
+
+
+IN the paper \cite{Sadavoy_2019}, the topic of galaxy contamination was covered. 
+
+I used the primary beam file provided to replicate Figures 11 and 12 from the paper. I then wanted to use these methods to apply them to my source. 
+
+
+My source is visible at Band 5 and Band 7. However, due to <some things> Band 5 is not well studied in number count statistics, so I cannot repliate these methods for Band 7. However, it works for Band 7.
+
+In \cite{Sadavoy_2019} they used a Schechter function:
 \begin{equation}
-    \frac{dN}{dS} = \text{deg}^{-2}\left(\frac{S}{S_0}\right)^{-\alpha} \exp\left(\frac{S}{S_0}\right),
+    \frac{dN}{dS} = \text{deg}^{-2}\left(\frac{S}{S_0}\right)^{-\alpha} \exp\left(\frac{S}{S_0}\right).
 \end{equation}
 
+
+I did not do the fit myself but Band 7 was fit using a double-power law function with a form slightly different from the Schechter function with the form of:
+\begin{equation}
+    \frac{dN}{dS} = \text{deg}^{-2}\left(\frac{S}{S_0}\right)^{-\alpha} \exp\left(\frac{S}{S_0}\right).
+    \label{eq: double_power_law}
+\end{equation}
+
+\noindent where $N_0$, $S_0$ and $\alpha$ and $\beta$ are the two power law slopes. The corresponding values are found in Table \ref{tab: GC_parameter_table}.
 
 
 
 \begin{table}[h!]
 \centering
-\caption{<caption>}
-\begin{tabular}{ccccccc}
+\caption{Best-fit parameters of Equation \ref{eq: double_power_law} (differential number counts) from \cite{Stach_2018}. For Band 7 ($\lambda = 0.870$ mm).}
+\begin{tabular}{cccc}
 \toprule
-\multirow{2}{*}{} & \multicolumn{3}{c}{\textbf{Stokes Errors (mJy)}} & \textbf{Step} & \textbf{Vector Length} &  \\
-& I & Q & U & pix  &  pix & \\
+\textbf{$N_0$} & \textbf{$S_8$} & \textbf{$\alpha$} & \textbf{$\beta$}
 \midrule 
-\textbf{Band 4} & Ierr & Qerr & Uerr & 4 & 2 \\
-\textbf{Band 5} & 0.0143745 & 0.013025 & 0.01525  & 8 (check) & 2   \\
-\textbf{Band 6} & Ierr & Qerr & Uerr & 6 & 4   \\
-\textbf{Band 7} & 0.035175 & 0.02625 & 6 & 139.65 & 4 \\
+N & S & a & b 
 \bottomrule
 \end{tabular}
 \label{tab: GC_parameter_table}
