@@ -41,19 +41,25 @@ def galaxy_probability(S, band):
     S in mJy
     """
     if band == 'Band 6':
-        # These values are from Carniani, 2015 (dN/dS)
+        # These values and equation are from Carniani, 2015 (dN/dS)
         phi = 1800 # deg^-2
         S0 = 1.7 # mJy
         alpha = -2.08 # unitless
+        
+        dN_dS = phi * (S/S0)**(alpha) * np.exp(-S/S0)
+        
     elif band == 'Band 7':
         # Values from Statch, 2018 (https://arxiv.org/pdf/1805.05362), page 6, below equation 2
-        phi = 1200 # deg^-2
-        S0 = 5.1 # mJy
-        alpha = -5.9 # unitless
+        N0    = 1200 # deg^-2
+        S0    = 5.1  # mJy
+        alpha = 5.9  # unitless
+        beta  = 0.4  # unitless
+        
+        dN_dS = (N0 / S0) * ((S / S0)**alpha + (S / S0)**beta)**-1
     else:
         return print('Currently function only supports Band 6 and Band 7')
     
-    dN_dS = phi * (S/S0)**(alpha) * np.exp(-S/S0)
+    
     
     return dN_dS
 # ---------------------------------------------------
@@ -62,19 +68,46 @@ def galaxy_probability(S, band):
 
 # ---------------------------------------------------
 # This function is used to find N from dN/dS using the trapezoidal rule
+
+# I got ChatGPT to help me with log spacing i am eating lunch very busy need this done will clean it up later
 # ---------------------------------------------------
-def find_N_from_dN_dS(S_min):
+def find_N_from_dN_dS(S_min, band, spacing):
+    
+    # Band 6 uses a linear spaced S grid for now 
+    if spacing == 'linspace':  
+        S_grid = np.logspace(-2, 2, 1000)  # 0.01 to 100 mJy
+            
+        # Compute dN/dS over flux grid
+        dN_dS_grid = np.array([galaxy_probability(s, band) for s in S_grid])
 
-    S_grid = np.logspace(-2, 2, 1000)  # 0.01 to 100 mJy
+        # Select fluxes above threshold
+        mask = S_grid >= S_min
+        
+        N_per_area = np.trapz(dN_dS_grid[mask], S_grid[mask])
 
-    # Compute dN/dS over flux grid
-    dN_dS_grid = np.array([galaxy_probability(s, 'Band 6') for s in S_grid])
+    elif spacing == 'logspace':
+        
+        # Use log-spaced bins and integrate in log-space
+        S_grid = np.logspace(-2, 3, 2000)   # 0.01 to 1000 mJy
+        logS_grid = np.log10(S_grid)
+        
+        # Compute dN/dS
+        dN_dS_grid = np.array([galaxy_probability(s, band) for s in S_grid])
+        
+        # Convert to dN/dlog10S
+        dN_dlogS_grid = S_grid * np.log(10) * dN_dS_grid
+        
+        # Select fluxes above threshold
+        mask = S_grid >= S_min
+        
+        # Integrate in log-space
+        N_per_area = np.trapz(dN_dlogS_grid[mask], logS_grid[mask])
 
-    # Select fluxes above threshold
-    mask = S_grid >= S_min
+        
+    else:
+        
+        return print("Currently function only supports 'linspace' or 'logspace'")
 
-    # Integrate using trapezoidal rule
-    N_per_area = np.trapz(dN_dS_grid[mask], S_grid[mask])
 
     return N_per_area
 # ---------------------------------------------------
@@ -83,7 +116,7 @@ def find_N_from_dN_dS(S_min):
 
 
 # -----------------------------------------------------------------------------------------
-def run_galaxy_contamination(band, sn_array, dr_arcsec = 0.25, print_things = True):
+def run_galaxy_contamination(band, sn_array, spacing = 'linspace', dr_arcsec = 0.25, print_things = True):
     if band == "Band 6":
         pb_path = constants.band6_data_folder_path + "c2d_989_pbeam_233GHz.fits"
         
@@ -137,7 +170,9 @@ def run_galaxy_contamination(band, sn_array, dr_arcsec = 0.25, print_things = Tr
     x_pos = x_cen + r_pix.astype(int)
 
     pb_val_arr = pb_map[y_cen, x_pos].astype(np.float32).newbyteorder('=')  # native endian
-    sigma_r_arr = (0.03 / pb_val_arr).astype(np.float32).newbyteorder('=')
+    
+    # to do: find sentiviity for BAND 7 
+    sigma_r_arr = (0.035 / pb_val_arr).astype(np.float32).newbyteorder('=')
 
     df["pb_val"] = pb_val_arr
     df["sigma_r"] = sigma_r_arr
@@ -162,7 +197,7 @@ def run_galaxy_contamination(band, sn_array, dr_arcsec = 0.25, print_things = Tr
         # Loop over each annulus
         for S_min in S:
             # Use your function to integrate dN/dS above threshold
-            N_per_area = find_N_from_dN_dS(S_min)
+            N_per_area = find_N_from_dN_dS(S_min, band, spacing)
             N_per_area_list.append(N_per_area)
 
         N = np.array(N_per_area_list)
