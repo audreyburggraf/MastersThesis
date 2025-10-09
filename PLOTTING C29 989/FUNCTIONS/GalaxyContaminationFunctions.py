@@ -50,17 +50,17 @@ def galaxy_probability(S, band):
         
     elif band == 'Band 7':
         # Values from Statch, 2018 (https://arxiv.org/pdf/1805.05362), page 6, below equation 2
-        N0    = 1200 # deg^-2
-        S0    = 5.1  # mJy
-        alpha = 5.9  # unitless
-        beta  = 0.4  # unitless
+        N0    = 2.2 # mJy ^-1 deg^-2
+        S0    = 3.9  # mJy
+        alpha = -1.7  # unitless
         
-        dN_dS = (N0 / S0) * ((S / S0)**alpha + (S / S0)**beta)**-1
+        dN_dS = 1.15e3 * (N0 / S0) * (S / S0)**alpha * np.exp(-S/S0)
+            
     else:
         return print('Currently function only supports Band 6 and Band 7')
     
     
-    
+
     return dN_dS
 # ---------------------------------------------------
 
@@ -77,7 +77,6 @@ def find_N_from_dN_dS(S_min, band, spacing):
     if spacing == 'linspace':  
         S_grid = np.logspace(-2, 2, 1000)  # 0.01 to 100 mJy
             
-        # Compute dN/dS over flux grid
         dN_dS_grid = np.array([galaxy_probability(s, band) for s in S_grid])
 
         # Select fluxes above threshold
@@ -93,6 +92,7 @@ def find_N_from_dN_dS(S_min, band, spacing):
         
         # Compute dN/dS
         dN_dS_grid = np.array([galaxy_probability(s, band) for s in S_grid])
+
         
         # Convert to dN/dlog10S
         dN_dlogS_grid = S_grid * np.log(10) * dN_dS_grid
@@ -120,13 +120,29 @@ def run_galaxy_contamination(band, sn_array, spacing = 'linspace', dr_arcsec = 0
     if band == "Band 6":
         pb_path = constants.band6_data_folder_path + "c2d_989_pbeam_233GHz.fits"
         
+        if print_things:
+            print(rf"The Schecter function form that is being used is: dN_dS = phi * (S/S0)**(alpha) * np.exp(-S/S0)")
+                
+            print(rf"The Schecter best-fit parameters being used are: phi = 1800 deg^-2, S0 = 1.7 mJy, and alpha =  -2.08")
+        
+            print(rf"These values are from Carniani et al. (2015")
+
     elif band == "Band 7":
         pb_path = constants.band7_data_folder_path + "IRS63_BAND7_pb.fits"
+        
+        if print_things:
+            print(rf"The Schecter function form that is being used is: dN_dS = 1.15e3 * (N0 / S0) * (S / S0)**alpha * np.exp(-S/S0)")
+            
+            print(rf"The Schecter best-fit parameters being used are: N0 = 2.2 mJy^-1 deg^-2, S0 = 3.9 mJy, and alpha = -1.7")
+         
+            
+            print(rf"These values are from Chen et al. (2022)")
         
     else:
         return print('Currently function only supports Band 5 and Band 6')
     
-    print("The dr value is: {dr_arcsec} arcsec")
+    print(" ")
+    print(rf"The dr value is: {dr_arcsec} arcsec")
     print(" ")
     
     # Primary Beam
@@ -140,6 +156,7 @@ def run_galaxy_contamination(band, sn_array, spacing = 'linspace', dr_arcsec = 0
 
     if print_things:
         print(rf'The centre position is: (y, x) = ({y_cen}, {x_cen}), and at this position pb = {pb_map[y_cen, x_cen]}')
+        print(" ")
     # ------------------------------------------------------------------------------------------------
     
 
@@ -190,6 +207,7 @@ def run_galaxy_contamination(band, sn_array, spacing = 'linspace', dr_arcsec = 0
         # Compute flux threshold per annulus
         S = sn * df["sigma_r"].values
 
+        # Compute dN/dS
         dN_dS = np.array([galaxy_probability(s, band) for s in S])
 
         N_per_area_list = []
@@ -265,7 +283,9 @@ def GC_probability(x_cen, y_cen, df, dfs, StokesI_mJy, sn_array, band, distance 
         y_dist = 0.684000 # From CARTA
         hypot_dist = 4.800975 # From CARTA
         
-        err_mJy = constants.StokesI_err_mJy_band7
+        err_mJy = constants.StokesI_err_mJy_band7 / (0.827)
+        
+        print("S/N = ", S_source_mJy/err_mJy)
        
         
     else:
