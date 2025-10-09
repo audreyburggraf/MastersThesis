@@ -206,7 +206,7 @@ step_band7 = 6
 
 vector_length_pix_const = 0 
 vector_len_pix_band4 = 2
-vector_len_pix_band5 = 2 # *** not updated 
+vector_len_pix_band5 = 6  
 vector_len_pix_band6 = 4
 vector_len_pix_band7 = 4
 # ------------------------------------------------------------------------------------------
