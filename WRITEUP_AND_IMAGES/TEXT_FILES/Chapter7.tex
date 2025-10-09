@@ -1,6 +1,32 @@
 \chapter{Galaxy Contamination}
 \label{ch7}
 
+When looking at our ALMA images in POLI, we noticed a faint object, that we think could be a background galaxy. I wanted to apply methods similar to those in \cite{sadavoy_dust_2019}. This consists of 
+
+
+
+\begin{figure*}[h]
+  \centering
+  % First figure
+  \begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/GalaxyContamination/StokesI_BAND5.pdf}
+    \caption{Galaxy Contamination of Band 5. Note that Stokes I is cutoff for visualization.}
+    \label{fig: GC_POLI_Band5}
+  \end{minipage}%
+  \hfill
+  % Second figure
+  \begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/GalaxyContamination/StokesI_BAND7.pdf}
+    \caption{Same as Figure \ref{fig: GC_POLI_Band5}, but for Band 7. Note that Stokes I is cutoff for visualization.}
+    \label{fig: GC_POLI_Band7}
+  \end{minipage}
+\end{figure*}
+
+
+
+
 
 
 IN the paper \cite{Sadavoy_2019}, the topic of galaxy contamination was covered. 
@@ -28,13 +54,29 @@ I did not do the fit myself but Band 7 was fit using a double-power law function
 
 \begin{table}[h!]
 \centering
-\caption{Best-fit parameters of Equation \ref{eq: double_power_law} (differential number counts) from \cite{Stach_2018}. For Band 7 ($\lambda = 0.870$ mm).}
+\caption{Best-fit parameters of Equation~\ref{eq:double_power_law} (differential number counts) from \cite{Stach_2018} for Band~7 ($\lambda = 0.870$ mm).}
+\label{tab: GC_parameter_table}
 \begin{tabular}{cccc}
 \toprule
-\textbf{$N_0$} & \textbf{$S_8$} & \textbf{$\alpha$} & \textbf{$\beta$}
+\textbf{$N_0$} & \textbf{$S_0$} & \textbf{$\alpha$} & \textbf{$\beta$} \\
 \midrule 
-N & S & a & b 
+N & S & a & b \\
 \bottomrule
 \end{tabular}
-\label{tab: GC_parameter_table}
 \end{table}
+
+
+The S/N of the source in Band 7 is approx. 9.4. The distance to the source is 4.75 arcsec. At the S/N ratio of 5, 9, 20 respectively are 12.03\%, 7.15\% and 3.12\%.
+
+
+
+
+\begin{figure*}[h]
+  \centering
+  \includegraphics[width=0.8\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/GalaxyContamination/Probabilities_Band7.pdf}
+  \caption{Galaxy contamination for Band 7.}
+  \label{fig: GalaxyContamination_Prob_B7}
+\end{figure*}
+
+
+
