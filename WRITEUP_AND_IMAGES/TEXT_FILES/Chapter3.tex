@@ -1,56 +1,71 @@
-\chapter{Intensity Profiles}
+\chapter{\stokesI and POLI Plots}
 \label{ch3}
 
 
 
-\section{Slice Along Minor}
-% ------------------------------------------------
+
+\subsection{Stream/Jet}
+
+
+
+\subsection{Error Values}
+As of now, Band 4 and Band 6 data was given to me, along with their error files. So Band 4 and Band 6 have error maps for <values>. This might change as I need to to nterms = 2 maybe? But for now, I cleaned Band 5 and Band 7 data myself and did not get error maps or we don't want to use them? So what I do is open the image in CASA viewer or CARTA, and find the maximum value of standard deviation in 4 boxes around the edges of the image (not on the bright disk) and average them together. 
+
+\subsection{Polarization Vectors}
+When we add the polarization vectors to the plot I don't plot one in each pixel. I use niquous <spelling? sampling no determine when we should plot each line, i.e. every $n$th pixel. Additionally, the length of these vectors are all normalized to the same length, and are not scaled based on the strength of the value at their corresponding pixel. The length of these vectors were chosen using guess and check, and just scaled to what looks best. 
+
+\begin{table}[h!]
+\centering
+\caption{<caption>}
+\begin{tabular}{ccccccc}
+\toprule
+\multirow{2}{*}{} & \multicolumn{3}{c}{\textbf{Stokes Errors (mJy)}} & \textbf{Step} & \textbf{Vector Length} &  \\
+& I & Q & U & pix  &  pix & \\
+\midrule 
+\textbf{Band 4} & Ierr & Qerr & Uerr & 4 & 2 \\
+\textbf{Band 5} & 0.0143745 & 0.013025 & 0.01525  & 6 & 2   \\
+\textbf{Band 6} & Ierr & Qerr & Uerr & 6 & 4   \\
+\textbf{Band 7} & 0.035175 & 0.02625 & 6 & 4 & 4 \\
+\bottomrule
+\end{tabular}
+\label{tab: nolabel}
+\end{table}
+
+
+
+
+
+
+
+
 \begin{figure*}[h]
   \centering
-  \includegraphics[width=0.3\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Slices/MinorSlice_Band4.pdf}
-  \caption{\textcolor{red}{Add caption.}}
-  \label{fig: slice-along-minor}
+  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/StokesI_POLI/IRS63_StokesI_POLI_vectors_BAND4.pdf}
+  \caption{\quoted{\stokesI (left) and polarized intensity (right) for IRS 63 at ALMA Band 4 (\bandfourlambda). The polarization vectors are shown as black lines. Vectors are shown for pixels with \add{conditions}. The beam is shown in the lower left corner. The \stokesI maps have a log colour scale and the polarized intensity maps have a linear scale \cite{sadavoy_dust_2019}}}
+  \label{fig: StokesI_POLI_B4}
 \end{figure*}
-% ------------------------------------------------
 
-
-\section{Stokes I}
-% ------------------------------------------------
-In Figure \ref{fig: slices_StokesI} we present plots of the Stokes I values along the slices along the minor axis for all 4 bands. When we look at the slices in Stokes I, we can see that the shapes are all centred at the origin. Meaning when we look at all of the light from the disk (polarized or not), we see the most light at the centre of the disk. This is expected, as the <YSO> is at the centre of the disk, so it should be brightest there.
 
 \begin{figure*}[h]
   \centering
-  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Slices/MW_slices_StokesI.pdf}
-  \caption{\textcolor{red}{Add caption.}}
-  \label{fig: slices_StokesI}
+  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/StokesI_POLI/IRS63_StokesI_POLI_vectors_BAND5.pdf}
+  \caption{Same as Figure \ref{fig: StokesI_POLI_B4}, except for Band 5 (\bandfivelambda).}
+  \label{fig: StokesI_POLI_B5}
 \end{figure*}
 
 
-% ------------------------------------------------
-\section{POLI}
-% ------------------------------------------------
-In Figure \ref{fig: slices_StokesI} we present plots of the POLI values along the slices along the minor axis for all 4 bands. When we look at the slices of POLI, we see some features that are different than Stokes I. Primarily that the curves are no longer centred at (0,0), and that they all have a slight shift to the right. In simpler terms, when we look at the polarized light, it no longer peaks at the centre of the disk, it is peaking at some point in the disk that is <closer or farther towards us>. 
 
-This can give us some insight into the structure of the disk. <flared, source>. 
 \begin{figure*}[h]
   \centering
-  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Slices/MW_slices_POLI.pdf}
-  \caption{Same as Figure \ref{fig: slices_StokesI}, but for POLI.}
-  \label{fig: Slices_POLI}
+  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/StokesI_POLI/IRS63_StokesI_POLI_vectors_BAND6.pdf}
+  \caption{Same as Figure \ref{fig: StokesI_POLI_B4}, except for Band 6 (\bandsixlambda).}
+  \label{fig: StokesI_POLI_B6}
 \end{figure*}
-% ------------------------------------------------
-% ------------------------------------------------
-% \section{POLF}
-% ------------------------------------------------
-% \begin{figure*}[h]
-%   \centering
-%   \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/IRS63_mw_slice_POLF_writeup.jpeg}
-%   \caption{\textcolor{red}{Add caption.}}
-%   \label{fig: }
-% \end{figure*}
 
 
-
-
-
-
+\begin{figure*}[h]
+  \centering
+  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/StokesI_POLI/IRS63_StokesI_POLI_vectors_debiased_BAND7.pdf}
+  \caption{Same as Figure \ref{fig: StokesI_POLI_B4}, except for Band 7 (\bandsevenlambda).}
+  \label{fig: StokesI_POLI_B7}
+\end{figure*}
