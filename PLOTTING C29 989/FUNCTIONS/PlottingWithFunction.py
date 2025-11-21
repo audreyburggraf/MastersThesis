@@ -184,7 +184,8 @@ def normalize_stokesI_for_cmap(StokesI_data_2d_mJy, custom_min=None, custom_max=
 
 
 # ---------------------------------------------------------------------------------------------------------------
-def create_stokes_i_base_plot(StokesI_wcs, StokesI_stretched, cmap, 
+def create_stokes_i_base_plot(band, 
+                              StokesI_wcs, StokesI_stretched, cmap, 
                               normalized_cbar_ticks, StokesI_unstretched_cbar_ticks, 
                               xmin, xmax, ymin, ymax, reference_length_pix, reference_length_AU,
                               BMAJ_pix, BMIN_pix, BPA_deg_cartesian, 
@@ -192,7 +193,8 @@ def create_stokes_i_base_plot(StokesI_wcs, StokesI_stretched, cmap,
                               text_fs = constants.text_fs , 
                               axis_label_fs = constants.axis_label_fs, 
                               axis_num_fs = constants.axis_num_fs, 
-                              cbar_fs = constants.cbar_fs):
+                              cbar_fs = constants.cbar_fs,
+                              label = None, fontcolor = 'black'):
     
     # Create a figure with the WCS projection
     fig, ax = plt.subplots(figsize=(14, 12), subplot_kw={'projection': StokesI_wcs})
@@ -222,17 +224,17 @@ def create_stokes_i_base_plot(StokesI_wcs, StokesI_stretched, cmap,
 
     ax.plot([(line_x_pos - reference_length_pix), (line_x_pos)], 
             [line_y_pos, line_y_pos],
-            color='black', linewidth=3)
+            color= fontcolor, linewidth=3)
 
     ax.text((line_x_pos - reference_length_pix/2), (line_y_pos - 2), 
-            f'{reference_length_AU} AU', fontsize=text_fs, ha='center', va='top') 
+            f'{reference_length_AU} AU', fontsize=text_fs, ha='center', va='top', color = fontcolor) 
 
     # Create and add the circular beam
     beam_x_pos = xmin - 0.1 * (xmin - xmax)
     beam_y_pos = ymin - 0.1 * (ymin - ymax)
 
     beam = Ellipse((beam_x_pos, beam_y_pos), width=BMAJ_pix, height=BMIN_pix,  
-                   angle=BPA_deg_cartesian, edgecolor='black', facecolor='none', alpha=1, lw=2)
+                   angle=BPA_deg_cartesian, edgecolor= fontcolor, facecolor='none', alpha=1, lw=2)
 
     ax.add_patch(beam)
 
@@ -240,12 +242,39 @@ def create_stokes_i_base_plot(StokesI_wcs, StokesI_stretched, cmap,
     ax.minorticks_on()
     ax.tick_params(axis="x", which="major", direction="in", bottom=True, top=True, length=7, labelsize=axis_num_fs)
     ax.tick_params(axis="y", which="major", direction="in", left=True, right=True, length=7, labelsize=axis_num_fs)
+    
+    
+    # Label
+    # ----------------------------------------------------------------------
+    if band == "Band 4":
+        b = 4
+    elif band == "Band 5":
+        b = 5
+    elif band == "Band 6":
+        b = 6
+    elif band == "Band 7":
+        b = 7
+    else:
+        print("This function only accepts 'Band 4', 'Band 5', 'Band 6' or 'Band 7' ")
+    # ----------------------------------------------------------------------         
+    if label == "Band":
+        ax.text(0.05, 0.90, f"Band {b}", transform=ax.transAxes, fontsize=text_fs, color = fontcolor)
+
+    elif label == 'wavelength':
+        ax.text(0.05, 0.90, f"{constants.lambda_mm[int(b)]} mm", transform=ax.transAxes, fontsize=text_fs, color = fontcolor)
+
+    elif labels is None:
+        pass  # No titles
+
+    else:
+        print("Function only accepts 'Band' or 'wavelength'")
+    # ----------------------------------------------------------------------
 
     return fig, ax
 # ---------------------------------------------------------------------------------------------------------------
 
 
-def create_base_plot(StokesI_wcs, plotting_data, cbar_label, cmap, 
+def create_base_plot(band, StokesI_wcs, plotting_data, cbar_label, cmap, 
                      xmin, xmax, ymin, ymax, reference_length_pix, reference_length_AU,
                      BMAJ_pix, BMIN_pix, BPA_deg_cartesian, 
                      max_length_pix, reference_fraction,
@@ -254,6 +283,7 @@ def create_base_plot(StokesI_wcs, plotting_data, cbar_label, cmap,
                      axis_num_fs = constants.axis_num_fs, 
                      cbar_fs = constants.cbar_fs,
                      cbar_num_fs = constants.cbar_num_fs,
+                     label = None, fontcolor = 'black',
                      cbar_orientation = 'vertical',
                      cbar_pad = 0.1,
                      cbar_shrink = 1,
@@ -362,7 +392,42 @@ def create_base_plot(StokesI_wcs, plotting_data, cbar_label, cmap,
         ax.tick_params(axis="y", which="major", direction="in", left=True, right=True,
                        length=7, labelsize=0)
 
+        # Minor axis ticks
+    # --------------------------------------------------------
+    ra = ax.coords['ra']
 
+    # --- Minor ticks ---
+    ra.display_minor_ticks(True)
+    ra.set_ticks_position(('b', 't'))
+    ra.tick_params(which='minor', length=4)
+    # --------------------------------------------------------
+    
+    
+    # Label
+    # ----------------------------------------------------------------------
+    if band == "Band 4":
+        b = 4
+    elif band == "Band 5":
+        b = 5
+    elif band == "Band 6":
+        b = 6
+    elif band == "Band 7":
+        b = 7
+    else:
+        print("This function only accepts 'Band 4', 'Band 5', 'Band 6' or 'Band 7' ")
+    # ----------------------------------------------------------------------         
+    if label == "Band":
+        ax.text(0.05, 0.90, f"Band {b}", transform=ax.transAxes, fontsize=text_fs, color = fontcolor)
+
+    elif label == 'wavelength':
+        ax.text(0.05, 0.90, f"{constants.lambda_mm[int(b)]} mm", transform=ax.transAxes, fontsize=text_fs, color = fontcolor)
+
+    elif labels is None:
+        pass  # No titles
+
+    else:
+        print("Function only accepts 'Band' or 'wavelength'")
+    # ---------------------------------------------------------------------
 
 
     return fig, ax
@@ -535,7 +600,8 @@ def plot_grids(data_list, soft_colormap_v2, StokesI_wcs, axis_label_fs, axis_num
 
 
 # ---------------------------------------------------------------------------------------------
-def create_stokes_i_plus_one_base_plot(StokesI_wcs, StokesI_stretched, 
+def create_stokes_i_plus_one_base_plot(band, 
+                                       StokesI_wcs, StokesI_stretched, 
                                        normalized_cbar_ticks, StokesI_unstretched_cbar_ticks, 
                                        other_plotting, other_plotting_label, 
                                        soft_colormap_v2, 
@@ -545,7 +611,9 @@ def create_stokes_i_plus_one_base_plot(StokesI_wcs, StokesI_stretched,
                                        text_fs = constants.text_fs , 
                                        axis_label_fs = constants.axis_label_fs, 
                                        axis_num_fs = constants.axis_num_fs, 
-                                       cbar_fs = constants.cbar_fs):
+                                       cbar_fs = constants.cbar_fs,
+                                       label = None,
+                                       fontcolor = "black"):
 
     fig, ax = plt.subplots(1, 2, figsize=(28, 12),
                            gridspec_kw={'wspace': -0.5},  # Increase wspace for more horizontal space
@@ -603,9 +671,51 @@ def create_stokes_i_plus_one_base_plot(StokesI_wcs, StokesI_stretched,
         ax[i].set_xlabel('Right Ascension', fontsize=axis_label_fs)
         ax[i].set_ylabel('Declination', fontsize=axis_label_fs)
         
-        ax[i].minorticks_on()
+        
+        # Label
+        # ----------------------------------------------------------------------
+        if band == "Band 4":
+            b = 4
+        elif band == "Band 5":
+            b = 5
+        elif band == "Band 6":
+            b = 6
+        elif band == "Band 7":
+            b = 7
+        else:
+            print("This function only accepts 'Band 4', 'Band 5', 'Band 6' or 'Band 7' ")
+        # ----------------------------------------------------------------------         
+        if label == "Band":
+            ax[i].text(0.05, 0.90, f"Band {b}", transform=ax[i].transAxes, fontsize=text_fs, color = fontcolor)
+
+        elif label == 'wavelength':
+            ax[i].text(0.05, 0.90, f"{constants.lambda_mm[int(b)]} mm", transform=ax[i].transAxes, fontsize=text_fs, color = fontcolor)
+
+        elif labels is None:
+            pass  # No titles
+
+        else:
+            print("Function only accepts 'Band' or 'wavelength'")
+        # ----------------------------------------------------------------------
+    
+    
+        
+        
+        
+        # Minor axis ticks
+        # --------------------------------------------------------
+        ra = ax[i].coords['ra']
+
+        # --- Minor ticks ---
+        ra.display_minor_ticks(True)
+        ra.set_ticks_position(('b', 't'))
+        ra.tick_params(which='minor', length=4)
+        # --------------------------------------------------------
+
+#         ax[i].minorticks_on()
 
         ax[i].tick_params(axis="x", which="major", direction="in", bottom=True, top=True, length=7, labelsize=axis_num_fs)
+# #         ax[i].tick_params(axis="x", which="minor", length=4)
         ax[i].tick_params(axis="y", which="major", direction="in", left=True, right=True, length=7, labelsize=axis_num_fs)
 
     ax[1].tick_params(axis='y', labelleft=False)
@@ -769,6 +879,16 @@ def plot_grids_4x3(data_list, soft_colormap_v2, StokesI_wcs, axis_label_fs, axis
         ax.minorticks_on()
         ax.tick_params(axis="x", which="major", direction="in", bottom=True, top=True, length=7, labelsize=axis_num_fs - 10)
         ax.tick_params(axis="y", which="major", direction="in", left=True, right=True, length=7, labelsize=axis_num_fs)
+        
+        # Minor axis ticks
+        # --------------------------------------------------------
+        ra = ax.coords['ra']
+
+        # --- Minor ticks ---
+        ra.display_minor_ticks(True)
+        ra.set_ticks_position(('b', 't'))
+        ra.tick_params(which='minor', length=4)
+        # --------------------------------------------------------
 
         # Add a colorbar to each subplot (horizontal colorbars)
         cbar = fig.colorbar(im, ax=ax, orientation='horizontal', fraction=0.04, pad=cb_pads[i])
@@ -930,6 +1050,15 @@ def plot_ratio_grid(POLI_mJy,
         ax.tick_params(axis="x", which="major", direction="in", bottom=True, top=True, length=7, labelsize=axis_num_fs - 10)
         ax.tick_params(axis="y", which="major", direction="in", left=True, right=True, length=7, labelsize=axis_num_fs)
 
+        # Minor axis ticks
+        # --------------------------------------------------------
+        ra = ax.coords['ra']
+
+        # --- Minor ticks ---
+        ra.display_minor_ticks(True)
+        ra.set_ticks_position(('b', 't'))
+        ra.tick_params(which='minor', length=4)
+        # --------------------------------------------------------
     
     return ax
 # ----------------------------------------------------------------------------------------------------------------------
