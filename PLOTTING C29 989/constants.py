@@ -32,6 +32,20 @@ lambda_mm = {
     10: 0.34
 }
 # ---------------------------------------------
+# Pick colors you like from the palette
+mw_colors = {
+    4:  "#ff1900",  # Red
+    5: "#ffaf1b",  # Soft Orange
+    6: "#8ddafe",  # Sky Blue
+    7: "#c5b3fd"   # Soft Purple
+}
+
+# Labels
+# alma_quad_labels_mm = [lambda_mm[4], lambda_mm[5], lambda_mm[6], lambda_mm[7]]
+# alma_quad_labels_band = ["Band 4", "Band 5", "Band 6", "Band 7"]
+# alma_quad_labels = alma_quad_labels_mm
+# ---------------------------------------------
+# ---------------------------------------------
 
 
 
@@ -44,6 +58,7 @@ distance_pc = 132
 # FITS Files
 # -------------------------------------------------------------------------------------------------------- 
 band4_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND4/"
+band4_nterms2_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND4_nterms2/"
 band5_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND5/"
 band6_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND6/"
 band7_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND7/"
@@ -55,6 +70,7 @@ band7_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/
 # CARTA
 # -------------------------------------------------------------------------------------------------------- 
 band4_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND4/"
+band4_nterms2_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND4_nterms2/"
 band5_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND5/"
 band6_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND6/"
 band7_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND7/"
@@ -105,6 +121,10 @@ centre_str_band5 = 'J163135.656-240130.086' # This value is from CASA
 # Band 4
 # ---------------------------------------------
 centre_str_band4 = 'J163135.656-240129.992' # This value is from CASA            
+# ---------------------------------------------
+# Band 4 (nterms = 2)
+# ---------------------------------------------
+centre_str_band4_nterms2 = 'J163135.656-240129.992' # Need to update this!!!! This is nterms = 1
 # ---------------------------------------------
 # Band 7
 # ---------------------------------------------
@@ -160,6 +180,12 @@ PA_deg_sky_band4 = 145.9 # This value is from CASA
 
 minor_angle_rad_sky_band4, major_angle_rad_sky_band4, minor_angle_rad_cartesian_band4, major_angle_rad_cartesian_band4 = get_minor_major_angles(PA_deg_sky_band4)
 # ---------------------------------------------
+# Band 4 (nterms = 2)
+# ---------------------------------------------
+PA_deg_sky_band4_nterms2 = 145.9 # This value is from CASA and is for BAND 4 NTERMS 1
+
+minor_angle_rad_sky_band4_nterms2, major_angle_rad_sky_band4_nterms2, minor_angle_rad_cartesian_band4_nterms2, major_angle_rad_cartesian_band4_nterms2 = get_minor_major_angles(PA_deg_sky_band4_nterms2)
+# ---------------------------------------------
 
 # Band 7
 # ---------------------------------------------
@@ -171,6 +197,14 @@ minor_angle_rad_sky_band7, major_angle_rad_sky_band7, minor_angle_rad_cartesian_
 
 
 # Rms errors
+# ------------------------------------------------------------------------------------------
+# --------
+# Band 4 (nterms 2) 
+# --------
+StokesI_err_mJy_band4_nterms2 = np.mean([1])# These need to be updated 
+StokesQ_err_mJy_band4_nterms2 = np.mean([1]) # These need to be updated 
+StokesU_err_mJy_band4_nterms2 = np.mean([1]) # These need to be updated 
+POLI_err_mJy_band4_nterms2 = np.mean([StokesQ_err_mJy_band4_nterms2, StokesU_err_mJy_band4_nterms2])
 # ------------------------------------------------------------------------------------------
 # --------
 # Band 5
@@ -200,12 +234,14 @@ max_length_pix = 400  # Maximum length of the vector in pixels for 100% polariza
 reference_fraction = 0.03
 
 step_band4 = 4
+step_band4_nterms2 = 10 # this needs updating
 step_band5 = 8 
 step_band6 = 6  
 step_band7 = 6
 
 vector_length_pix_const = 0 
 vector_len_pix_band4 = 2
+vector_len_pix_band4_nterms2 = 10 # This needs updating
 vector_len_pix_band5 = 6  
 vector_len_pix_band6 = 4
 vector_len_pix_band7 = 4

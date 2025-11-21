@@ -1,0 +1,9 @@
+# S: flux density, N: cumulative number, Na corrected by Zavala2018, Nb corrected by Bethermin2017
+S Na Na_err Nb Nb_err
+0.4 353 147 324 147
+0.5 208 77  169 72
+0.6 129 45  96  43
+0.7 87  32  58  27
+0.8 59  24  41  21
+0.9 37  19  26  16
+1.0 23  15  15  12
