@@ -20,12 +20,20 @@ from PolarizationFunctions import *
 def get_plotting_parameters(StokesI_header, StokesI_wcs, band):
     # Dictionary for band constants
     # Get the constants depending on what band of data we are using:
-    if band == 6:
+    if band == 'Band 6':
         centre_str = constants.centre_str_band6
 
-    elif band == 4:
+    elif band == 'Band 4':
         centre_str = constants.centre_str_band4  # Changed to band 4   
-    elif band == 7:
+        
+    elif band == 'Band 4 nterm2':
+        centre_str = constants.centre_str_band4  # Changed to band 4 
+    
+    elif band == 'Band 5':
+        centre_str = constants.centre_str_band5 
+        
+        
+    elif band == 'Band 7':
         centre_str = constants.centre_str_band7 
     else:
         return "Invalid band option"
