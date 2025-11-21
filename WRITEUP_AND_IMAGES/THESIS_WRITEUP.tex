@@ -30,6 +30,65 @@
 \usepackage{array}
 
 
+%====================================
+% ALMA Band Wavelength "Constants"
+%====================================
+% Band 4
+\newcommand{\bandfourlambda}{\ensuremath{2.1~\mathrm{mm}}}  
+
+% Band 5 
+\newcommand{\bandfivelambda}{\ensuremath{1.5~\mathrm{mm}}}
+
+  % Band 6 
+\newcommand{\bandsixlambda}{\ensuremath{1.25~\mathrm{mm}}}
+
+ % Band 7 
+\newcommand{\bandsevenlambda}{\ensuremath{0.87~\mathrm{mm}}}
+%====================================
+
+
+
+
+%===============================
+% Paramter/word/unit commands
+%===============================
+\newcommand{\stokesI}{Stokes \emph{I} }
+\newcommand{\stokesQ}{Stokes \emph{Q} }
+\newcommand{\stokesU}{Stokes \emph{U} }
+%===============================
+\newcommand{\alma}{\emph{ALMA} }
+%===============================
+
+
+%  EDITING / ANNOTATION COMMANDS
+%===============================
+% Note: I asked ChatGPT to draft these up for me and I will change them as I go to how I like them
+%===============================
+% Add something later
+\newcommand{\add}[1]{\textcolor{red}{\textbf{[ADD:} #1\textbf{]}}}
+
+% Fix or revise something
+\newcommand{\fix}[1]{\textcolor{blue}{\textbf{[FIX:} #1\textbf{]}}}
+
+% Remove or consider deleting something
+\newcommand{\remove}[1]{\textcolor{purple}{\textbf{[REMOVE:} #1\textbf{]}}}
+
+% Comment to yourself
+\newcommand{\note}[1]{\textcolor{teal}{\textit{[NOTE: #1]}}}
+
+% Placeholder for a missing number/value
+\newcommand{\numtodo}[1]{\textcolor{orange}{\textbf{[NUMBER NEEDED:} #1\textbf{]}}}
+
+% Direct quote with quotation marks added automatically
+% I will use this for when I want to add information from a paper as a placeholder, but before I change it to my own words
+\newcommand{\quoted}[1]{\textcolor{violet}{\textit{``#1''}}}
+
+% Highlight a term you're defining or emphasizing
+\newcommand{\highlight}[1]{\textcolor{magenta}{\textbf{#1}}}
+%===============================
+
+
+
 % for math equations
 
 \usepackage{amssymb}
@@ -149,6 +208,9 @@ Acknowledgments if any...
 \include{WRITEUP_AND_IMAGES/TEXT_FILES/Chapter7}
 
 \include{WRITEUP_AND_IMAGES/TEXT_FILES/Chapter8}
+
+\include{WRITEUP_AND_IMAGES/TEXT_FILES/Chapter9}
+
 
 \bibliographystyle{plainnat}
 \bibliography{WRITEUP_AND_IMAGES/MastersThesis}
