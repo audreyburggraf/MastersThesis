@@ -23,22 +23,79 @@ normalized_cbar_ticks = np.array([0, 0.2, 0.4, 0.6, 0.8, 1])
 # ALMA Band wavelengths
 # ---------------------------------------------
 lambda_mm = {
+    # Band 1
     1: 7.0,
+    # Band 3
     3: 3.1,
+    # Band 4
     4: 2.0,
-    5: 1.6, # check this 
+    42: 2.0,
+    "Band 4": 2.0,
+    "Band 4 nterms2": 2.0,
+    # Band 5
+    5: 1.7, # check this 
+    "Band 5": 1.7,
+    # Band 6
     6: 1.3,
-    7: 0.87,
+    "Band 6": 1.3,
+    # Band 7
+    7: 0.87, 
+    72: 0.87, 
+    "Band 7": 0.87, 
+    "Band 7 nterms2": 0.87, 
+    # Band 10
     10: 0.34
 }
 # ---------------------------------------------
-# Pick colors you like from the palette
-mw_colors = {
-    4:  "#ff1900",  # Red
-    5: "#ffaf1b",  # Soft Orange
-    6: "#8ddafe",  # Sky Blue
-    7: "#c5b3fd"   # Soft Purple
+# Setting the colours for each band 
+# The colour will be the same if its nterms = 1 or nterms = 2
+# mw_colors = {
+#     4:  "#ff1900",  # Red
+#     42:  "#ff1900",  # Red
+#     5: "#ffaf1b",  # Soft Orange
+#     6: "#8ddafe",  # Sky Blue
+#     7: "#c5b3fd",   # Soft Purple
+#     72: "#c5b3fd"   # Soft Purple
+# }
+
+
+# Set the colours for each band 
+alma_band_colors = {
+    1: "#f63fe3",  # pink from Kataoka et al. 2015
+    3: "#2321f6",  # blue from Kataoka et al. 2015
+   
+    #--------
+    # Band 4
+    #--------
+    4: "red", 
+    42: "red", 
+    "Band 4": "red",
+    "Band 4 nterms2": 'red',
+    #--------
+    # Band 5
+    #--------
+    5: "orange",  
+    "Band 5": "orange",
+    #--------
+    # Band 6
+    #--------
+    6: "#00bfc4", # Bright cyan
+    "Band 6": "#00bfc4",
+    #--------
+    # Band 7
+    #--------
+    7: "darkviolet", 
+    72: "darkviolet", 
+    "Band 7":  "darkviolet",
+    "Band 7 nterms2": "darkviolet",
+    10:"#fb0d0d", # red from Kataoka et al. 2015
 }
+
+
+
+
+
+
 
 # Labels
 # alma_quad_labels_mm = [lambda_mm[4], lambda_mm[5], lambda_mm[6], lambda_mm[7]]
@@ -59,9 +116,15 @@ distance_pc = 132
 # -------------------------------------------------------------------------------------------------------- 
 band4_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND4/"
 band4_nterms2_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND4_nterms2/"
+
 band5_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND5/"
+
 band6_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND6/"
-band7_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND7/"
+
+# band7_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND7/"
+band7_nterms2_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND7_nterms2/"
+
+
 # band7_v0_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND7_v0/"
 # band7_redo_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND7_redo/"
 # band7_nterms2_data_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/FITS FILES/BAND7_nterms2/"
@@ -73,7 +136,8 @@ band4_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH
 band4_nterms2_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND4_nterms2/"
 band5_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND5/"
 band6_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND6/"
-band7_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND7/"
+# band7_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND7/"
+band7_nterms2_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND7_nterms2/"
 # band7_redo_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND7_redo/"
 # band7_nterms2_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND7_nterms2/"
 # band7_uncalibrated_carta_folder_path = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/CARTA FILES/BAND7_uncalibrated/"
@@ -124,13 +188,16 @@ centre_str_band4 = 'J163135.656-240129.992' # This value is from CASA
 # ---------------------------------------------
 # Band 4 (nterms = 2)
 # ---------------------------------------------
-centre_str_band4_nterms2 = 'J163135.656-240129.992' # Need to update this!!!! This is nterms = 1
+centre_str_band4_nterms2 = 'J163135.656-240130.006' # This is from CASA and has been updated for nterms 2
 # ---------------------------------------------
 # Band 7
 # ---------------------------------------------
-centre_str_band7 = 'J163135.656-240130.089' # This value is from CASA and was updated to new file
+# I think this might be nterms = 2
+# centre_str_band7 = 'J163135.656-240130.089' # This value is from CASA and was updated to new file
 # ---------------------------------------------
-
+# This value is correct for nterms = 2
+centre_str_band7_nterms2 = 'J163135.656-240130.089'
+# ---------------------------------------------
 
 
 # Position, Minor and Major angles
@@ -182,16 +249,25 @@ minor_angle_rad_sky_band4, major_angle_rad_sky_band4, minor_angle_rad_cartesian_
 # ---------------------------------------------
 # Band 4 (nterms = 2)
 # ---------------------------------------------
-PA_deg_sky_band4_nterms2 = 145.9 # This value is from CASA and is for BAND 4 NTERMS 1
+PA_deg_sky_band4_nterms2 = 139.31 # This value is from CASA and has been updated for nterms = 2
 
 minor_angle_rad_sky_band4_nterms2, major_angle_rad_sky_band4_nterms2, minor_angle_rad_cartesian_band4_nterms2, major_angle_rad_cartesian_band4_nterms2 = get_minor_major_angles(PA_deg_sky_band4_nterms2)
 # ---------------------------------------------
 
 # Band 7
 # ---------------------------------------------
-PA_deg_sky_band7 = 139.65 # This value is from fitting the new band 7 file (image component size, or 148.86 deconvolved)
+# I believe this is for nterms = 2 
+# PA_deg_sky_band7 = 139.65 # This value is from fitting the new band 7 file (image component size, or 148.86 deconvolved)
 
-minor_angle_rad_sky_band7, major_angle_rad_sky_band7, minor_angle_rad_cartesian_band7, major_angle_rad_cartesian_band7 = get_minor_major_angles(PA_deg_sky_band7)
+# minor_angle_rad_sky_band7, major_angle_rad_sky_band7, minor_angle_rad_cartesian_band7, major_angle_rad_cartesian_band7 = get_minor_major_angles(PA_deg_sky_band7)
+# ---------------------------------------------
+
+
+# Band 7
+# ---------------------------------------------
+PA_deg_sky_band7_nterms2 = 139.65
+
+minor_angle_rad_sky_band7_nterms2, major_angle_rad_sky_band7_nterms2, minor_angle_rad_cartesian_band7_nterms2, major_angle_rad_cartesian_band7_nterms2 = get_minor_major_angles(PA_deg_sky_band7_nterms2)
 # ---------------------------------------------
 
 
@@ -201,9 +277,9 @@ minor_angle_rad_sky_band7, major_angle_rad_sky_band7, minor_angle_rad_cartesian_
 # --------
 # Band 4 (nterms 2) 
 # --------
-StokesI_err_mJy_band4_nterms2 = np.mean([1])# These need to be updated 
-StokesQ_err_mJy_band4_nterms2 = np.mean([1]) # These need to be updated 
-StokesU_err_mJy_band4_nterms2 = np.mean([1]) # These need to be updated 
+StokesI_err_mJy_band4_nterms2 = np.mean([0.0115, 0.0145, 0.0101, 0.0189])
+StokesQ_err_mJy_band4_nterms2 = np.mean([0.0098, 0.0097, 0.0095, 0.0096]) 
+StokesU_err_mJy_band4_nterms2 = np.mean([0.0102, 0.0105, 0.0098, 0.0100]) 
 POLI_err_mJy_band4_nterms2 = np.mean([StokesQ_err_mJy_band4_nterms2, StokesU_err_mJy_band4_nterms2])
 # ------------------------------------------------------------------------------------------
 # --------
@@ -221,10 +297,15 @@ POLI_err_mJy_band5 = np.mean([StokesQ_err_mJy_band5, StokesU_err_mJy_band5])
 # StokesU_err_mJy_band7_uncalibrated = 0.03
 # POLI_err_mJy_band7_uncalibrated = 0.05 
 # ------------------------------------------------------------------------------------------
-StokesI_err_mJy_band7 = np.mean([0.0340, 0.0382, 0.0375, 0.0310])
-StokesQ_err_mJy_band7 = np.mean([0.0256, 0.0266, 0.0268, 0.0260]) 
-StokesU_err_mJy_band7 = np.mean([0.0257, 0.0243, 0.0234, 0.0240]) 
-POLI_err_mJy_band7 = np.mean([StokesQ_err_mJy_band7, StokesU_err_mJy_band7])
+# StokesI_err_mJy_band7 = np.mean([nan]) 
+# StokesQ_err_mJy_band7 = np.mean([nan]) 
+# StokesU_err_mJy_band7 = np.mean([nan]) 
+# POLI_err_mJy_band7 = np.mean([StokesQ_err_mJy_band7, StokesU_err_mJy_band7])
+# ------------------------------------------------------------------------------------------
+StokesI_err_mJy_band7_nterms2 = np.mean([0.0340, 0.0382, 0.0375, 0.0310])
+StokesQ_err_mJy_band7_nterms2 = np.mean([0.0256, 0.0266, 0.0268, 0.0260]) 
+StokesU_err_mJy_band7_nterms2 = np.mean([0.0257, 0.0243, 0.0234, 0.0240]) 
+POLI_err_mJy_band7_nterms2 = np.mean([StokesQ_err_mJy_band7_nterms2, StokesU_err_mJy_band7_nterms2])
 # ------------------------------------------------------------------------------------------
 
 # Vector Constants
@@ -234,17 +315,19 @@ max_length_pix = 400  # Maximum length of the vector in pixels for 100% polariza
 reference_fraction = 0.03
 
 step_band4 = 4
-step_band4_nterms2 = 10 # this needs updating
+step_band4_nterms2 = step_band4 # this needs updating
 step_band5 = 8 
 step_band6 = 6  
-step_band7 = 6
+# step_band7 = 6
+step_band7_nterms2 = 6
 
 vector_length_pix_const = 0 
 vector_len_pix_band4 = 2
-vector_len_pix_band4_nterms2 = 10 # This needs updating
+vector_len_pix_band4_nterms2 = vector_len_pix_band4 # This needs updating
 vector_len_pix_band5 = 6  
 vector_len_pix_band6 = 4
-vector_len_pix_band7 = 4
+# vector_len_pix_band7 = 4
+vector_len_pix_band7_nterms2 = 4
 # ------------------------------------------------------------------------------------------
 
 

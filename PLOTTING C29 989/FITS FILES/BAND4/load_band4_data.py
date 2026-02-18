@@ -20,6 +20,7 @@ from FITS_Image_Functions import *
 from PolarizationFunctions import *
 from PlottingWithFunction import * 
 from IntroductionFunctions import *
+from POLF_Functions import *
 # ------------------------------------------
 
 StokesI_file  = band4_data_folder_path + "IRS63_StokesI_clean_selfcal_pbcor_J2000.fits"
@@ -77,6 +78,8 @@ _, _, PA_err_deg, _ = read_in_file(PA_err_file, dimensions = 2)
 # Polarized Fraction
 # -------------------------------------------------------------------------------------------------------
 _, _, POLF, _ = read_in_file(POLF_file, dimensions = 2)
+
+find_POLF_avg("Band 4", POLF, StokesI_mJy, band4_data_folder_path)
 # -------------------------------------------------------------------------------------------------------
 
 
@@ -100,6 +103,7 @@ nx, ny = StokesI_mJy.shape
 # Find the vectors
 # -------------------------------------------------------------------------------------------------------
 results = generate_polarization_vectors(ny, nx,
+                                        xmin, xmax, ymin, ymax, # This is for the nterms test
                                         RA_centre_pix, Dec_centre_pix,
                                         constants.minor_angle_rad_sky_band4,
                                         StokesI_mJy,
@@ -125,6 +129,10 @@ StokesU_grid_100Uniform  = results['StokesU_grid_100Uniform']
 
 StokesQ_grid_100Azimuthal = results['StokesQ_grid_100Azimuthal']
 StokesU_grid_100Azimuthal = results['StokesU_grid_100Azimuthal']
+
+# Masks for nterms comparison
+vector_mask = results['vector_mask']
+in_plot_mask = results['in_plot_mask']
 # -------------------------------------------------------------------------------------------------------
 
 

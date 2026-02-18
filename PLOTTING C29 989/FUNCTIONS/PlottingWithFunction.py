@@ -32,6 +32,128 @@ text_fs = constants.text_fs
 # -----------------------------------------------------------------------------------------
 
 
+# Start making functions for each figure element so I don't need to keep typing the exact same text over and over 
+# I am working on 12 days of physics I have limited time, I got ChatGPT to write this function for me
+# -----------------------------------------------------------------------------------------
+def add_stokesI_colorbar(im, ax, cbar_fs, axis_num_fs, 
+                         normalized_cbar_ticks, StokesI_unstretched_cbar_ticks):
+    cbar = plt.colorbar(im, ax=ax)
+    cbar.set_label(r'Stokes I (mJy/beam)', fontsize=cbar_fs)
+    cbar.ax.tick_params(labelsize=axis_num_fs, which='major', length=7, direction="in")
+    cbar.ax.tick_params(which='minor', length=4, direction="in")
+    cbar.set_ticks(normalized_cbar_ticks)
+    cbar.set_ticklabels([f"{val:.2f}" for val in StokesI_unstretched_cbar_ticks])
+# -----------------------------------------------------------------------------------------
+def add_reference_scale_bar(ax, xmin, xmax, ymin, ymax,
+                            reference_length_pix,
+                            reference_length_AU,
+                            text_fs, fontcolor, reference_lw):
+
+    fig = ax.figure
+
+    # 1) PLACE TEXT IN AXES COORDINATES (right aligned)
+    text_x_axes = 0.95
+    text_y_axes = 0.90
+
+    text_obj = ax.text(text_x_axes, text_y_axes, 
+                       f"{reference_length_AU} AU",
+                       transform=ax.transAxes,
+                       fontsize=text_fs,
+                       color=fontcolor,
+                       ha='right')
+
+    # 2) FORCE DRAW SO WE CAN GET PIXEL BBOX
+    fig.canvas.draw()
+
+    # 3) GET BOUNDING BOX OF TEXT IN **PIXELS**
+    renderer = fig.canvas.get_renderer()
+    bbox = text_obj.get_window_extent(renderer=renderer)
+
+    text_center_pix = (bbox.x0 + bbox.x1) / 2   # pixel center of text
+
+    # 4) CONVERT TEXT CENTER FROM PIXELS → DATA COORDINATES
+    inv = ax.transData.inverted()
+    text_center_data, _ = inv.transform((text_center_pix, bbox.y0))
+
+    # 5) CHOOSE Y POSITION OF THE LINE (GUESSING IS FINE)
+    line_y = ymax - 0.125 * (ymax - ymin)
+
+    # 6) BUILD LINE CENTERED AROUND THE TEXT CENTER
+    half_len = reference_length_pix / 2
+    line_x_start = text_center_data - half_len
+    line_x_end   = text_center_data + half_len
+
+    # 7) DRAW THE LINE IN DATA COORDS
+    ax.plot([line_x_start, line_x_end],
+            [line_y, line_y],
+            color=fontcolor, linewidth=reference_lw)
+    
+# -----------------------------------------------------------------------------------------
+
+    
+    
+# -----------------------------------------------------------------------------------------
+def add_band_label(ax, band, label, text_fs, fontcolor, constants):
+    """
+    Add a Band label or wavelength label to an axis.
+
+    Parameters
+    ----------
+    ax : matplotlib axis
+        Axis to draw the text on.
+    band : str
+        'Band 4', 'Band 5', 'Band 6', or 'Band 7'.
+    label : str or None
+        'Band', 'wavelength', or None to skip.
+    text_fs : float
+        Font size.
+    fontcolor : str
+        Text color.
+    constants : module or object
+        Must contain lambda_mm, indexed by integer band number.
+    """
+
+    # Map band string → integer
+    band_map = {
+        "Band 4": 4,
+        "Band 5": 5,
+        "Band 6": 6,
+        "Band 7": 7
+    }
+
+    if band not in band_map:
+        print("add_band_label only accepts: 'Band 4', 'Band 5', 'Band 6', 'Band 7'")
+        return
+
+    b = band_map[band]
+
+    # Nothing to draw
+    if label is None:
+        return
+
+    # Add the appropriate label
+    if label == "Band":
+        text = f"Band {b}"
+
+    elif label == "wavelength":
+        text = f"{constants.lambda_mm[b]} mm"
+
+    else:
+        print("label must be 'Band', 'wavelength', or None")
+        return
+
+    # Draw the label
+    ax.text(0.05, 0.90, text,
+            transform=ax.transAxes,
+            fontsize=text_fs,
+            color=fontcolor)
+# -----------------------------------------------------------------------------------------
+
+
+
+
+
+
 
 
 def simple_plot(StokesI_wcs, plotting_data, cbar_label, cmap, 
@@ -51,7 +173,7 @@ def simple_plot(StokesI_wcs, plotting_data, cbar_label, cmap,
                 y_label = True,
                 x_num = True,
                 y_num = True,
-                full_axis_labels = True,):
+                full_axis_labels = True):
    
     
     # Create a figure with the WCS projection
@@ -194,7 +316,20 @@ def create_stokes_i_base_plot(band,
                               axis_label_fs = constants.axis_label_fs, 
                               axis_num_fs = constants.axis_num_fs, 
                               cbar_fs = constants.cbar_fs,
-                              label = None, fontcolor = 'black'):
+                              label = None, 
+                              fontcolor = 'black',
+                              axis_labels = True,
+                              x_label = True,
+                              y_label = True,
+                              x_num = True,
+                              y_num = True,
+                              full_axis_labels = True,
+                              cbar_on = True, 
+                              reference_length_on = True,
+                              reference_lw = 3,
+                             beam_lw = 2,
+                             spline_lw = 0.8,
+                             major_tick_length = 7):
     
     # Create a figure with the WCS projection
     fig, ax = plt.subplots(figsize=(14, 12), subplot_kw={'projection': StokesI_wcs})
@@ -203,72 +338,87 @@ def create_stokes_i_base_plot(band,
     im = ax.imshow(StokesI_stretched, cmap=cmap)
 
     # Colorbar
-    cbar = plt.colorbar(im, ax=ax)
-    cbar.set_label(r'Stokes I (mJy/beam)', fontsize=cbar_fs)
-    cbar.ax.tick_params(labelsize=axis_num_fs, which='major', length=7, direction="in")
-    cbar.ax.tick_params(which='minor', length=4, direction="in")
-    cbar.set_ticks(normalized_cbar_ticks)
-    cbar.set_ticklabels([f"{val:.2f}" for val in StokesI_unstretched_cbar_ticks])
+    if cbar_on:
+        add_stokesI_colorbar(im, ax, cbar_fs, axis_num_fs,
+                             normalized_cbar_ticks, StokesI_unstretched_cbar_ticks)
+
 
     # Add axis labels
-    ax.set_xlabel('Right Ascension', fontsize=axis_label_fs)
-    ax.set_ylabel('Declination', fontsize=axis_label_fs)
+    # Add x-axis label or remove it
+    if x_label == True:
+        if full_axis_labels == True:
+            ax.set_xlabel('Right Ascension', fontsize=axis_label_fs)
+        else:
+            ax.set_xlabel('RA', fontsize=axis_label_fs)
+    else:
+        ax.set_xlabel('')  # This removes the label text
+        
+    # Add x-axis label or remove it
+    if y_label == True:
+        if full_axis_labels == True:
+            ax.set_ylabel('Declination', fontsize=axis_label_fs)
+        else:
+            ax.set_ylabel('Dec', fontsize=axis_label_fs)
+    else:
+        ax.set_ylabel('')  # This removes the label text
+        
+        
 
     # Set x and y limits
     ax.set_xlim(xmin, xmax)
     ax.set_ylim(ymin, ymax)
 
     # Add line and text for 100 AU 
-    line_x_pos = xmax - 0.05 * (xmax - xmin) 
-    line_y_pos = ymax - 0.1  * (ymax - ymin) 
+    if reference_length_on:
+        add_reference_scale_bar(ax, xmin, xmax, ymin, ymax,
+                                reference_length_pix,
+                                reference_length_AU,
+                                text_fs, fontcolor, reference_lw)
 
-    ax.plot([(line_x_pos - reference_length_pix), (line_x_pos)], 
-            [line_y_pos, line_y_pos],
-            color= fontcolor, linewidth=3)
 
-    ax.text((line_x_pos - reference_length_pix/2), (line_y_pos - 2), 
-            f'{reference_length_AU} AU', fontsize=text_fs, ha='center', va='top', color = fontcolor) 
 
     # Create and add the circular beam
     beam_x_pos = xmin - 0.1 * (xmin - xmax)
     beam_y_pos = ymin - 0.1 * (ymin - ymax)
 
     beam = Ellipse((beam_x_pos, beam_y_pos), width=BMAJ_pix, height=BMIN_pix,  
-                   angle=BPA_deg_cartesian, edgecolor= fontcolor, facecolor='none', alpha=1, lw=2)
+                   angle=BPA_deg_cartesian, edgecolor= fontcolor, facecolor='none', alpha=1, lw=beam_lw)
 
     ax.add_patch(beam)
 
-    # Adjust ticks
-    ax.minorticks_on()
-    ax.tick_params(axis="x", which="major", direction="in", bottom=True, top=True, length=7, labelsize=axis_num_fs)
-    ax.tick_params(axis="y", which="major", direction="in", left=True, right=True, length=7, labelsize=axis_num_fs)
-    
-    
-    # Label
-    # ----------------------------------------------------------------------
-    if band == "Band 4":
-        b = 4
-    elif band == "Band 5":
-        b = 5
-    elif band == "Band 6":
-        b = 6
-    elif band == "Band 7":
-        b = 7
+        # Turn off x-axis labels but keep ticks
+    # X-axis
+    if x_num == True:
+        ax.tick_params(axis="x", which="major", direction="in", bottom=True, top=True,
+                       length=major_tick_length, labelsize=axis_num_fs, width=spline_lw)
     else:
-        print("This function only accepts 'Band 4', 'Band 5', 'Band 6' or 'Band 7' ")
-    # ----------------------------------------------------------------------         
-    if label == "Band":
-        ax.text(0.05, 0.90, f"Band {b}", transform=ax.transAxes, fontsize=text_fs, color = fontcolor)
+        # Keep ticks but hide labels
+        ax.tick_params(axis="x", which="major", direction="in", bottom=True, top=True,
+                       length=major_tick_length, labelsize=0, width=spline_lw)
 
-    elif label == 'wavelength':
-        ax.text(0.05, 0.90, f"{constants.lambda_mm[int(b)]} mm", transform=ax.transAxes, fontsize=text_fs, color = fontcolor)
-
-    elif labels is None:
-        pass  # No titles
-
+    # Y-axis
+    if y_num == True:
+        ax.tick_params(axis="y", which="major", direction="in", left=True, right=True,
+                       length=major_tick_length, labelsize=axis_num_fs, width=spline_lw)
     else:
-        print("Function only accepts 'Band' or 'wavelength'")
-    # ----------------------------------------------------------------------
+        # Keep ticks but hide labels
+        ax.tick_params(axis="y", which="major", direction="in", left=True, right=True,
+                       length=major_tick_length, labelsize=0, width=spline_lw)
+        
+        
+  
+    # Add the label of the band to the top left (if label does not equal none)
+    add_band_label(ax, band, label, text_fs, fontcolor, constants)
+
+    
+    # Make all four spines thicker
+    # Tick thickness
+    ax.tick_params(axis="both", which="major", width=spline_lw)
+#     ax.tick_params(axis="both", which="minor", width=spline_lw)
+
+
+    # WCSAxes frame thickness
+    ax.coords.frame.set_linewidth(spline_lw)
 
     return fig, ax
 # ---------------------------------------------------------------------------------------------------------------
@@ -296,7 +446,41 @@ def create_base_plot(band, StokesI_wcs, plotting_data, cbar_label, cmap,
                      y_num = True,
                      full_axis_labels = True,
                      line_x_frac = 0.05,
-                     line_y_frac = 0.1):
+                     line_y_frac = 0.1,
+                     plot_for_slides = False,
+                     cbar_label_on = True):
+    
+    
+    # If plot is for slideshow
+    # -----------------------------------------------------
+    if plot_for_slides == True: 
+        cbar_fs = 40
+        axis_label_fs = 40
+        axis_num_fs = 21
+        cbar_orientation = 'horizontal'
+        cbar_pad = 0.1
+        cbar_shrink = 0.698
+        fig_size_x = 12
+        fig_size_y = 14
+        text_fs = 40
+        y_label = False
+        y_num = False
+        x_label = True
+        x_num = False
+        full_axis_labels = False
+        cbar_num_fs = 40
+        cbar_label_on = False
+        
+        
+        fig_size_y = fig_size_y - 2
+        
+        # Only keep y-axis label for Band 4
+        if band in ['Band 4', 'Band 4 nterms2']:
+            y_label = True
+            
+            fig_size_x = fig_size_x + 5
+            cbar_shrink = 0.5
+      # -----------------------------------------------------
    
     
     # Create a figure with the WCS projection
@@ -316,7 +500,9 @@ def create_base_plot(band, StokesI_wcs, plotting_data, cbar_label, cmap,
         cbar = fig.colorbar(im, ax=ax, orientation='horizontal', pad=cbar_pad, shrink = cbar_shrink)
     
 #     cbar = plt.colorbar(im, ax=ax)
-    cbar.set_label(cbar_label, fontsize=cbar_fs)
+    if cbar_label_on:
+        
+        cbar.set_label(cbar_label, fontsize=cbar_fs)
     cbar.ax.tick_params(labelsize=cbar_num_fs, which='major', length=7, direction="in")
     cbar.ax.tick_params(which='minor', length=4, direction="in")
 
@@ -394,12 +580,12 @@ def create_base_plot(band, StokesI_wcs, plotting_data, cbar_label, cmap,
 
         # Minor axis ticks
     # --------------------------------------------------------
-    ra = ax.coords['ra']
+#     ra = ax.coords['ra']
 
-    # --- Minor ticks ---
-    ra.display_minor_ticks(True)
-    ra.set_ticks_position(('b', 't'))
-    ra.tick_params(which='minor', length=4)
+#     # --- Minor ticks ---
+#     ra.display_minor_ticks(True)
+#     ra.set_ticks_position(('b', 't'))
+#     ra.tick_params(which='minor', length=4)
     # --------------------------------------------------------
     
     
@@ -407,14 +593,16 @@ def create_base_plot(band, StokesI_wcs, plotting_data, cbar_label, cmap,
     # ----------------------------------------------------------------------
     if band == "Band 4":
         b = 4
+    elif band == "Band 4 nterms2":
+        b = 5
     elif band == "Band 5":
         b = 5
     elif band == "Band 6":
         b = 6
-    elif band == "Band 7":
+    elif band == "Band 7 nterms2":
         b = 7
     else:
-        print("This function only accepts 'Band 4', 'Band 5', 'Band 6' or 'Band 7' ")
+        print("This function only accepts 'Band 4', 'Band 4 nterms2', 'Band 5', 'Band 6' or 'Band 7 nterms2' ")
     # ----------------------------------------------------------------------         
     if label == "Band":
         ax.text(0.05, 0.90, f"Band {b}", transform=ax.transAxes, fontsize=text_fs, color = fontcolor)
@@ -676,14 +864,16 @@ def create_stokes_i_plus_one_base_plot(band,
         # ----------------------------------------------------------------------
         if band == "Band 4":
             b = 4
+        elif band == "Band 4 nterms2":
+            b = 4
         elif band == "Band 5":
             b = 5
         elif band == "Band 6":
             b = 6
-        elif band == "Band 7":
+        elif band == "Band 7 nterms2":
             b = 7
         else:
-            print("This function only accepts 'Band 4', 'Band 5', 'Band 6' or 'Band 7' ")
+            print("This function only accepts 'Band 4', 'Band 4 nterms2', 'Band 5', 'Band 6' or 'Band 7 nterms2' ")
         # ----------------------------------------------------------------------         
         if label == "Band":
             ax[i].text(0.05, 0.90, f"Band {b}", transform=ax[i].transAxes, fontsize=text_fs, color = fontcolor)
@@ -1076,7 +1266,9 @@ def plot_slices_along_axes(
     cb_friendly=False,
     vline = True,
     chi_sq = True,
-    fit_slices = True
+    fit_slices = True,
+    plot_carta = True, 
+    print_statement = False
 ):
     """
     Plot data along major and minor axes.
@@ -1101,11 +1293,12 @@ def plot_slices_along_axes(
         chi_squared_minor_offset = calculate_chi_squared(my_minor_offset, carta_minor_offset)
         chi_squared_major_offset = calculate_chi_squared(my_major_offset, carta_major_offset)
 
-        print("Chi-squared comparison between user and CARTA slices:")
-        print(f"  Minor axis values χ²: {chi_squared_minor_values:.3f}")
-        print(f"  Major axis values χ²: {chi_squared_major_values:.3f}")
-        print(f"  Minor axis offset χ²: {chi_squared_minor_offset:.3f}")
-        print(f"  Major axis offset χ²: {chi_squared_major_offset:.3f}")
+        if print_statement:
+            print("Chi-squared comparison between user and CARTA slices:")
+            print(f"  Minor axis values χ²: {chi_squared_minor_values:.3f}")
+            print(f"  Major axis values χ²: {chi_squared_major_values:.3f}")
+            print(f"  Minor axis offset χ²: {chi_squared_minor_offset:.3f}")
+            print(f"  Major axis offset χ²: {chi_squared_major_offset:.3f}")
         
         
     if fit_slices:
@@ -1136,14 +1329,15 @@ def plot_slices_along_axes(
         
         
         
-        print(" ")
-        print("Fitting the slope of the slices:")
-        print(rf"  Major Axis α:")
-        print(rf"    Mine : {alpha_major_pos:.1f} (pos) and {alpha_major_neg:.1f} (neg)")
-        print(rf"    CARTA: {alpha_major_pos_carta:.1f} (pos) and {alpha_major_neg_carta:.1f} (neg)")
-        print(rf"  Minor Axis α:")
-        print(rf"    Mine : {alpha_minor_pos:.1f} (pos) and {alpha_minor_neg:.1f} (neg)")
-        print(rf"    CARTA: {alpha_minor_pos_carta:.1f} (pos) and {alpha_minor_neg_carta:.1f} (neg)")
+        if print_statement: 
+            print(" ")
+            print("Fitting the slope of the slices:")
+            print(rf"  Major Axis α:")
+            print(rf"    Mine : {alpha_major_pos:.1f} (pos) and {alpha_major_neg:.1f} (neg)")
+            print(rf"    CARTA: {alpha_major_pos_carta:.1f} (pos) and {alpha_major_neg_carta:.1f} (neg)")
+            print(rf"  Minor Axis α:")
+            print(rf"    Mine : {alpha_minor_pos:.1f} (pos) and {alpha_minor_neg:.1f} (neg)")
+            print(rf"    CARTA: {alpha_minor_pos_carta:.1f} (pos) and {alpha_minor_neg_carta:.1f} (neg)")
         
         
         
@@ -1174,18 +1368,21 @@ def plot_slices_along_axes(
                    color=slices_color_my_major, ls='-', lw=my_data_lw, 
                    label="Mine")
 
-        ax[0].plot(carta_major_offset, carta_major_data, 
-                   color=slices_color_carta_major, ls='--', lw=carta_data_lw, 
-                   label="CARTA")
+        if plot_carta:
+            ax[0].plot(carta_major_offset, carta_major_data, 
+                       color=slices_color_carta_major, ls='--', lw=carta_data_lw, 
+                       label="CARTA")
 
         # Minor axis
         ax[1].plot(my_minor_offset, my_minor_data, 
                    color=slices_color_my_minor, ls='-', lw=my_data_lw, 
                    label="Mine")
 
-        ax[1].plot(carta_minor_offset, carta_minor_data, 
-                   color=slices_color_carta_minor, ls='--', lw=carta_data_lw, 
-                   label="CARTA")
+        
+        if plot_carta: 
+            ax[1].plot(carta_minor_offset, carta_minor_data, 
+                       color=slices_color_carta_minor, ls='--', lw=carta_data_lw, 
+                       label="CARTA")
 
     elif type_of_plot == "Scatter":
         # Major axis
@@ -1193,18 +1390,20 @@ def plot_slices_along_axes(
                       color=slices_color_my_major, marker='o', 
                       label="Mine")
 
-        ax[0].scatter(carta_major_offset, carta_major_data, 
-                      color=slices_color_carta_major, marker='x', 
-                      label="CARTA")
+        if plot_carta:
+            ax[0].scatter(carta_major_offset, carta_major_data, 
+                          color=slices_color_carta_major, marker='x', 
+                          label="CARTA")
 
         # Minor axis
         ax[1].scatter(my_minor_offset, my_minor_data, 
                       color=slices_color_my_minor, marker='o', 
                       label="Mine")
 
-        ax[1].scatter(carta_minor_offset, carta_minor_data, 
-                      color=slices_color_carta_minor, marker='x', 
-                      label="CARTA")
+        if plot_carta:
+            ax[1].scatter(carta_minor_offset, carta_minor_data, 
+                          color=slices_color_carta_minor, marker='x', 
+                          label="CARTA")
 
     # Add vertical lines at x = 0
     if vline:
@@ -1220,10 +1419,11 @@ def plot_slices_along_axes(
     for i in range(2):
         ax[i].set_xlabel("Offset (arcsec)", fontsize=axis_label_fs)
         ax[i].set_ylabel(y_label, fontsize=axis_label_fs)
-        ax[i].legend(fontsize=legend_text_fs)
         ax[i].tick_params(axis="both", which="major", direction="in", length=7, labelsize=axis_num_fs)
         
-    
+        if plot_carta:
+            ax[i].legend(fontsize=legend_text_fs)
+       
 
     plt.tight_layout()
 

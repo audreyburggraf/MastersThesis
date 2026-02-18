@@ -295,14 +295,16 @@ def ratio_model(StokesQ_grid_100Uniform, StokesU_grid_100Uniform,
     if step is None:
         if band == 'Band 4':
             step = constants.step_band4
+        elif band == 'Band 4 nterms2':
+            step = constants.step_band4_nterms2
         elif band == 'Band 5':
              step = constants.step_band5
         elif band == 'Band 6':
              step = constants.step_band6
-        elif band == 'Band 7':
-             step = constants.step_band7
+        elif band == 'Band 7 nterms2':
+             step = constants.step_band7_nterms2
         else:
-            raise ValueError("Unsupported band. Only Band 4, Band 5, Band 6 and Band 7 are currently supported.")
+            raise ValueError("Unsupported band. Only 'Band 4', 'band 4 nterms2', 'Band 5', 'Band 6' and 'Band 7 nterms2' are currently supported.")
         
 
     results = {}

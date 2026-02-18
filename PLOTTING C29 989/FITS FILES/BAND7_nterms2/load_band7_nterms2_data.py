@@ -1,5 +1,9 @@
+# ON VNC THIS IS BAND7_new_mistake (POORLY NAMED)
+
 import sys
 from astropy.io import fits
+# from pathlib import Path
+# import pandas as pd
 
 # Add the directory where constants.py is located to sys.path
 sys.path.append("/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/")  # Replace with the actual path
@@ -8,7 +12,7 @@ sys.path.append("/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING 
 import constants
 
 # Use the variable from constants.py
-band7_nterms2_data_folder_path = constants.band7_nterms2_data_folder_path
+loc = constants.band7_nterms2_data_folder_path
 functions_folder_path = constants.functions_folder_path
 
 
@@ -21,13 +25,18 @@ from FITS_Image_Functions import *
 from PolarizationFunctions import *
 from PlottingWithFunction import * 
 from IntroductionFunctions import *
+from DebiasFunctions import *
+from POLF_Functions import *
 # ------------------------------------------
 
 
 # Define file paths
-StokesI_file = band7_nterms2_data_folder_path + "IRS63_BAND7_StokesI_clean_nopbcorr.fits"
-StokesQ_file = band7_nterms2_data_folder_path + "IRS63_BAND7_StokesQ_clean_nopbcorr.fits"
-StokesU_file = band7_nterms2_data_folder_path + "IRS63_BAND7_StokesU_clean_nopbcorr.fits"
+StokesI_file         = loc + "IRS63_BAND7_StokesI_clean_nopbcorr.fits"
+StokesQ_file         = loc + "IRS63_BAND7_StokesQ_clean_nopbcorr.fits"
+StokesU_file         = loc + "IRS63_BAND7_StokesU_clean_nopbcorr.fits"
+POLI_biased_file     = loc + "POLI_biased_mJy_BAND7_nterms2.fits"
+POLI_err_file        = loc + "POLI_err_mJy_BAND7_nterms2.fits"
+POLI_dedebiased_file = loc + "POLI_debiased_mJy_BAND7_nterms2.fits"
 
 
 # Stokes I
@@ -68,27 +77,17 @@ StokesU_err_mJy = np.full((ny, nx), constants.StokesQ_err_mJy_band7_nterms2)
 # -------------------------------------------------------------------------------------------------------
 
 
+
+
+
 # Polarization Intensity
 # -------------------------------------------------------------------------------------------------------
-POLI_calc = calculate_polarized_intensity(StokesQ_mJy, StokesU_mJy)
-POLI_mJy = POLI_calc
+_, _, POLI_biased_mJy, _ = read_in_file(POLI_biased_file, dimensions = 2)
 
-# Ensure POLI_mJy is shaped (ny, nx)
-POLI_mJy_resized = POLI_mJy[:ny, :nx]
+_, _, POLI_debiased_mJy, _ = read_in_file(POLI_dedebiased_file, dimensions = 2)
 
-
-# Save data
-hdu = fits.PrimaryHDU(data=POLI_mJy, header=StokesI_header)
-hdu.writeto(band7_nterms2_data_folder_path + "POLI_mJy_calculated_BAND7.fits", overwrite=True)
-
-# _, _, POLI_Jy, _ = read_in_file(POLI_file)
-# POLI_mJy = convert_jy_to_mjy(POLI_Jy)
+_, _, POLI_err_mJy, _ = read_in_file(POLI_err_file, dimensions = 2)
 # -------------------------------------------------------------------------------------------------------
-# Polarization Intensity error
-# -------------------------------------------------------------------------------------------------------
-POLI_err_mJy = calculate_polarized_intensity_err(StokesQ_mJy, StokesU_mJy, StokesQ_err_mJy, StokesU_err_mJy)
-# -------------------------------------------------------------------------------------------------------
-
 
 
 # Polarization Angle
@@ -108,7 +107,11 @@ PA_err_deg = np.degrees(PA_err_rad)
 # Polarized Fraction
 # -------------------------------------------------------------------------------------------------------
 POLF = calculate_polarized_fraction(StokesQ_mJy, StokesU_mJy, StokesI_mJy)
+
+find_POLF_avg("Band 7 nterms2", POLF, StokesI_mJy, loc)
 # -------------------------------------------------------------------------------------------------------
+
+
 # Polarized Fraction Error
 # -------------------------------------------------------------------------------------------------------
 POLF_err = calculate_polarized_fraction_err(StokesQ_mJy, StokesU_mJy, StokesI_mJy, 
@@ -117,32 +120,30 @@ POLF_err = calculate_polarized_fraction_err(StokesQ_mJy, StokesU_mJy, StokesI_mJ
 
 
 
-BMAJ_deg, BMIN_deg, BMAJ_pix, BMIN_pix, BPA_deg_cartesian, reference_length_pix, RA_centre_pix, Dec_centre_pix, xmin, xmax, ymin, ymax = get_plotting_parameters(StokesI_header, StokesI_wcs, 7)
+BMAJ_deg, BMIN_deg, BMAJ_pix, BMIN_pix, BPA_deg_cartesian, reference_length_pix, RA_centre_pix, Dec_centre_pix, xmin, xmax, ymin, ymax = get_plotting_parameters(StokesI_header, StokesI_wcs, 'Band 7 nterms2')
 
 
 
-
-# Find the vectors
+# Find the debiased vectors
 # -------------------------------------------------------------------------------------------------------
-# in the file:MakingGridFunctions.py make_vectors_band47
-results = generate_polarization_vectors_band47(ny, nx,
-                                               RA_centre_pix, Dec_centre_pix,
-                                               constants.minor_angle_rad_sky_band7,
-                                               StokesI_mJy, 
-                                               POLI_calc, POLI_err_mJy,
-                                               PA_rad, PA_err_deg,
-                                               'band 7')
+results = generate_polarization_vectors(ny, nx,
+                                        xmin, xmax, ymin, ymax, # This is for the nterms test
+                                        RA_centre_pix, Dec_centre_pix,
+                                        constants.minor_angle_rad_sky_band4_nterms2,
+                                        StokesI_mJy,
+                                        POLI_debiased_mJy, POLI_err_mJy,
+                                        PA_rad, PA_err_deg,
+                                        'Band 7 nterms2')
 # -------------------------------------------------------------------------------------------------------
 
-
-
-
-# Accessing the actual vector data and anglesf
+# Accessing the actual vector data and angles
 vector_data_actual_cartesian = results['vector_data_actual_cartesian']
 vector_angle_actual_sky = results['vector_angle_actual_sky']
 
+
 vector_data_100Uniform_cartesian = results['vector_data_100Uniform_cartesian']
 vector_angle_100Uniform_sky = results['vector_angle_100Uniform_sky']
+
 
 vector_data_100Azimuthal_cartesian = results['vector_data_100Azimuthal_cartesian']
 vector_angle_100Azimuthal_sky      = results['vector_angle_100Azimuthal_sky']
@@ -152,7 +153,50 @@ StokesU_grid_100Uniform  = results['StokesU_grid_100Uniform']
 
 StokesQ_grid_100Azimuthal = results['StokesQ_grid_100Azimuthal']
 StokesU_grid_100Azimuthal = results['StokesU_grid_100Azimuthal']
+
+# Masks for nterms comparison
+vector_mask = results['vector_mask']
+in_plot_mask = results['in_plot_mask']
 # -------------------------------------------------------------------------------------------------------
 
 
 
+
+
+
+
+# Find the biased vectors
+# -------------------------------------------------------------------------------------------------------
+results_biased = generate_polarization_vectors(ny, nx,
+                                        xmin, xmax, ymin, ymax, # This is for the nterms test
+                                        RA_centre_pix, Dec_centre_pix,
+                                        constants.minor_angle_rad_sky_band4_nterms2,
+                                        StokesI_mJy,
+                                        POLI_biased_mJy, POLI_err_mJy,
+                                        PA_rad, PA_err_deg,
+                                        'Band 7 nterms2')
+# -------------------------------------------------------------------------------------------------------
+
+# Accessing the actual vector data and angles
+vector_data_actual_cartesian_nodebias = results_biased['vector_data_actual_cartesian']
+# vector_data_actual_cartesian = results['vector_data_actual_cartesian']
+# vector_angle_actual_sky = results['vector_angle_actual_sky']
+
+
+# vector_data_100Uniform_cartesian = results['vector_data_100Uniform_cartesian']
+# vector_angle_100Uniform_sky = results['vector_angle_100Uniform_sky']
+
+
+# vector_data_100Azimuthal_cartesian = results['vector_data_100Azimuthal_cartesian']
+# vector_angle_100Azimuthal_sky      = results['vector_angle_100Azimuthal_sky']
+
+# StokesQ_grid_100Uniform  = results['StokesQ_grid_100Uniform']
+# StokesU_grid_100Uniform  = results['StokesU_grid_100Uniform']
+
+# StokesQ_grid_100Azimuthal = results['StokesQ_grid_100Azimuthal']
+# StokesU_grid_100Azimuthal = results['StokesU_grid_100Azimuthal']
+
+# # Masks for nterms comparison
+# vector_mask = results['vector_mask']
+# in_plot_mask = results['in_plot_mask']
+# -------------------------------------------------------------------------------------------------------
