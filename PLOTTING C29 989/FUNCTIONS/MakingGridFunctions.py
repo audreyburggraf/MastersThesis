@@ -57,14 +57,20 @@ def compute_polarization_vector(x, y, PA_grid, band, vector_len_pix = None):
     if vector_len_pix is None:
         if band == 'Band 6':
             vector_len_pix = constants.vector_len_pix_band6
+            
+        elif band == 'Band 4 nterms2':
+            vector_len_pix = constants.vector_len_pix_band4_nterms2
+            
         elif band == 'Band 4':
             vector_len_pix = constants.vector_len_pix_band4
+            
         elif band == 'Band 5':
             vector_len_pix = constants.vector_len_pix_band5
-        elif band == 'Band 7':
-            vector_len_pix = constants.vector_len_pix_band7
+            
+        elif band == 'Band 7 nterms2':
+            vector_len_pix = constants.vector_len_pix_band7_nterms2
         else:
-            raise ValueError("Band must be 'Band 4', 'Band 5', 'Band 6', or 'Band 7'")
+            raise ValueError("Band must be 'Band 4', 'Band 4 nterms2', 'Band 5', 'Band 6', or 'Band 7 nterms2'")
 
     
     
@@ -82,7 +88,9 @@ def compute_polarization_vector(x, y, PA_grid, band, vector_len_pix = None):
     
     return vector_cartesian, PA_rad_sky
 # --------------------------------------------------------------------------
-def make_vectors(ny, nx, POLI_mJy, POLI_err_mJy, PA_grid, PA_err_deg, band, 
+def make_vectors(ny, nx, 
+                 xmin, xmax, ymin, ymax, 
+                 POLI_mJy, POLI_err_mJy, PA_grid, PA_err_deg, band, 
                  step = None, vector_len_pix = None):
     """
     Generate vectors for Band 4 polarization data.
@@ -102,22 +110,34 @@ def make_vectors(ny, nx, POLI_mJy, POLI_err_mJy, PA_grid, PA_err_deg, band,
     if band == 'Band 4':
         default_step = constants.step_band4
         POLI_err_cutoff = 4
+        
+    elif band == 'Band 4 nterms2':
+        default_step = constants.step_band4_nterms2
+        POLI_err_cutoff = 4
+        
     elif band == 'Band 5':
         default_step = constants.step_band5
         POLI_err_cutoff = 4
+        
     elif band == 'Band 6':
         default_step = constants.step_band6
         POLI_err_cutoff = 3
-    elif band == 'Band 7':
-        default_step = constants.step_band7
+        
+    elif band == 'Band 7 nterms2':
+        default_step = constants.step_band7_nterms2
         POLI_err_cutoff = 4
     else:
-        raise ValueError("Currently only accepting Band 4, Band 5, Band 6, Band 7")
+        raise ValueError("Currently only accepting 'Band 4', 'Band 4 nterms2, 'Band 5', 'Band 6', 'Band 7 nterms2'")
 
     # If step wasn't passed, use the band default
     if step is None:
         step = default_step
         
+    # Make some empty grid that we will fill with the mask on if there is a vector or not
+    vector_mask = np.zeros((ny, nx), dtype=bool)
+    in_plot_mask = np.zeros((ny, nx), dtype=bool)
+    
+    # Empty arrays
     vectors_cartesian = []
     vector_angles_sky = []
     
@@ -129,8 +149,18 @@ def make_vectors(ny, nx, POLI_mJy, POLI_err_mJy, PA_grid, PA_err_deg, band,
                 vector_cartesian, PA_rad_sky = compute_polarization_vector(x, y, PA_grid, band, vector_len_pix)
                 vectors_cartesian.append(vector_cartesian)
                 vector_angles_sky.append(PA_rad_sky)
+                
+                # Save the mask
+                vector_mask[y, x] = True
+                
+                # Check that the vector is in the plotting range 
+                in_plot = (xmin <= x <= xmax) and (ymin <= y <= ymax)
+
+                if in_plot:
+                    in_plot_mask[y, x] = True
     
-    return vectors_cartesian, vector_angles_sky
+    
+    return vectors_cartesian, vector_angles_sky, vector_mask, in_plot_mask
 # --------------------------------------------------------------------------
 
 

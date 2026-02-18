@@ -333,14 +333,16 @@ def mix_StokesQU_and_generate_vectors(Uniform_ratio, Azimuthal_ratio,
     if step is None:
         if band == 'Band 4':
             step = constants.step_band4 
+        elif band == 'Band 4 nterms2':
+            step = constants.step_band4_nterms2
         elif band == 'Band 5':
             step = constants.step_band5
         elif band == 'Band 6':
             step = constants.step_band6
-        elif band == 'Band 7':
-            step = constants.step_band7
+        elif band == 'Band 7 nterms2':
+            step = constants.step_band7_nterms2
         else:
-            return('Only accepting Band 4, Band 5, Band 6 and Band 7')
+            return("Currently accepting 'Band 4', 'Band 4 nterms2', 'Band 5', 'Band 6' and 'Band 7 nterms2")
                 
 
     # Compute weighted sum of Stokes Q and U
@@ -351,7 +353,8 @@ def mix_StokesQU_and_generate_vectors(Uniform_ratio, Azimuthal_ratio,
     PA_grid_mixed_rad_sky = calculate_polarization_angle(StokesQ_grid_mixed, StokesU_grid_mixed)
                              
     # Generate polarization vectors
-    vector_mixed_cartesian, vector_mixed_angle_rad_sky = make_vectors(ny, nx, 
+    vector_mixed_cartesian, vector_mixed_angle_rad_sky, _, _ = make_vectors(ny, nx, 
+                                                                         0,0,0,0, # Here is xmin, xmax, ymin, ymax
                                                                       POLI_mJy, POLI_err_mJy, 
                                                                       PA_grid_mixed_rad_sky, PA_err_deg,
                                                                       band,

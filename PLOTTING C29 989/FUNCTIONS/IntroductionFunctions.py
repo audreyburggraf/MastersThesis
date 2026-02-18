@@ -26,15 +26,15 @@ def get_plotting_parameters(StokesI_header, StokesI_wcs, band):
     elif band == 'Band 4':
         centre_str = constants.centre_str_band4  # Changed to band 4   
         
-    elif band == 'Band 4 nterm2':
-        centre_str = constants.centre_str_band4  # Changed to band 4 
+    elif band == 'Band 4 nterms2':
+        centre_str = constants.centre_str_band4_nterms2 
     
     elif band == 'Band 5':
         centre_str = constants.centre_str_band5 
         
         
-    elif band == 'Band 7':
-        centre_str = constants.centre_str_band7 
+    elif band == 'Band 7 nterms2':
+        centre_str = constants.centre_str_band7_nterms2
     else:
         return "Invalid band option"
     
@@ -128,6 +128,7 @@ def reccomended_step_count(StokesI_header):
 
 
 def generate_polarization_vectors(ny, nx,
+                                  xmin, xmax, ymin, ymax, 
                                   RA_centre_pix, Dec_centre_pix,
                                   uniform_angle,
                                   StokesI_mJy, 
@@ -153,26 +154,31 @@ def generate_polarization_vectors(ny, nx,
     
     
     # Get vector and angles for the actual data
-    vector_data_actual_cartesian, vector_angle_actual_sky = make_vectors(ny, nx,  
-                                                                         POLI_mJy, POLI_err_mJy,
-                                                                         PA_real_sky_rad, PA_err_deg,
-                                                                         band, step, vector_len_pix)
+    vector_data_actual_cartesian, vector_angle_actual_sky, vector_mask, in_plot_mask = make_vectors(ny, nx,  
+                                                                                      xmin, xmax, ymin, ymax, 
+                                                                                      POLI_mJy, POLI_err_mJy,
+                                                                                      PA_real_sky_rad, PA_err_deg,
+                                                                                      band, step, vector_len_pix)
     
     # Make the PA grids for uniform and Azimuthal
     PA_grid_100Uniform   = make_PA_grid_100Uniform(ny,   nx, uniform_angle)
     PA_grid_100Azimuthal = make_PA_grid_100Azimuthal(ny, nx, RA_centre_pix, Dec_centre_pix)  
     
     # Get the vector and angle data for the 100 Uniform case 
-    vector_data_100Uniform_cartesian, vector_angle_100Uniform_sky = make_vectors(ny, nx,  
-                                                                                 POLI_mJy, POLI_err_mJy,
-                                                                                 PA_grid_100Uniform, PA_err_deg,
-                                                                                 band, step, vector_len_pix)
+    # Currently not saving the mask here
+    vector_data_100Uniform_cartesian, vector_angle_100Uniform_sky, _, _ = make_vectors(ny, nx,  
+                                                                                    0, 0, 0, 0, # We dont need these here 
+                                                                                    POLI_mJy, POLI_err_mJy,
+                                                                                    PA_grid_100Uniform, PA_err_deg,
+                                                                                    band, step, vector_len_pix)
     
     # Get the vector and angle data for the 100 Azimuthal case 
-    vector_data_100Azimuthal_cartesian, vector_angle_100Azimuthal_sky = make_vectors(ny, nx,  
-                                                                                     POLI_mJy, POLI_err_mJy,
-                                                                                     PA_grid_100Azimuthal, PA_err_deg,
-                                                                                     band, step, vector_len_pix)
+    # Currently not saving the mask here
+    vector_data_100Azimuthal_cartesian, vector_angle_100Azimuthal_sky, _, _ = make_vectors(ny, nx, 
+                                                                                        0, 0, 0, 0, # We dont need these here 
+                                                                                        POLI_mJy, POLI_err_mJy,
+                                                                                        PA_grid_100Azimuthal, PA_err_deg,
+                                                                                        band, step, vector_len_pix)
     
     # Get Stokes Q and U grids
     StokesQ_grid_100Uniform,   StokesU_grid_100Uniform   = recover_StokesQU(PA_grid_100Uniform,   StokesI_mJy, ny, nx)
@@ -189,7 +195,9 @@ def generate_polarization_vectors(ny, nx,
         'StokesQ_grid_100Uniform': StokesQ_grid_100Uniform,
         'StokesU_grid_100Uniform': StokesU_grid_100Uniform,
         'StokesQ_grid_100Azimuthal': StokesQ_grid_100Azimuthal,
-        'StokesU_grid_100Azimuthal': StokesU_grid_100Azimuthal
+        'StokesU_grid_100Azimuthal': StokesU_grid_100Azimuthal,
+        'vector_mask': vector_mask,
+        'in_plot_mask': in_plot_mask
     }
     
     return results

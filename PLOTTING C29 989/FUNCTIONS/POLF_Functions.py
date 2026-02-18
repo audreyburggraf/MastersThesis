@@ -16,6 +16,54 @@ from DustModelFunctions import *
 POLF_columns = ['POLF_Gaussian', 'POLF_maxPOLI', 'POLF_maxStokesI']
 
 
+
+# Calculate POLF average
+# --------------------------------------------------------------------------------------
+def find_POLF_avg(band, POLF, StokesI_mJy, path, sigma_cutoff = 5):
+
+    if band == "Band 4":
+        out_path = Path(path) / "constants_BAND4.csv"
+
+    elif band == "Band 4 nterms2":
+        out_path = Path(path) / "constants_BAND4_nterms2.csv"
+
+    elif band == "Band 5":
+        out_path = Path(path) / "constants_BAND5.csv"
+
+    elif band == "Band 6":
+        out_path = Path(path) / "constants_BAND6.csv"
+
+    elif band == "Band 7 nterms2":
+        out_path = Path(path) / "constants_BAND7_nterms2.csv"
+
+    else:
+        raise ValueError(
+            "Function currently only accepts: "
+            "'Band 4', 'Band 4 nterms2', 'Band 5', 'Band 6', 'Band 7 nterms2'")
+
+    
+    threshold = sigma_cutoff * np.nanstd(StokesI_mJy)   # e.g. 5-sigma cut
+    mask = StokesI_mJy > threshold
+
+    POLF_region = POLF[mask]
+    POLF_avg = np.nanmean(POLF_region)
+
+
+    # Your computed value
+    POLF_avg = float(POLF_avg)
+
+    # Load existing file
+    df = pd.read_csv(out_path)
+
+    # Add / overwrite POLF_avg column
+    df["POLF_avg"] = [POLF_avg]   # assumes 1-row CSV, like your others
+
+    # Save back to disk
+    df.to_csv(out_path, index=False)
+# --------------------------------------------------------------------------------------
+
+
+
 # Function to find 
 # --------------------------------------------------------------------------------------
 def find_gaussian_POLF(UniformRatios, POLF, tolerance=0.001):
@@ -98,14 +146,16 @@ def find_POLF_at_max_StokesI(StokesI_mJy, POLI_mJy, POLF, print_statements = Fal
 def get_all_POLF_and_save(StokesI_mJy, POLI_mJy, POLF, UniformRatios, band, gaussian_tolerance = 0.001, print_statements = False):
     if band == 'Band 4':
         path = constants.band4_data_folder_path + "constants_BAND4.csv"
+    elif band == 'Band 4 nterms2':
+        path = constants.band4_nterms2_data_folder_path + "constants_BAND4_nterms2.csv"
     elif band == 'Band 5':
         path = constants.band5_data_folder_path + "constants_BAND5.csv"
     elif band == 'Band 6':
         path = constants.band6_data_folder_path + "constants_BAND6.csv"
-    elif band == 'Band 7':
-        path = constants.band7_data_folder_path + "constants_BAND7.csv"
+    elif band == 'Band 7 nterms2':
+        path = constants.band7_nterms2_data_folder_path + "constants_BAND7_nterms2.csv"
     else:
-        raise ValueError("Only 'Band 4', 'Band 5', 'Band 6', and 'Band 7' are supported.")
+        raise ValueError("Only 'Band 4', 'Band 4 nterms2', 'Band 5', 'Band 6', and 'Band 7 nterms2' are supported.")
         
     
     POLF_Gaussian = find_gaussian_POLF(UniformRatios, POLF, gaussian_tolerance)
@@ -145,9 +195,25 @@ def load_POLF(bands):
     }
 
     for band in bands:
-        # Dynamically fetch path from constants.py
-        var_name = f"band{band}_data_folder_path"
-        path = Path(getattr(constants, var_name)) / f"constants_BAND{band}.csv"
+        # Case 1: Band 4 nterms2
+        if band == "Band 4 nterms2":
+            var_name = "band4_nterms2_data_folder_path"
+            path = Path(getattr(constants, var_name)) / "constants_BAND4_nterms2.csv"
+
+        # Case 2: Band 7 nterms2
+        elif band == "Band 7 nterms2":
+            var_name = "band7_nterms2_data_folder_path"
+            path = Path(getattr(constants, var_name)) / "constants_BAND7_nterms2.csv"
+
+        # Case 3: Normal bands: "Band 4", "Band 5", "Band 6", "Band 7", ...
+        else:
+            # Extract the number from "Band X"
+            band_num = int(band.split()[-1])   # "Band 4" -> 4
+
+            var_name = f"band{band_num}_data_folder_path"
+            path = Path(getattr(constants, var_name)) / f"constants_BAND{band_num}.csv"
+   
+        
 
         df = pd.read_csv(path)
 
@@ -177,7 +243,7 @@ def find_best_sf(a_max_f_dist_micron, P_times_omega, df_POLF, print_results = Fa
     
     
     
-    # Loop overl all columns of POLF
+    # Loop over all columns of POLF
     for j in range(len(POLF_columns)):
         # Extract the column name
         col_name = POLF_columns[j]
@@ -266,7 +332,4 @@ def find_best_sf(a_max_f_dist_micron, P_times_omega, df_POLF, print_results = Fa
     
     
     return best_a_max_f, best_POLF, best_sf
-# --------------------------------------------------------------------------------------
-
-
 # --------------------------------------------------------------------------------------

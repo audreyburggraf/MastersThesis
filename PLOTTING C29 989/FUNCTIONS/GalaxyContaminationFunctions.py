@@ -9,6 +9,7 @@ from C29_functions import *
 
 # Import necessary packages
 import matplotlib.pyplot as plt
+from scipy.optimize import curve_fit
 
 # Import the constants
 # -----------------------------------------------------------------------------------------
@@ -35,7 +36,7 @@ text_fs = constants.text_fs
 # This function is based on equation 7 from Sadavoy 2019 
 # (https://iopscience.iop.org/article/10.3847/1538-4365/ab4257)
 # ------------------------------------------------------
-def galaxy_probability(S, band):
+def galaxy_probability(S, band, sf = 1.15e3):
     """
     Differential number counts per deg^2
     S in mJy
@@ -48,16 +49,16 @@ def galaxy_probability(S, band):
         
         dN_dS = phi * (S/S0)**(alpha) * np.exp(-S/S0)
         
-    elif band == 'Band 7':
+    elif band == 'Band 7 nterms2':
         # Values from Statch, 2018 (https://arxiv.org/pdf/1805.05362), page 6, below equation 2
-        N0    = 2.2 # mJy ^-1 deg^-2
+        N0    = 923 # number deg^-2
         S0    = 3.9  # mJy
         alpha = -1.7  # unitless
         
-        dN_dS = 1.15e3 * (N0 / S0) * (S / S0)**alpha * np.exp(-S/S0)
+        dN_dS = N0  * (S / S0)**alpha * np.exp(-S/S0)
             
     else:
-        return print('Currently function only supports Band 6 and Band 7')
+        return print("Currently function only supports 'Band 6' and 'Band 7 nterms2'")
     
     
 
@@ -76,7 +77,7 @@ def find_N_from_dN_dS(S_min, band, spacing):
     # Band 6 uses a linear spaced S grid for now 
     if spacing == 'linspace':  
         S_grid = np.logspace(-2, 2, 1000)  # 0.01 to 100 mJy
-            
+        
         dN_dS_grid = np.array([galaxy_probability(s, band) for s in S_grid])
 
         # Select fluxes above threshold
@@ -127,8 +128,8 @@ def run_galaxy_contamination(band, sn_array, spacing = 'linspace', dr_arcsec = 0
         
             print(rf"These values are from Carniani et al. (2015")
 
-    elif band == "Band 7":
-        pb_path = constants.band7_data_folder_path + "IRS63_BAND7_pb.fits"
+    elif band == "Band 7 nterms2":
+        pb_path = constants.band7_nterms2_data_folder_path + "IRS63_BAND7_pb.fits"
         
         if print_things:
             print(rf"The Schecter function form that is being used is: dN_dS = 1.15e3 * (N0 / S0) * (S / S0)**alpha * np.exp(-S/S0)")
@@ -139,7 +140,7 @@ def run_galaxy_contamination(band, sn_array, spacing = 'linspace', dr_arcsec = 0
             print(rf"These values are from Chen et al. (2022)")
         
     else:
-        return print('Currently function only supports Band 5 and Band 6')
+        return print("Currently function only supports 'Band 6' and 'Band 7 nterms2'")
     
     print(" ")
     print(rf"The dr value is: {dr_arcsec} arcsec")
@@ -174,20 +175,48 @@ def run_galaxy_contamination(band, sn_array, spacing = 'linspace', dr_arcsec = 0
     r_arcsec = pixels_to_arcsec(header, r_pix)
 
 
-    df = pd.DataFrame({
-        "r_pix": r_pix,
-        "r_arcsec": r_arcsec,
-        "r_deg": arcsec_to_degrees(r_arcsec)
-    })
     # ------------------------------------------------------------------------------------------------
 
+    
+    
     
     # sigma, area
     # ------------------------------------------------------------------------------------------------
     x_pos = x_cen + r_pix.astype(int)
 
-    pb_val_arr = pb_map[y_cen, x_pos].astype(np.float32).newbyteorder('=')  # native endian
     
+    # PB:
+    # -----------------------------------------------------------
+    # Old way
+    pb_val_arr = pb_map[y_cen, x_pos].astype(np.float32).newbyteorder('=')  # native endian
+    # -----------------------------------------------------------
+    # Extended new way 
+    
+    def pb_model(r, A, sigma):
+        return A * np.exp(-0.5 * (r / sigma)**2)
+
+    # Give reasonable initial guesses!
+    p0 = [1.0, 5.0]   # A ~ 1, sigma ~ a few arcsec/pixels
+
+    popt, pcov = curve_fit(pb_model, r_arcsec, pb_val_arr, p0=p0)
+    A_fit, sigma_fit = popt
+
+    pd_fit = pb_model(r_arcsec, A_fit, sigma_fit)
+
+    r_arcsec_ext = np.linspace(0, 15, 300)
+    pb_val_arr = pb_model(r_arcsec_ext, A_fit, sigma_fit)
+    
+    r_pix_ext = arcsec_to_pixels(header, r_arcsec_ext)
+    # -----------------------------------------------------------
+
+    
+    df = pd.DataFrame({
+    "r_pix": r_pix_ext,
+    "r_arcsec": r_arcsec_ext,
+    "r_deg": arcsec_to_degrees(r_arcsec_ext)
+    })
+        
+        
     # to do: find sentiviity for BAND 7 
     sigma_r_arr = (0.035 / pb_val_arr).astype(np.float32).newbyteorder('=')
 
@@ -274,22 +303,29 @@ def GC_probability(x_cen, y_cen, df, dfs, StokesI_mJy, sn_array, band, distance 
 
         err_mJy = constants.StokesI_err_mJy_band6
         
-    elif band == "Band 7":
+    elif band == "Band 7 nterms2":
         S_source_mJy = 4.008985706605e-4 * 1000 # From CARTA
         x_source = 773 # From CARTA
         y_source = 472 # From CARTA
+        pb_at_source = 0.828187 # This is from CARTA
         
         x_dist = 4.752000 # From CARTA
         y_dist = 0.684000 # From CARTA
         hypot_dist = 4.800975 # From CARTA
         
-        err_mJy = constants.StokesI_err_mJy_band7 / (0.827)
+        err_mJy = constants.StokesI_err_mJy_band7_nterms2 / pb_at_source
         
-        print("S/N = ", S_source_mJy/err_mJy)
+        if print_things:
+            print(rf"The Stokes I peak on the source is: {S_source_mJy} mJy")
+            print(rf"At Band 7 the error in Stokes I is: {constants.StokesI_err_mJy_band7_nterms2} mJy")
+            print(rf"The primary beam (pb) value at this peak Stokes I is {pb_at_source} ")
+            print(rf"When we find S/N, the noise is StokesI_err/pb = {err_mJy}")
+            print("S/N = ", S_source_mJy/err_mJy)
+            print(" ")
        
         
     else:
-        return print('Currently function only supports Band 5 and Band 6')
+        return print("Currently function only supports 'Band 6' and 'Band 7 nterms2'")
     
     
     # Check that the inputted S_mJy at (x_source, y_source) matches my StokesI_mJy array
@@ -333,7 +369,7 @@ def GC_probability(x_cen, y_cen, df, dfs, StokesI_mJy, sn_array, band, distance 
     for i in range(len(sn_array)):
 
         print(rf"If the source S/N > {sn_array[i]}:")
-        print(rf"     The cumulative prob is: {dfs[i]['prob_cumulative'][closest_idx]:.2f}%")
+        print(rf"     The cumulative prob is: {dfs[i]['prob_cumulative'][closest_idx]:.2f}% at {closest_r:.2f} arcsec")
         print(" ")              
                   
 

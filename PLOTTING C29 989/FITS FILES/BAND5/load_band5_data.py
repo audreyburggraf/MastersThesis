@@ -21,6 +21,7 @@ from FITS_Image_Functions import *
 from PolarizationFunctions import *
 from PlottingWithFunction import * 
 from IntroductionFunctions import *
+from POLF_Functions import *
 # ------------------------------------------
 
 
@@ -110,6 +111,8 @@ PA_err_deg = np.degrees(PA_err_rad)
 # Polarized Fraction
 # -------------------------------------------------------------------------------------------------------
 POLF = calculate_polarized_fraction(StokesQ_mJy, StokesU_mJy, StokesI_mJy)
+
+find_POLF_avg("Band 5", POLF, StokesI_mJy, band5_data_folder_path)
 # -------------------------------------------------------------------------------------------------------
 # Polarized Fraction Error
 # -------------------------------------------------------------------------------------------------------
@@ -140,6 +143,7 @@ POLI_mJy_nostream[stream_ymin:stream_ymax+1, stream_xmin:stream_xmax+1] = np.nan
 # -------------------------------------------------------------------------------------------------------
 # in the file:MakingGridFunctions.py make_vectors_band47
 results = generate_polarization_vectors(ny, nx,
+                                        xmin, xmax, ymin, ymax, # This is for the nterms test
                                         RA_centre_pix, Dec_centre_pix,
                                         constants.minor_angle_rad_sky_band5,
                                         StokesI_mJy, 
@@ -179,6 +183,7 @@ POLI_mJy_stream[:, :] = np.nan  # Set everything to NaN
 POLI_mJy_stream[stream_ymin:stream_ymax+1, stream_xmin:stream_xmax+1] = POLI_mJy[stream_ymin:stream_ymax+1, stream_xmin:stream_xmax+1]
 
 results_stream = generate_polarization_vectors(ny, nx,
+                                               xmin, xmax, ymin, ymax, # This is for the nterms test
                                                RA_centre_pix, Dec_centre_pix,
                                                constants.minor_angle_rad_sky_band5,
                                                StokesI_mJy, 

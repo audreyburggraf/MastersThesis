@@ -13,7 +13,7 @@ import constants
 
 
 
-def extract_axis_data(axis_x, axis_y, data_2d, minor_or_major, centre_pix, gridsize, header):
+def extract_axis_data(axis_x, axis_y, data_2d, minor_or_major, centre_pix, gridsize, header, print_statement = False):
     """
     Extracts data along a specified axis (major or minor) and returns the data along with valid positions.
 
@@ -30,6 +30,7 @@ def extract_axis_data(axis_x, axis_y, data_2d, minor_or_major, centre_pix, grids
     - offset_pixels: List of pixel offsets (positive and negative)
     - offset_arcsec: List of arcsecond offsets (positive and negative)
     """
+   
     axis_data = []
     offset_pixels = []
     offset_arcsec = []
@@ -77,16 +78,16 @@ def extract_axis_data(axis_x, axis_y, data_2d, minor_or_major, centre_pix, grids
                     offset_pixels.append(-offset_pixel)  # Positive offset in pixels
                     offset_arcsec.append(-offset_pixel * pixel_scale_arcsec)  # Positive offset in arcseconds
 
-    print(' ')
-    print('in extract_axis_data')
-    print('gridsize:', gridsize)
-    print('length of axis_data:', len(axis_data))
-    print('length of offset_pixels:', len(offset_pixels))
-    print('length of offset_arcsec:', len(offset_arcsec))
-    print(' ')
+    if print_statement: 
+        print(' ')
+        print('in extract_axis_data')
+        print('gridsize:', gridsize)
+        print('length of axis_data:', len(axis_data))
+        print('length of offset_pixels:', len(offset_pixels))
+        print('length of offset_arcsec:', len(offset_arcsec))
+        print(' ')
 
     return axis_data, offset_pixels, offset_arcsec
-
 
 
 
@@ -163,28 +164,37 @@ def run_slices(data, StokesI_header, StokesI_wcs, carta_minor_data, carta_major_
     """
 
     # Select band-specific parameters
-    if band == 6:
+    if band == 'Band 6':
         centre_str = constants.centre_str_band6
         major_angle_rad_cartesian = constants.major_angle_rad_cartesian_band6
         minor_angle_rad_cartesian = constants.minor_angle_rad_cartesian_band6
         line_length_arcsec = 1.4
-    elif band == 5:
+        
+    elif band == 'Band 5':
         centre_str = constants.centre_str_band5
         major_angle_rad_cartesian = constants.major_angle_rad_cartesian_band5
         minor_angle_rad_cartesian = constants.minor_angle_rad_cartesian_band5
         line_length_arcsec = 1.8  # Adjust this if needed for Band 5
-    elif band == 4:
+        
+    elif band == 'Band 4':
         centre_str = constants.centre_str_band4
         major_angle_rad_cartesian = constants.major_angle_rad_cartesian_band4
         minor_angle_rad_cartesian = constants.minor_angle_rad_cartesian_band4
         line_length_arcsec = 1.4  # Adjust this if needed for Band 4
-    elif band == 7:
-        centre_str = constants.centre_str_band7
-        major_angle_rad_cartesian = constants.major_angle_rad_cartesian_band7
-        minor_angle_rad_cartesian = constants.minor_angle_rad_cartesian_band7
+    
+    elif band == 'Band 4 nterms2':
+        centre_str = constants.centre_str_band4_nterms2
+        major_angle_rad_cartesian = constants.major_angle_rad_cartesian_band4_nterms2
+        minor_angle_rad_cartesian = constants.minor_angle_rad_cartesian_band4_nterms2
+        line_length_arcsec = 1.4  # Adjust this if needed for Band 4
+        
+    elif band == 'Band 7 nterms2':
+        centre_str = constants.centre_str_band7_nterms2
+        major_angle_rad_cartesian = constants.major_angle_rad_cartesian_band7_nterms2
+        minor_angle_rad_cartesian = constants.minor_angle_rad_cartesian_band7_nterms2
         line_length_arcsec = 2.0  # Adjust this if needed for Band 7
     else:
-        raise ValueError("Unsupported band. Only Band 4, Band 5, Band 6 and Band 7 are currently supported.")
+        raise ValueError("Unsupported band. Only 'Band 4', 'Band 4 nterms 2', 'Band 5', 'Band 6' and 'Band 7 nterms2' are currently supported.")
         
     
 
@@ -213,21 +223,24 @@ def run_slices(data, StokesI_header, StokesI_wcs, carta_minor_data, carta_major_
     minor_x = centre_pix[0] + delta * np.cos(minor_angle_rad_cartesian)
     minor_y = centre_pix[1] + delta * np.sin(minor_angle_rad_cartesian)
     
-    print(' ')
-    print('in run_slices')
-    print('The length of major_x, _y, minor_x, _ is:', len(major_x), len(major_y), len(minor_x), len(minor_y))
+    if print_statement:
+        print(' ')
+        print('in run_slices')
+        print('The length of major_x, _y, minor_x, _ is:', len(major_x), len(major_y), len(minor_x), len(minor_y))
 
     # Extract image values along the defined axes
     major_data, _, major_offset_arcsec = extract_axis_data(major_x, major_y, 
                                                            data, 'major', 
                                                            centre_pix, gridsize, 
-                                                           StokesI_header)
+                                                           StokesI_header,
+                                                           print_statement)
     
     
     minor_data, _, minor_offset_arcsec = extract_axis_data(minor_x, minor_y, 
                                                            data, 'minor', 
                                                            centre_pix, gridsize, 
-                                                           StokesI_header)
+                                                           StokesI_header,
+                                                           print_statement)
     
     points = [major_x, major_y, minor_x, minor_y]
     

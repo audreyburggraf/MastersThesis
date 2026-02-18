@@ -26,31 +26,55 @@ import constants
 # band10_color = "#fb0d0d" # red from Kataoka et al. 2015
 
 # Set the colours for each band 
-alma_band_colors = {
-    1: "#f63fe3",  # pink from Kataoka et al. 2015
-    3: "#2321f6",  # blue from Kataoka et al. 2015
-    4: "#d4aa00",  # warm gold/mustard yellow that ChatGPT reccomended
-    5: "#8000ff",  # vivid violet that ChatGPT reccomended
-    6: "#00bfc4", # bright cyan that ChatGPT reccomended
-    7: "#086608",  # green from Kataoka et al. 2015
-    10:"#fb0d0d", # red from Kataoka et al. 2015
-}
+# alma_band_colors = {
+#     1: "#f63fe3",  # pink from Kataoka et al. 2015
+#     3: "#2321f6",  # blue from Kataoka et al. 2015
+   
+#     #--------
+#     # Band 4
+#     #--------
+#     4: "red", 
+#     "Band 4": "red",
+#     "Band 4 nterms2": 'red',
+#     #--------
+#     # Band 5
+#     #--------
+#     5: "orange",  
+#     "Band 5": "orange",
+#     #--------
+#     # Band 6
+#     #--------
+#     6: "#00bfc4", # Bright cyan
+#     "Band 6": "#00bfc4",
+#     #--------
+#     # Band 7
+#     #--------
+#     7: "darkviolet", 
+#     "Band 7":  "darkviolet",
+#     "Band 7 nterms2": "darkviolet",
+#     10:"#fb0d0d", # red from Kataoka et al. 2015
+# }
+
+alma_band_colors = constants.alma_band_colors
 
 alma_band_ms = {
     1: '.', 
     3: 'P',  
     4: 'o',  
+    'Band 4': 'o',  
+    'Band 4 nterms2': 'o',  
     5: '^',  
+    'Band 5': '^',  
     6: 's', 
+    'Band 6': 's', 
     7: '*',  
+    'Band 7': '*', 
+    'Band 7 nterms2': '*', 
     10:'p', 
 }
 
 
-kataoka_fig2_colors = fig2_colors = [alma_band_colors[10], 
-                                     alma_band_colors[7],
-                                     alma_band_colors[3],
-                                     alma_band_colors[1]]
+kataoka_fig2_colors = fig2_colors = ['red', 'orange', 'blue', 'purple']
 
 
 

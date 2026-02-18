@@ -42,10 +42,11 @@ def debias_func(POLI_map, POLI_err_map, StokesQ_map, StokesU_map, band):
             P_obs = POLI_map[y, x]
             StokesQ = StokesQ_map[y, x]
             StokesU = StokesU_map[y, x]
+            
             S_N = P_obs / sigma_PI
 
             if S_N > 9:
-                debiased = np.sqrt(StokesQ**2 + StokesU**2 - sigma_PI**2)
+                debiased = np.sqrt(StokesQ**2 + StokesU**2 - sigma_PI**2) # Minor correction
             else:
                 debiased = bessel_for_debias(P_obs, sigma_PI)
                
