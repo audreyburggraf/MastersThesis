@@ -20,6 +20,7 @@ from FITS_Image_Functions import *
 from PolarizationFunctions import *
 from PlottingWithFunction import * 
 from IntroductionFunctions import *
+from POLF_Functions import *
 # ------------------------------------------
 
 
@@ -113,6 +114,8 @@ _, _, PA_err_deg, _ = read_in_file(PA_err_file)
 # Polarized Fraction
 # -------------------------------------------------------------------------------------------------------
 _, _, POLF, _ = read_in_file(POLF_file)
+
+find_POLF_avg("Band 6", POLF, StokesI_mJy, band6_data_folder_path)
 # -------------------------------------------------------------------------------------------------------
 
 
@@ -140,8 +143,9 @@ BMAJ_deg, BMIN_deg, BMAJ_pix, BMIN_pix, BPA_deg_cartesian, reference_length_pix,
 # Find the vectors
 # -------------------------------------------------------------------------------------------------------
 results = generate_polarization_vectors(ny, nx,
+                                        xmin, xmax, ymin, ymax, # This is for xmin, xmax, ymin, ymax, for my nterms test
                                         RA_centre_pix, Dec_centre_pix,
-                                        constants.minor_angle_rad_sky_band7,
+                                        constants.minor_angle_rad_sky_band6,
                                         StokesI_mJy, 
                                         POLI_mJy, POLI_err_mJy,
                                         PA_rad, PA_err_deg,
