@@ -97,7 +97,25 @@ def plot_a_vs_POLF(a_max_dist_micron, P_times_omega,
     band_colors = [alma_band_colors[b] for b in bands]
     ms = [alma_band_ms[b] for b in bands]
     
+    
+    
+    # Make list for labels
+    # -----------------------------------
+    labels = []
 
+    for band in bands:
+
+        if band == 'Band 4' or band == 'Band 4 nterms2':
+            label = 'Band 4'
+        elif band == 'Band 7' or band == 'Band 7 nterms2':
+            label = 'Band 7'
+        else:
+            label = band
+
+        labels.append(label)
+
+    labels = np.array(labels)
+    # -----------------------------------
 
     # mm
 
@@ -107,9 +125,9 @@ def plot_a_vs_POLF(a_max_dist_micron, P_times_omega,
 
     for i in range(len(bands)):
         if legend == 'w sf':
-            label = f'Band {bands[i]} $\cdot$ sf'
+            label = f'{labels[i]} $\cdot$ sf'
         elif legend == 'wo sf':
-            label = f'Band {bands[i]}'
+            label = f'{labels[i]}'
         else:
             label = None  # in case legend is neither 'with sf' nor 'wo sf'
         
@@ -118,7 +136,8 @@ def plot_a_vs_POLF(a_max_dist_micron, P_times_omega,
                 P_times_omega[:, i] * sf,
                 color = band_colors[i],
                 ls = '-',
-                label = label)
+                label = label, 
+                lw = 3)
 
 
     # Add axis labels
@@ -150,7 +169,7 @@ def plot_a_vs_POLF(a_max_dist_micron, P_times_omega,
     ax.ticklabel_format(style='plain', axis='x')
 
     # ---------------------------------------------------------------------------------
-    ax.legend(fontsize = legend_text_fs, title = 'Model', title_fontsize = legend_text_fs)
+#     ax.legend(fontsize = legend_text_fs, title = 'Model', title_fontsize = legend_text_fs)
 
     
     return fig, ax
