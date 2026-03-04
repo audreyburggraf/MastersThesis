@@ -4,6 +4,8 @@ from matplotlib.patches import Ellipse
 import seaborn as sns
 import math
 from matplotlib.ticker import ScalarFormatter
+from matplotlib.patches import Patch
+from matplotlib.lines import Line2D
 
 # Import Functions
 from FITS_Image_Functions import *

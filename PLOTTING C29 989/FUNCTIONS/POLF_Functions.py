@@ -66,7 +66,7 @@ def find_POLF_avg(band, POLF, StokesI_mJy, path, sigma_cutoff = 5):
 
 # Function to find 
 # --------------------------------------------------------------------------------------
-def find_gaussian_POLF(UniformRatios, POLF, tolerance=0.001):
+def find_gaussian_POLF(band, UniformRatios, POLF, tolerance=0.001):
     # Convert inputs to numpy arrays in case they aren't already
     UniformRatios = np.array(UniformRatios)
     POLF = np.array(POLF)
@@ -78,7 +78,7 @@ def find_gaussian_POLF(UniformRatios, POLF, tolerance=0.001):
     matching_POLF = POLF[mask]
     
     if matching_POLF.size == 0:
-        return np.nan  # or raise an exception if preferred
+        return np.nan, mask  # or raise an exception if preferred
     
     # Compute and return the average
     POLF_average = np.mean(matching_POLF)
@@ -89,6 +89,37 @@ def find_gaussian_POLF(UniformRatios, POLF, tolerance=0.001):
         for val in row:
             if val == True:
                 count += 1
+    
+#     if band == "Band 4":
+#         out_path = Path(path) / "POLF_Gaussisn_mask_BAND4.csv"
+#         np.save(out_path, mask)
+
+
+#     elif band == "Band 4 nterms2":
+#         out_path = Path(path) / "POLF_Gaussisn_mask_BAND4_nterms2.csv"
+#         np.save(out_path, mask)
+
+
+#     elif band == "Band 5":
+#         out_path = Path(path) / "POLF_Gaussisn_mask_BAND5.csv"
+#         np.save(out_path, mask)
+
+
+#     elif band == "Band 6":
+#         out_path = Path(path) / "POLF_Gaussisn_mask_BAND6.csv"
+#         np.save(out_path, mask)
+
+
+#     elif band == "Band 7 nterms2":
+#         out_path = Path(path) / "POLF_Gaussisn_mask_BAND7_nterms2.csv"
+#         np.save(out_path, mask)
+
+
+#     else:
+#         raise ValueError(
+#             "Function currently only accepts: "
+#             "'Band 4', 'Band 4 nterms2', 'Band 5', 'Band 6', 'Band 7 nterms2'")
+    
 
     
     return POLF_average
@@ -158,7 +189,7 @@ def get_all_POLF_and_save(StokesI_mJy, POLI_mJy, POLF, UniformRatios, band, gaus
         raise ValueError("Only 'Band 4', 'Band 4 nterms2', 'Band 5', 'Band 6', and 'Band 7 nterms2' are supported.")
         
     
-    POLF_Gaussian = find_gaussian_POLF(UniformRatios, POLF, gaussian_tolerance)
+    POLF_Gaussian = find_gaussian_POLF(band, UniformRatios, POLF, gaussian_tolerance)
     
     POLF_maxPOLI = find_POLF_at_max_POLI(StokesI_mJy, POLI_mJy, POLF, print_statements)
     
@@ -185,7 +216,7 @@ def get_all_POLF_and_save(StokesI_mJy, POLI_mJy, POLF, UniformRatios, band, gaus
 
 # Load POLF
 # --------------------------------------------------------------------------------------
-def load_POLF(bands):
+def load_POLF(bands, print_things = False):
     # Initialize storage
     results = {
         'Band': [],
@@ -195,6 +226,8 @@ def load_POLF(bands):
     }
 
     for band in bands:
+        if print_things:
+            print(rf'Band = {band}')
         # Case 1: Band 4 nterms2
         if band == "Band 4 nterms2":
             var_name = "band4_nterms2_data_folder_path"
@@ -333,3 +366,110 @@ def find_best_sf(a_max_f_dist_micron, P_times_omega, df_POLF, print_results = Fa
     
     return best_a_max_f, best_POLF, best_sf
 # --------------------------------------------------------------------------------------
+
+
+
+
+
+
+# # --------------------------------------------------------------------------------------
+# def find_sf_v2(a_max_f_dist_micron, P_times_omega, df_POLF, print_results = False):
+    
+#     # Start a df and test
+#     df = pd.DataFrame({'a_max micron': a_max_f_dist_micron})
+    
+    
+#     # We are only going to be using POLF_mean
+#     POLF_values = 
+   
+    
+#     # Loop over all columns of POLF
+#     for j in range(len(POLF_columns)):
+#         # Extract the column name
+#         col_name = POLF_columns[j]
+#         if print_results:
+#             print(f'We are minimizing for {col_name}:')
+
+#         # Choose the test POLF
+#         POLF_test = df_POLF[col_name]
+
+#         scale_factors = []
+#         diff_array = []
+        
+#         # Minimize the sum of squares
+#         for i in range(len(a_max_f_dist_micron)):
+#             result = minimize(
+#                 dust_sum_of_sq,
+#                 x0=0.01,
+#                 args=(P_times_omega[i, :], POLF_test),
+#                 bounds=[(0, None)]
+#             )
+
+#             sf_opt = result.x[0]
+#             err = result.fun
+            
+#             # Save the data
+#             scale_factors.append(sf_opt)
+#             diff_array.append(err)
+
+#         # Add columns to main df
+#         df[f'sf_{col_name}'] = scale_factors
+#         df[f'error_{col_name}'] = diff_array
+        
+        
+#         best_index_array = []
+#         best_error_array = []
+#         best_a_max_f_array = []
+#         best_sf_array = []
+
+#     for col_name in POLF_columns:
+#         if print_results:
+#             print(f'We are now looking at the results for {col_name}:')
+
+#         best_index = np.argmin(df[f'error_{col_name}'])
+#         best_error = df[f'error_{col_name}'][best_index]
+#         best_a_max_f = a_max_f_dist_micron[best_index]
+#         best_sf = df[f'sf_{col_name}'][best_index]
+
+#         best_index_array.append(best_index)
+#         best_error_array.append(best_error)
+#         best_a_max_f_array.append(best_a_max_f)
+#         best_sf_array.append(best_sf)
+
+#         if print_results:
+#             print(f"   The index with the lowest error from minimize is    : {best_index}")
+#             print(f"   At this index, the corresponding error is           : {best_error:.3f}")
+#             print(f"   At this index, the corresponding a_max * f is       : {best_a_max_f:.1f} micron")
+#             print(f"   The scale factor at that a_max * f is               : {best_sf:.5f}")
+#             print(' ')
+
+#     if print_results:    
+#         print(' ')
+#         print(' ')
+
+#     best_POLF_index = np.argmin(best_error_array)
+#     best_POLF_column = POLF_columns[best_POLF_index]
+#     best_POLF = df_POLF[best_POLF_column]
+#     best_index = best_index_array[best_POLF_index]
+#     best_error = best_error_array[best_POLF_index]
+#     best_a_max_f = best_a_max_f_array[best_POLF_index]
+#     best_sf = best_sf_array[best_POLF_index]
+
+
+#     if print_results:
+#         print(f'Out of the {len(df_POLF)} POLF options:')
+#         print(f"   Lowest error occurs at POLF index of                 : {best_POLF_index}")
+#         print(f"   This POLF index corresponds to                       : {best_POLF_column}")   
+#         print(f"   The POLFs at this best POLF column are               : {best_POLF[0]:.3f},  {best_POLF[1]:.3f},  {best_POLF[2]:.3f}")
+#         print(f"   The index with the lowest error from minimize is     : {best_index}")
+#         print(f"   At this index, the corresponding error is            : {best_error:.3f}")
+#         print(f"   At this index, the corresponding a_max * f is        : {best_a_max_f:.1f} micron")
+#         print(f"   The scale factor at that a_max * f is                : {best_sf:.5f}")
+
+
+    
+    
+    
+    
+#     return best_a_max_f, best_POLF, best_sf
+# # --------------------------------------------------------------------------------------

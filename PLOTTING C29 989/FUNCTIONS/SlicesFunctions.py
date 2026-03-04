@@ -1,6 +1,7 @@
 # Import Functions
 from FITS_Image_Functions import *
 from DataAnalysisFunctions import *
+from scipy.stats import norm
 
 # Import the constants
 # -----------------------------------------------------------------------------------------
@@ -11,7 +12,7 @@ sys.path.append("/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING 
 import constants
 # -----------------------------------------------------------------------------------------
 
-
+import pandas as pd
 
 def extract_axis_data(axis_x, axis_y, data_2d, minor_or_major, centre_pix, gridsize, header, print_statement = False):
     """
@@ -261,9 +262,103 @@ def run_slices(data, StokesI_header, StokesI_wcs, carta_minor_data, carta_major_
 
 
 
+# def plot_gaussian_beam(ax, band, offsets_arcsec, color = 'black', 
+#                        normalize=True, scale_to_data=None):
+#     """
+#     Plots projected 1D Gaussian beam along a given slice angle.
+
+#     Parameters
+#     ----------
+#     ax : matplotlib axis
+#     band : str
+#     offsets_arcsec : array
+#         X-axis offsets (arcsec) of the slice
+#     normalize : bool
+#         If True, normalize beam to peak = 1
+#     scale_to_data : float or None
+#         If provided, scales beam peak to this value
+#     """
+
+#     # ----------------------------
+#     # Select correct constants file
+#     # ----------------------------
+#     if band == 'Band 6' or 6:
+#         file = constants.band6_data_folder_path + 'beam_BAND6.csv'
+#         minor_angle_rad_cartesian = constants.minor_angle_rad_cartesian_band6
+
+#     elif band == 'Band 5' or 5:
+#         file = constants.band5_data_folder_path + 'beam_BAND5.csv'
+#         minor_angle_rad_cartesian = constants.minor_angle_rad_cartesian_band5
+
+#     elif band == 'Band 4' or 4:
+#         file = constants.band4_data_folder_path + 'beam_BAND4.csv'
+#         minor_angle_rad_cartesian = constants.minor_angle_rad_cartesian_band4
+
+#     elif band == 'Band 4 nterms2' or 42:
+#         file = constants.band4_nterms2_data_folder_path + 'beam_BAND4_nterms2.csv'
+#         minor_angle_rad_cartesian = constants.minor_angle_rad_cartesian_band4_nterms2
+
+#     elif band == 'Band 7 nterms2 or 72':
+#         file = constants.band7_nterms2_data_folder_path + 'beam_BAND7_nterms2.csv'
+#         minor_angle_rad_cartesian = constants.minor_angle_rad_cartesian_band7_nterms2
+
+#     else:
+#         raise ValueError("Unsupported band.")
+
+#     df = pd.read_csv(file)
+
+#     BMAJ_arcsec = df.at[0, "BMAJ_arcsec"]
+#     BMIN_arcsec = df.at[0, "BMIN_arcsec"]
+#     BPA_deg     = df.at[0, "BPA_deg"]
+
+#     # We only care about the minor axis, and the minor FWHM is BMIN_arcsec
     
     
+#     # FWHM to sigma 
+#     # --------------------------------------------
+#     # FWHM = 2 sqrt(2 ln 2) sigma 
+#     # sigma = FWHM /2 sqrt(2 ln(2)
+#     # --------------------------------------------
+#     fwhm_to_sigma = 1 / (2 * np.sqrt(2 * np.log(2)))
     
+#     sigma_maj = BMAJ_arcsec * fwhm_to_sigma
+#     sigma_min = BMIN_arcsec * fwhm_to_sigma
+#     # --------------------------------------------
+
+#     # Convert BPA to radians
+#     BPA_rad = np.deg2rad(BPA_deg)
+
+#     # ----------------------------
+#     # Effective sigma along slice
+#     # ----------------------------
+#     delta_theta = minor_angle_rad_cartesian  - BPA_rad
+
+#     sigma_eff = np.sqrt(
+#         (sigma_maj * np.cos(delta_theta))**2 +
+#         (sigma_min * np.sin(delta_theta))**2
+#     )
+
+#     # Calculate the 1D gaussian using scipy.stats
+#     beam_profile = norm.pdf(offsets_arcsec, loc=0, scale=sigma_eff)
+
+#     if normalize:
+#         beam_profile /= beam_profile.max()
+
+#     if scale_to_data is not None:
+#         beam_profile *= scale_to_data
+
+#     # ----------------------------
+#     # Plot
+#     # ----------------------------
+#     ax.plot(offsets_arcsec,
+#             beam_profile,
+#             linestyle='--',
+#             color=color,
+#             linewidth=2,
+#             label='Projected Beam')
+
+#     #return sigma_eff
+
     
     
     

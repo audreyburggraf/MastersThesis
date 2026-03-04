@@ -200,3 +200,11 @@ vector_data_actual_cartesian_nodebias = results_biased['vector_data_actual_carte
 # vector_mask = results['vector_mask']
 # in_plot_mask = results['in_plot_mask']
 # -------------------------------------------------------------------------------------------------------
+
+
+
+
+# Save the beam info
+# -----------------------------------------------------------------
+save_beam_info(StokesI_header, 'Band 7 nterms2', print_statements=False)
+# -----------------------------------------------------------------

@@ -213,3 +213,11 @@ stream_vectors = results_stream['vector_data_actual_cartesian']
 #     else:
 #         vector_data_actual_cartesian.append(row)
 # -------------------------------------------------------------------------------------------------------
+
+
+
+
+# Save the beam info
+# -----------------------------------------------------------------
+save_beam_info(StokesI_header, 'Band 5', print_statements=False)
+# -----------------------------------------------------------------

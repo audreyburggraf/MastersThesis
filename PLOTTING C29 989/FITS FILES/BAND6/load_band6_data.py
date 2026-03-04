@@ -173,3 +173,8 @@ StokesU_grid_100Azimuthal = results['StokesU_grid_100Azimuthal']
 
 
 
+
+# Save the beam info
+# -----------------------------------------------------------------
+save_beam_info(StokesI_header, 'Band 6', print_statements=False)
+# -----------------------------------------------------------------

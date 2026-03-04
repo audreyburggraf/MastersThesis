@@ -1,6 +1,8 @@
 # Import constants
 # ---------------------------------------------------------------------------------------
 import sys
+import pandas as pd
+from pathlib import Path
 
 # Add the directory where constants.py is located to sys.path
 sys.path.append("/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/")
@@ -203,6 +205,129 @@ def generate_polarization_vectors(ny, nx,
     return results
 
 
+
+
+
+# --------------------------------------------------------------------------------------
+def save_beam_info(header, band, print_statements=False):
+
+    if band == 'Band 4':
+        path = constants.band4_data_folder_path + "beam_BAND4.csv"
+    elif band == 'Band 4 nterms2':
+        path = constants.band4_nterms2_data_folder_path + "beam_BAND4_nterms2.csv"
+    elif band == 'Band 5':
+        path = constants.band5_data_folder_path + "beam_BAND5.csv"
+    elif band == 'Band 6':
+        path = constants.band6_data_folder_path + "beam_BAND6.csv"
+    elif band == 'Band 7 nterms2':
+        path = constants.band7_nterms2_data_folder_path + "beam_BAND7_nterms2.csv"
+    else:
+        raise ValueError("Unsupported band.")
+
+    # Extract beam parameters (degrees)
+    BMAJ_deg = header['BMAJ']
+    BMIN_deg = header['BMIN']
+    BPA_deg  = header['BPA']
+
+    # Convert to arcsec
+    BMAJ_arcsec = BMAJ_deg * 3600
+    BMIN_arcsec = BMIN_deg * 3600
+
+    # Pixel scale (arcsec/pixel)
+    CDELT1_deg = abs(header['CDELT1'])
+    pixel_scale_arcsec = CDELT1_deg * 3600
+    
+    # FWHM to sigma 
+    # --------------------------------------------
+    # FWHM = 2 sqrt(2 ln 2) sigma 
+    # sigma = FWHM /2 sqrt(2 ln(2)
+    # --------------------------------------------
+    fwhm_to_sigma = 1 / (2 * np.sqrt(2 * np.log(2)))
+    
+    sigma = BMIN_arcsec * fwhm_to_sigma
+    # --------------------------------------------
+    
+
+    data_dict = {
+        "BMAJ_arcsec": [BMAJ_arcsec],
+        "BMIN_arcsec": [BMIN_arcsec],
+        "BPA_deg": [BPA_deg],
+        "pixel_scale_arcsec": [pixel_scale_arcsec],
+        "sigma": [sigma], 
+    }
+
+    df = pd.DataFrame(data_dict)
+    df.to_csv(path, index=False)
+
+    if print_statements:
+        print(f"Saved beam info for {band}")
+        print(f"BMAJ: {BMAJ_arcsec:.3f} arcsec")
+        print(f"BMIN: {BMIN_arcsec:.3f} arcsec")
+        print(f"BPA : {BPA_deg:.2f} deg")
+        print(f"Pixel scale: {pixel_scale_arcsec:.4f} arcsec/pixel")
+        print(f"sigma: {sigma:.4f} arcsec/pixel")
+
+# --------------------------------------------------------------------------------------
+
+
+
+# --------------------------------------------------------------------------------------
+def load_beam_info(bands, print_things = True):
+
+    results = {
+        'Band': [],
+        'BMAJ_arcsec': [],
+        'BMIN_arcsec': [],
+        'BPA_deg': [],
+        'pixel_scale_arcsec': [],
+        'sigma': []
+    }
+    
+    
+    
+
+    for band in bands:
+        if print_things:
+            print(rf'Working on {band}')
+
+
+        if band == "Band 4 nterms2" or band == 42:
+            var_name = "band4_nterms2_data_folder_path"
+            path = Path(getattr(constants, var_name)) / "beam_BAND4_nterms2.csv"
+
+        elif band == "Band 7 nterms2" or band == 72:
+            var_name = "band7_nterms2_data_folder_path"
+            path = Path(getattr(constants, var_name)) / "beam_BAND7_nterms2.csv"
+            
+        elif band == "Band 5" or band == 5:
+            var_name = "band5_data_folder_path"
+            path = Path(getattr(constants, var_name)) / "beam_BAND5.csv"
+        
+        elif band == "Band 6" or band == 6:
+            var_name = "band6_data_folder_path"
+            path = Path(getattr(constants, var_name)) / "beam_BAND6.csv"
+
+
+        else:
+            return("band input not accepted")
+        df = pd.read_csv(path)
+
+        results['Band'].append(band)
+        results['BMAJ_arcsec'].append(df.at[0, "BMAJ_arcsec"])
+        results['BMIN_arcsec'].append(df.at[0, "BMIN_arcsec"])
+        results['BPA_deg'].append(df.at[0, "BPA_deg"])
+        results['pixel_scale_arcsec'].append(df.at[0, "pixel_scale_arcsec"])
+        results['sigma'].append(df.at[0, "sigma"])
+
+    df_beam = pd.DataFrame(results)
+
+    return df_beam
+# --------------------------------------------------------------------------------------
+
+
+
+    
+    
 
 # def generate_polarization_vectors_band47(ny, nx,
 #                                          RA_centre_pix, Dec_centre_pix,
