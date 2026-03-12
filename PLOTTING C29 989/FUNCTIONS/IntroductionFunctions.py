@@ -22,22 +22,31 @@ from PolarizationFunctions import *
 def get_plotting_parameters(StokesI_header, StokesI_wcs, band):
     # Dictionary for band constants
     # Get the constants depending on what band of data we are using:
-    if band == 'Band 6':
-        centre_str = constants.centre_str_band6
+    centre_lookup = {
+        'Band 6': constants.centre_str_band6,
+        'Band 6 smooth': constants.centre_str_band6_smooth,
+        'Band 6 smooth B7': constants.centre_str_band6_smooth_B7,
 
-    elif band == 'Band 4':
-        centre_str = constants.centre_str_band4  # Changed to band 4   
-        
-    elif band == 'Band 4 nterms2':
-        centre_str = constants.centre_str_band4_nterms2 
-    
-    elif band == 'Band 5':
-        centre_str = constants.centre_str_band5 
-        
-        
-    elif band == 'Band 7 nterms2':
-        centre_str = constants.centre_str_band7_nterms2
-    else:
+        'Band 4': constants.centre_str_band4,
+        'Band 4 nterms2': constants.centre_str_band4_nterms2,
+        'Band 4 nterms2 smooth': constants.centre_str_band4_nterms2_smooth,
+        'Band 4 nterms2 smooth B6': constants.centre_str_band4_nterms2_smooth_B6,
+        'Band 4 nterms2 smooth B6 B7': constants.centre_str_band4_nterms2_smooth_B6_B7,
+
+        'Band 5 v0': constants.centre_str_band5_v0,
+        'Band 5': constants.centre_str_band5,
+        'Band 5 robust -2': constants.centre_str_band5_robust_minus2,
+        'Band 5 robust -1': constants.centre_str_band5_robust_minus1,
+        'Band 5 nterms2': constants.centre_str_band5_nterms2,
+
+        'Band 7 nterms2': constants.centre_str_band7_nterms2,
+        'Band 7 nterms2 smooth': constants.centre_str_band7_nterms2_smooth,
+        'Band 7 nterms2 smooth B6': constants.centre_str_band7_nterms2_smooth
+    }
+
+    centre_str = centre_lookup.get(band)
+
+    if centre_str is None:
         return "Invalid band option"
     
     # Get beam information
@@ -211,18 +220,34 @@ def generate_polarization_vectors(ny, nx,
 # --------------------------------------------------------------------------------------
 def save_beam_info(header, band, print_statements=False):
 
-    if band == 'Band 4':
-        path = constants.band4_data_folder_path + "beam_BAND4.csv"
-    elif band == 'Band 4 nterms2':
-        path = constants.band4_nterms2_data_folder_path + "beam_BAND4_nterms2.csv"
-    elif band == 'Band 5':
-        path = constants.band5_data_folder_path + "beam_BAND5.csv"
-    elif band == 'Band 6':
-        path = constants.band6_data_folder_path + "beam_BAND6.csv"
-    elif band == 'Band 7 nterms2':
-        path = constants.band7_nterms2_data_folder_path + "beam_BAND7_nterms2.csv"
-    else:
-        raise ValueError("Unsupported band.")
+     beam_paths = {
+        'Band 4': (constants.band4_data_folder_path, "beam_BAND4.csv"),
+        'Band 4 nterms2': (constants.band4_nterms2_data_folder_path, "beam_BAND4_nterms2.csv"),
+        'Band 4 nterms2 smooth': (constants.band4_nterms2_smooth_data_folder_path, "beam_BAND4_nterms2_smooth.csv"),
+        'Band 4 nterms2 smooth B6': (constants.band4_nterms2_smooth_B6_data_folder_path, "beam_BAND4_nterms2_smooth_B6.csv"),
+        'Band 4 nterms2 smooth B6 B7': (constants.band4_nterms2_smooth_B6_B7_data_folder_path, 
+                                        "beam_BAND4_nterms2_smooth_B6_B7.csv"),
+
+        'Band 5': (constants.band5_data_folder_path, "beam_BAND5.csv"),
+        'Band 5 v0': (constants.band5_v0_data_folder_path, "beam_BAND5_v0.csv"),
+        'Band 5 robust -2': (constants.band5_robust_minus2_data_folder_path, "beam_BAND5_robust_minus2.csv"),
+        'Band 5 robust -1': (constants.band5_robust_minus1_data_folder_path, "beam_BAND5_robust_minus1.csv"),
+        'Band 5 nterms2': (constants.band5_nterms2_data_folder_path, "beam_BAND5_nterms2.csv"),
+
+        'Band 6': (constants.band6_data_folder_path, "beam_BAND6.csv"),
+        'Band 6 smooth': (constants.band6_smooth_data_folder_path, "beam_BAND6_smooth.csv"),
+        'Band 6 smooth B7': (constants.band6_smooth_B6_data_folder_path, "beam_BAND6_smooth_B7.csv"),
+
+        'Band 7 nterms2': (constants.band7_nterms2_data_folder_path, "beam_BAND7_nterms2.csv"),
+        'Band 7 nterms2 smooth': (constants.band7_nterms2_smooth_data_folder_path, "beam_BAND7_nterms2_smooth.csv"),
+        'Band 7 nterms2 smooth B6': (constants.band7_nterms2_smooth_B6_data_folder_path, "beam_BAND7_nterms2_smooth_B6.csv"),
+    }
+
+    if band not in beam_paths:
+        raise ValueError(f"Unsupported band: {band}")
+
+    folder, filename = beam_paths[band]
+    path = Path(folder) / filename
 
     # Extract beam parameters (degrees)
     BMAJ_deg = header['BMAJ']
@@ -284,32 +309,39 @@ def load_beam_info(bands, print_things = True):
     }
     
     
-    
+    beam_file_lookup = {
+        "Band 4 nterms2": ("band4_nterms2_data_folder_path", "beam_BAND4_nterms2.csv"),
+        "Band 4 nterms2 smooth": ("band4_nterms2_smooth_data_folder_path", "beam_BAND4_nterms2_smooth.csv"),
+        "Band 4 nterms2 smooth B6": ("band4_nterms2_smooth_B6_data_folder_path", "beam_BAND4_nterms2_smooth_B6.csv"),
+        "Band 4 nterms2 smooth B6 B7": ("band4_nterms2_smooth_B6_B7_data_folder_path", "beam_BAND4_nterms2_smooth_B6_B7.csv"),
+
+        "Band 7 nterms2": ("band7_nterms2_data_folder_path", "beam_BAND7_nterms2.csv"),
+        "Band 7 nterms2 smooth": ("band7_nterms2_smooth_data_folder_path", "beam_BAND7_nterms2_smooth.csv"),
+        "Band 7 nterms2 smooth B6": ("band7_nterms2_smooth_B6_data_folder_path", "beam_BAND7_nterms2_smooth_B6.csv"),
+
+        "Band 5": ("band5_data_folder_path", "beam_BAND5.csv"),
+        "Band 5 v0": ("band5_v0_data_folder_path", "beam_BAND5_v0.csv"),
+        "Band 5 nterms2": ("band5_nterms2_data_folder_path", "beam_BAND5_nterms2.csv"),
+        "Band 5 robust -2": ("band5_robust_minus2_data_folder_path", "beam_BAND5_robust_minus2.csv"),
+
+        "Band 6": ("band6_data_folder_path", "beam_BAND6.csv"),
+        "Band 6 smooth": ("band6_smooth_data_folder_path", "beam_BAND6_smooth.csv"),
+        "Band 6 smooth B7": ("band6_smooth_B7_data_folder_path", "beam_BAND6_smooth_B7.csv"),
+    }
+
 
     for band in bands:
+
         if print_things:
-            print(rf'Working on {band}')
+            print(f"Working on {band}")
 
+        if band not in beam_file_lookup:
+            raise ValueError(f"Band input not accepted: {band}")
 
-        if band == "Band 4 nterms2" or band == 42:
-            var_name = "band4_nterms2_data_folder_path"
-            path = Path(getattr(constants, var_name)) / "beam_BAND4_nterms2.csv"
+        var_name, filename = beam_file_lookup[band]
 
-        elif band == "Band 7 nterms2" or band == 72:
-            var_name = "band7_nterms2_data_folder_path"
-            path = Path(getattr(constants, var_name)) / "beam_BAND7_nterms2.csv"
-            
-        elif band == "Band 5" or band == 5:
-            var_name = "band5_data_folder_path"
-            path = Path(getattr(constants, var_name)) / "beam_BAND5.csv"
-        
-        elif band == "Band 6" or band == 6:
-            var_name = "band6_data_folder_path"
-            path = Path(getattr(constants, var_name)) / "beam_BAND6.csv"
+        path = Path(getattr(constants, var_name)) / filename
 
-
-        else:
-            return("band input not accepted")
         df = pd.read_csv(path)
 
         results['Band'].append(band)

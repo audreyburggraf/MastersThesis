@@ -293,3 +293,51 @@ def dust_sum_of_sq(sf, model_Pw, obs_POLF):
     
     return total
 # --------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+def find_sf_v2(a_max_f_dist_micron, P_times_omega, df_POLF, print_results=False):
+
+    # We are looking at the POLF from the mean/average method, none others 
+    POLF_obs = df_POLF['POLF_Gaussian']
+
+    # Make arrays to store the median and standard deviation values 
+    sf_medians = []
+    sf_stds = []
+
+    # Loop over each a_max grid point
+    for i in range(len(a_max_f_dist_micron)):
+
+        Pw_model = P_times_omega[i, :]  # 4 bands
+        
+        # Avoid divide by zero
+        valid = Pw_model > 0
+        
+        sf_i = POLF_obs[valid] / Pw_model[valid]
+
+        sf_medians.append(np.median(sf_i))
+        sf_stds.append(np.std(sf_i))
+
+    sf_medians = np.array(sf_medians)
+    sf_stds = np.array(sf_stds)
+
+    # Choose best a_max where scatter is minimized
+    best_idx = np.argmin(sf_stds)
+
+    best_a_max_f = a_max_f_dist_micron[best_idx]
+    best_sf = sf_medians[best_idx]
+
+    # Compute predicted POLF at best solution
+#     best_POLF = P_times_omega[best_idx, :] * best_sf
+
+    if print_results:
+        print("Best a_max:", best_a_max_f)
+        print("Best SF:", best_sf)
+
+    # return values
+    return best_a_max_f, POLF_obs, best_sf
+

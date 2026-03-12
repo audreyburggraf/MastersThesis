@@ -1,0 +1,4 @@
+Band 5 v0:
+- This is my original Band 5 data 
+- On the groupmachie I accidentally deleted this data when I went to change it to briggs = -2
+- I need to redo the clean so I want to store this data but I will need to use the new clean

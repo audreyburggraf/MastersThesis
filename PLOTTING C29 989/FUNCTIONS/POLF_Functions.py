@@ -26,20 +26,41 @@ def find_POLF_avg(band, POLF, StokesI_mJy, path, sigma_cutoff = 5):
 
     elif band == "Band 4 nterms2":
         out_path = Path(path) / "constants_BAND4_nterms2.csv"
+        
+    elif band == "Band 4 nterms2 smooth":
+        out_path = Path(path) / "constants_BAND4_nterms2_smooth.csv"
 
     elif band == "Band 5":
         out_path = Path(path) / "constants_BAND5.csv"
+    
+    elif band == "Band 5 v0":
+        out_path = Path(path) / "constants_BAND5_v0.csv"
+    
+    elif band == "Band 5 robust -2":
+        out_path = Path(path) / "constants_BAND5_robust_minus2.csv"
+    
+    elif band == "Band 5 robust -1":
+        out_path = Path(path) / "constants_BAND5_robust_minus1.csv"
+        
+    elif band == "Band 5 nterms2":
+        out_path = Path(path) / "constants_BAND5_nterms2.csv"
 
     elif band == "Band 6":
         out_path = Path(path) / "constants_BAND6.csv"
+    
+    elif band == "Band 6 smooth":
+        out_path = Path(path) / "constants_BAND6_smooth.csv"
 
     elif band == "Band 7 nterms2":
         out_path = Path(path) / "constants_BAND7_nterms2.csv"
+    
+    elif band == "Band 7 nterms2 smooth":
+        out_path = Path(path) / "constants_BAND7_nterms2_smooth.csv"
 
     else:
         raise ValueError(
             "Function currently only accepts: "
-            "'Band 4', 'Band 4 nterms2', 'Band 5', 'Band 6', 'Band 7 nterms2'")
+            "'Band 4', 'Band 4 nterms2', 'Band 4 nterms2 smooth', 'Band 5', 'Band 5 v0', 'Band 5 robust -2', 'Band 5 robust -1', 'Band 5 nterms2', 'Band 6', 'Band 6 smooth', 'Band 7 nterms2', 'Band 7 nterms2 smooth'")
 
     
     threshold = sigma_cutoff * np.nanstd(StokesI_mJy)   # e.g. 5-sigma cut
@@ -177,16 +198,43 @@ def find_POLF_at_max_StokesI(StokesI_mJy, POLI_mJy, POLF, print_statements = Fal
 def get_all_POLF_and_save(StokesI_mJy, POLI_mJy, POLF, UniformRatios, band, gaussian_tolerance = 0.001, print_statements = False):
     if band == 'Band 4':
         path = constants.band4_data_folder_path + "constants_BAND4.csv"
+        
     elif band == 'Band 4 nterms2':
         path = constants.band4_nterms2_data_folder_path + "constants_BAND4_nterms2.csv"
+    
+    elif band == 'Band 4 nterms2 smooth':
+        path = constants.band4_nterms2_smooth_data_folder_path + "constants_BAND4_nterms2_smooth.csv"
+        
     elif band == 'Band 5':
         path = constants.band5_data_folder_path + "constants_BAND5.csv"
+    elif band == 'Band 5 v0':
+        path = constants.band5_v0_data_folder_path + "constants_BAND5_v0.csv"
+    
+    elif band == 'Band 5 robust -2':
+        path = constants.band5_robust_minus2_data_folder_path + "constants_BAND5_robust_minus2.csv"
+        
+    elif band == 'Band 5 robust -1':
+        path = constants.band5_robust_minus1_data_folder_path + "constants_BAND5_robust_minus1.csv"
+        
+    elif band == 'Band 5 nterms2':
+        path = constants.band5_nterms2_data_folder_path + "constants_BAND5_nterms2.csv"
+    
     elif band == 'Band 6':
         path = constants.band6_data_folder_path + "constants_BAND6.csv"
+        
+        
+    elif band == 'Band 6 smooth':
+        path = constants.band6_smooth_data_folder_path + "constants_BAND6_smooth.csv"
+    
     elif band == 'Band 7 nterms2':
         path = constants.band7_nterms2_data_folder_path + "constants_BAND7_nterms2.csv"
+        
+    elif band == 'Band 7 nterms2 smooth':
+        path = constants.band7_nterms2_smooth_data_folder_path + "constants_BAND7_nterms2_smooth.csv"
+        
+        
     else:
-        raise ValueError("Only 'Band 4', 'Band 4 nterms2', 'Band 5', 'Band 6', and 'Band 7 nterms2' are supported.")
+        raise ValueError("Only 'Band 4', 'Band 4 nterms2', 'Band 4 nterms2 smooth', 'Band 5', 'Band 5 nterms2', 'Band 5 robust -2', 'Band 5 robust -1', 'Band 6', 'Band 6 smooth', 'Band 7 nterms2' and 'Band 7 nterms2 smooth' are supported.")
         
     
     POLF_Gaussian = find_gaussian_POLF(band, UniformRatios, POLF, gaussian_tolerance)
@@ -232,13 +280,42 @@ def load_POLF(bands, print_things = False):
         if band == "Band 4 nterms2":
             var_name = "band4_nterms2_data_folder_path"
             path = Path(getattr(constants, var_name)) / "constants_BAND4_nterms2.csv"
+            
+ 
+        elif band == "Band 4 nterms2 smooth":
+            var_name = "band4_nterms2_smooth_data_folder_path"
+            path = Path(getattr(constants, var_name)) / "constants_BAND4_nterms2_smooth.csv"
 
         # Case 2: Band 7 nterms2
         elif band == "Band 7 nterms2":
             var_name = "band7_nterms2_data_folder_path"
             path = Path(getattr(constants, var_name)) / "constants_BAND7_nterms2.csv"
+            
+        elif band == "Band 7 nterms2 smooth":
+            var_name = "band7_nterms2_smooth_data_folder_path"
+            path = Path(getattr(constants, var_name)) / "constants_BAND7_nterms2_smooth.csv"
+            
+        # Case 3: Band 5 v0
+        elif band == "Band 5 v0":
+            var_name = "band5_v0_data_folder_path"
+            path = Path(getattr(constants, var_name)) / "constants_BAND5_v0.csv"
+            
+        # Case 4: Band 5 robust -2
+        elif band == "Band 5 robust -2":
+            var_name = "band5_robust_minus2_data_folder_path"
+            path = Path(getattr(constants, var_name)) / "constants_BAND5_robust_minus1.csv"
+        
+        # Case 5: Band 5 robust -1
+        elif band == "Band 5 robust -1":
+            var_name = "band5_robust_minus2_data_folder_path"
+            path = Path(getattr(constants, var_name)) / "constants_BAND5_robust_minus1.csv"
+            
+            
+        elif band == "Band 6 smooth":
+            var_name = "band6_smooth_data_folder_path"
+            path = Path(getattr(constants, var_name)) / "constants_BAND6_smooth.csv"
 
-        # Case 3: Normal bands: "Band 4", "Band 5", "Band 6", "Band 7", ...
+        # Case 6: Normal bands: "Band 4", "Band 5", "Band 6", "Band 7", ...
         else:
             # Extract the number from "Band X"
             band_num = int(band.split()[-1])   # "Band 4" -> 4

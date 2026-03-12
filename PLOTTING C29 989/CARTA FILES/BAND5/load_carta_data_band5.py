@@ -7,7 +7,7 @@ carta_image_path_band5 = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/
 
 
 # ------------------------------------------------------------------------------------------------------
-carta_major_df_StokesI = pd.read_csv(carta_image_path_band5 + "IRS63_StokesI_CARTA_MAJOR_AXIS_BAND5_18.csv", 
+carta_major_df_StokesI = pd.read_csv(carta_image_path_band5 + "IRS63_StokesI_CARTA_MAJOR_AXIS_BAND5_18_nterms1_redo.csv", 
                        delim_whitespace=True,  # Auto-detects spaces/tabs as delimiter
                        header=None, 
                        skiprows = 6,
@@ -19,7 +19,7 @@ carta_major_data_mJy_StokesI   = np.array(carta_major_df_StokesI["Value (Jy/beam
 
 
 # ------------------------------------------------------------------------------------------------------
-carta_minor_df_StokesI = pd.read_csv(carta_image_path_band5 + "IRS63_StokesI_CARTA_MINOR_AXIS_BAND5_18.csv", 
+carta_minor_df_StokesI = pd.read_csv(carta_image_path_band5 + "IRS63_StokesI_CARTA_MINOR_AXIS_BAND5_18_nterms1_redo.csv", 
                        delim_whitespace=True,  # Auto-detects spaces/tabs as delimiter
                        header=None, 
                        skiprows = 6,
@@ -34,7 +34,7 @@ carta_minor_data_mJy_StokesI   = np.array(carta_minor_df_StokesI["Value (Jy/beam
 
 
 # ------------------------------------------------------------------------------------------------------
-carta_major_df_POLI = pd.read_csv(carta_image_path_band5 + "IRS63_POLI_CARTA_MAJOR_AXIS_BAND5_18.csv", 
+carta_major_df_POLI = pd.read_csv(carta_image_path_band5 + "IRS63_POLI_CARTA_MAJOR_AXIS_BAND5_18_nterms1_redo.csv", 
                        delim_whitespace=True,  # Auto-detects spaces/tabs as delimiter
                        header=None, 
                        skiprows = 6,
@@ -48,7 +48,7 @@ carta_major_data_mJy_POLI   = np.array(carta_major_df_POLI["Value (Jy/beam)"]) *
 
 
 # ------------------------------------------------------------------------------------------------------
-carta_minor_df_POLI = pd.read_csv(carta_image_path_band5 + "IRS63_POLI_CARTA_MINOR_AXIS_BAND5_18.csv", 
+carta_minor_df_POLI = pd.read_csv(carta_image_path_band5 + "IRS63_POLI_CARTA_MINOR_AXIS_BAND5_18_nterms1_redo.csv", 
                        delim_whitespace=True,  # Auto-detects spaces/tabs as delimiter
                        header=None, 
                        skiprows = 6,

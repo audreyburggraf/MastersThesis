@@ -1321,13 +1321,14 @@ def plot_slices_along_axes(
                                                                    my_minor_data, 
                                                                    my_minor_offset)
         
-        alpha_major_pos_carta, _ , alpha_major_neg_carta, _ = fit_slices_slope(beam_area_arcsec2, 
-                                                                               carta_major_data, 
-                                                                               carta_major_offset)
+        if plot_carta:
+            alpha_major_pos_carta, _ , alpha_major_neg_carta, _ = fit_slices_slope(beam_area_arcsec2, 
+                                                                                   carta_major_data, 
+                                                                                   carta_major_offset)
         
-        alpha_minor_pos_carta, _ , alpha_minor_neg_carta, _ = fit_slices_slope(beam_area_arcsec2, 
-                                                                               carta_minor_data, 
-                                                                               carta_minor_offset)
+            alpha_minor_pos_carta, _ , alpha_minor_neg_carta, _ = fit_slices_slope(beam_area_arcsec2, 
+                                                                                   carta_minor_data, 
+                                                                                   carta_minor_offset)
         
         
         

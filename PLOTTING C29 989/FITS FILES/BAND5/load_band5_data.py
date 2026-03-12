@@ -26,9 +26,9 @@ from POLF_Functions import *
 
 
 # Define file paths
-StokesI_file = band5_data_folder_path + "IRS63_BAND5_StokesI_clean_nopbcorr_p4.fits"
-StokesQ_file = band5_data_folder_path + "IRS63_BAND5_StokesQ_clean_nopbcorr_p4.fits"
-StokesU_file = band5_data_folder_path + "IRS63_BAND5_StokesU_clean_nopbcorr_p4.fits"
+StokesI_file = band5_data_folder_path + "IRS63_BAND5_StokesI_redo_nterms1.fits"
+StokesQ_file = band5_data_folder_path + "IRS63_BAND5_StokesQ_redo_nterms1.fits"
+StokesU_file = band5_data_folder_path + "IRS63_BAND5_StokesU_redo_nterms1.fits"
 
 
 # Stokes I
@@ -65,7 +65,7 @@ StokesU_mJy = convert_jy_to_mjy(StokesU_Jy)
 # -------------------------------------------------------------------------------------------------------
 # Stokes U Error
 # -------------------------------------------------------------------------------------------------------
-StokesU_err_mJy = np.full((ny, nx), constants.StokesQ_err_mJy_band5)
+StokesU_err_mJy = np.full((ny, nx), constants.StokesU_err_mJy_band5)
 # -------------------------------------------------------------------------------------------------------
 
 
@@ -112,7 +112,7 @@ PA_err_deg = np.degrees(PA_err_rad)
 # -------------------------------------------------------------------------------------------------------
 POLF = calculate_polarized_fraction(StokesQ_mJy, StokesU_mJy, StokesI_mJy)
 
-find_POLF_avg("Band 5", POLF, StokesI_mJy, band5_data_folder_path)
+# find_POLF_avg("Band 5 v0", POLF, StokesI_mJy, band5_v0_data_folder_path)
 # -------------------------------------------------------------------------------------------------------
 # Polarized Fraction Error
 # -------------------------------------------------------------------------------------------------------
@@ -145,7 +145,7 @@ POLI_mJy_nostream[stream_ymin:stream_ymax+1, stream_xmin:stream_xmax+1] = np.nan
 results = generate_polarization_vectors(ny, nx,
                                         xmin, xmax, ymin, ymax, # This is for the nterms test
                                         RA_centre_pix, Dec_centre_pix,
-                                        constants.minor_angle_rad_sky_band5,
+                                        constants.minor_angle_rad_sky_band5_v0,
                                         StokesI_mJy, 
                                         POLI_mJy_nostream, POLI_err_mJy,
                                         PA_rad, PA_err_deg,

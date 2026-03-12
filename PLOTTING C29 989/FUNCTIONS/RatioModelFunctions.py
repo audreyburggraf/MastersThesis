@@ -297,14 +297,29 @@ def ratio_model(StokesQ_grid_100Uniform, StokesU_grid_100Uniform,
             step = constants.step_band4
         elif band == 'Band 4 nterms2':
             step = constants.step_band4_nterms2
-        elif band == 'Band 5':
+            
+        elif band == 'Band 4 nterms2 smooth':
+            step = constants.step_band4_nterms2_smooth
+            
+        elif band == 'Band 5' or 'Band 5 v0' or 'Band 5 robust -2'or 'Band 5 robust -1':
              step = constants.step_band5
+             print(rf'All band 5 using same step')
+        
         elif band == 'Band 6':
              step = constants.step_band6
+                
+        elif band == 'Band 6 smooth':
+             step = constants.step_band6_smooth
+            
         elif band == 'Band 7 nterms2':
              step = constants.step_band7_nterms2
+           
+            
+        elif band == 'Band 7 nterms2 smooth':
+             step = constants.step_band7_nterms2_smooth
+                
         else:
-            raise ValueError("Unsupported band. Only 'Band 4', 'band 4 nterms2', 'Band 5', 'Band 6' and 'Band 7 nterms2' are currently supported.")
+            raise ValueError("Unsupported band. Only 'Band 4', 'Band 4 nterms2', 'Band 4 nterms2 smooth', 'Band 5', 'Band 5 v0', 'Band 5 robust -2', 'Band 5 robust -1, 'Band 6', 'Band 6 smooth', 'Band 7 nterms2' and 'Band 7 nterms2 smooth' are currently supported.")
         
 
     results = {}
