@@ -1,5 +1,5 @@
 # might need to add: git pull origin main --rebase
 
 git add .
-git commit -m "Add comment"
+git commit -m "Need to find where i am redefining something"
 git push origin main
