@@ -54,24 +54,32 @@ def compute_polarization_vector(x, y, PA_grid, band, vector_len_pix = None):
     and the polarization angle in radians.
     """
     
+    vector_length_defaults = {
+        'Band 4': constants.vector_len_pix_band4,
+        'Band 4 nterms2': constants.vector_len_pix_band4_nterms2,
+        'Band 4 nterms2 smooth': constants.vector_len_pix_band4_nterms2_smooth,
+        'Band 4 nterms2 smooth B6': constants.vector_len_pix_band4_nterms2_smooth_B6,
+        'Band 4 nterms2 smooth B6 B7': constants.vector_len_pix_band4_nterms2_smooth_B6_B7,
+        
+        'Band 5': constants.vector_len_pix_band5,
+        'Band 5 v0': constants.vector_len_pix_band5_v0,
+        'Band 5 robust -2': constants.vector_len_pix_band5_robust_minus2,
+        'Band 5 robust -1': constants.vector_len_pix_band5_robust_minus2,
+        
+        'Band 6': constants.vector_len_pix_band6,
+        'Band 6 smooth': constants.vector_len_pix_band6_smooth,
+        'Band 6 smooth B7': constants.vector_len_pix_band6_smooth_B7,
+        
+        'Band 7 nterms2': constants.vector_len_pix_band7_nterms2,
+        'Band 7 nterms2 smooth': constants.vector_len_pix_band7_nterms2_smooth,
+        'Band 7 nterms2 smooth B6': constants.vector_len_pix_band7_nterms2_smooth_B6,
+    }
+
     if vector_len_pix is None:
-        if band == 'Band 6':
-            vector_len_pix = constants.vector_len_pix_band6
-            
-        elif band == 'Band 4 nterms2':
-            vector_len_pix = constants.vector_len_pix_band4_nterms2
-            
-        elif band == 'Band 4':
-            vector_len_pix = constants.vector_len_pix_band4
-            
-        elif band == 'Band 5' or band == 'Band 5 v0' or 'Band 5 robust -2'or 'Band 5 robust -1':
-            vector_len_pix = constants.vector_len_pix_band5
-#             print(rf"Using constants.vector_len_pix_band5' for all Band 5. Value of: {vector_len_pix}")
-            
-        elif band == 'Band 7 nterms2':
-            vector_len_pix = constants.vector_len_pix_band7_nterms2
-        else:
-            raise ValueError("Band must be 'Band 4', 'Band 4 nterms2', 'Band 5', 'Band 5 v0', 'Band 5 robust -2', 'Band 5 robust -1',  'Band 6', or 'Band 7 nterms2'")
+        if band not in vector_length_defaults:
+            raise ValueError(f"Unsupported band: {band}")
+
+        vector_len_pix = vector_length_defaults[band]
 
     
     
@@ -108,40 +116,31 @@ def make_vectors(ny, nx,
     vector_angles_sky: List of polarization angles
     """
     
-    if band == 'Band 4':
-        default_step = constants.step_band4
-        POLI_err_cutoff = 4
-        
-    elif band == 'Band 4 nterms2':
-        default_step = constants.step_band4_nterms2
-        POLI_err_cutoff = 4
-        
-    elif band == 'Band 4 nterms2 smooth':
-        default_step = constants.step_band4_nterms2_smooth
-        POLI_err_cutoff = 4
-        
-    elif band == 'Band 5' or 'Band 5 v0' or 'Band 5 robust -2'or 'Band 5 robust -1':
-        default_step = constants.step_band5
-        POLI_err_cutoff = 4
-#         print(rf"Using constants.step_band5' for all Band 5. Value of: {default_step}")
-        
-    elif band == 'Band 6':
-        default_step = constants.step_band6
-        POLI_err_cutoff = 3
-        
-    elif band == 'Band 6 smooth':
-        default_step = constants.step_band6_smooth
-        POLI_err_cutoff = 3
-        
-    elif band == 'Band 7 nterms2':
-        default_step = constants.step_band7_nterms2
-        POLI_err_cutoff = 4
-        
-    elif band == 'Band 7 nterms2 smooth':
-        default_step = constants.step_band7_nterms2_smooth
-        POLI_err_cutoff = 4 
-    else:
-        raise ValueError("Currently only accepting 'Band 4', 'Band 4 nterms2', 'Band 4 nterms2 smooth', 'Band 5', 'Band 5 v0', 'Band 5 robust -2',  'Band 5 robust -1', 'Band 6', 'Band 7 nterms2', 'Band 7 nterms2 smooth'")
+    band_parameters = {
+        'Band 4': (constants.step_band4, 4),
+        'Band 4 nterms2': (constants.step_band4_nterms2, 4),
+        'Band 4 nterms2 smooth': (constants.step_band4_nterms2_smooth, 4),
+        'Band 4 nterms2 smooth B6': (constants.step_band4_nterms2_smooth_B6, 4),
+        'Band 4 nterms2 smooth B6 B7': (constants.step_band4_nterms2_smooth_B6_B7, 4),
+
+        'Band 5': (constants.step_band5, 4),
+        'Band 5 v0': (constants.step_band5_v0, 4),
+        'Band 5 robust -2': (constants.step_band5_robust_minus2, 4),
+        'Band 5 robust -1': (constants.step_band5_robust_minus1, 4),
+
+        'Band 6': (constants.step_band6, 3),
+        'Band 6 smooth': (constants.step_band6_smooth, 3),
+        'Band 6 smooth B7': (constants.step_band6_smooth_B7, 3),
+
+        'Band 7 nterms2': (constants.step_band7_nterms2, 4),
+        'Band 7 nterms2 smooth': (constants.step_band7_nterms2_smooth, 4),
+        'Band 7 nterms2 smooth B6': (constants.step_band7_nterms2_smooth_B6, 4),
+    }
+
+    if band not in band_parameters:
+        raise ValueError(f"Unsupported band: {band}")
+
+    default_step, POLI_err_cutoff = band_parameters[band]
 
     # If step wasn't passed, use the band default
     if step is None:

@@ -220,7 +220,7 @@ def generate_polarization_vectors(ny, nx,
 # --------------------------------------------------------------------------------------
 def save_beam_info(header, band, print_statements=False):
 
-     beam_paths = {
+    beam_paths = {
         'Band 4': (constants.band4_data_folder_path, "beam_BAND4.csv"),
         'Band 4 nterms2': (constants.band4_nterms2_data_folder_path, "beam_BAND4_nterms2.csv"),
         'Band 4 nterms2 smooth': (constants.band4_nterms2_smooth_data_folder_path, "beam_BAND4_nterms2_smooth.csv"),
@@ -236,7 +236,7 @@ def save_beam_info(header, band, print_statements=False):
 
         'Band 6': (constants.band6_data_folder_path, "beam_BAND6.csv"),
         'Band 6 smooth': (constants.band6_smooth_data_folder_path, "beam_BAND6_smooth.csv"),
-        'Band 6 smooth B7': (constants.band6_smooth_B6_data_folder_path, "beam_BAND6_smooth_B7.csv"),
+        'Band 6 smooth B7': (constants.band6_smooth_B7_data_folder_path, "beam_BAND6_smooth_B7.csv"),
 
         'Band 7 nterms2': (constants.band7_nterms2_data_folder_path, "beam_BAND7_nterms2.csv"),
         'Band 7 nterms2 smooth': (constants.band7_nterms2_smooth_data_folder_path, "beam_BAND7_nterms2_smooth.csv"),

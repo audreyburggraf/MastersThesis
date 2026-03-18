@@ -108,7 +108,7 @@ PA_err_deg = np.degrees(PA_err_rad)
 # -------------------------------------------------------------------------------------------------------
 POLF = calculate_polarized_fraction(StokesQ_mJy, StokesU_mJy, StokesI_mJy)
 
-find_POLF_avg("Band 7 nterms2", POLF, StokesI_mJy, loc)
+# find_POLF_avg("Band 7 nterms2", POLF, StokesI_mJy, loc)
 # -------------------------------------------------------------------------------------------------------
 
 

@@ -94,8 +94,11 @@ alma_band_colors = {
     "Band 5": "orange",
     "Band 5 v0": "orange",
     "Band 5 nterms 2": "orange",
-    "Band 5 robust -2": "orange",
-    "Band 5 robust -1": "orange",
+     #--------
+    # Band 5 robust 
+    #--------
+    "Band 5 robust -2": "lavender",
+    "Band 5 robust -1": "powderblue",
     #--------
     # Band 6
     #--------
@@ -116,6 +119,40 @@ alma_band_colors = {
 }
 
 
+# alma_band_ms = {
+#     1: '.', 
+#     3: 'P', 
+    
+#     4: 'o',  
+#     'Band 4': 'o',  
+#     'Band 4 nterms2': 'o',  
+#     'Band 4 nterms2 smooth': 'o', 
+#     'Band 4 nterms2 smooth B6': 'o', 
+#     'Band 4 nterms2 smooth B6 B7': 'o', 
+    
+#     5: '^',  
+#     50: '^', 
+#     52: '^', 
+#     'Band 5': '^',  
+#     'Band 5 v0': '^', 
+    
+#     # Band 5 robust values
+#     'Band 5 robust -2': 'd',
+#     'Band 5 robust -1': 'P',
+    
+#     6: 's', 
+#     'Band 6': 's', 
+#     'Band 6 smooth': 's', 
+#     'Band 6 smooth B7': 's', 
+    
+#     7: '*',  
+#     'Band 7': '*', 
+#     'Band 7 nterms2': '*', 
+#     'Band 7 nterms2 smooth': '*', 
+#     'Band 7 nterms2 smooth B6': '*', 
+    
+#     10:'p', 
+# }
 
 
 
@@ -172,13 +209,13 @@ band7_nterms2_smooth_B6_data_folder_path = fits_path + "BAND7_nterms2_smooth_B6/
 # -------------------------------------------------------------------------------------------------------- 
 # CARTA
 # -------------------------------------------------------------------------------------------------------- 
-carta_path = base_path + "CARTA FILES/"
+carta_path = plotting_path + "CARTA FILES/"
 
 band4_carta_folder_path = carta_path + "BAND4/"
 band4_nterms2_carta_folder_path = carta_path + "BAND4_nterms2/"
 band4_nterms2_smooth_carta_folder_path = carta_path + "BAND4_nterms2_smooth/"
-band4_nterms2_smooth_carta_folder_path = carta_path + "BAND4_nterms2_smooth_B6/"
-band4_nterms2_smooth_carta_folder_path = carta_path + "BAND4_nterms2_smooth_B7/"
+band4_nterms2_smooth_B6_carta_folder_path = carta_path + "BAND4_nterms2_smooth_B6/"
+band4_nterms2_smooth_B6_B7_carta_folder_path = carta_path + "BAND4_nterms2_smooth_B6_B7/"
 
 band5_carta_folder_path = carta_path + "BAND5/"
 band5_v0_carta_folder_path = carta_path + "BAND5_v0/"
@@ -188,11 +225,11 @@ band5_robust_minus1_carta_folder_path = carta_path + "BAND5_robust_minus1/"
 
 band6_carta_folder_path = carta_path + "BAND6/"
 band6_smooth_carta_folder_path = carta_path + "BAND6_smooth/"
-band6_smooth_carta_folder_path = carta_path + "BAND6_smooth_B6/"
+band6_smooth_B7_carta_folder_path = carta_path + "BAND6_smooth_B7/"
 
 band7_nterms2_carta_folder_path = carta_path + "BAND7_nterms2/"
 band7_nterms2_smooth_carta_folder_path = carta_path + "BAND7_nterms2_smooth/"
-band7_nterms2_smooth_carta_folder_path = carta_path + "BAND7_nterms2_smooth_B6/"
+band7_nterms2_smooth_B6_carta_folder_path = carta_path + "BAND7_nterms2_smooth_B6/"
 # -------------------------------------------------------------------------------------------------------- 
 # Other
 # -------------------------------------------------------------------------------------------------------- 
@@ -239,26 +276,26 @@ centre_data = {
     # Band 6
     "band6": 'J163135.657-240129.935',
     "band6_smooth": 'J163135.657-240129.939',
-    "band6_smooth_B7": None,
+    "band6_smooth_B7": 'J163135.657-240129.939',
 
     # Band 5
     "band5_v0": 'J163135.656-240130.086',
     "band5": 'J163135.656-240130.086',
     "band5_nterms2": 'J163135.656-240130.086',
     "band5_robust_minus2": 'J163135.656-240130.086',
-    "band5_robust_minus1": 'J163135.656-240130.086',  # update later
+    "band5_robust_minus1": 'J163135.656-240130.086',   # This was updated to the correct value on March 18
 
     # Band 4
     "band4": 'J163135.656-240129.992',
     "band4_nterms2": 'J163135.656-240130.006',
     "band4_nterms2_smooth": 'J163135.656-240130.004',
     "band4_nterms2_smooth_B6": 'J163135.656-240130.005',
-    "band4_nterms2_smooth_B6_B7": 'J163135.656-240130.005',
+    "band4_nterms2_smooth_B6_B7": 'J163135.657-240129.939',
 
     # Band 7
     "band7_nterms2": 'J163135.656-240130.089',
-    "band7_nterms2_smooth": None,
-    "band7_nterms2_smooth_B6": None,
+    "band7_nterms2_smooth": 'J163135.656-240130.088',
+    "band7_nterms2_smooth_B6": 'J163135.656-240130.088',
 }
 
 # ------------------------------------------------------------------------------------------
@@ -334,14 +371,14 @@ PA_values = {
     # Band 6
     "band6": 148,
     "band6_smooth": 149.13,
-    "band6_smooth_B7": 0,
+    "band6_smooth_B7": 148.57,
 
     # Band 5
     "band5_v0": 140.25,  # CASA value (may update)
     "band5": 148.79,
     "band5_nterms2": 148.83,
     "band5_robust_minus2": 148.41,
-    "band5_robust_minus1": 148.41,
+    "band5_robust_minus1": 148.39, # This was updated to the correct value on March 18
 
     # Band 4
     "band4": 145.9,  # CASA value
@@ -351,9 +388,9 @@ PA_values = {
     "band4_nterms2_smooth_B6_B7": 147.38,
 
     # Band 7
-    "band7_nterms2": 139.65,
-    "band7_nterms2_smooth": 0,
-     "band7_nterms2_smooth_B6": 0,
+    "band7_nterms2": 139.65, # maybe check this is the right angle
+    "band7_nterms2_smooth": 149.82,
+     "band7_nterms2_smooth_B6": 149.40,
 }
 
 # --------------------------------------------------------------------------------------------------------
@@ -499,8 +536,15 @@ rms_data = {
         "Q": [0.0139, 0.0132, 0.0134, 0.0134],
         "U": [0.0146, 0.0144, 0.0143, 0.0146]
     },
+    
+        "band5_robust_minus1": {
+        "I": [0.0411, 0.0430, 0.0415, 0.0429],
+        "Q": [0.0394, 0.0406, 0.0398, 0.0422],
+        "U": [0.0408, 0.0394, 0.0410, 0.0420]
+    },
 
-    "band5_robust_minus2": {
+
+        "band5_robust_minus2": {
         "I": [0.0889, 0.0955, 0.0956, 0.0960],
         "Q": [0.0815, 0.0830, 0.0803, 0.0842],
         "U": [0.0853, 0.0865, 0.0848, 0.0832]
@@ -514,9 +558,9 @@ rms_data = {
     },
     
     "band6_smooth_B7": {
-        "I": [],
-        "Q": [],
-        "U": []
+        "I": [0.2001, 0.1810, 0.1989, 0.1825],
+        "Q": [0.0667, 0.0672, 0.0789, 0.0599],
+        "U": [0.0826, 0.0722, 0.0855, 0.0607]
     },
 
     # Band 7
@@ -524,19 +568,19 @@ rms_data = {
         "I": [0.0340, 0.0382, 0.0375, 0.0310],
         "Q": [0.0256, 0.0266, 0.0268, 0.0260],
         "U": [0.0257, 0.0243, 0.0234, 0.0240]
+    },
+    
+   "band7_nterms2_smooth": {
+        "I": [],
+        "Q": [],
+        "U": []
+    },
+    
+  "band7_nterms2_smooth_B6": {
+        "I": [0.0571, 0.0495, 0.0543, 0.0392],
+        "Q": [0.0240, 0.0270, 0.0260, 0.0282],
+        "U": [0.0307, 0.0269, 0.0283, 0.0288]
     }
-    
-#    "band7_nterms2_smooth": {
-#         "I": [],
-#         "Q": [],
-#         "U": []
-#     }
-    
-#   "band7_nterms2_smooth_B6": {
-#         "I": [],
-#         "Q": [],
-#         "U": []
-#     }
 }
 
 # ------------------------------------------------------------------------------------------
@@ -640,17 +684,22 @@ reference_fraction = 0.03
 
 step_values = {
     "band4": 4,
-    "band4_nterms2": 4,           # update later if needed
+    "band4_nterms2": 4,           
     "band4_nterms2_smooth": 8,
-     "band4_nterms2_smooth_B6": 100, # This needs to be updated obviously
-     "band4_nterms2_smooth_B6_B7": 100, # This needs to be updated obviously
+    "band4_nterms2_smooth_B6": 1, # This needs to be updated obviously
+    "band4_nterms2_smooth_B6_B7": 9, 
+    
     "band5": 8,
+    "band5_v0": 1, # This needs to be updated obviously
+    "band5_robust_minus1": 6, 
+    "band5_robust_minus2": 6, 
+    
     "band6": 6,
     "band6_smooth": 8,
-    "band6_smooth_B7": 8,  # This needs to be updated obviously
+    "band6_smooth_B7": 9,  
     "band7_nterms2": 6,
-    "band7_nterms2_smooth": 100, # This needs to be updated obviously
-    "band7_nterms2_smooth_B6": 100, # This needs to be updated obviously
+    "band7_nterms2_smooth": 1, # This needs to be updated obviously
+    "band7_nterms2_smooth_B6": 9, 
 }
 
 for band, val in step_values.items():
@@ -665,10 +714,23 @@ vector_length_pix_const = 0
 
 vector_length_values = {
     "band4": 2,
-    "band4_nterms2": 2,           # update later if needed
+    "band4_nterms2": 2, 
+    "band4_nterms2_smooth": 2, 
+    "band4_nterms2_smooth_B6": 2,
+    "band4_nterms2_smooth_B6_B7": 6,  # Found using trial and error
+    
     "band5": 6,
+    "band5_v0": 6,
+    "band5_robust_minus2": 6, 
+    "band5_robust_minus1": 6,
+    
     "band6": 4,
-    "band7_nterms2": 4
+    "band6_smooth": 4,
+    "band6_smooth_B7": 6, # Found using trial and error
+    
+    "band7_nterms2": 4,
+    "band7_nterms2_smooth": 4,
+    "band7_nterms2_smooth_B6": 6 # Found using trial and error
 }
 
 for band, val in vector_length_values.items():

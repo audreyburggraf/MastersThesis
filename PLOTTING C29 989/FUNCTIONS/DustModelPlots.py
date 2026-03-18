@@ -57,28 +57,40 @@ import constants
 
 alma_band_colors = constants.alma_band_colors
 
-alma_band_ms = {
-    1: '.', 
-    3: 'P',  
-    4: 'o',  
-    'Band 4': 'o',  
-    'Band 4 nterms2': 'o',  
-    'Band 4 nterms2 smooth': 'o',  
-    5: '^',  
-    50: '^', 
-    52: '^', 
-    'Band 5': '^',  
-    'Band 5 v0': '^',  
-    'Band 5 robust2': '^',  
-    6: 's', 
-    'Band 6': 's', 
-    'Band 6 smooth': 's', 
-    7: '*',  
-    'Band 7': '*', 
-    'Band 7 nterms2': '*', 
-    'Band 7 nterms2 smooth': '*', 
-    10:'p', 
-}
+# alma_band_ms = {
+#     1: '.', 
+#     3: 'P', 
+    
+#     4: 'o',  
+#     'Band 4': 'o',  
+#     'Band 4 nterms2': 'o',  
+#     'Band 4 nterms2 smooth': 'o', 
+#     'Band 4 nterms2 smooth B6': 'o', 
+#     'Band 4 nterms2 smooth B6 B7': 'o', 
+    
+#     5: '^',  
+#     50: '^', 
+#     52: '^', 
+#     'Band 5': '^',  
+#     'Band 5 v0': '^', 
+    
+#     # Band 5 robust values
+#     'Band 5 robust -2': 'd',
+#     'Band 5 robust -1': 'P',
+    
+#     6: 's', 
+#     'Band 6': 's', 
+#     'Band 6 smooth': 's', 
+#     'Band 6 smooth B7': 's', 
+    
+#     7: '*',  
+#     'Band 7': '*', 
+#     'Band 7 nterms2': '*', 
+#     'Band 7 nterms2 smooth': '*', 
+#     'Band 7 nterms2 smooth B6': '*', 
+    
+#     10:'p', 
+# }
 
 
 kataoka_fig2_colors = fig2_colors = ['red', 'orange', 'blue', 'purple']

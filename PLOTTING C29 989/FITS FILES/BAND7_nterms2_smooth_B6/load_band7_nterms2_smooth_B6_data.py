@@ -31,12 +31,12 @@ from POLF_Functions import *
 
 
 # Define file paths
-StokesI_file         = loc + "IRS63_BAND7_nterms2_StokesI_smooth_wrt_band5.fits"
-StokesQ_file         = loc + "IRS63_BAND7_nterms2_StokesQ_smooth_wrt_band5.fits"
-StokesU_file         = loc + "IRS63_BAND7_nterms2_StokesU_smooth_wrt_band5.fits"
-POLI_biased_file     = loc + "POLI_biased_mJy_BAND7_nterms2_smooth.fits"
-POLI_err_file        = loc + "POLI_err_mJy_BAND7_nterms2_smooth.fits"
-POLI_dedebiased_file = loc + "POLI_debiased_mJy_BAND7_nterms2_smooth.fits"
+StokesI_file         = loc + "IRS63_BAND7_nterms2_StokesI_smooth_wrt_band6.fits"
+StokesQ_file         = loc + "IRS63_BAND7_nterms2_StokesQ_smooth_wrt_band6.fits"
+StokesU_file         = loc + "IRS63_BAND7_nterms2_StokesU_smooth_wrt_band6.fits"
+POLI_biased_file     = loc + "POLI_biased_mJy_BAND7_nterms2_smooth_B6.fits"
+POLI_err_file        = loc + "POLI_err_mJy_BAND7_nterms2_smooth_B6.fits"
+POLI_dedebiased_file = loc + "POLI_debiased_mJy_BAND7_nterms2_smooth_B6.fits"
 
 
 # Stokes I
@@ -134,7 +134,7 @@ BMAJ_deg, BMIN_deg, BMAJ_pix, BMIN_pix, BPA_deg_cartesian, reference_length_pix,
 results = generate_polarization_vectors(ny, nx,
                                         xmin, xmax, ymin, ymax, # This is for the nterms test
                                         RA_centre_pix, Dec_centre_pix,
-                                        constants.minor_angle_rad_sky_band4_nterms2_smoth_B6,
+                                        constants.minor_angle_rad_sky_band4_nterms2_smooth_B6,
                                         StokesI_mJy,
                                         POLI_debiased_mJy, POLI_err_mJy,
                                         PA_rad, PA_err_deg,

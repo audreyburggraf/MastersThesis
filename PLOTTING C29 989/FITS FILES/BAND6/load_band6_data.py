@@ -115,7 +115,7 @@ _, _, PA_err_deg, _ = read_in_file(PA_err_file)
 # -------------------------------------------------------------------------------------------------------
 _, _, POLF, _ = read_in_file(POLF_file)
 
-find_POLF_avg("Band 6", POLF, StokesI_mJy, band6_data_folder_path)
+# find_POLF_avg("Band 6", POLF, StokesI_mJy, band6_data_folder_path)
 # -------------------------------------------------------------------------------------------------------
 
 

@@ -23,9 +23,9 @@ from IntroductionFunctions import *
 from POLF_Functions import *
 # ------------------------------------------
 
-StokesI_file         = loc + "IRS63_BAND6_StokesI_smooth_wrt_band5.fits"
-StokesQ_file         = loc + "IRS63_BAND6_StokesQ_smooth_wrt_band5.fits"
-StokesU_file         = loc + "IRS63_BAND6_StokesU_smooth_wrt_band5.fits"
+StokesI_file         = loc + "IRS63_BAND6_StokesI_smooth_wrt_band7.fits"
+StokesQ_file         = loc + "IRS63_BAND6_StokesQ_smooth_wrt_band7.fits"
+StokesU_file         = loc + "IRS63_BAND6_StokesU_smooth_wrt_band7.fits"
 
 
 # Stokes I

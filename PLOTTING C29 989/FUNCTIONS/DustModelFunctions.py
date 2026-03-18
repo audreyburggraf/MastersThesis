@@ -4,10 +4,7 @@ from scipy.interpolate import interp1d
 import dsharp_opac as do
 
 
-
-
-
-
+import pandas as pd
 
 
 
@@ -299,11 +296,24 @@ def dust_sum_of_sq(sf, model_Pw, obs_POLF):
 
 
 
+# I am updating this so we can say what POLF we want to use 
+# --------------------------------------------------------------------------
+def find_sf_v2(a_max_f_dist_micron, P_times_omega, df_POLF, POLF_index, print_results=False):
+    
+    polf_columns = {
+        'gaussian': 'POLF_Gaussian',
+        'max Stokes I': 'POLF_maxStokesI',
+        'POLI': 'POLF_maxPOLI',
+        'mean': 'POLF_mean'
+    }
+    
+    
+    if POLF_index not in polf_columns:
+        raise ValueError(
+            "POLF_index must be 'gaussian', 'poli', 'avg', 'mean', or 'max Stokes I'"
+        )
 
-def find_sf_v2(a_max_f_dist_micron, P_times_omega, df_POLF, print_results=False):
-
-    # We are looking at the POLF from the mean/average method, none others 
-    POLF_obs = df_POLF['POLF_Gaussian']
+    POLF_obs = df_POLF[polf_columns[POLF_index]]
 
     # Make arrays to store the median and standard deviation values 
     sf_medians = []
@@ -340,4 +350,165 @@ def find_sf_v2(a_max_f_dist_micron, P_times_omega, df_POLF, print_results=False)
 
     # return values
     return best_a_max_f, POLF_obs, best_sf
+
+# --------------------------------------------------------------------------
+
+
+
+
+
+# I am updating this so we can say what POLF we want to use 
+def find_sf_v3(bands,
+               bands_naming,
+               bands_included_in_fit,
+               csv_files,
+               P_omega_data_folder_path,
+               df_POLF,
+               POLF_index,
+               print_results=False,
+               trouble = False,
+               trouble_f = 0.75,
+               choose_trouble_index = False,
+               trouble_index = 2):
+    
+    polf_columns = {
+        'gaussian': 'POLF_Gaussian',
+        'max Stokes I': 'POLF_maxStokesI',
+        'POLI': 'POLF_maxPOLI',
+        'mean': 'POLF_mean'
+    }
+    
+    
+    if POLF_index not in polf_columns:
+        raise ValueError(
+            "POLF_index must be 'gaussian', 'poli', 'avg', 'mean', or 'max Stokes I'"
+        )
+        
+        
+    
+    print(rf'The Bands we are looking at are: {bands}')
+    print(rf"The Bands included in the fit are: {bands_included_in_fit}")
+ 
+    # Band names → indices (0, 1, 2, etc)
+    band_to_index = {band: i for i, band in enumerate(bands)}
+    fit_indices = [band_to_index[b] for b in bands_included_in_fit]
+    
+    
+    a_max_f_dist_micron = {}
+    P_times_omega = {}
+    best_a_max_f = {}
+    POLF_obs = {}
+    best_sf = {}
+
+
+
+    POLF_obs_all = df_POLF[polf_columns[POLF_index]].values
+
+    
+
+    # LOOP OVER FILES (f values)
+    for f, fname in csv_files.items():
+
+        df = pd.read_csv(P_omega_data_folder_path + fname)
+
+        # x-axis
+        a_max_vals = df["a_max_f_micron"].values
+        a_max_f_dist_micron[f] = a_max_vals
+
+        # ALL bands
+        Pw = np.column_stack([
+            df[f"P_times_omega_{b}"].values for b in bands_naming
+        ])
+        P_times_omega[f] = Pw
+
+        # Make arrays to store the median and standard deviation values 
+        sf_medians = []
+        sf_stds = []
+    
+    
+
+
+        # Loop over each a_max grid point
+        for i in range(len(a_max_vals)):
+
+            Pw_model = Pw[i, :]  # all bands
+
+             # ONLY use selected bands for fit
+            Pw_fit = Pw_model[fit_indices]
+            POLF_fit = POLF_obs_all[fit_indices]
+
+            # Avoid divide by zero
+            valid = Pw_fit > 0
+
+            sf_i = POLF_fit[valid] / Pw_fit[valid]
+
+            sf_medians.append(np.median(sf_i))
+            sf_stds.append(np.std(sf_i))
+
+        sf_medians = np.array(sf_medians)
+        sf_stds = np.array(sf_stds)
+
+        
+        
+        # Choose best a_max where scatter is minimized
+        best_idx = np.argmin(sf_stds)
+        
+
+
+        # Fitting Band 4 and 7 only at f = 0.75 gave me a weird result
+        # Want to look at it closer
+        # ----------------------------------------
+        if trouble:
+            if f == trouble_f:
+                sorted_indices = np.argsort(sf_stds)
+
+                
+                # Print results 
+                print(rf'The best a_max_f is: {a_max_vals[best_idx]}')
+                print(rf'At this value, the best sf is : {sf_medians[best_idx]}')
+                print(' ')
+                
+                # Get the next two lwest
+                second_best_idx = sorted_indices[1]
+                third_best_idx = sorted_indices[2]
+
+                
+                # Print results 
+                print(rf'The second best best a_max_f is: {a_max_vals[second_best_idx]}')
+                print(rf'At this value, the best sf is : {sf_medians[second_best_idx]}')
+                print(' ')
+                
+                # Print results 
+                print(rf'The third best a_max_f is: {a_max_vals[third_best_idx]}')
+                print(rf'At this value, the best sf is : {sf_medians[third_best_idx]}')
+                print(' ')
+                
+                
+                if choose_trouble_index:
+                    best_idx = sorted_indices[trouble_index]
+                    
+        # ----------------------------------------
+        
+      
+        best_a_max_f[f] = a_max_vals[best_idx]
+        best_sf[f] = sf_medians[best_idx]
+        POLF_obs[f] = np.array([
+        POLF_obs_all[band_to_index[b]] for b in bands
+    ])
+        
+    # Compute predicted POLF at best solution
+#     best_POLF = P_times_omega[best_idx, :] * best_sf
+
+    if print_results:
+        print("best_idx:", best_idx)
+        print("Best a_max:", best_a_max_f)
+        print("Best SF:", best_sf)
+
+    # return values
+    return a_max_f_dist_micron, P_times_omega, best_a_max_f, POLF_obs, best_sf
+
+
+
+
+
 

@@ -19,48 +19,36 @@ POLF_columns = ['POLF_Gaussian', 'POLF_maxPOLI', 'POLF_maxStokesI']
 
 # Calculate POLF average
 # --------------------------------------------------------------------------------------
-def find_POLF_avg(band, POLF, StokesI_mJy, path, sigma_cutoff = 5):
+def find_POLF_avg(band, POLF, StokesI_mJy, sigma_cutoff = 5):
 
-    if band == "Band 4":
-        out_path = Path(path) / "constants_BAND4.csv"
+    band_paths = {
+        "Band 4": (constants.band4_data_folder_path, "constants_BAND4.csv"),
+        "Band 4 nterms2": (constants.band4_nterms2_data_folder_path, "constants_BAND4_nterms2.csv"),
+        "Band 4 nterms2 smooth": (constants.band4_nterms2_smooth_data_folder_path, "constants_BAND4_nterms2_smooth.csv"),
+        "Band 4 nterms2 smooth B6": (constants.band4_nterms2_smooth_B6_data_folder_path, "constants_BAND4_nterms2_smooth_B6.csv"),
+        "Band 4 nterms2 smooth B6 B7": (constants.band4_nterms2_smooth_B6_B7_data_folder_path, "constants_BAND4_nterms2_smooth_B6_B7.csv"),
 
-    elif band == "Band 4 nterms2":
-        out_path = Path(path) / "constants_BAND4_nterms2.csv"
-        
-    elif band == "Band 4 nterms2 smooth":
-        out_path = Path(path) / "constants_BAND4_nterms2_smooth.csv"
+        "Band 5": (constants.band5_data_folder_path, "constants_BAND5.csv"),
+        "Band 5 v0": (constants.band5_v0_data_folder_path, "constants_BAND5_v0.csv"),
+        "Band 5 robust -2": (constants.band5_robust_minus2_data_folder_path, "constants_BAND5_robust_minus2.csv"),
+        "Band 5 robust -1": (constants.band5_robust_minus1_data_folder_path, "constants_BAND5_robust_minus1.csv"),
+        "Band 5 nterms2": (constants.band5_nterms2_data_folder_path, "constants_BAND5_nterms2.csv"),
 
-    elif band == "Band 5":
-        out_path = Path(path) / "constants_BAND5.csv"
-    
-    elif band == "Band 5 v0":
-        out_path = Path(path) / "constants_BAND5_v0.csv"
-    
-    elif band == "Band 5 robust -2":
-        out_path = Path(path) / "constants_BAND5_robust_minus2.csv"
-    
-    elif band == "Band 5 robust -1":
-        out_path = Path(path) / "constants_BAND5_robust_minus1.csv"
-        
-    elif band == "Band 5 nterms2":
-        out_path = Path(path) / "constants_BAND5_nterms2.csv"
+        "Band 6": (constants.band6_data_folder_path, "constants_BAND6.csv"),
+        "Band 6 smooth": (constants.band6_smooth_data_folder_path, "constants_BAND6_smooth.csv"),
+        "Band 6 smooth B7": (constants.band6_smooth_B7_data_folder_path, "constants_BAND6_smooth_B7.csv"),
 
-    elif band == "Band 6":
-        out_path = Path(path) / "constants_BAND6.csv"
-    
-    elif band == "Band 6 smooth":
-        out_path = Path(path) / "constants_BAND6_smooth.csv"
+        "Band 7 nterms2": (constants.band7_nterms2_data_folder_path, "constants_BAND7_nterms2.csv"),
+        "Band 7 nterms2 smooth": (constants.band7_nterms2_smooth_data_folder_path, "constants_BAND7_nterms2_smooth.csv"),
+        "Band 7 nterms2 smooth B6": (constants.band7_nterms2_smooth_B6_data_folder_path, "constants_BAND7_nterms2_smooth_B6.csv"),
+    }
 
-    elif band == "Band 7 nterms2":
-        out_path = Path(path) / "constants_BAND7_nterms2.csv"
-    
-    elif band == "Band 7 nterms2 smooth":
-        out_path = Path(path) / "constants_BAND7_nterms2_smooth.csv"
+    if band not in band_paths:
+        raise ValueError(f"Unsupported band: {band}")
 
-    else:
-        raise ValueError(
-            "Function currently only accepts: "
-            "'Band 4', 'Band 4 nterms2', 'Band 4 nterms2 smooth', 'Band 5', 'Band 5 v0', 'Band 5 robust -2', 'Band 5 robust -1', 'Band 5 nterms2', 'Band 6', 'Band 6 smooth', 'Band 7 nterms2', 'Band 7 nterms2 smooth'")
+    folder, filename = band_paths[band]
+    out_path = Path(folder) / filename
+
 
     
     threshold = sigma_cutoff * np.nanstd(StokesI_mJy)   # e.g. 5-sigma cut
@@ -77,7 +65,7 @@ def find_POLF_avg(band, POLF, StokesI_mJy, path, sigma_cutoff = 5):
     df = pd.read_csv(out_path)
 
     # Add / overwrite POLF_avg column
-    df["POLF_avg"] = [POLF_avg]   # assumes 1-row CSV, like your others
+    df["POLF_avg_sigma"] = [POLF_avg]   # assumes 1-row CSV, like your others
 
     # Save back to disk
     df.to_csv(out_path, index=False)
@@ -195,59 +183,58 @@ def find_POLF_at_max_StokesI(StokesI_mJy, POLI_mJy, POLF, print_statements = Fal
 
 
 # --------------------------------------------------------------------------------------
-def get_all_POLF_and_save(StokesI_mJy, POLI_mJy, POLF, UniformRatios, band, gaussian_tolerance = 0.001, print_statements = False):
-    if band == 'Band 4':
-        path = constants.band4_data_folder_path + "constants_BAND4.csv"
+def get_all_POLF_and_save(StokesI_mJy, POLI_mJy, POLF, UniformRatios, band, gaussian_tolerance = 0.001, sigma_cutoff = 5, print_statements = False):
+
+    band_paths = {
+    'Band 4': (constants.band4_data_folder_path, "constants_BAND4.csv"),
+    'Band 4 nterms2': (constants.band4_nterms2_data_folder_path, "constants_BAND4_nterms2.csv"),
+    'Band 4 nterms2 smooth': (constants.band4_nterms2_smooth_data_folder_path, "constants_BAND4_nterms2_smooth.csv"),
+    'Band 4 nterms2 smooth B6': (constants.band4_nterms2_smooth_B6_data_folder_path, "constants_BAND4_nterms2_smooth_B6.csv"),
+    'Band 4 nterms2 smooth B6 B7': (constants.band4_nterms2_smooth_B6_B7_data_folder_path,
+                                    "constants_BAND4_nterms2_smooth_B6_B7.csv"),
         
-    elif band == 'Band 4 nterms2':
-        path = constants.band4_nterms2_data_folder_path + "constants_BAND4_nterms2.csv"
-    
-    elif band == 'Band 4 nterms2 smooth':
-        path = constants.band4_nterms2_smooth_data_folder_path + "constants_BAND4_nterms2_smooth.csv"
-        
-    elif band == 'Band 5':
-        path = constants.band5_data_folder_path + "constants_BAND5.csv"
-    elif band == 'Band 5 v0':
-        path = constants.band5_v0_data_folder_path + "constants_BAND5_v0.csv"
-    
-    elif band == 'Band 5 robust -2':
-        path = constants.band5_robust_minus2_data_folder_path + "constants_BAND5_robust_minus2.csv"
-        
-    elif band == 'Band 5 robust -1':
-        path = constants.band5_robust_minus1_data_folder_path + "constants_BAND5_robust_minus1.csv"
-        
-    elif band == 'Band 5 nterms2':
-        path = constants.band5_nterms2_data_folder_path + "constants_BAND5_nterms2.csv"
-    
-    elif band == 'Band 6':
-        path = constants.band6_data_folder_path + "constants_BAND6.csv"
-        
-        
-    elif band == 'Band 6 smooth':
-        path = constants.band6_smooth_data_folder_path + "constants_BAND6_smooth.csv"
-    
-    elif band == 'Band 7 nterms2':
-        path = constants.band7_nterms2_data_folder_path + "constants_BAND7_nterms2.csv"
-        
-    elif band == 'Band 7 nterms2 smooth':
-        path = constants.band7_nterms2_smooth_data_folder_path + "constants_BAND7_nterms2_smooth.csv"
-        
-        
-    else:
-        raise ValueError("Only 'Band 4', 'Band 4 nterms2', 'Band 4 nterms2 smooth', 'Band 5', 'Band 5 nterms2', 'Band 5 robust -2', 'Band 5 robust -1', 'Band 6', 'Band 6 smooth', 'Band 7 nterms2' and 'Band 7 nterms2 smooth' are supported.")
-        
+    'Band 5': (constants.band5_data_folder_path, "constants_BAND5.csv"),
+    'Band 5 v0': (constants.band5_v0_data_folder_path, "constants_BAND5_v0.csv"),
+    'Band 5 robust -2': (constants.band5_robust_minus2_data_folder_path, "constants_BAND5_robust_minus2.csv"),
+    'Band 5 robust -1': (constants.band5_robust_minus1_data_folder_path, "constants_BAND5_robust_minus1.csv"),
+    'Band 5 nterms2': (constants.band5_nterms2_data_folder_path, "constants_BAND5_nterms2.csv"),
+
+    'Band 6': (constants.band6_data_folder_path, "constants_BAND6.csv"),
+    'Band 6 smooth': (constants.band6_smooth_data_folder_path, "constants_BAND6_smooth.csv"),
+    'Band 6 smooth B7': (constants.band6_smooth_B7_data_folder_path, "constants_BAND6_smooth_B7.csv"),
+
+    'Band 7 nterms2': (constants.band7_nterms2_data_folder_path, "constants_BAND7_nterms2.csv"),
+    'Band 7 nterms2 smooth': (constants.band7_nterms2_smooth_data_folder_path, "constants_BAND7_nterms2_smooth.csv"),
+    'Band 7 nterms2 smooth B6': (constants.band7_nterms2_smooth_B6_data_folder_path, "constants_BAND7_nterms2_smooth_B6.csv"),
+    }
+
+    if band not in band_paths:
+        raise ValueError(
+            "Band not supported"
+        )
+
+    folder, filename = band_paths[band]
+    path = folder + filename
     
     POLF_Gaussian = find_gaussian_POLF(band, UniformRatios, POLF, gaussian_tolerance)
+    
     
     POLF_maxPOLI = find_POLF_at_max_POLI(StokesI_mJy, POLI_mJy, POLF, print_statements)
     
     POLF_maxStokesI = find_POLF_at_max_StokesI(StokesI_mJy, POLI_mJy, POLF, print_statements)
     
+#     POLF_avg_sigma = find_POLF_avg(band, StokesI_mJy, POLF, sigma_cutoff)
+    
+    print(rf'POLF_Gaussian = {POLF_Gaussian}')
+    print(rf'POLF_maxPOLI = {POLF_maxPOLI}')
+    print(rf'POLF_maxStokesI = {POLF_maxStokesI}')
+#     print(rf'POLF_avg_sigma = {POLF_avg_sigma}')
     
     data_dict = {
         "POLF_Gaussian": [POLF_Gaussian],
         "POLF_maxPOLI": [POLF_maxPOLI],
         "POLF_maxStokesI": [POLF_maxStokesI],
+#         "POLF_avg_sigma": [POLF_avg_sigma],
     }
 
     # Convert to DataFrame
@@ -262,6 +249,7 @@ def get_all_POLF_and_save(StokesI_mJy, POLI_mJy, POLF, UniformRatios, band, gaus
 
 
 
+
 # Load POLF
 # --------------------------------------------------------------------------------------
 def load_POLF(bands, print_things = False):
@@ -270,60 +258,45 @@ def load_POLF(bands, print_things = False):
         'Band': [],
         'POLF_Gaussian': [],
         'POLF_maxPOLI': [],
-        'POLF_maxStokesI': []
+        'POLF_maxStokesI': [],
+#         'POLF_avg_sigma': [],
+    }
+
+    band_config = {
+        "Band 4": ("band4_data_folder_path", "constants_BAND4.csv"),
+        "Band 4 nterms2": ("band4_nterms2_data_folder_path", "constants_BAND4_nterms2.csv"),
+        "Band 4 nterms2 smooth": ("band4_nterms2_smooth_data_folder_path", "constants_BAND4_nterms2_smooth.csv"),
+        "Band 4 nterms2 smooth B6": ("band4_nterms2_smooth_B6_data_folder_path", "constants_BAND4_nterms2_smooth_B6.csv"),
+        "Band 4 nterms2 smooth B6 B7": ("band4_nterms2_smooth_B6_B7_data_folder_path",
+                                        "constants_BAND4_nterms2_smooth_B6_B7.csv"),
+
+        "Band 5": ("band5_data_folder_path", "constants_BAND5.csv"),
+        "Band 5 v0": ("band5_v0_data_folder_path", "constants_BAND5_v0.csv"),
+        "Band 5 robust -2": ("band5_robust_minus2_data_folder_path", "constants_BAND5_robust_minus2.csv"),
+        "Band 5 robust -1": ("band5_robust_minus1_data_folder_path", "constants_BAND5_robust_minus1.csv"),
+        "Band 5 nterms2": ("band5_nterms2_data_folder_path", "constants_BAND5_nterms2.csv"),
+
+        "Band 6": ("band6_data_folder_path", "constants_BAND6.csv"),
+        "Band 6 smooth": ("band6_smooth_data_folder_path", "constants_BAND6_smooth.csv"),
+        "Band 6 smooth B7": ("band6_smooth_B7_data_folder_path", "constants_BAND6_smooth_B7.csv"),
+
+        "Band 7": ("band7_data_folder_path", "constants_BAND7.csv"),
+        "Band 7 nterms2": ("band7_nterms2_data_folder_path", "constants_BAND7_nterms2.csv"),
+        "Band 7 nterms2 smooth": ("band7_nterms2_smooth_data_folder_path", "constants_BAND7_nterms2_smooth.csv"),
+        "Band 7 nterms2 smooth B6": ("band7_nterms2_smooth_B6_data_folder_path", "constants_BAND7_nterms2_smooth_B6.csv"),
     }
 
     for band in bands:
+
         if print_things:
-            print(rf'Band = {band}')
-        # Case 1: Band 4 nterms2
-        if band == "Band 4 nterms2":
-            var_name = "band4_nterms2_data_folder_path"
-            path = Path(getattr(constants, var_name)) / "constants_BAND4_nterms2.csv"
-            
- 
-        elif band == "Band 4 nterms2 smooth":
-            var_name = "band4_nterms2_smooth_data_folder_path"
-            path = Path(getattr(constants, var_name)) / "constants_BAND4_nterms2_smooth.csv"
+            print(f"Band = {band}")
 
-        # Case 2: Band 7 nterms2
-        elif band == "Band 7 nterms2":
-            var_name = "band7_nterms2_data_folder_path"
-            path = Path(getattr(constants, var_name)) / "constants_BAND7_nterms2.csv"
-            
-        elif band == "Band 7 nterms2 smooth":
-            var_name = "band7_nterms2_smooth_data_folder_path"
-            path = Path(getattr(constants, var_name)) / "constants_BAND7_nterms2_smooth.csv"
-            
-        # Case 3: Band 5 v0
-        elif band == "Band 5 v0":
-            var_name = "band5_v0_data_folder_path"
-            path = Path(getattr(constants, var_name)) / "constants_BAND5_v0.csv"
-            
-        # Case 4: Band 5 robust -2
-        elif band == "Band 5 robust -2":
-            var_name = "band5_robust_minus2_data_folder_path"
-            path = Path(getattr(constants, var_name)) / "constants_BAND5_robust_minus1.csv"
-        
-        # Case 5: Band 5 robust -1
-        elif band == "Band 5 robust -1":
-            var_name = "band5_robust_minus2_data_folder_path"
-            path = Path(getattr(constants, var_name)) / "constants_BAND5_robust_minus1.csv"
-            
-            
-        elif band == "Band 6 smooth":
-            var_name = "band6_smooth_data_folder_path"
-            path = Path(getattr(constants, var_name)) / "constants_BAND6_smooth.csv"
+        if band not in band_config:
+            raise ValueError(f"Unsupported band: {band}")
 
-        # Case 6: Normal bands: "Band 4", "Band 5", "Band 6", "Band 7", ...
-        else:
-            # Extract the number from "Band X"
-            band_num = int(band.split()[-1])   # "Band 4" -> 4
+        folder_var, filename = band_config[band]
 
-            var_name = f"band{band_num}_data_folder_path"
-            path = Path(getattr(constants, var_name)) / f"constants_BAND{band_num}.csv"
-   
-        
+        path = Path(getattr(constants, folder_var)) / filename
 
         df = pd.read_csv(path)
 
@@ -331,8 +304,10 @@ def load_POLF(bands, print_things = False):
         results['POLF_Gaussian'].append(df.at[0, "POLF_Gaussian"] * 100)
         results['POLF_maxPOLI'].append(df.at[0, "POLF_maxPOLI"] * 100)
         results['POLF_maxStokesI'].append(df.at[0, "POLF_maxStokesI"] * 100)
+#         results['POLF_avg_simga'].append(df.at[0, "POLF_avg_simga"] * 100)
     
 
+    print(rf' in load_POLF, results = {results}')
     # Convert to DataFrame
     df_POLF = pd.DataFrame(results)
 

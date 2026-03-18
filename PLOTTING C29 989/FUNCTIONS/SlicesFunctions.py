@@ -164,87 +164,127 @@ def run_slices(data, StokesI_header, StokesI_wcs, carta_minor_data, carta_major_
         Offset positions along the minor axis (in arcseconds).
     """
 
-    # Select band-specific parameters
-    if band == 'Band 6':
-        centre_str = constants.centre_str_band6
-        major_angle_rad_cartesian = constants.major_angle_rad_cartesian_band6
-        minor_angle_rad_cartesian = constants.minor_angle_rad_cartesian_band6
-        line_length_arcsec = 1.4
+    band_parameters = {
         
-    if band == 'Band 6 smooth':
-        centre_str = constants.centre_str_band6_smooth
-        major_angle_rad_cartesian = constants.major_angle_rad_cartesian_band6_smooth
-        minor_angle_rad_cartesian = constants.minor_angle_rad_cartesian_band6_smooth
-        line_length_arcsec = 1.4
+       'Band 4': (
+            constants.centre_str_band4,
+            constants.major_angle_rad_cartesian_band4,
+            constants.minor_angle_rad_cartesian_band4,
+            1.4
+        ),
+
+        'Band 4 nterms2': (
+            constants.centre_str_band4_nterms2,
+            constants.major_angle_rad_cartesian_band4_nterms2,
+            constants.minor_angle_rad_cartesian_band4_nterms2,
+            1.4
+        ),
+
+        'Band 4 nterms2 smooth': (
+            constants.centre_str_band4_nterms2_smooth,
+            constants.major_angle_rad_cartesian_band4_nterms2_smooth,
+            constants.minor_angle_rad_cartesian_band4_nterms2_smooth,
+            1.4
+        ),
         
-    elif band == 'Band 5 v0':
-        centre_str = constants.centre_str_band5_v0
-        major_angle_rad_cartesian = constants.major_angle_rad_cartesian_band5_v0
-        minor_angle_rad_cartesian = constants.minor_angle_rad_cartesian_band5_v0
-        line_length_arcsec = 1.8  # Adjust this if needed for Band 5
-    elif band == 'Band 5':
-        centre_str = constants.centre_str_band5
-        major_angle_rad_cartesian = constants.major_angle_rad_cartesian_band5
-        minor_angle_rad_cartesian = constants.minor_angle_rad_cartesian_band5
-        line_length_arcsec = 1.8  # Adjust this if needed for Band 5
+       'Band 4 nterms2 smooth B6': (
+            constants.centre_str_band4_nterms2_smooth_B6,
+            constants.major_angle_rad_cartesian_band4_nterms2_smooth_B6,
+            constants.minor_angle_rad_cartesian_band4_nterms2_smooth_B6,
+            1.4
+        ),
         
-    elif band == 'Band 5 robust -2':
-        centre_str = constants.centre_str_band5_robust_minus2
-        major_angle_rad_cartesian = constants.major_angle_rad_cartesian_band5_robust_minus2
-        minor_angle_rad_cartesian = constants.minor_angle_rad_cartesian_band5_robust_minus2
-        line_length_arcsec = 1.8  # Adjust this if needed for Band 5
+       'Band 4 nterms2 smooth B6 B7': (
+            constants.centre_str_band4_nterms2_smooth_B6_B7,
+            constants.major_angle_rad_cartesian_band4_nterms2_smooth_B6_B7,
+            constants.minor_angle_rad_cartesian_band4_nterms2_smooth_B6_B7,
+            1.4
+        ),
+
+        'Band 5 v0': (
+            constants.centre_str_band5_v0,
+            constants.major_angle_rad_cartesian_band5_v0,
+            constants.minor_angle_rad_cartesian_band5_v0,
+            1.8
+        ),
+
+        'Band 5': (
+            constants.centre_str_band5,
+            constants.major_angle_rad_cartesian_band5,
+            constants.minor_angle_rad_cartesian_band5,
+            1.8
+        ),
+
+        'Band 5 robust -2': (
+            constants.centre_str_band5_robust_minus2,
+            constants.major_angle_rad_cartesian_band5_robust_minus2,
+            constants.minor_angle_rad_cartesian_band5_robust_minus2,
+            1.8
+        ),
+
+        'Band 5 robust -1': (
+            constants.centre_str_band5_robust_minus1,
+            constants.major_angle_rad_cartesian_band5_robust_minus1,
+            constants.minor_angle_rad_cartesian_band5_robust_minus1,
+            1.8
+        ),
+
+        'Band 5 nterms2': (
+            constants.centre_str_band5_nterms2,
+            constants.major_angle_rad_cartesian_band5_nterms2,
+            constants.minor_angle_rad_cartesian_band5_nterms2,
+            1.8
+        ),
         
-    elif band == 'Band 5 robust -1':
-        centre_str = constants.centre_str_band5_robust_minus1
-        major_angle_rad_cartesian = constants.major_angle_rad_cartesian_band5_robust_minus1
-        minor_angle_rad_cartesian = constants.minor_angle_rad_cartesian_band5_robust_minus1
-        line_length_arcsec = 1.8  # Adjust this if needed for Band 5
+        'Band 6': (
+            constants.centre_str_band6,
+            constants.major_angle_rad_cartesian_band6,
+            constants.minor_angle_rad_cartesian_band6,
+            1.4
+        ),
+
+        'Band 6 smooth': (
+            constants.centre_str_band6_smooth,
+            constants.major_angle_rad_cartesian_band6_smooth,
+            constants.minor_angle_rad_cartesian_band6_smooth,
+            1.4
+        ),
+
+        'Band 6 smooth B7': (
+            constants.centre_str_band6_smooth_B7,
+            constants.major_angle_rad_cartesian_band6_smooth_B7,
+            constants.minor_angle_rad_cartesian_band6_smooth_B7,
+            1.4
+        ),
+
+        'Band 7 nterms2': (
+            constants.centre_str_band7_nterms2,
+            constants.major_angle_rad_cartesian_band7_nterms2,
+            constants.minor_angle_rad_cartesian_band7_nterms2,
+            2.0
+        ),
+
+        'Band 7 nterms2 smooth': (
+            constants.centre_str_band7_nterms2_smooth, 
+            constants.major_angle_rad_cartesian_band7_nterms2_smooth,
+            constants.minor_angle_rad_cartesian_band7_nterms2_smooth,
+            2.0
+        ),
         
-    elif band == 'Band 5 nterms2':
-        centre_str = constants.centre_str_band5_nterms2
-        major_angle_rad_cartesian = constants.major_angle_rad_cartesian_band5_nterms2
-        minor_angle_rad_cartesian = constants.minor_angle_rad_cartesian_band5_nterms2
-        line_length_arcsec = 1.8  # Adjust this if needed for Band 5
-        
-    elif band == 'Band 4':
-        centre_str = constants.centre_str_band4
-        major_angle_rad_cartesian = constants.major_angle_rad_cartesian_band4
-        minor_angle_rad_cartesian = constants.minor_angle_rad_cartesian_band4
-        line_length_arcsec = 1.4  # Adjust this if needed for Band 4
-    
-    elif band == 'Band 4 nterms2':
-        centre_str = constants.centre_str_band4_nterms2
-        major_angle_rad_cartesian = constants.major_angle_rad_cartesian_band4_nterms2
-        minor_angle_rad_cartesian = constants.minor_angle_rad_cartesian_band4_nterms2
-        line_length_arcsec = 1.4  # Adjust this if needed for Band 4
-        
-        
-    elif band == 'Band 4 nterms2 smooth':
-        centre_str = constants.centre_str_band4_nterms2_smooth
-        major_angle_rad_cartesian = constants.major_angle_rad_cartesian_band4_nterms2_smooth
-        minor_angle_rad_cartesian = constants.minor_angle_rad_cartesian_band4_nterms2_smooth
-        line_length_arcsec = 1.4  # Adjust this if needed for Band 4
-        
-        
-    elif band == 'Band 7 nterms2':
-        centre_str = constants.centre_str_band7_nterms2
-        major_angle_rad_cartesian = constants.major_angle_rad_cartesian_band7_nterms2
-        minor_angle_rad_cartesian = constants.minor_angle_rad_cartesian_band7_nterms2
-        line_length_arcsec = 2.0  # Adjust this if needed for Band 7
-        
-        
-    
-    elif band == 'Band 7 nterms2 smooth':
-        centre_str = constants.centre_str_band7_nterms2
-        print('In run_slices we are using Band 7 nterms2 centre and PA, not updated to smoothed')
-        major_angle_rad_cartesian = constants.major_angle_rad_cartesian_band7_nterms2_smooth
-        minor_angle_rad_cartesian = constants.minor_angle_rad_cartesian_band7_nterms2_smooth
-        line_length_arcsec = 2.0  # Adjust this if needed for Band 7
-        
-    else:
-        raise ValueError("Unsupported band. Only 'Band 4', 'Band 4 nterms2 smooth', 'Band 4 nterms2 smooth', 'Band 5', 'Band 5 v0', 'Band 5 robust2', 'Band 6', 'Band 7 nterms2' and 'Band 7 nterms2 smooth' are currently supported.")
-        
-    
+       'Band 7 nterms2 smooth B6': (
+            constants.centre_str_band7_nterms2_smooth_B6,  
+            constants.major_angle_rad_cartesian_band7_nterms2_smooth_B6,
+            constants.minor_angle_rad_cartesian_band7_nterms2_smooth_B6,
+            2.0
+        )
+    }
+
+
+    if band not in band_parameters:
+        raise ValueError(f"Unsupported band: {band}")
+
+    centre_str, major_angle_rad_cartesian, minor_angle_rad_cartesian, line_length_arcsec = band_parameters[band]
+
 
     # Normalize angles to standard range
     major_angle_rad_cartesian = normalize_angle(major_angle_rad_cartesian)

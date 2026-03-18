@@ -272,33 +272,36 @@ def run_gaussian_model(theta_rad, phi_values, BMAJ_values_pix, BMIN_values_pix, 
                        print_statements = True):
     
     
+    step_defaults = {
+        'Band 4': constants.step_band4,
+        'Band 4 nterms2': constants.step_band4_nterms2,
+        'Band 4 nterms2 smooth': constants.step_band4_nterms2_smooth,
+        'Band 4 nterms2 smooth B6': constants.step_band4_nterms2_smooth_B6,
+        'Band 4 nterms2 smooth B6 B7': constants.step_band4_nterms2_smooth_B6_B7,
+
+        'Band 5': constants.step_band5,
+        'Band 5 v0': constants.step_band5_v0,
+        'Band 5 robust -2': constants.step_band5_robust_minus2,
+        'Band 5 robust -1': constants.step_band5_robust_minus1,
+
+        'Band 6': constants.step_band6,
+        'Band 6 smooth': constants.step_band6_smooth,
+        'Band 6 smooth B7': constants.step_band6_smooth_B7,
+
+        'Band 7 nterms2': constants.step_band7_nterms2,
+        'Band 7 nterms2 smooth': constants.step_band7_nterms2_smooth,
+        'Band 7 nterms2 smooth B6': constants.step_band7_nterms2_smooth_B6,
+    }
+
     if step is None:
-        if band == 'Band 4':
-            step = constants.step_band4
-        elif band == 'Band 4 nterms2':
-            step = constants.step_band4_nterms2
-            
-        elif band == 'Band 4 nterms2 smooth':
-            step = constants.step_band4_nterms2_smooth
-        
-            
-        elif band == 'Band 5' or 'Band 5 v0' or 'Band 5 robust -2' or 'Band 5 robust -1':
-            step = constants.step_band5
-            print(rf"Using constants.step_band5' for all Band 5. Value of: {step}")
-        elif band == 'Band 6':
-            step = constants.step_band6
-            
-        elif band == 'Band 6 smooth':
-            step = constants.step_band6_smooth
-            
-        elif band == 'Band 7 nterms2':
-             step = constants.step_band7_nterms2
-            
-        elif band == 'Band 7 nterms2 smooth':
-             step = constants.step_band7_nterms2_smooth
-                
-        else:
-            raise ValueError("Unsupported band. Only 'Band 4', 'Band 4 nterms2', 'Band 4 nterms2 smooth',  'Band 5', 'Band 5 v0', 'Band 5 robust -2', 'Band 5 robust -1', 'Band 6', 'Band 6 smooth', 'Band 7 nterms2' and 'Band 7 nterms2 smooth' are currently supported.")
+        if band not in step_defaults:
+            raise ValueError(
+                "Unsupported band. ")
+
+        step = step_defaults[band]
+
+        if band.startswith('Band 5'):
+            print("All Band 5 using same step")
             
             
     
