@@ -24,6 +24,8 @@ def find_POLF_avg(band, POLF, StokesI_mJy, sigma_cutoff = 5):
     band_paths = {
         "Band 4": (constants.band4_data_folder_path, "constants_BAND4.csv"),
         "Band 4 nterms2": (constants.band4_nterms2_data_folder_path, "constants_BAND4_nterms2.csv"),
+        "Band 4 nterms2 robust -1": (constants.band4_nterms2_robust_minus1_data_folder_path, "constants_BAND4_nterms2_robust_minus1.csv"),
+        
         "Band 4 nterms2 smooth": (constants.band4_nterms2_smooth_data_folder_path, "constants_BAND4_nterms2_smooth.csv"),
         "Band 4 nterms2 smooth B6": (constants.band4_nterms2_smooth_B6_data_folder_path, "constants_BAND4_nterms2_smooth_B6.csv"),
         "Band 4 nterms2 smooth B6 B7": (constants.band4_nterms2_smooth_B6_B7_data_folder_path, "constants_BAND4_nterms2_smooth_B6_B7.csv"),
@@ -188,6 +190,8 @@ def get_all_POLF_and_save(StokesI_mJy, POLI_mJy, POLF, UniformRatios, band, gaus
     band_paths = {
     'Band 4': (constants.band4_data_folder_path, "constants_BAND4.csv"),
     'Band 4 nterms2': (constants.band4_nterms2_data_folder_path, "constants_BAND4_nterms2.csv"),
+    'Band 4 nterms2 robust -1': (constants.band4_nterms2_robust_minus1_data_folder_path, 
+                                 "constants_BAND4_nterms2_robust_minus1.csv"),
     'Band 4 nterms2 smooth': (constants.band4_nterms2_smooth_data_folder_path, "constants_BAND4_nterms2_smooth.csv"),
     'Band 4 nterms2 smooth B6': (constants.band4_nterms2_smooth_B6_data_folder_path, "constants_BAND4_nterms2_smooth_B6.csv"),
     'Band 4 nterms2 smooth B6 B7': (constants.band4_nterms2_smooth_B6_B7_data_folder_path,
@@ -265,6 +269,8 @@ def load_POLF(bands, print_things = False):
     band_config = {
         "Band 4": ("band4_data_folder_path", "constants_BAND4.csv"),
         "Band 4 nterms2": ("band4_nterms2_data_folder_path", "constants_BAND4_nterms2.csv"),
+        "Band 4 nterms2 robust -1": ("band4_nterms2_robust_minus1_data_folder_path", "constants_BAND4_nterms2_robust_minus1.csv"),
+        
         "Band 4 nterms2 smooth": ("band4_nterms2_smooth_data_folder_path", "constants_BAND4_nterms2_smooth.csv"),
         "Band 4 nterms2 smooth B6": ("band4_nterms2_smooth_B6_data_folder_path", "constants_BAND4_nterms2_smooth_B6.csv"),
         "Band 4 nterms2 smooth B6 B7": ("band4_nterms2_smooth_B6_B7_data_folder_path",

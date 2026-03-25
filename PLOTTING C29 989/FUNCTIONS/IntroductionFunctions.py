@@ -29,6 +29,7 @@ def get_plotting_parameters(StokesI_header, StokesI_wcs, band):
 
         'Band 4': constants.centre_str_band4,
         'Band 4 nterms2': constants.centre_str_band4_nterms2,
+        'Band 4 nterms2 robust -1': constants.centre_str_band4_nterms2_robust_minus1,
         'Band 4 nterms2 smooth': constants.centre_str_band4_nterms2_smooth,
         'Band 4 nterms2 smooth B6': constants.centre_str_band4_nterms2_smooth_B6,
         'Band 4 nterms2 smooth B6 B7': constants.centre_str_band4_nterms2_smooth_B6_B7,
@@ -223,6 +224,8 @@ def save_beam_info(header, band, print_statements=False):
     beam_paths = {
         'Band 4': (constants.band4_data_folder_path, "beam_BAND4.csv"),
         'Band 4 nterms2': (constants.band4_nterms2_data_folder_path, "beam_BAND4_nterms2.csv"),
+        'Band 4 nterms2 robust -1': (constants.band4_nterms2_robust_minus1_data_folder_path, 
+                                     "beam_BAND4_nterms2_robust_minus1.csv"),
         'Band 4 nterms2 smooth': (constants.band4_nterms2_smooth_data_folder_path, "beam_BAND4_nterms2_smooth.csv"),
         'Band 4 nterms2 smooth B6': (constants.band4_nterms2_smooth_B6_data_folder_path, "beam_BAND4_nterms2_smooth_B6.csv"),
         'Band 4 nterms2 smooth B6 B7': (constants.band4_nterms2_smooth_B6_B7_data_folder_path, 
@@ -311,6 +314,7 @@ def load_beam_info(bands, print_things = True):
     
     beam_file_lookup = {
         "Band 4 nterms2": ("band4_nterms2_data_folder_path", "beam_BAND4_nterms2.csv"),
+        "Band 4 nterms2 robust -1": ("band4_nterms2_robust_minus1_data_folder_path", "beam_BAND4_nterms2_robust_minus1.csv"),
         "Band 4 nterms2 smooth": ("band4_nterms2_smooth_data_folder_path", "beam_BAND4_nterms2_smooth.csv"),
         "Band 4 nterms2 smooth B6": ("band4_nterms2_smooth_B6_data_folder_path", "beam_BAND4_nterms2_smooth_B6.csv"),
         "Band 4 nterms2 smooth B6 B7": ("band4_nterms2_smooth_B6_B7_data_folder_path", "beam_BAND4_nterms2_smooth_B6_B7.csv"),

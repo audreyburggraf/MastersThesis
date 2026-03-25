@@ -296,6 +296,7 @@ def ratio_model(StokesQ_grid_100Uniform, StokesU_grid_100Uniform,
     step_defaults = {
         'Band 4': constants.step_band4,
         'Band 4 nterms2': constants.step_band4_nterms2,
+        'Band 4 nterms2 robust -1': constants.step_band4_nterms2_robust_minus1,
         'Band 4 nterms2 smooth': constants.step_band4_nterms2_smooth,
         'Band 4 nterms2 smooth B6': constants.step_band4_nterms2_smooth_B6,
         'Band 4 nterms2 smooth B6 B7': constants.step_band4_nterms2_smooth_B6_B7,

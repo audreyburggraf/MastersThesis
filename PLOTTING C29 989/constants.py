@@ -32,6 +32,7 @@ lambda_mm = {
     42: 2.0,
     "Band 4": 2.0,
     "Band 4 nterms2": 2.0,
+    "Band 4 nterms2 robust -1": 2.0,
     "Band 4 nterms2 smooth": 2.0,
     "Band 4 nterms2 smooth B6": 2.0,
     "Band 4 nterms2 smooth B6 B7": 2.0,
@@ -86,19 +87,23 @@ alma_band_colors = {
     "Band 4 nterms2 smooth B6": 'red',
     "Band 4 nterms2 smooth B6 B7": 'red',
     #--------
+    # Band 4 robust 
+    #--------
+    "Band 4 nterms2 robust -1": 'lightcoral',
+    #--------
     # Band 5
     #--------
-    5: "orange",  
-    50: "orange",  
-    52: "orange",  
-    "Band 5": "orange",
-    "Band 5 v0": "orange",
-    "Band 5 nterms 2": "orange",
+    5: "darkorange",  
+    50: "darkorange",  
+    52: "darkorange",  
+    "Band 5": "darkorange",
+    "Band 5 v0": "darkorange",
+    "Band 5 nterms 2": "darkorange",
      #--------
     # Band 5 robust 
     #--------
-    "Band 5 robust -2": "lavender",
-    "Band 5 robust -1": "powderblue",
+    "Band 5 robust -2": "lightsteelblue",
+    "Band 5 robust -1": "olivedrab",
     #--------
     # Band 6
     #--------
@@ -119,40 +124,43 @@ alma_band_colors = {
 }
 
 
-# alma_band_ms = {
-#     1: '.', 
-#     3: 'P', 
+alma_band_ms = {
+    'testing': '0', 
+    1: '.', 
+    3: 'P', 
     
-#     4: 'o',  
-#     'Band 4': 'o',  
-#     'Band 4 nterms2': 'o',  
-#     'Band 4 nterms2 smooth': 'o', 
-#     'Band 4 nterms2 smooth B6': 'o', 
-#     'Band 4 nterms2 smooth B6 B7': 'o', 
+    4: 'o',  
+    'Band 4': 'o',  
+    'Band 4 nterms2': 'o',  
+    'Band 4 nterms2 smooth': 'o', 
+    'Band 4 nterms2 smooth B6': 'o', 
+    'Band 4 nterms2 smooth B6 B7': 'o', 
     
-#     5: '^',  
-#     50: '^', 
-#     52: '^', 
-#     'Band 5': '^',  
-#     'Band 5 v0': '^', 
+    'Band 4 nterms2 robust -1': 'H',  
     
-#     # Band 5 robust values
-#     'Band 5 robust -2': 'd',
-#     'Band 5 robust -1': 'P',
+    5: '^',  
+    50: '^', 
+    52: '^', 
+    'Band 5': '^',  
+    'Band 5 v0': '^', 
     
-#     6: 's', 
-#     'Band 6': 's', 
-#     'Band 6 smooth': 's', 
-#     'Band 6 smooth B7': 's', 
+    # Band 5 robust values
+    'Band 5 robust -2': 'd',
+    'Band 5 robust -1': 'P',
     
-#     7: '*',  
-#     'Band 7': '*', 
-#     'Band 7 nterms2': '*', 
-#     'Band 7 nterms2 smooth': '*', 
-#     'Band 7 nterms2 smooth B6': '*', 
+    6: 's', 
+    'Band 6': 's', 
+    'Band 6 smooth': 's', 
+    'Band 6 smooth B7': 's', 
     
-#     10:'p', 
-# }
+    7: '*',  
+    'Band 7': '*', 
+    'Band 7 nterms2': '*', 
+    'Band 7 nterms2 smooth': '*', 
+    'Band 7 nterms2 smooth B6': '*', 
+    
+    10:'p', 
+}
 
 
 
@@ -189,6 +197,7 @@ fits_path = plotting_path + "FITS FILES/"
 
 band4_data_folder_path = fits_path + "BAND4/"
 band4_nterms2_data_folder_path = fits_path + "BAND4_nterms2/"
+band4_nterms2_robust_minus1_data_folder_path = fits_path + "BAND4_nterms2_robust_minus1/"
 band4_nterms2_smooth_data_folder_path = fits_path + "BAND4_nterms2_smooth/"
 band4_nterms2_smooth_B6_data_folder_path = fits_path + "BAND4_nterms2_smooth_B6/"
 band4_nterms2_smooth_B6_B7_data_folder_path = fits_path + "BAND4_nterms2_smooth_B6_B7/"
@@ -213,6 +222,7 @@ carta_path = plotting_path + "CARTA FILES/"
 
 band4_carta_folder_path = carta_path + "BAND4/"
 band4_nterms2_carta_folder_path = carta_path + "BAND4_nterms2/"
+band4_nterms2_robust_minus1_carta_folder_path = carta_path + "BAND4_nterms2_robust_minus1/"
 band4_nterms2_smooth_carta_folder_path = carta_path + "BAND4_nterms2_smooth/"
 band4_nterms2_smooth_B6_carta_folder_path = carta_path + "BAND4_nterms2_smooth_B6/"
 band4_nterms2_smooth_B6_B7_carta_folder_path = carta_path + "BAND4_nterms2_smooth_B6_B7/"
@@ -288,6 +298,7 @@ centre_data = {
     # Band 4
     "band4": 'J163135.656-240129.992',
     "band4_nterms2": 'J163135.656-240130.006',
+    "band4_nterms2_robust_minus1": 'J163135.656-240130.006', # Same as above but this is still correct
     "band4_nterms2_smooth": 'J163135.656-240130.004',
     "band4_nterms2_smooth_B6": 'J163135.656-240130.005',
     "band4_nterms2_smooth_B6_B7": 'J163135.657-240129.939',
@@ -382,7 +393,8 @@ PA_values = {
 
     # Band 4
     "band4": 145.9,  # CASA value
-    "band4_nterms2": 139.31,  # updated for nterms = 2
+    "band4_nterms2": 139.31,  # updated for nterms = 2 CHECK THIS
+    "band4_nterms2_robust_minus1": 145.49,  # This is correct
     "band4_nterms2_smooth": 148.30,
     "band4_nterms2_smooth_B6": 147.23, 
     "band4_nterms2_smooth_B6_B7": 147.38,
@@ -498,6 +510,12 @@ rms_data = {
         "I": [0.0115, 0.0145, 0.0101, 0.0189],
         "Q": [0.0098, 0.0097, 0.0095, 0.0096],
         "U": [0.0102, 0.0105, 0.0098, 0.0100]
+    },
+    
+    "band4_nterms2_robust_minus1": {
+        "I": [0.0284, 0.0283, 0.0291, 0.0290],
+        "Q": [0.0219, 0.0283, 0.0281, 0.0287],
+        "U": [0.0274, 0.0286, 0.0280, 0.0277]
     },
 
     "band4_nterms2_smooth": {
@@ -684,7 +702,8 @@ reference_fraction = 0.03
 
 step_values = {
     "band4": 4,
-    "band4_nterms2": 4,           
+    "band4_nterms2": 4,     
+    "band4_nterms2_robust_minus1": 3,  
     "band4_nterms2_smooth": 8,
     "band4_nterms2_smooth_B6": 1, # This needs to be updated obviously
     "band4_nterms2_smooth_B6_B7": 9, 
@@ -715,6 +734,7 @@ vector_length_pix_const = 0
 vector_length_values = {
     "band4": 2,
     "band4_nterms2": 2, 
+    "band4_nterms2_robust_minus1": 2, # This was just set to the same as above for now
     "band4_nterms2_smooth": 2, 
     "band4_nterms2_smooth_B6": 2,
     "band4_nterms2_smooth_B6_B7": 6,  # Found using trial and error

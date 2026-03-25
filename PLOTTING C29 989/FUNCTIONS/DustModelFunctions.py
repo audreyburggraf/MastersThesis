@@ -349,7 +349,8 @@ def find_sf_v2(a_max_f_dist_micron, P_times_omega, df_POLF, POLF_index, print_re
         print("Best SF:", best_sf)
 
     # return values
-    return best_a_max_f, POLF_obs, best_sf
+    return best_a_max_f, POLF_obs, best_sf, best_idx
+
 
 # --------------------------------------------------------------------------
 
@@ -399,6 +400,7 @@ def find_sf_v3(bands,
     best_a_max_f = {}
     POLF_obs = {}
     best_sf = {}
+    best_idx_arr = {}
 
 
 
@@ -492,6 +494,7 @@ def find_sf_v3(bands,
       
         best_a_max_f[f] = a_max_vals[best_idx]
         best_sf[f] = sf_medians[best_idx]
+        best_idx_arr[f] = best_idx
         POLF_obs[f] = np.array([
         POLF_obs_all[band_to_index[b]] for b in bands
     ])
@@ -505,7 +508,7 @@ def find_sf_v3(bands,
         print("Best SF:", best_sf)
 
     # return values
-    return a_max_f_dist_micron, P_times_omega, best_a_max_f, POLF_obs, best_sf
+    return a_max_f_dist_micron, P_times_omega, best_a_max_f, POLF_obs, best_sf, best_idx_arr
 
 
 

@@ -33,7 +33,7 @@ cbar_fs = constants.cbar_fs
 text_fs = constants.text_fs
 
 alma_band_colors = constants.alma_band_colors
-# alma_band_ms = constants.alma_band_ms
+alma_band_ms = constants.alma_band_ms
 # -----------------------------------------------------------------------------------------
 
 
@@ -1752,173 +1752,191 @@ alma_band_ms = {
 }
 # --------------------------------------------------------------------------------------
 
-def plot_scale_factor_results(bands,  # These are the bands we are looking at
-                              bands_labels,
-                              f_values,  # These are the porosity values we are testing
-                              a_max_f_dist_micron,
-                              P_times_omega,
-                              sf,  # This is the values the data is being scaled by
-                              a_max,  # These are the best a_max values for each f
-                              POLF_obs,  # These are the values for each band we are plotting the marker at
-                              plot_sf=1.5,  # This controls how much the text labels are scaled by
-                              ymin = -0.1, 
-                              ymax = 1.7, 
-                              ):
+# def plot_scale_factor_results(bands,  # These are the bands we are looking at
+#                               bands_labels,
+#                               f_values,  # These are the porosity values we are testing
+#                               a_max_f_dist_micron,
+#                               P_times_omega,
+#                               sf,  # This is the values the data is being scaled by
+#                               a_max,  # These are the best a_max values for each f
+#                               POLF_obs,  # These are the values for each band we are plotting the marker at
+#                               plot_sf=1.5,  # This controls how much the text labels are scaled by
+#                               ymin = -0.1, 
+#                               ymax = 1.7, 
+#                               ):
 
-    # Set the colors and marker styles for each band
-    band_colors = [alma_band_colors[b] for b in bands]
-    ms = [alma_band_ms[b] for b in bands]
+#     # Set the colors and marker styles for each band
+#     band_colors = [alma_band_colors[b] for b in bands]
+#     ms = [alma_band_ms[b] for b in bands]
 
-    # Make the figure
-    fig, ax = plt.subplots(1, len(f_values), figsize=(30, 8))
+#     # Make the figure
+#     fig, ax = plt.subplots(1, len(f_values), figsize=(30, 8))
 
-    # Loop over the f values you want to plot
-    for i, f in enumerate(f_values):
+#     # Loop over the f values you want to plot
+#     for i, f in enumerate(f_values):
 
-        print(f, f_values[i])
+#         print(f, f_values[i])
 
-        # Y-axis formatting
-        if i == 0:
-            ax[i].set_ylabel('P $\\omega$', fontsize=axis_label_fs * plot_sf)
-        else:
-            ax[i].set_yticklabels([])
-            ax[i].set_ylabel('')
-            ax[i].tick_params(left=False)
+#         # Y-axis formatting
+#         if i == 0:
+#             ax[i].set_ylabel('P $\\omega$', fontsize=axis_label_fs * plot_sf)
+#         else:
+#             ax[i].set_yticklabels([])
+#             ax[i].set_ylabel('')
+#             ax[i].tick_params(left=False)
 
-        # X-axis formatting
-        ax[i].set_xscale("log")
-        ax[i].set_xlabel(r'$a_{\mathrm{max}} f / \mu\mathrm{m}$',
-                         fontsize=axis_label_fs * plot_sf)
+#         # X-axis formatting
+#         ax[i].set_xscale("log")
+#         ax[i].set_xlabel(r'$a_{\mathrm{max}} f / \mu\mathrm{m}$',
+#                          fontsize=axis_label_fs * plot_sf)
 
-        # Tick formatting
-        ax[i].minorticks_on()
-        ax[i].tick_params(axis="x", which="minor", direction="in",
-                          left=True, right=True, length=4)
-        ax[i].tick_params(axis="y", which="minor", direction="in",
-                          left=True, right=True, length=4)
-        ax[i].tick_params(axis="x", which="major", direction="in",
-                          bottom=True, top=True, length=7,
-                          labelsize=axis_num_fs * plot_sf)
-        ax[i].tick_params(axis="y", which="major", direction="in",
-                          left=True, right=True, length=7,
-                          labelsize=axis_num_fs * plot_sf)
+#         # Tick formatting
+#         ax[i].minorticks_on()
+#         ax[i].tick_params(axis="x", which="minor", direction="in",
+#                           left=True, right=True, length=4)
+#         ax[i].tick_params(axis="y", which="minor", direction="in",
+#                           left=True, right=True, length=4)
+#         ax[i].tick_params(axis="x", which="major", direction="in",
+#                           bottom=True, top=True, length=7,
+#                           labelsize=axis_num_fs * plot_sf)
+#         ax[i].tick_params(axis="y", which="major", direction="in",
+#                           left=True, right=True, length=7,
+#                           labelsize=axis_num_fs * plot_sf)
 
-        # Titles and annotations
-        ax[i].set_title(f'$f$ = {f:.2f}', fontsize=50)
+#         # Titles and annotations
+#         ax[i].set_title(f'$f$ = {f:.2f}', fontsize=50)
 
-        ax[i].text(0.05, 0.15,
-                   f'sf = {sf[f]:.2f}',
-                   transform=ax[i].transAxes,
-                   fontsize=30)
+#         ax[i].text(0.05, 0.15,
+#                    f'sf = {sf[f]:.2f}',
+#                    transform=ax[i].transAxes,
+#                    fontsize=30)
 
-        ax[i].text(0.05, 0.05,
-                   rf'$a_{{\mathrm{{max}}}}$ = {a_max[f]/f:.0f} $\mu$m',
-                   transform=ax[i].transAxes,
-                   fontsize=30)
+#         ax[i].text(0.05, 0.05,
+#                    rf'$a_{{\mathrm{{max}}}}$ = {a_max[f]/f:.0f} $\mu$m',
+#                    transform=ax[i].transAxes,
+#                    fontsize=30)
 
-        # In the loop over each plot
-        # ------------------------------------------
-        ax[i].axhline(1.367706, color = alma_band_colors[4], ls = '--')
-        ax[i].axhline(0.990896, color = alma_band_colors[5], ls = '--')
-        ax[i].axhline(1.463922, color = alma_band_colors[6], ls = '--')
-        ax[i].axhline(1.042140, color = alma_band_colors[7], ls = '--')
+#         # In the loop over each plot
+#         # ------------------------------------------
+#         ax[i].axhline(1.367706, color = alma_band_colors[4], ls = '--')
+#         ax[i].axhline(0.990896, color = alma_band_colors[5], ls = '--')
+#         ax[i].axhline(1.463922, color = alma_band_colors[6], ls = '--')
+#         ax[i].axhline(1.042140, color = alma_band_colors[7], ls = '--')
         
-        ax[i].set_ylim(ymin, ymax)
-        # ------------------------------------------
+#         ax[i].set_ylim(ymin, ymax)
+#         # ------------------------------------------
         
         
-        # Plot each band
-        for j, b in enumerate(bands):
-            ax[i].scatter(a_max[f],
-                          POLF_obs[f][j],
-                          c=band_colors[j],
-                          marker=ms[j],
-                          s=200)
+#         # Plot each band
+#         for j, b in enumerate(bands):
+#             ax[i].scatter(a_max[f],
+#                           POLF_obs[f][j],
+#                           c=band_colors[j],
+#                           marker=ms[j],
+#                           s=200)
 
-            ax[i].plot(a_max_f_dist_micron[f],
-                       P_times_omega[f][:, j] * sf[f],
-                       color=band_colors[j],
-                       ls='-',
-                       label=bands_labels[j],
-                       lw=3)
+#             ax[i].plot(a_max_f_dist_micron[f],
+#                        P_times_omega[f][:, j] * sf[f],
+#                        color=band_colors[j],
+#                        ls='-',
+#                        label=bands_labels[j],
+#                        lw=3)
 
-    # Layout adjustments
-    plt.tight_layout()
-    plt.subplots_adjust(wspace=0.01, hspace=0)
+#     # Layout adjustments
+#     plt.tight_layout()
+#     plt.subplots_adjust(wspace=0.01, hspace=0)
 
-    # Shared legend (lines)
-    handles, labels = ax[0].get_legend_handles_labels()
-    fig.legend(handles,
-               labels,
-               loc='lower center',
-               bbox_to_anchor=(0.5, -0.15),
-               ncol=len(bands),
-               fontsize=30,
-               frameon=False)
+#     # Shared legend (lines)
+#     handles, labels = ax[0].get_legend_handles_labels()
+#     fig.legend(handles,
+#                labels,
+#                loc='lower center',
+#                bbox_to_anchor=(0.5, -0.15),
+#                ncol=len(bands),
+#                fontsize=30,
+#                frameon=False)
 
-    plt.subplots_adjust(bottom=0.15)
+#     plt.subplots_adjust(bottom=0.15)
 
-    # Marker-only legend (POLF points)
-    marker_handles = []
-    for j in range(len(bands)):
-        marker_handles.append(
-            Line2D([0], [0],
-                   marker=ms[j],
-                   color='none',
-                   markerfacecolor=band_colors[j],
-                   markeredgecolor=band_colors[j],
-                   markersize=15,
-                   linestyle='None',
-                   label=bands_labels[j])
-        )
+#     # Marker-only legend (POLF points)
+#     marker_handles = []
+#     for j in range(len(bands)):
+#         marker_handles.append(
+#             Line2D([0], [0],
+#                    marker=ms[j],
+#                    color='none',
+#                    markerfacecolor=band_colors[j],
+#                    markeredgecolor=band_colors[j],
+#                    markersize=15,
+#                    linestyle='None',
+#                    label=bands_labels[j])
+#         )
 
-    # Header
-    header = Line2D([0], [0],
-                    linestyle='None',
-                    marker=None,
-                    label='Measured POLF:')
+#     # Header
+#     header = Line2D([0], [0],
+#                     linestyle='None',
+#                     marker=None,
+#                     label='Measured POLF:')
 
-    custom_handles = [header] + marker_handles
+#     custom_handles = [header] + marker_handles
 
-    fig.legend(handles=custom_handles,
-               loc='lower center',
-               bbox_to_anchor=(0.5, -0.25),
-               ncol=len(custom_handles),
-               fontsize=30,
-               frameon=False,
-               handlelength=0.8,
-               handletextpad=0.5,
-               columnspacing=1.5)
+#     fig.legend(handles=custom_handles,
+#                loc='lower center',
+#                bbox_to_anchor=(0.5, -0.25),
+#                ncol=len(custom_handles),
+#                fontsize=30,
+#                frameon=False,
+#                handlelength=0.8,
+#                handletextpad=0.5,
+#                columnspacing=1.5)
 
-    return fig, ax
+#     return fig, ax
 
-# --------------------------------------------------------------------------------------
+# # --------------------------------------------------------------------------------------
 
 
 
-def plot_scale_factor_results_v2(bands,        # These are the bands we are looking at
+
+
+
+def plot_scale_factor_results(bands,        # These are the bands we are looking at
                               bands_labels, 
                               bands_included_in_fit, # These are the values that were fit
                               f_values,     # These are the porosity values we are testing
                               a_max_f_dist_micron, 
                               P_times_omega,
                               sf,           # This is the values the data is being scaled by 
+                              best_idx, 
                               a_max,        # These are the best a_max values for each f
                               POLF_markers,    # These are the values for each band we are plotting the marker at
                               plot_sf = 1.5, # This controls how much the text labels are scaled by
                               ymin = -0.1, 
                               ymax = 1.7, 
-                              hlines = False):
+#                               hlines = False,
+                              custom_lw = None,
+                              custom_text_x = None,
+                             chi_sq_precision = 3):
     band_ls = [
     '-' if b in bands_included_in_fit else '--'
     for b in bands
     ]
     
-    print(alma_band_ms)
+    if custom_lw is None:
+        # default behavior
+        bands_lw = [
+            5 if b in bands_included_in_fit else 3
+            for b in bands
+        ]
+    else:
+        # override where specified
+        bands_lw = [
+            custom_lw.get(b, 5 if b in bands_included_in_fit else 3)
+            for b in bands
+        ]
     
     # Set the colors and marker size for each band 
     band_colors = [alma_band_colors[b] for b in bands]
-    ms = [alma_band_ms[b] for b in bands]
+    ms = [constants.alma_band_ms[b] for b in bands]
     
     
     
@@ -1928,9 +1946,11 @@ def plot_scale_factor_results_v2(bands,        # These are the bands we are look
     fig, ax = plt.subplots(1, 4, figsize=(30, 8))
     
     
+    
+    
     # Loop over the f values you want to plot
     for i, f in enumerate(f_values): 
-        print(rf'f = {f}')
+#         print(rf'f = {f}')
         
        
 
@@ -1956,34 +1976,30 @@ def plot_scale_factor_results_v2(bands,        # These are the bands we are look
         ax[i].tick_params(axis="x", which="major", direction="in", bottom=True, top=True, length=7, labelsize=axis_num_fs*plot_sf)
         ax[i].tick_params(axis="y", which="major", direction="in", left=True, right=True, length=7, labelsize=axis_num_fs*plot_sf)
 
-
+        
+        
+        # ---------------------------------------------------------------------------------------
+        # ---------------------------------------------------------------------------------------
 
         # Labels on plot
         # ---------------------------------------------------------------------------------------
         ax[i].set_title(f'$f$ = {f:.2f}', fontsize=50)
-
-        ax[i].text(0.05, 0.15, f'sf = {sf[f]:.2f}', transform=ax[i].transAxes, fontsize = 30)
-        
-        # Add the a_max to the text
-        ax[i].text(0.05, 0.05, rf'$a_{{\mathrm{{max}}}}$ = {a_max[f]/f:.0f} $\mu$m', 
-                   transform=ax[i].transAxes, 
-                   fontsize = 30)
         # ---------------------------------------------------------------------------------------
 
 
         # In the loop over each plot
         # ------------------------------------------
-        if hlines:
-            ax[i].axhline(1.367706, color = alma_band_colors[4], ls = '--')
-            ax[i].axhline(0.990896, color = alma_band_colors[5], ls = '--')
-            ax[i].axhline(1.463922, color = alma_band_colors[6], ls = '--')
-            ax[i].axhline(1.042140, color = alma_band_colors[7], ls = '--')
+#         if hlines:
+#             ax[i].axhline(1.367706, color = alma_band_colors[4], ls = '--')
+#             ax[i].axhline(0.990896, color = alma_band_colors[5], ls = '--')
+#             ax[i].axhline(1.463922, color = alma_band_colors[6], ls = '--')
+#             ax[i].axhline(1.042140, color = alma_band_colors[7], ls = '--')
         
         ax[i].set_ylim(ymin, ymax)
         # ------------------------------------------
         
         
-
+        marker_handles = []
         # plot each band for this f
         for j, b in enumerate(bands):
             
@@ -1993,72 +2009,146 @@ def plot_scale_factor_results_v2(bands,        # These are the bands we are look
 #             print(rf'At band {b}, the POLF_obs value is: {POLF_obs[f][idx]}')
 #             print(' ')
 
-            
+            fc = band_colors[j]
+            ec = band_colors[j]
+            marker_lw = 0 
+    
+            if b in ["Band 5"]:
+                fc = 'none'
+                marker_lw = 5
+
             ax[i].scatter(a_max[f], 
                           POLF_markers[b],
-                          c=band_colors[j], 
                           marker=ms[j], 
-                          s=200)
+                          s=400,
+                          facecolors=fc,
+                          edgecolors=ec,
+                         linewidths=marker_lw)
 
-            ax[i].plot(a_max_f_dist_micron[f],
-                       P_times_omega[f][:, idx] * sf[f],
-                       color=band_colors[j],
-                       label=f'{bands_labels[j]}',
-                       lw=3,
-                       ls=band_ls[j])
-
-    plt.tight_layout()
-    plt.subplots_adjust(wspace=0.01, hspace=0)
-
-
-    # Create one shared legend at the bottom
-    handles, labels = ax[0].get_legend_handles_labels()
-
-    fig.legend(handles, labels,
-               loc='lower center',
-               bbox_to_anchor=(0.5, -0.15),  # move lower by decreasing y
-               ncol=len(bands),
-               fontsize=30,
-               frameon=False)
-
-    plt.subplots_adjust(bottom=0.15)  # make room for legend
-
-
-    # ----------------------------------------------------
-
-    # Create marker-only legend handles
-    marker_handles = []
-
-    for j in range(len(bands)):
-        marker_handles.append(
+        
+            marker_handles.append(
             Line2D([0], [0],
                    marker=ms[j],
-                   color='none',              # no line
-                   markerfacecolor=band_colors[j],
-                   markeredgecolor=band_colors[j],
+                   color='none',
+                   markerfacecolor=fc,
+                   markeredgecolor=ec,
+                   markeredgewidth=marker_lw,
                    markersize=15,
-                   linestyle='None',
-                   label=bands_labels[j])
-        )
+                   linestyle='None'))
 
-    # Add header text "POLF:"
-    header = Line2D([0], [0],
-                    linestyle='None',
-                    marker=None,
-                    label='Measured POLF:')
+            if b not in ["Band 5 robust -1", "Band 5 robust -2"]:
+                ax[i].plot(a_max_f_dist_micron[f],
+                           P_times_omega[f][:, idx] * sf[f],
+                           color=band_colors[j],
+                           label=f'{bands_labels[j]}',
+                           lw=bands_lw[j],
+                           ls=band_ls[j]
+                          )
 
-    custom_handles = [header] + marker_handles
+        # Calculate chi_sq
+        # ---------------------------------------------
+        # ---------------------------------------------
+        chi_sq_running_sum = 0
+        chi_sq = 0
+        
+        #print('In chi squared calculation:')
+        #print(rf'f = {f}')
+        #print(rf'best_idx = {best_idx[f]}')
+#         print(rf'The best_index is {best_idx[f]}')
+        # Loop over each band 
+        for j, b in enumerate(bands):
+            
+            if b == "Band 5":
+                continue
+            
+            band_idx = bands.index(b)
+            
+            
+            POLF_obs = POLF_markers[b]
+            POLF_model = P_times_omega[f][best_idx[f], band_idx] * sf[f]
+            
+            chi_sq_running_sum = chi_sq_running_sum + (POLF_obs - POLF_model)**2
+            
+            
+            #print(rf'At band {bf}, or index {band_idx}:')
+            #print(rf'   the observed POLF is {POLF_obs:.2f}, and the measured POLF is {POLF_model:.2f} and the difference = {(POLF_obs - POLF_model):.2f}')
+        chi_sq = chi_sq_running_sum
+        #print(' ')
+        # ---------------------------------------------
+        # ---------------------------------------------
+        
+        
+        
+                
+        x_pos = 0.05 
+        
+        if custom_text_x is not None:
+            x_pos = x_pos + custom_text_x[i]
+        
+        
+        
+        ax[i].text(x_pos, 0.15,  f'$\chi^2$ = {chi_sq:.{chi_sq_precision}f}', transform=ax[i].transAxes, fontsize = 30)
 
-    fig.legend(handles=custom_handles,
-               loc='lower center',
-               bbox_to_anchor=(0.5, -0.25),
-               ncol=len(custom_handles),
-               fontsize=30,
-               frameon=False,
-               handlelength=0.8,
-               handletextpad=0.5,
-               columnspacing=1.5)
+        ax[i].text(x_pos, 0.25, f'sf = {sf[f]:.2f}', transform=ax[i].transAxes, fontsize = 30)
+
+        # Add the a_max to the text
+        ax[i].text(x_pos, 0.05, rf'$a_{{\mathrm{{max}}}}$ = {a_max[f]/f:.0f} $\mu$m', 
+                   transform=ax[i].transAxes, 
+                   fontsize = 30)
+        
+        
+        
+    plt.tight_layout()
+    plt.subplots_adjust(wspace=0.01, hspace=0)
+    
+    
+    # Add coloured text for each Band in the far right plot
     # ----------------------------------------------------
+    # ----------------------------------------------------
+    start = 0.9
+    c = 0
+    # Loop over each band 
+    for j, b_label in enumerate(bands_labels):
+        
+        if "robust" in b_label:
+            label = b_label.replace(" robust ", "\nrobust ")
+            c = c + 0.075
+        else:
+            label = b_label
+
+        ax[3].text(0.70, start - c,
+                   label,
+                   transform=ax[3].transAxes,
+                   fontsize=30,
+                   color=band_colors[j])
+        c = c + 0.1
+        
+        
+        
+    legend_elements = [
+        Line2D([0], [0], color='black', linestyle='-', lw = 5, label='Included'),
+        Line2D([0], [0], color='black', linestyle='--', lw = 5, label='Excluded')
+    ]
+
+    # Line style
+    ax[2].legend(handles=legend_elements, fontsize = 30, frameon=False, title="Fit", title_fontsize = 30)   
+    
+    # ----------------------------------------------------
+    # ----------------------------------------------------
+
+    # Markers
+    ax[1].legend(handles=marker_handles, 
+                 fontsize = 30, 
+                 frameon=False, 
+                 title="Obs. POLF", 
+                 title_fontsize = 30,
+                 loc = 'upper right',
+                 handletextpad=-3.8,
+                 handlelength=0.2)   
+#     # ----------------------------------------------------
+#     # ----------------------------------------------------
+
+
 
 
 

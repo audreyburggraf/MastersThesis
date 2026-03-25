@@ -179,6 +179,13 @@ def run_slices(data, StokesI_header, StokesI_wcs, carta_minor_data, carta_major_
             constants.minor_angle_rad_cartesian_band4_nterms2,
             1.4
         ),
+        
+        'Band 4 nterms2 robust -1': (
+            constants.centre_str_band4_nterms2_robust_minus1,
+            constants.major_angle_rad_cartesian_band4_nterms2_robust_minus1,
+            constants.minor_angle_rad_cartesian_band4_nterms2_robust_minus1,
+            1.4
+        ),
 
         'Band 4 nterms2 smooth': (
             constants.centre_str_band4_nterms2_smooth,
