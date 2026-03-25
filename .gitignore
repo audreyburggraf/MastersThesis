@@ -1,0 +1,17 @@
+# Python environments (anywhere in repo)
+venv/
+env/
+glitterin_env/
+*/venv/
+*/env/
+*/glitterin_env/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# macOS
+.DS_Store
