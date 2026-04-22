@@ -245,3 +245,22 @@ def get_fwhm_from_header(header, unit='arcsec'):
     except KeyError:
         raise KeyError("Header does not contain BMAJ/BMIN keys")
 # -------------------------------------------------------------------------------------------------
+
+
+
+
+
+# Function to convert micron to cm
+# --------------------------------------------------------------------------------------
+def micron_to_cm(value_micron):
+    value_micron = np.array(value_micron)  # convert input to numpy array
+    return value_micron * 1e-4  # 1 micron = 1e-4 cm
+# --------------------------------------------------------------------------------------
+
+# Function to convert mm to cm
+# --------------------------------------------------------------------------------------
+def mm_to_cm(value_mm):
+    value_mm = np.array(value_mm)  # convert input to numpy array
+    return value_mm * 1e-1  # 1 mm = 0.1 cm = 1e-1 cm
+# --------------------------------------------------------------------------------------
+

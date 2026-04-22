@@ -6,6 +6,8 @@ sys.path.append("/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING 
 # Now you can import constants.py
 import constants
 
+import glitterin
+
 # Use the variable from constants.py
 functions_folder_path = constants.functions_folder_path
 
@@ -21,9 +23,10 @@ from MakingGridFunctions import *
 from SlicesFunctions import * 
 from IntroductionFunctions import *
 from DustModelFunctions import * 
-from DSHARP_Functions import * 
 from DustModelPlots import * 
 from POLF_Functions import * 
 from DebiasFunctions import * 
 from GalaxyContaminationFunctions import * 
+from GlitterinPlots import *
+from glitterinFunctions import *
 from UnitConversion import * 

@@ -94,7 +94,22 @@ def add_reference_scale_bar(ax, xmin, xmax, ymin, ymax,
             color=fontcolor, linewidth=reference_lw)
     
 # -----------------------------------------------------------------------------------------
+# This function is only curreny. used in making some glitterin plots
 
+def add_min_major_ticks(ax, axis_num_fs = None, sf = 1):
+    
+    if axis_num_fs  is None:
+        axis_num_fs  = constants.axis_num_fs  * sf
+        
+        
+    # Adjust ticks
+    ax.minorticks_on()
+    ax.tick_params(axis="x", which="major", direction="in", bottom=True, top=True, length=7, labelsize=axis_num_fs)
+    ax.tick_params(axis="y", which="major", direction="in", bottom=True, top=True, length=7, labelsize=axis_num_fs)
+
+    ax.tick_params(axis="x", which="minor", direction="in", bottom=True, top=True, length=4)
+    ax.tick_params(axis="y", which="minor", direction="in", left=True, right=True, length=4)
+# -----------------------------------------------------------------------------------------
     
     
 # -----------------------------------------------------------------------------------------
