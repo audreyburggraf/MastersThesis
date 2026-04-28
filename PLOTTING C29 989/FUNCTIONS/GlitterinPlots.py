@@ -262,8 +262,7 @@ def Lin2025Figure8(text_fs = constants.text_fs ,
 # ----------------------------------------------------------
 # Function to replicate Figure 10 and 11
 # ----------------------------------------------------------
-def Lin2025Figure1011(theta, results, 
-                      idx = -1, 
+def Lin2025Figure1011(theta, mat_dist, 
                       text_sf = 1, 
                     text_fs = None, 
                     axis_label_fs = None, 
@@ -299,8 +298,8 @@ def Lin2025Figure1011(theta, results,
             [(-1.1, 1.1), (-0.7, 0.15), (-1.1, 1.05)]
         ],
         11: [
-            [None, (-0.14, 0.22), (0.41, 1.05)],
-            [(-1.1, 1.1), (-0.05, 0.35), (-1.1, 1.1)]
+            [(0.6, 40), (-0.14, 0.12), (0.41, 1.05)],
+            [(-1.1, 1.1), (-0.05, 0.32), (-1.1, 1.1)]
         ]
     }
     
@@ -337,8 +336,8 @@ def Lin2025Figure1011(theta, results,
 
 
     # ------------------------------------------------------
-    plot_keys = [None, 'N12_eff', 'N22_eff', 'N33_eff', 'N34_eff', 'N44_eff'] 
-    # plot_keys = [None, 'N12', 'N22', 'N33', 'N34', 'N44'] 
+#     plot_keys = [None, 'N12_eff', 'N22_eff', 'N33_eff', 'N34_eff', 'N44_eff'] 
+    plot_keys = [None, 'N12', 'N22', 'N33', 'N34', 'N44'] 
     # plot_keys = [None, 'N12_fig10', 'N22_fig10', 'N33_fig10', 'N34_fig10', 'N44_fig10'] 
     
     # ------------------------------------------------------
@@ -385,14 +384,11 @@ def Lin2025Figure1011(theta, results,
         # ------------------------------------------------------------
         key = plot_keys[i]
         
-        colors = (glitterinColours[1], 'red', 'orange', 'green', 'indigo', 'pink')
-        
         if key is not None:
-            for j in range(len(results)):
-                ax.plot(theta, results[j][key][idx], color = colors[j], lw=3, label = rf'{j + 1}')
-                
-                axes[0, 0].plot(theta, results[j]['Z11'][:, idx]/results[j]['Z11'][idx_90, idx], color = colors[j], lw=3)
-                
+            ax.plot(theta, mat_dist[key], color = glitterinColours[1], lw=3)
+
+            axes[0, 0].plot(theta, mat_dist['Z11']/mat_dist['Z11'][idx_90], glitterinColours[1], lw=3)
+
         # ------------------------------------------------------
             
         
@@ -421,90 +417,187 @@ def Lin2025Figure1011(theta, results,
 # ----------------------------------------------------------
 # Function to replicate Figure 12
 # ----------------------------------------------------------
-def Lin2025Figure12(results_all,
-                    text_fs = constants.text_fs , 
-                    axis_label_fs = constants.axis_label_fs, 
-                    axis_num_fs = constants.axis_num_fs, 
-                    fig_size_x = 15,
-                    fig_size_y = 10,
-                    x_num = True,
-                    y_num = True,
-                    full_axis_labels = True):
+# def Lin2025Figure12(results_all,
+#                     text_fs = constants.text_fs , 
+#                     axis_label_fs = constants.axis_label_fs, 
+#                     axis_num_fs = constants.axis_num_fs, 
+#                     fig_size_x = 15,
+#                     fig_size_y = 10,
+#                     x_num = True,
+#                     y_num = True,
+#                     full_axis_labels = True):
    
     
-    # Create a figure 
-    fig, axes = plt.subplots(2, 2, figsize=(fig_size_x, fig_size_y), sharex = True)
+#     # Create a figure 
+#     fig, axes = plt.subplots(2, 2, figsize=(fig_size_x, fig_size_y), sharex = True)
    
     
-    panel_labels = ["a)", "b)", "c)", "d)"]
+#     panel_labels = ["a)", "b)", "c)", "d)"]
     
     
-    y_axis_labels = ["$\kappa_{abs, 1 mm}$ [cm$^2$ g$^{-1}]$", 
-                     "$\\beta (870 \mu$m - 3.11 mm)",
-                     "$\kappa_{sca, 1 mm}$ [cm$^2$ g$^{-1}]$", 
-                     "$P \omega$"]
+#     y_axis_labels = ["$\kappa_{abs, 1 mm}$ [cm$^2$ g$^{-1}]$", 
+#                      "$\\beta (870 \mu$m - 3.11 mm)",
+#                      "$\kappa_{sca, 1 mm}$ [cm$^2$ g$^{-1}]$", 
+#                      "$P \omega$"]
     
-    for i, ax in enumerate(axes.flatten()):
+#     for i, ax in enumerate(axes.flatten()):
         
-        ax.text(0.05, 0.85, f"{panel_labels[i]}",
-                       transform=ax.transAxes,
-                       fontsize=text_fs)
+#         ax.text(0.05, 0.85, f"{panel_labels[i]}",
+#                        transform=ax.transAxes,
+#                        fontsize=text_fs)
         
-        # Add x-labels to bottom row:
-        if i in (2, 3):
-            ax.set_xlabel(rf'Maximum $r_{{vol}}$ [cm]', fontsize=axis_label_fs)
+#         # Add x-labels to bottom row:
+#         if i in (2, 3):
+#             ax.set_xlabel(rf'Maximum $r_{{vol}}$ [cm]', fontsize=axis_label_fs)
         
-        # Label the y-axes
-        ax.set_ylabel(rf'{y_axis_labels[i]}',    fontsize=axis_label_fs)
+#         # Label the y-axes
+#         ax.set_ylabel(rf'{y_axis_labels[i]}',    fontsize=axis_label_fs)
 
 
-        # Make axes log-space
-        if i in (0, 2):
-            ax.set_yscale('log')
-        ax.set_xscale('log')
+#         # Make axes log-space
+#         if i in (0, 2):
+#             ax.set_yscale('log')
+#         ax.set_xscale('log')
 
-        # Adjust ticks
-        add_min_major_ticks(ax)
+#         # Adjust ticks
+#         add_min_major_ticks(ax)
         
-        # Set the x-lims of the plots
-        ax.set_xlim(1e-3, 1e0)
+#         # Set the x-lims of the plots
+#         ax.set_xlim(1e-3, 1e0)
         
-    # Plot the data 
-    # --------------------------------------------- 
-    axes[0, 0].plot(results_all['1 mm']['r_vol'], results_all['1 mm']['k_abs_eff'])
-#     axes[0, 1].plot(results_all['1 mm']['r_vol'], results_all['1 mm']['Q_ext_vol'])
-    axes[1, 0].plot(results_all['1 mm']['r_vol'], results_all['1 mm']['k_sca_eff'])
+#     # Plot the data 
+#     # --------------------------------------------- 
+#     axes[0, 0].plot(results_all['1 mm']['r_vol'], results_all['1 mm']['k_abs_eff'])
+# #     axes[0, 1].plot(results_all['1 mm']['r_vol'], results_all['1 mm']['Q_ext_vol'])
+#     axes[1, 0].plot(results_all['1 mm']['r_vol'], results_all['1 mm']['k_sca_eff'])
     
-    labels = {
-        '870 micron': '870 $\mu$m', 
-        '3.1 mm': '3.1 mm',
-        '7 mm': '7 mm', 
-    }
+#     labels = {
+#         '870 micron': '870 $\mu$m', 
+#         '3.1 mm': '3.1 mm',
+#         '7 mm': '7 mm', 
+#     }
 
-    for lambdas in ('870 micron', '3.1 mm', '7 mm'):
-        axes[1, 1].plot(results_all[lambdas]['r_vol'], 
-                        results_all[lambdas]['P_omega_90'], 
-                        color = glitterinColours[lambdas],
-                        label = labels[lambdas],
-                        lw = 3)
-    # --------------------------------------------- 
+#     for lambdas in ('870 micron', '3.1 mm', '7 mm'):
+#         axes[1, 1].plot(results_all[lambdas]['r_vol'], 
+#                         results_all[lambdas]['P_omega_90'], 
+#                         color = glitterinColours[lambdas],
+#                         label = labels[lambdas],
+#                         lw = 3)
+#     # --------------------------------------------- 
     
-    # Customize the bottom right plot    
-    # --------------------------------------------- 
-    axes[1, 1].axhline(0, color = 'silver')
-    axes[1, 1].legend(fontsize = 20)
-    # ---------------------------------------------    
+#     # Customize the bottom right plot    
+#     # --------------------------------------------- 
+#     axes[1, 1].axhline(0, color = 'silver')
+#     axes[1, 1].legend(fontsize = 20)
+#     # ---------------------------------------------    
     
-    # Set the x-lims of the plots
-    # --------------------------------------------- 
-    axes[1, 0].set_ylim(1e-1, 90)
-    # --------------------------------------------- 
+#     # Set the x-lims of the plots
+#     # --------------------------------------------- 
+#     axes[1, 0].set_ylim(1e-1, 90)
+#     # --------------------------------------------- 
     
-    # Adjust the space between the plots
-    fig.subplots_adjust(hspace = 0.1, wspace = 0.25)
+#     # Adjust the space between the plots
+#     fig.subplots_adjust(hspace = 0.1, wspace = 0.25)
 
-    return fig, axes
+#     return fig, axes
+
+
 # ----------------------------------------------------------
+# Function to replicate Figure 12
+# ----------------------------------------------------------
+# def Lin2025Figure12(text_fs = constants.text_fs , 
+#                     axis_label_fs = constants.axis_label_fs, 
+#                     axis_num_fs = constants.axis_num_fs, 
+#                     fig_size_x = 15,
+#                     fig_size_y = 10,
+#                     x_num = True,
+#                     y_num = True,
+#                     full_axis_labels = True):
+    
+   
+#     # Setting up the figure and what we want to plot
+#     # ---------------------------------------------
+#     # Create a figure 
+#     fig, axes = plt.subplots(2, 2, figsize=(fig_size_x, fig_size_y), sharex = True)
+#     # ---------------------------------------------
+#     panel_labels = ["a)", "b)", "c)", "d)"]
+#     # ---------------------------------------------
+#     y_axis_labels = ["$\kappa_{abs, 1 mm}$ [cm$^2$ g$^{-1}]$", 
+#                  "$\\beta (870 \mu$m - 3.11 mm)",
+#                  "$\kappa_{sca, 1 mm}$ [cm$^2$ g$^{-1}]$", 
+#                  "$P \omega$"]
+#     # ---------------------------------------------
+    
+    
+#     # Loop over each plot
+#     # ---------------------------------------------
+    
+#     for i, ax in enumerate(axes.flatten()):
+        
+#         ax.text(0.05, 0.85, f"{panel_labels[i]}",
+#                        transform=ax.transAxes,
+#                        fontsize=text_fs)
+        
+#         # Add x-labels to bottom row:
+#         if i in (2, 3):
+#             ax.set_xlabel(rf'Maximum $r_{{vol}}$ [cm]', fontsize=axis_label_fs)
+        
+#         # Label the y-axes
+#         ax.set_ylabel(rf'{y_axis_labels[i]}',    fontsize=axis_label_fs)
+
+
+#         # Make axes log-space
+#         if i in (0, 2):
+#             ax.set_yscale('log')
+#         ax.set_xscale('log')
+
+#         # Adjust ticks
+#         add_min_major_ticks(ax)
+        
+#         # Set the x-lims of the plots
+# #         ax.set_xlim(1e-3, 1e0)
+        
+    
+# #     labels = {
+# #         '870 micron': '870 $\mu$m', 
+# #         '3.1 mm': '3.1 mm',
+# #         '7 mm': '7 mm', 
+# #     }
+
+# #     for lambdas in ('870 micron', '3.1 mm', '7 mm'):
+# #         axes[1, 1].plot(mat_dist_all[lambdas]['r_vol'], 
+# #                         mat_dist_all[lambdas]['Pw'], 
+# #                         color = glitterinColours[lambdas],
+# #                         label = labels[lambdas],
+# #                         lw = 3)
+# #     # --------------------------------------------- 
+    
+    
+    
+#     # Plot the data for the left plots
+#     # --------------------------------------------- 
+# #     axes[0, 0].plot(sizes_all['1 mm'].r, mat_all['1 mm'].k_abs)
+# #     axes[1, 0].plot(sizes_all['1 mm'].r, mat_all['1 mm'].k_sca)
+#     # --------------------------------------------- 
+    
+    
+#     # Customize the bottom right plot    
+#     # --------------------------------------------- 
+#     axes[1, 1].axhline(0, color = 'silver')
+#     axes[1, 1].legend(fontsize = 20)
+#     # ---------------------------------------------    
+    
+#     # Set the x-lims of the plots
+#     # --------------------------------------------- 
+# #     axes[1, 0].set_ylim(1e-1, 90)
+#     # --------------------------------------------- 
+    
+#     # Adjust the space between the plots
+#     fig.subplots_adjust(hspace = 0.1, wspace = 0.25)
+
+#     return fig, axes
+# # ----------------------------------------------------------
+# # ----------------------------------------------------------
 #
 #
 #

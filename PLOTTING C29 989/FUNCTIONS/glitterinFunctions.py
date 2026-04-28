@@ -5,6 +5,7 @@ import glitterin
 import numpy as np
 import matplotlib.pyplot as plt
 from UnitConversion import *
+from glitterin_LabDistributionFunc import *
 # ------------------------------------------------------------
 #
 #
@@ -127,6 +128,7 @@ def CalculateNormalizedZ(result):
     result['N34_eff'] = N34 
     result['N44_eff'] = N44
 # ------------------------------------------------------------
+
 #
 #
 #
@@ -528,5 +530,146 @@ def add_P_to_results_all(results_all, wavelength_labels, theta):
         res['k_abs_dist'] = k_abs_eff
         res['k_sca_dist'] = k_sca_eff
 # ------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+# Function to run glitterin for the lab distribution
+# ------------------------------------------------------------
+def RunGlitterinLabDist(particle):
+    # Path to the lab data text files
+    particle_file_loc = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/glitterin/DustModels/"
+    
+    
+    # Set things based on the particle type
+    # -------------------------------
+    if particle == 'feldspar':
+        fname = 'sizes_feldspar.txt'
+        w_um = 0.4416 # [micron]
+        n = 1.5
+        k = 1e-4
+
+    # -------------------------------
+    elif particle == 'hematite':
+        fname = 'size_hematite.txt'
+        w_um = 0.6328 # [micron]
+        n = 3
+        k = 0.03
+
+    # -------------------------------
+    else:
+        return print("The function currently only works for the particle 'feldspar' or 'hematite'")
+    # -------------------------------
+    
+
+    # Get the particle size
+    sizes = read_gals_size_table(particle_file_loc + fname, skiprows=2, out_type='container')
+    lab_x = sizes.x(w_um)
+    
+    # prepare inputs for the neural network
+    x_inp = lab_x
+    n_inp = n + np.zeros_like(x_inp)
+    k_inp = k + np.zeros_like(x_inp)
+    w_inp = w_um*1e4 + np.zeros_like(x_inp) # [cm]
+    theta = np.linspace(0, 180, 181)
+    
+
+    # Now we can produce the scattering quantities for each grain size
+    producer.setup(['Cext', 'Cabs', 'Csca', 'albedo', 'Z11', 'Z12', 'Z22', 'Z33', 'Z34', 'Z44', 
+                                              'N11', 'N12', 'N22', 'N33', 'N34', 'N44'])
+    
+    mat = producer(x_inp, n_inp, k_inp, theta, w_inp, xtype='enc', outtype='MuellerMatrix')
+    
+    
+
+
         
+    # Make an additional place to store the values averaged over the distribution
+    mat_dist = {}
+
+    mat_dist['Cext'] = average_over_size(mat.Cext, sizes.N_log_r, sizes.d_log_r)
+
+    mat_dist['Z11'] = average_over_size(mat.Z11.T, sizes.N_log_r, sizes.d_log_r)
+    mat_dist['Z12'] = average_over_size(mat.Z12.T, sizes.N_log_r, sizes.d_log_r)
+    mat_dist['Z22'] = average_over_size(mat.Z22.T, sizes.N_log_r, sizes.d_log_r)
+    mat_dist['Z33'] = average_over_size(mat.Z33.T, sizes.N_log_r, sizes.d_log_r)
+    mat_dist['Z34'] = average_over_size(mat.Z34.T, sizes.N_log_r, sizes.d_log_r)
+    mat_dist['Z44'] = average_over_size(mat.Z44.T, sizes.N_log_r, sizes.d_log_r)
+    
+
+    # 3. Saving Results
+    
+#     result['N11_calc'] = N11 
+    mat_dist['N12'] = - mat_dist['Z12'] / mat_dist['Z11']
+    mat_dist['N22'] = mat_dist['Z22'] / mat_dist['Z11']
+    mat_dist['N33'] = mat_dist['Z33'] / mat_dist['Z11']
+    mat_dist['N34'] = mat_dist['Z34'] / mat_dist['Z11']
+    mat_dist['N44'] = mat_dist['Z44'] / mat_dist['Z11']
+
+    return mat, mat_dist, theta
+# ------------------------------------------------------------
+#
+#
+#
+#
+#
+# -----------------------------------------------------------
+# Function to run glitterin using the DSHARP size distrbution
+# ------------------------------------------------------------
+# def make_dsharp_sizes(amax_um, amin_um=0.1, Nsize=200):
+#     sizes = SizeContainer()
+
+#     # uniform grid in log10(r)
+#     sizes.log_r = np.linspace(np.log10(amin_um), np.log10(amax_um), Nsize)
+
+#     # r in micron
+#     r = sizes.r
+
+#     # DSHARP-style n(r) ∝ r^-3.5
+#     # convert to N_log_r ∝ r * n(r) ∝ r^-2.5
+#     sizes.N_log_r = r**(-2.5)
+
+#     # not needed for averaging, but can fill with dummy arrays
+#     sizes.S_log_r = np.zeros_like(r)
+#     sizes.V_log_r = np.zeros_like(r)
+
+#     return sizes
+# ------------------------------------------------------------
+def RunGlitterinPowerLawDist(amax_um, w_um, n, k, amin_um=0.1, Nsize=200):
+    sizes = SizeContainer()
+    sizes.log_r = np.linspace(np.log10(amin_um), np.log10(amax_um), Nsize)
+    sizes.N_log_r = sizes.r**(-2.5)   # because n(r) ∝ r^-3.5
+    sizes.S_log_r = np.zeros_like(sizes.r)
+    sizes.V_log_r = np.zeros_like(sizes.r)
+
+    x_inp = 2 * np.pi * sizes.r / w_um
+    n_inp = n + np.zeros_like(x_inp)
+    k_inp = k + np.zeros_like(x_inp)
+    w_inp = w_um * 1e4 + np.zeros_like(x_inp)
+    theta = np.linspace(0, 180, 181)
+
+    mat = producer(x_inp, n_inp, k_inp, theta, w_inp,
+                   xtype='vol',
+                   outtype='MuellerMatrix')
+
+    mat_dist = {}
+    for key in ['Z11', 'Z12', 'Z22', 'Z33', 'Z34', 'Z44']:
+        mat_dist[key] = average_over_size(getattr(mat, key).T,
+                                          sizes.N_log_r,
+                                          sizes.d_log_r)
+
+    mat_dist['N12'] = -mat_dist['Z12'] / mat_dist['Z11']
+    mat_dist['N22'] =  mat_dist['Z22'] / mat_dist['Z11']
+    mat_dist['N33'] =  mat_dist['Z33'] / mat_dist['Z11']
+    mat_dist['N34'] =  mat_dist['Z34'] / mat_dist['Z11']
+    mat_dist['N44'] =  mat_dist['Z44'] / mat_dist['Z11']
+
+    return theta, sizes, mat, mat_dist
+# ------------------------------------------------------------       
        
