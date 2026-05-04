@@ -59,7 +59,7 @@ def galaxy_probability(S, band, sf = 1.15e3):
         
         dN_dS = N0  * (S / S0)**alpha * np.exp(-S/S0)
         
-        print(rf'IN galaxy_probability:::: N0 = {N0}, S0 = {S0}, alpha = {alpha}')
+#         print(rf'IN galaxy_probability:::: N0 = {N0}, S0 = {S0}, alpha = {alpha}')
             
     else:
         return print("Currently function only supports 'Band 6' and 'Band 7 nterms2'")
