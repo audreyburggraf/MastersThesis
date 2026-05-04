@@ -1,0 +1,66 @@
+Previously, we showed the polarization patterns at each band. The meaning behind their patterns revel things that will be later discussed. For now, we want to be able to model the patterns we see to be able to make conclusions about certain methods. 
+
+We developed two different geometric models for the polarization patterns which will be discussed. The polarization patterns are not created purely only by geometric effects, and ideally would incorporate some physics (including radiative transfer), but is beyond the scope of this thesis. For our project, purely geometric models is sufficient. 
+
+
+% ----------------------------------------------------------
+\subsection{Ratio Model}
+% ----------------------------------------------------------
+The first geometric model that was used is called the \emph{ratio model}. With this model we start with a purely uniform and purely azimuthal example. 
+
+The purely uniform example is where all vectors are uniform along the minor axis, or 90\degg from the position angle shown in Table \ref{tab: source_info}. This can be seen in the left panel of Figure \ref{fig: RatioExamples}.
+
+The 100\% azimuthal examples is where all agnles are azimuthal, or in a circular pattern around the centre point, which can also be found in Table \ref{tab: source_info}.  To calculate the azimuthal polarization angle, for each $(x, y)$ pixel we calculate the offset from the disk center $(x_0, y_0)$ using $\Delta x = x - x_0$ and $\Delta y = y - y_0$. We then calculate the azimuthal angle using the python function \texttt{numpy.arctan2}. This can be seen in the right panel of Figure \ref{fig: RatioExamples}.
+
+
+Now that we have our 100\% Uniform and 100\% Azimuthal cases we create a grid of different ratios between the two ranging from 100U 0A, 90U 10A, ..., 10U 90A, 0U 100A, where U refers to unifrm, A azimuthal, and their associated numbers are their weighted perfect. The position angle is calculated from \SQ and \SU, as shown in Equation \ref{eq: PA}, so to make the mixed ratio models, we need to mix \SQ and \SU. 
+
+For example, if we are looking at the 50U and 50A case, then we do:
+\begin{eqnarray}
+    Q_{ratio} &= 0.5\cdot Q_{uniform} + 0.5 \cdot Q_{azimuthal}, \text{ and} \\
+    U_{ratio} &= 0.5\cdot U_{uniform} + 0.5 \cdot U_{azimuthal},
+\end{eqnarray}
+\noindent and then use $Q_{ratio}$ and $U_{ratio}$ to find $\theta_{ratio}$, using Equation \ref{eq: PA}. This process is repeated for each ratio combination. The 5050 example is shown in the middle panel of Figure \ref{fig: RatioExamples}.
+
+
+
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Ratio/RatioExamples.pdf}
+  \caption{Example of the 100U 0A, 50U 50A and 0U 100A cases of the ratio model for Band 7. }
+  \label{fig: RatioExamples}
+\end{figure}
+
+
+
+
+% ----------------------------------------------------------
+
+
+
+
+
+% ----------------------------------------------------------
+\subsection{Gaussian Model}
+% ----------------------------------------------------------
+
+
+
+
+% ----------------------------------------------------------
+
+
+
+
+
+% ----------------------------------------------------------
+\subsection{Determining the Best Model}
+% ----------------------------------------------------------
+
+
+
+
+% ----------------------------------------------------------
+

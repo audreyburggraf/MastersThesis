@@ -1,5 +1,5 @@
 \chapter{Data}
-\label{ch2}
+\label{ch_data}
 
 
 Wording Ideas:
@@ -51,6 +51,25 @@ Wording:
 
 
 
+\begin{table}[h!]
+\centering
+\caption{Center position and position angle were found using a fit of the cleaned image on \texttt{CASA}. }
+\begin{tabular}{ccccccc}
+\toprule
+\multirow{2}{*}{} & \multicolumn{2}{c}{\textbf{Center position (J2000)}} & \textbf{Wavelength} & \textbf{PA} & \textbf{Next} \\
+& R.A. (h, m, s) & Decl. ($^\circ$,$'$,$''$) & (mm) & ($^\circ$)  & unit & \\
+\midrule 
+\textbf{Band 4} & 16:31:35.656 & -24:01:29.992 & \bandfourmm & 145.9 & 0 \\
+\textbf{Band 5} & 16:31:35.656 & -24:01:30.086 & \bandfivemm  & 140.25 (check) & 0   \\
+\textbf{Band 6} & 16:31:35.657 & -24:01:29.935 & \bandsixmm & 148.0 & 0   \\
+\textbf{Band 7} & 16:31:35.656 & -24:01:30.089 & \bandsevenmm & 139.65 & 0 \\
+\bottomrule
+\end{tabular}
+\label{tab: beam_info}
+\end{table}
+
+
+
 \section{\alma Imaging}
 
 
@@ -59,6 +78,12 @@ Wording:
     \item\ \quoted{The polarization intensity and $P$ was de-biased via the method described in \theircite  \cite{Stephens_2017}}.
 \end{itemize}
 
+
+
+\subsection{Debiasing}
+
+
+Observed polarized intensity is given by \POLIub, and it has a corresponding debiased intensity given by \POLI, with an error of \POLIerr. 
 
 \section{Clean}
 
@@ -80,5 +105,11 @@ Wording:
 \begin{itemize}
     \item\ \quoted{The ALMA instrumental error on $P$ is expected to be about 1\%. In cases where the measured $P$ rms was less than this value, we used 0.1\% as our error.  \cite{Stephens_2017}}.
 \end{itemize}
+
+
+
+
+\subsection{Error Values}
+As of now, Band 4 and Band 6 data was given to me, along with their error files. So Band 4 and Band 6 have error maps for <values>. This might change as I need to to nterms = 2 maybe? But for now, I cleaned Band 5 and Band 7 data myself and did not get error maps or we don't want to use them? So what I do is open the image in CASA viewer or CARTA, and find the maximum value of standard deviation in 4 boxes around the edges of the image (not on the bright disk) and average them together. 
 
 
