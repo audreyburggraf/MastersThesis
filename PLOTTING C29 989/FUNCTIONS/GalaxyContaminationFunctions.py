@@ -49,6 +49,8 @@ def galaxy_probability(S, band, sf = 1.15e3):
         
         dN_dS = phi * (S/S0)**(alpha) * np.exp(-S/S0)
         
+        
+        
     elif band == 'Band 7 nterms2':
         # Values from Statch, 2018 (https://arxiv.org/pdf/1805.05362), page 6, below equation 2
         N0    = 923 # number deg^-2
@@ -56,6 +58,8 @@ def galaxy_probability(S, band, sf = 1.15e3):
         alpha = -1.7  # unitless
         
         dN_dS = N0  * (S / S0)**alpha * np.exp(-S/S0)
+        
+        print(rf'IN galaxy_probability:::: N0 = {N0}, S0 = {S0}, alpha = {alpha}')
             
     else:
         return print("Currently function only supports 'Band 6' and 'Band 7 nterms2'")

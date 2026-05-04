@@ -6,6 +6,7 @@ sys.path.append("/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING 
 # Now you can import constants.py
 import constants
 
+
 import glitterin
 
 # Use the variable from constants.py

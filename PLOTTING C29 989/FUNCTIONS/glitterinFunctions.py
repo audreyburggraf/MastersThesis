@@ -6,6 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from UnitConversion import *
 from glitterin_LabDistributionFunc import *
+from tqdm import tqdm
 # ------------------------------------------------------------
 #
 #
@@ -641,35 +642,267 @@ def RunGlitterinLabDist(particle):
 
 #     return sizes
 # ------------------------------------------------------------
-def RunGlitterinPowerLawDist(amax_um, w_um, n, k, amin_um=0.1, Nsize=200):
+def RunGlitterinPowerLawDist(amax_cm, w, w_units, n, k, amin_cm = 1e-5, Nsize = 200):
+    
+    # Note: I want everything in units of cm
+    
+    if w_units == 'micron':
+    
+        w_cm = w / 10000
+        
+    elif w_units == 'cm':
+        w_cm = w 
+
+    else:
+        return print('The function currently only works for w_units of micron or cm')
+        
     sizes = SizeContainer()
-    sizes.log_r = np.linspace(np.log10(amin_um), np.log10(amax_um), Nsize)
+    sizes.log_r = np.linspace(np.log10(amin_cm), np.log10(amax_cm), Nsize)
     sizes.N_log_r = sizes.r**(-2.5)   # because n(r) ∝ r^-3.5
     sizes.S_log_r = np.zeros_like(sizes.r)
     sizes.V_log_r = np.zeros_like(sizes.r)
 
-    x_inp = 2 * np.pi * sizes.r / w_um
+    x_inp = 2 * np.pi * sizes.r / w_cm
     n_inp = n + np.zeros_like(x_inp)
     k_inp = k + np.zeros_like(x_inp)
-    w_inp = w_um * 1e4 + np.zeros_like(x_inp)
+    w_inp = w_cm + np.zeros_like(x_inp)
     theta = np.linspace(0, 180, 181)
+    
+    producer.setup(['Cext', 'Cabs', 'Csca', 'albedo', 'Z11', 'Z12', 'Z22', 'Z33', 'Z34', 'Z44', 
+                                          'N11', 'N12', 'N22', 'N33', 'N34', 'N44'])
 
     mat = producer(x_inp, n_inp, k_inp, theta, w_inp,
                    xtype='vol',
                    outtype='MuellerMatrix')
+    
+    # Calculate some things
+    # ------------------------------------------------------------------
+    mat.r_vol = (x_inp * w_inp) / (2 * np.pi)
+    # ------------------------------------------------------------------
+    # kappa values using equation 20 from the paper
+    rho_s = 1.675 # [grams / cm^3]
+    mass = (4/3) * np.pi * rho_s * mat.r_vol**3
+    # ------------------------------------------------------------------
+    mat.k_ext = mat.Cext / mass
+    mat.k_abs = mat.Cabs / mass
+    mat.k_sca = mat.Csca / mass
+    # ------------------------------------------------------------------
+    
+    
+    # Look at distrbution
 
     mat_dist = {}
     for key in ['Z11', 'Z12', 'Z22', 'Z33', 'Z34', 'Z44']:
         mat_dist[key] = average_over_size(getattr(mat, key).T,
                                           sizes.N_log_r,
                                           sizes.d_log_r)
+        
 
-    mat_dist['N12'] = -mat_dist['Z12'] / mat_dist['Z11']
-    mat_dist['N22'] =  mat_dist['Z22'] / mat_dist['Z11']
-    mat_dist['N33'] =  mat_dist['Z33'] / mat_dist['Z11']
-    mat_dist['N34'] =  mat_dist['Z34'] / mat_dist['Z11']
-    mat_dist['N44'] =  mat_dist['Z44'] / mat_dist['Z11']
+    Cext_avg = average_over_size(mat.Cext, sizes.N_log_r, sizes.d_log_r)
+    Cabs_avg = average_over_size(mat.Cabs, sizes.N_log_r, sizes.d_log_r)
+    Csca_avg = average_over_size(mat.Csca, sizes.N_log_r, sizes.d_log_r)
+    mass_avg = average_over_size(mass, sizes.N_log_r, sizes.d_log_r)
+
+    mat_dist['k_ext'] = Cext_avg / mass_avg
+    mat_dist['k_abs'] = Cabs_avg / mass_avg
+    mat_dist['k_sca'] = Csca_avg / mass_avg
+
+
 
     return theta, sizes, mat, mat_dist
-# ------------------------------------------------------------       
-       
+# ------------------------------------------------------------ 
+def RunGlitterinPowerLawDistAveraged(indicies, data_w_cm, data_n, data_k, max_rvol_grid_cm):
+
+    # Make main storage dictionary
+    results = {}
+
+
+    # Loop over all of the wavelength index
+    for i, idx in enumerate(indicies):
+
+        # Get the index
+        print(rf'Now working on: {idx}')
+
+        # Get n, k, wavelength
+        n = data_n[idx]
+        k = data_k[idx]
+        w_cm = data_w_cm[idx]
+        print(rf'n = {n:.3f} and k = {k:.3f}')
+        print(rf'lambda = {w_cm} cm')
+
+
+        # Make empty arrays for this wavelength
+        k_abs = np.zeros_like(max_rvol_grid_cm)
+        k_sca = np.zeros_like(max_rvol_grid_cm)
+        omega = np.zeros_like(max_rvol_grid_cm) 
+        P = np.zeros_like(max_rvol_grid_cm) 
+        P_omega = np.zeros_like(max_rvol_grid_cm) 
+
+        # Loop over each rvol_max value for 
+        for i, rvol_max_cm in enumerate(tqdm(max_rvol_grid_cm)):
+            theta, sizes, mat, mat_dist = RunGlitterinPowerLawDist(rvol_max_cm, w_cm, 'cm', n, k)
+
+            k_abs[i] = mat_dist['k_abs']
+            k_sca[i] = mat_dist['k_sca']
+
+            omega[i] = mat_dist['k_sca'] / (mat_dist['k_sca'] + mat_dist['k_abs'])
+
+            idx_90 = np.argmin(np.abs(theta - 90))
+            P[i] = - mat_dist['Z12'][idx_90] / mat_dist['Z11'][idx_90]
+
+            P_omega[i] = P[i] * omega[i]
+
+        # Save everything for this wavelength
+        results[idx] = {
+            'w_cm': w_cm,
+            'n': n,
+            'k': k,
+            'rvol_max_cm': max_rvol_grid_cm,
+            'rvol_max_micron': cm_to_micron(max_rvol_grid_cm),
+    #         'rvol_max_um': max_rvol_grid_cm * 1e4,
+            'k_abs': k_abs,
+            'k_sca': k_sca,
+    #         'omega': omega,
+    #         'g': g,
+            'omega': omega, 
+            'P': P,
+            'P_omega': P_omega,
+        }
+        
+    return results
+# ------------------------------------------------------------
+#
+#
+#
+#
+# 
+# I am updating this so we can say what POLF we want to use 
+def find_sf_glitterin(results, AllBands, BandsInFit, df_POLF, POLF_index, print_results = True):
+    
+    
+    # POLF Stuff
+    # --------------------------------------------------------------------------
+    # Name the columns of the POLF values
+    POLF_columns = {
+        'gaussian': 'POLF_Gaussian',
+        'max Stokes I': 'POLF_maxStokesI',
+        'POLI': 'POLF_maxPOLI',
+        'mean': 'POLF_mean'
+    }
+    
+    
+    # POLF_index is the POLF we want to use to compare
+    # Make sure we have that data 
+    if POLF_index not in POLF_columns:
+        raise ValueError(
+            "POLF_index must be 'gaussian', 'poli', 'avg', 'mean', or 'max Stokes I'"
+        )
+    print(rf'The POLF value we are considering is: {POLF_index}')
+    
+    # Get all the POLF values together
+    POLF_obs_all = df_POLF[POLF_columns[POLF_index]].values
+    # --------------------------------------------------------------------------    
+        
+    
+    print(f'\n The Bands we are looking at are: {AllBands}')
+    print(rf"The Bands included in the fit are: {BandsInFit}")
+ 
+    # Band names → indices (0, 1, 2, etc)
+    band_to_index = {band: i for i, band in enumerate(AllBands)}
+    fit_indices = [band_to_index[b] for b in BandsInFit]
+
+
+    # Make an array for the rvol_max and make sure it is the same for all bands
+    # --------------------------------------------------------------------------    
+    rvol_max_cm = results[AllBands[0]]['rvol_max_cm']
+#     rvol_max_micron = cm_to_micron(rvol_max_cm)
+    
+    ref = rvol_max_cm
+    
+    # Pick first band as reference
+    ref = results[AllBands[0]]['rvol_max_cm']
+
+    # Check all match
+    all_same = all(
+        np.allclose(results[band]['rvol_max_cm'], ref)
+        for band in AllBands
+    )
+
+    print("\n All rvol_max_cm are the same:", all_same)
+    # --------------------------------------------------------------------------    
+
+    
+    # Save the P omega data in the way that we need it to be saved
+    # We want it saved like Pw = (N_rvol, N_bands), 
+    # or one column per band, num r_vol_max long
+    # --------------------------------------------------------------------------   
+    N_rvol_max = len(rvol_max_cm)
+    N_bands = len(AllBands)
+    
+    Pw = np.zeros((N_rvol_max, N_bands))
+    
+    for j, band in enumerate(AllBands):
+        Pw[:, j] = results[band]['P_omega']
+    # --------------------------------------------------------------------------   
+    
+
+    # Calculate the median and standard deviations
+    # --------------------------------------------------------------------------   
+    # Make arrays to store the median and standard deviation values 
+    sf_medians = []
+    sf_stds = []
+
+    # Loop over each rvol_max grid point
+    for i in range(len(rvol_max_cm )):
+        Pw_model = Pw[i, :]  # all bands for current rvol_max
+
+         # ONLY use selected bands for fit
+        Pw_fit = Pw_model[fit_indices]
+        POLF_fit = POLF_obs_all[fit_indices]
+
+        # Avoid divide by zero
+        valid = Pw_fit > 0
+
+        sf_i = POLF_fit[valid] / Pw_fit[valid]
+
+        sf_medians.append(np.median(sf_i))
+        sf_stds.append(np.std(sf_i))
+
+    sf_medians = np.array(sf_medians)
+    sf_stds = np.array(sf_stds)
+    # --------------------------------------------------------------------------   
+
+
+    # Choose best a_max where scatter is minimized
+    # ---------------------------------------------
+    best_idx = np.argmin(sf_stds)
+
+    best_rvol_max_cm = rvol_max_cm[best_idx]
+    best_sf = sf_medians[best_idx]
+    best_idx_arr = best_idx
+    
+    POLF_obs = np.array([
+        POLF_obs_all[band_to_index[b]] for b in AllBands
+    ])
+    # ---------------------------------------------
+        
+    if print_results:
+        print("\nbest_idx:", best_idx)
+        print("Best rvol_max_cm:", best_rvol_max_cm)
+        print("Best SF:", best_sf)
+        print("Best SF std:", sf_stds[best_idx])
+    
+    
+    sf_results = {
+        'rvol_max_cm': rvol_max_cm,
+        'Pw': Pw,
+        'best_rvol_max_cm': best_rvol_max_cm,
+        'best_rvol_max_micron': cm_to_micron(best_rvol_max_cm),
+        'POLF_obs': POLF_obs,
+        'best_sf': best_sf,
+        'best_idx_arr': best_idx_arr,
+        'sf_medians': sf_medians,
+        'sf_stds': sf_stds
+    }
+
+    return sf_results

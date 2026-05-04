@@ -125,6 +125,38 @@ alma_band_colors = {
 }
 
 
+# Set the colours for each band 
+alma_band_plot_labels = {
+    #--------
+    # Band 4
+    #--------
+    "Band 4": "Band 4",
+    "Band 4 nterms2": "Band 4",
+    #--------
+    # Band 5
+    #-------- 
+    "Band 5": "Band 5",
+    "Band 5 v0": "Band 5",
+    "Band 5 nterms 2": "Band 5",
+    'Band 5 robust -1': "Band 5 rob. -1",
+    #--------
+    # Band 6
+    #--------
+    "Band 6": "Band 6",
+    "Band 6 smooth": "Band 6",
+    "Band 6 smooth B7":"Band 6",
+    #--------
+    # Band 7
+    #--------
+    "Band 7":  "Band 7",
+    "Band 7 nterms2": "Band 7",
+    "Band 7 nterms2 smooth": "Band 7",
+    "Band 7 nterms2 smooth B6": "Band 7",
+}
+
+
+
+
 alma_band_ms = {
     'testing': '0', 
     1: '.', 

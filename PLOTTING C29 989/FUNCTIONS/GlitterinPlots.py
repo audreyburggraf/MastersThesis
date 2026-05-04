@@ -5,6 +5,7 @@ import seaborn as sns
 from matplotlib.ticker import ScalarFormatter
 from matplotlib.lines import Line2D
 from PlottingWithFunction import * 
+from UnitConversion import * 
 # ------------------------------------------------------------
 #
 #
@@ -417,187 +418,115 @@ def Lin2025Figure1011(theta, mat_dist,
 # ----------------------------------------------------------
 # Function to replicate Figure 12
 # ----------------------------------------------------------
-# def Lin2025Figure12(results_all,
-#                     text_fs = constants.text_fs , 
-#                     axis_label_fs = constants.axis_label_fs, 
-#                     axis_num_fs = constants.axis_num_fs, 
-#                     fig_size_x = 15,
-#                     fig_size_y = 10,
-#                     x_num = True,
-#                     y_num = True,
-#                     full_axis_labels = True):
+def Lin2025Figure12(results, text_fs = constants.text_fs , 
+                    axis_label_fs = constants.axis_label_fs, 
+                    axis_num_fs = constants.axis_num_fs, 
+                    fig_size_x = 15,
+                    fig_size_y = 10,
+                    x_num = True,
+                    y_num = True,
+                    full_axis_labels = True):
+    
    
+    # Setting up the figure and what we want to plot
+    # ---------------------------------------------
+    # Create a figure 
+    fig, axes = plt.subplots(2, 2, figsize=(fig_size_x, fig_size_y), sharex = True)
+    # ---------------------------------------------
+    panel_labels = ["a)", "b)", "c)", "d)"]
+    # ---------------------------------------------
+    y_axis_labels = ["$\kappa_{abs, 1 mm}$ [cm$^2$ g$^{-1}]$", 
+                 "$\\beta (870 \mu$m - 3.11 mm)",
+                 "$\kappa_{sca, 1 mm}$ [cm$^2$ g$^{-1}]$", 
+                 "$P \omega$"]
+    # ---------------------------------------------
+    ylims = [
+        [(0.5, 3.75), None],
+        [(1e-1, 90), (-0.1, 1)]
+    ]
+
+    # flatten
+    flat_ylims = [item for row in ylims for item in row]
+
+    # apply
+    for ax, ylim in zip(axes.flatten(), flat_ylims):
+        if ylim is not None:
+            ax.set_ylim(*ylim)
+    # ---------------------------------------------
     
-#     # Create a figure 
-#     fig, axes = plt.subplots(2, 2, figsize=(fig_size_x, fig_size_y), sharex = True)
-   
+    # Loop over each plot
+    # ---------------------------------------------
     
-#     panel_labels = ["a)", "b)", "c)", "d)"]
-    
-    
-#     y_axis_labels = ["$\kappa_{abs, 1 mm}$ [cm$^2$ g$^{-1}]$", 
-#                      "$\\beta (870 \mu$m - 3.11 mm)",
-#                      "$\kappa_{sca, 1 mm}$ [cm$^2$ g$^{-1}]$", 
-#                      "$P \omega$"]
-    
-#     for i, ax in enumerate(axes.flatten()):
+    for i, ax in enumerate(axes.flatten()):
         
-#         ax.text(0.05, 0.85, f"{panel_labels[i]}",
-#                        transform=ax.transAxes,
-#                        fontsize=text_fs)
+        ax.text(0.05, 0.85, f"{panel_labels[i]}",
+                       transform=ax.transAxes,
+                       fontsize=text_fs)
         
-#         # Add x-labels to bottom row:
-#         if i in (2, 3):
-#             ax.set_xlabel(rf'Maximum $r_{{vol}}$ [cm]', fontsize=axis_label_fs)
+        # Add x-labels to bottom row:
+        if i in (2, 3):
+            ax.set_xlabel(rf'Maximum $r_{{vol}}$ [cm]', fontsize=axis_label_fs)
         
-#         # Label the y-axes
-#         ax.set_ylabel(rf'{y_axis_labels[i]}',    fontsize=axis_label_fs)
+        # Label the y-axes
+        ax.set_ylabel(rf'{y_axis_labels[i]}',    fontsize=axis_label_fs)
 
 
-#         # Make axes log-space
-#         if i in (0, 2):
-#             ax.set_yscale('log')
-#         ax.set_xscale('log')
+        # Make axes log-space
+        if i in (0, 2):
+            ax.set_yscale('log')
+        ax.set_xscale('log')
 
-#         # Adjust ticks
-#         add_min_major_ticks(ax)
+        # Adjust ticks
+        add_min_major_ticks(ax)
         
-#         # Set the x-lims of the plots
-#         ax.set_xlim(1e-3, 1e0)
+        # Set the x-lims of the plots
+        ax.set_xlim(1e-3, 1e0)
         
-#     # Plot the data 
-#     # --------------------------------------------- 
-#     axes[0, 0].plot(results_all['1 mm']['r_vol'], results_all['1 mm']['k_abs_eff'])
-# #     axes[0, 1].plot(results_all['1 mm']['r_vol'], results_all['1 mm']['Q_ext_vol'])
-#     axes[1, 0].plot(results_all['1 mm']['r_vol'], results_all['1 mm']['k_sca_eff'])
     
-#     labels = {
-#         '870 micron': '870 $\mu$m', 
-#         '3.1 mm': '3.1 mm',
-#         '7 mm': '7 mm', 
-#     }
+    labels = {
+        '870 micron': '870 $\mu$m', 
+        '3.1 mm': '3.1 mm',
+        '7 mm': '7 mm', 
+    }
 
-#     for lambdas in ('870 micron', '3.1 mm', '7 mm'):
-#         axes[1, 1].plot(results_all[lambdas]['r_vol'], 
-#                         results_all[lambdas]['P_omega_90'], 
-#                         color = glitterinColours[lambdas],
-#                         label = labels[lambdas],
-#                         lw = 3)
+    for lambdas in ('870 micron', '3.1 mm', '7 mm'):
+        
+        res = results[lambdas]
+        
+        axes[1, 1].plot(res['rvol_max_cm'], 
+                        res['P_omega'], 
+                        color = glitterinColours[lambdas],
+                        label = labels[lambdas],
+                        lw = 3)
 #     # --------------------------------------------- 
     
-#     # Customize the bottom right plot    
-#     # --------------------------------------------- 
-#     axes[1, 1].axhline(0, color = 'silver')
-#     axes[1, 1].legend(fontsize = 20)
-#     # ---------------------------------------------    
     
-#     # Set the x-lims of the plots
-#     # --------------------------------------------- 
+    
+    # Plot the data for the left plots
+    # --------------------------------------------- 
+    res1 = results['1 mm']
+    axes[0, 0].plot(res1['rvol_max_cm'], res1['k_abs'], color = 'black')
+    axes[1, 0].plot(res1['rvol_max_cm'], res1['k_sca'], color = 'black')
+    # --------------------------------------------- 
+    
+    
+    # Customize the bottom right plot    
+    # --------------------------------------------- 
+    axes[1, 1].axhline(0, color = 'silver')
+    axes[1, 1].legend(fontsize = 10)
+    # ---------------------------------------------    
+    
+    # Set the x-lims of the plots
+    # --------------------------------------------- 
 #     axes[1, 0].set_ylim(1e-1, 90)
-#     # --------------------------------------------- 
+    # --------------------------------------------- 
     
-#     # Adjust the space between the plots
-#     fig.subplots_adjust(hspace = 0.1, wspace = 0.25)
+    # Adjust the space between the plots
+    fig.subplots_adjust(hspace = 0.1, wspace = 0.25)
 
-#     return fig, axes
-
-
+    return fig, axes
 # ----------------------------------------------------------
-# Function to replicate Figure 12
 # ----------------------------------------------------------
-# def Lin2025Figure12(text_fs = constants.text_fs , 
-#                     axis_label_fs = constants.axis_label_fs, 
-#                     axis_num_fs = constants.axis_num_fs, 
-#                     fig_size_x = 15,
-#                     fig_size_y = 10,
-#                     x_num = True,
-#                     y_num = True,
-#                     full_axis_labels = True):
-    
-   
-#     # Setting up the figure and what we want to plot
-#     # ---------------------------------------------
-#     # Create a figure 
-#     fig, axes = plt.subplots(2, 2, figsize=(fig_size_x, fig_size_y), sharex = True)
-#     # ---------------------------------------------
-#     panel_labels = ["a)", "b)", "c)", "d)"]
-#     # ---------------------------------------------
-#     y_axis_labels = ["$\kappa_{abs, 1 mm}$ [cm$^2$ g$^{-1}]$", 
-#                  "$\\beta (870 \mu$m - 3.11 mm)",
-#                  "$\kappa_{sca, 1 mm}$ [cm$^2$ g$^{-1}]$", 
-#                  "$P \omega$"]
-#     # ---------------------------------------------
-    
-    
-#     # Loop over each plot
-#     # ---------------------------------------------
-    
-#     for i, ax in enumerate(axes.flatten()):
-        
-#         ax.text(0.05, 0.85, f"{panel_labels[i]}",
-#                        transform=ax.transAxes,
-#                        fontsize=text_fs)
-        
-#         # Add x-labels to bottom row:
-#         if i in (2, 3):
-#             ax.set_xlabel(rf'Maximum $r_{{vol}}$ [cm]', fontsize=axis_label_fs)
-        
-#         # Label the y-axes
-#         ax.set_ylabel(rf'{y_axis_labels[i]}',    fontsize=axis_label_fs)
-
-
-#         # Make axes log-space
-#         if i in (0, 2):
-#             ax.set_yscale('log')
-#         ax.set_xscale('log')
-
-#         # Adjust ticks
-#         add_min_major_ticks(ax)
-        
-#         # Set the x-lims of the plots
-# #         ax.set_xlim(1e-3, 1e0)
-        
-    
-# #     labels = {
-# #         '870 micron': '870 $\mu$m', 
-# #         '3.1 mm': '3.1 mm',
-# #         '7 mm': '7 mm', 
-# #     }
-
-# #     for lambdas in ('870 micron', '3.1 mm', '7 mm'):
-# #         axes[1, 1].plot(mat_dist_all[lambdas]['r_vol'], 
-# #                         mat_dist_all[lambdas]['Pw'], 
-# #                         color = glitterinColours[lambdas],
-# #                         label = labels[lambdas],
-# #                         lw = 3)
-# #     # --------------------------------------------- 
-    
-    
-    
-#     # Plot the data for the left plots
-#     # --------------------------------------------- 
-# #     axes[0, 0].plot(sizes_all['1 mm'].r, mat_all['1 mm'].k_abs)
-# #     axes[1, 0].plot(sizes_all['1 mm'].r, mat_all['1 mm'].k_sca)
-#     # --------------------------------------------- 
-    
-    
-#     # Customize the bottom right plot    
-#     # --------------------------------------------- 
-#     axes[1, 1].axhline(0, color = 'silver')
-#     axes[1, 1].legend(fontsize = 20)
-#     # ---------------------------------------------    
-    
-#     # Set the x-lims of the plots
-#     # --------------------------------------------- 
-# #     axes[1, 0].set_ylim(1e-1, 90)
-#     # --------------------------------------------- 
-    
-#     # Adjust the space between the plots
-#     fig.subplots_adjust(hspace = 0.1, wspace = 0.25)
-
-#     return fig, axes
-# # ----------------------------------------------------------
-# # ----------------------------------------------------------
 #
 #
 #
@@ -625,7 +554,7 @@ def P_vs_omega_twin_axis(results_all, wavelength_labels, wavelengths_cm):
         # Label the x- and y-axis labels
         ax.set_ylabel('P', fontsize=axis_label_fs)
         ax2.set_ylabel(rf'$\omega$', fontsize=axis_label_fs)
-        ax.set_xlabel(rf'Maximum $r_{{vol}}$ [cm]', fontsize=axis_label_fs)
+        ax.set_xlabel('Maximum grain size [$\mu$m]', fontsize=axis_label_fs)
         
         
         # Make the x-axes log scaling
@@ -633,19 +562,29 @@ def P_vs_omega_twin_axis(results_all, wavelength_labels, wavelengths_cm):
         
         # Add the wavelength text
         ax.text(0.05, 0.90,
-                f"{wavelengths_cm[idx]} cm",
+                f"{constants.lambda_mm[idx]} mm",
                 transform=ax.transAxes,
                 fontsize=text_fs)
+        
+        # Remove scientific notation from x-axis
+        ax.xaxis.set_major_formatter(ScalarFormatter(useMathText=False))
+        ax.ticklabel_format(style='plain', axis='x')
         
         # Adjust ticks
         add_min_major_ticks(ax)
         add_min_major_ticks(ax2)
         
         # Plot the data 
-        ax_P, = ax.plot(results['r_vol'], results['P'],  color='red',  label='P', lw = 3)
-        ax2_omega, = ax2.plot(results['r_vol'], results['omega'], color='blue', label=r'$\omega$', lw = 3)
+        rvol_max_micron = cm_to_micron(results['rvol_max_cm'])
+        ax_P, = ax.plot(rvol_max_micron, results['P'],  color='red',  label='P', lw = 3)
+        ax2_omega, = ax2.plot(rvol_max_micron, results['omega'], color='blue', label=r'$\omega$', lw = 3)
     
 
+    
+        # Set y-lim
+        ax.set_ylim(-0.2, 1.4)
+        ax2.set_ylim(-0.2, 1.4)
+            
         # Add a legend
         ax.legend(handles = [ax_P, ax2_omega], fontsize = legend_text_fs, loc = 'upper right')
 
@@ -657,3 +596,295 @@ def P_vs_omega_twin_axis(results_all, wavelength_labels, wavelengths_cm):
     
     
     return fig, axes
+# ----------------------------------------------------------
+#
+#
+#
+#
+#
+
+
+
+def Pomega_Plot(results, BandsIndex,
+                text_fs = constants.text_fs , 
+                axis_label_fs = constants.axis_label_fs, 
+                axis_num_fs = constants.axis_num_fs, 
+                legend_text_fs = constants.legend_text_fs,
+                fig_size_x = 8,
+                fig_size_y = 5):
+    
+   
+    # Setting up the figure and what we want to plot
+    # ---------------------------------------------
+    # Create a figure 
+    fig, ax = plt.subplots(figsize=(fig_size_x, fig_size_y))
+    # ---------------------------------------------
+    
+    
+    # Label the x- and y-axis labels
+    ax.set_ylabel('P $\omega$', fontsize=axis_label_fs)
+    ax.set_xlabel('Maximum grain size [$\mu$m]', fontsize=axis_label_fs)
+
+    
+    # Make x-axis log
+    ax.set_xscale('log')
+    
+     # Adjust ticks
+    add_min_major_ticks(ax)
+    
+
+    # Loop over each wavelength
+    # ---------------------------------------------
+    for i, b in enumerate(BandsIndex):
+        print(b)
+        
+        res = results[b]
+        rvol_max_micron = cm_to_micron(res['rvol_max_cm'])
+        
+        ax.plot(rvol_max_micron, 
+                res['P_omega'], 
+                color = constants.alma_band_colors[b],
+                label = constants.alma_band_plot_labels[b],
+                lw = 3)
+    # ---------------------------------------------
+    
+    # Add a legend
+    ax.legend(fontsize = legend_text_fs)
+        
+    
+    
+
+    return fig, ax
+# ----------------------------------------------------------
+# ----------------------------------------------------------
+def plot_scale_factor_resultsGlitterin(bands,
+                                       bands_included_in_fit, 
+                                       results, 
+                                       sf_results, 
+                                       df_POLF, 
+                                       fig_x_size = 8,
+                                       fig_y_size = 5,
+                                       plot_sf = 1,
+                                       custom_lw = None,
+                                       chi_sq_precision = 3):
+    
+    sf = sf_results['best_sf']
+    rvol_max_best_micron = sf_results['best_rvol_max_micron']
+    
+    
+
+    # ----------------------------------------------------------------
+    band_ls = [
+    '-' if b in bands_included_in_fit else '--'
+    for b in bands
+    ]
+    
+    if custom_lw is None:
+        # default behavior
+        bands_lw = [
+            3 if b in bands_included_in_fit else 2
+            for b in bands
+        ]
+    else:
+        # override where specified
+        bands_lw = [
+            custom_lw.get(b, 3 if b in bands_included_in_fit else 2)
+            for b in bands
+        ]
+    # ----------------------------------------------------------------
+    # Set the colors and marker size for each band 
+    # ----------------------------------------------------------------
+    band_colors = [alma_band_colors[b] for b in bands]
+    ms = [constants.alma_band_ms[b] for b in bands]
+    # ----------------------------------------------------------------
+    
+    
+    # Get POLF values
+    # ----------------------------------------------------------------
+    POLF_markers = dict(zip(df_POLF["Band"], df_POLF["POLF_maxStokesI"]))
+    # ----------------------------------------------------------------
+    
+    
+    # Make the figure
+    # Later I will make this so you can customize how many figures you need
+    fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size))
+    
+    # Axes
+    # ----------------------------------------------------------------
+    # Make x-axis log
+    ax.set_xscale('log')
+    
+    # Label the x- and y-axis labels
+    ax.set_ylabel('P $\omega$', fontsize=axis_label_fs)
+    ax.set_xlabel('Maximum grain size [$\mu$m]', fontsize=axis_label_fs * plot_sf)
+    
+    # Adjust ticks
+    add_min_major_ticks(ax)
+    # ----------------------------------------------------------------
+    
+
+    # Set the x-axis values
+     # ----------------------------------------------------------------
+    rvol_max_micron = results[bands[0]]['rvol_max_micron']
+     # ----------------------------------------------------------------
+    
+
+
+    marker_handles = []
+    
+    # Loop over each band 
+    for j, b in enumerate(bands):
+
+        idx = bands.index(b)
+
+        # Set the face and edge color of the POLF markers
+        # ---------------------------------------------------
+        fc = constants.alma_band_colors[b]
+        ec = constants.alma_band_colors[b]
+        marker_lw = 0 
+
+        # Customize Band 5
+        if b in ["Band 5"]:
+            fc = 'none'
+            marker_lw = 5
+        # ---------------------------------------------------
+        # Plot the POLF values at the best amax
+        ax.scatter(rvol_max_best_micron, 
+                   POLF_markers[b],
+                   marker=ms[j], 
+                   s=100,
+                   facecolors=fc,
+                   edgecolors=ec,
+                   linewidths=marker_lw)
+        # ---------------------------------------------------
+
+
+        marker_handles.append(
+        Line2D([0], [0],
+               marker=ms[j],
+               color='none',
+               markerfacecolor=fc,
+               markeredgecolor=ec,
+               markeredgewidth=marker_lw,
+               markersize=15,
+               linestyle='None'))
+
+        # Plot rvol_max grid and P omega multiplied by the scale factor
+        # ---------------------------------------------------
+        if b not in ["Band 5 robust -1", "Band 5 robust -2"]:
+            ax.plot(rvol_max_micron,
+                    results[b]['P_omega'] * sf,
+                       color=band_colors[j],
+                       label= f'{constants.alma_band_plot_labels[b]}',
+                       lw=bands_lw[j],
+                       ls=band_ls[j]
+                      )
+        # ---------------------------------------------------
+    
+        # Calculate chi_sq
+        # ---------------------------------------------
+        chi_sq_running_sum = 0
+
+        best_idx = sf_results['best_idx_arr']
+
+        for b in bands:
+
+            # optional: skip Band 5 if you want
+            if b == "Band 5":
+                continue
+
+            POLF_obs = POLF_markers[b]
+            POLF_model = results[b]['P_omega'][best_idx] * sf
+
+            chi_sq_running_sum += (POLF_obs - POLF_model)**2
+
+        chi_sq = chi_sq_running_sum
+        # ---------------------------------------------
+        
+        
+        
+                
+    x_pos = 0.4 
+    y_pos = 0.05
+    y_gap = 0.1
+        
+        
+    fs = 15
+    ax.text(x_pos, y_pos + y_gap,  f'$\chi^2$ = {chi_sq:.{chi_sq_precision}f}', transform=ax.transAxes, fontsize = fs)
+
+
+    ax.text(x_pos, y_pos + 2*y_gap, f'sf = {sf:.2f}', transform=ax.transAxes, fontsize = fs)
+
+    # Add the a_max to the text
+    ax.text(x_pos, y_pos, rf'$a_{{\mathrm{{max}}}}$ = {rvol_max_best_micron:.0f} $\mu$m', 
+               transform=ax.transAxes, 
+               fontsize = fs)
+        
+        
+        
+    
+    
+    # Add coloured text for each Band 
+    # ----------------------------------------------------
+    start = 0.9 # y
+    c = 0
+    # Loop over each band 
+    for j, b_label in enumerate(bands):
+        
+        if "robust" in b_label:
+            label = b_label.replace(" robust ", "\nrobust ")
+            c = c + 0.075
+        else:
+            label = b_label
+
+        ax.text(0.01, start - c,
+                   label,
+                   transform=ax.transAxes,
+                   fontsize=15,
+                   color=band_colors[j])
+        c = c + 0.1
+        # ----------------------------------------------------
+        
+        
+    # Add a legend for the line style
+    # ----------------------------------------------------
+    legend_elements = [
+        Line2D([0], [0], color='black', linestyle='-', lw = 5, label='Included'),
+        Line2D([0], [0], color='black', linestyle='--', lw = 5, label='Excluded')
+    ]
+
+    # Line style
+    fs = 15
+    legend1 = ax.legend(handles=legend_elements, 
+                        fontsize = fs, 
+                        frameon=False, 
+                        title="Fit", 
+                        title_fontsize = fs,
+                        loc = 'lower right')
+    
+    
+    ax.add_artist(legend1)
+    # ----------------------------------------------------
+
+    
+    
+    # Add a legend for the POLF markers
+    # ----------------------------------------------------
+    ax.legend(handles=marker_handles, 
+                 fontsize = 15, 
+                 frameon=False, 
+                 title="Obs. POLF", 
+                 title_fontsize = 15,
+                 loc = 'upper right',
+                 handletextpad=-3.8,
+                 handlelength=0.2)   
+    # ----------------------------------------------------
+
+
+
+
+
+    return fig, ax
+    
+
+# --------------------------------------------------------------------------------------

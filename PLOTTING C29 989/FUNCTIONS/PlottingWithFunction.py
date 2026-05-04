@@ -110,6 +110,20 @@ def add_min_major_ticks(ax, axis_num_fs = None, sf = 1):
     ax.tick_params(axis="x", which="minor", direction="in", bottom=True, top=True, length=4)
     ax.tick_params(axis="y", which="minor", direction="in", left=True, right=True, length=4)
 # -----------------------------------------------------------------------------------------
+def add_min_major_ticks_wcs(ax, axis_num_fs = None, sf = 1):
+    
+    if axis_num_fs  is None:
+        axis_num_fs  = constants.axis_num_fs  * sf
+        
+        
+    # Adjust ticks
+    ax.minorticks_on()
+    ax.tick_params(axis="x", which="major", direction="in", bottom=True, top=True, length=7, labelsize=axis_num_fs)
+    ax.tick_params(axis="y", which="major", direction="in", bottom=True, top=True, length=7, labelsize=axis_num_fs)
+
+    ax.tick_params(axis="x", which="minor", length=4)
+    ax.tick_params(axis="y", which="minor", length=4)
+# -----------------------------------------------------------------------------------------
     
     
 # -----------------------------------------------------------------------------------------
@@ -136,13 +150,18 @@ def add_band_label(ax, band, label, text_fs, fontcolor, constants):
     # Map band string → integer
     band_map = {
         "Band 4": 4,
+        4: 4,
         "Band 5": 5,
+        5: 5,
         "Band 6": 6,
-        "Band 7": 7
+        6: 6, 
+        "Band 7": 7,
+        "Band 7 nterms2": 7,
+        7: 7, 
     }
 
     if band not in band_map:
-        print("add_band_label only accepts: 'Band 4', 'Band 5', 'Band 6', 'Band 7'")
+        print("add_band_label only accepts: 'Band 4', '4',  'Band 5', '5', 'Band 6','6',  'Band 7', 'Band 7 nterms2', '7', ")
         return
 
     b = band_map[band]
@@ -168,8 +187,58 @@ def add_band_label(ax, band, label, text_fs, fontcolor, constants):
             fontsize=text_fs,
             color=fontcolor)
 # -----------------------------------------------------------------------------------------
+# Used ChatGpt to help make this function to save time
+# Note I already have a function but this is upated 
+def add_StokesI_cbar(im, ax, normalized_ticks, unstretched_ticks,
+                    cbar_fs, axis_num_fs, shrink=1):
+    """
+    Add a horizontal Stokes I colorbar to a given axis.
 
+    Parameters
+    ----------
+    im : matplotlib image
+        Output of imshow
+    ax : matplotlib axis
+        Axis the colorbar is attached to
+    normalized_ticks : array-like
+        Tick locations in normalized (stretched) space
+    unstretched_ticks : array-like
+        Tick labels in physical units (mJy/beam)
+    cbar_fs : int
+        Font size for label
+    axis_num_fs : int
+        Font size for tick labels
+    shrink : float
+        Shrink factor for colorbar length
+    """
 
+    cbar = plt.colorbar(im, ax=ax, orientation='horizontal', shrink=shrink)
+
+    cbar.set_label(r'Stokes I (mJy/beam)', fontsize=cbar_fs)
+
+    cbar.ax.tick_params(labelsize=axis_num_fs, which='major',
+                        length=7, direction="in")
+    cbar.ax.tick_params(which='minor', length=4, direction="in")
+
+    cbar.set_ticks(normalized_ticks)
+    cbar.set_ticklabels([f"{val:.2f}" for val in unstretched_ticks])
+
+    return cbar
+# -----------------------------------------------------------------------------------------
+def MinorAxisSlice(ax, minor_x, minor_y):
+    
+    
+    ax.plot(minor_x, 
+         minor_y, 
+        label = 'Minor Axis Slice',
+        color = 'grey',
+        lw = 7, 
+       ls = "--")
+
+    ax.legend(fontsize = 25, loc = 'lower right', frameon = False)
+# -----------------------------------------------------------------------------------------   
+    
+    
 
 
 

@@ -50,3 +50,10 @@ def mm_to_micron(value_mm):
 #
 #
 #
+# ------------------------------------------------------------
+# Function to convert cm to mm
+# ------------------------------------------------------------
+def cm_to_mm(value_cm):
+    value_cm = np.array(value_cm)  # convert input to numpy array
+    return value_cm * 10
+# ------------------------------------------------------------
