@@ -46,15 +46,33 @@
 \newcommand{\bandsevenmm}{\ensuremath{0.87~\mathrm{mm}}}
 %====================================
 
-
+\newcommand{\half}{\frac{1}{2}}
 
 
 %===============================
 % Paramter/word/unit commands
 %===============================
+\newcommand{\degg}{$^\circ$ }
+
+
 \newcommand{\stokesI}{Stokes \emph{I} }
+\newcommand{\SI}{Stokes \emph{I} }
+\newcommand{\SIns}{Stokes \emph{I}}
 \newcommand{\stokesQ}{Stokes \emph{Q} }
 \newcommand{\stokesU}{Stokes \emph{U} }
+
+\newcommand{\SQ}{Stokes \emph{Q} }
+\newcommand{\SU}{Stokes \emph{U} }
+
+\newcommand{\POLIub}{$\mathcal{P}_\text{obs}$}
+\newcommand{\POLIsym}{$\mathcal{P}_I$}
+\newcommand{\POLI}{POLI }
+\newcommand{\POLIns}{POLI}
+\newcommand{\POLIeq}{\mathcal{P}_I}
+\newcommand{\POLIerr}{$\sigma_\mathcal{P}_I$}
+\newcommand{\POLIerreq}{\sigma_{\mathcal{P}_I}}
+
+\newcommand{\PAerr}{\sigma_\theta}
 %===============================
 \newcommand{\alma}{\emph{ALMA} }
 
@@ -77,6 +95,11 @@
 %===============================
 
 
+%===============================
+\newcommand{\ra}{\rightarrow}
+%===============================
+
+
 %  EDITING / ANNOTATION COMMANDS
 %===============================
 % Note: I asked ChatGPT to draft these up for me and I will change them as I go to how I like them
@@ -85,7 +108,11 @@
 \newcommand{\add}[1]{\textcolor{red}{\textbf{[ADD:} #1\textbf{]}}}
 
 % Fix or revise something
-\newcommand{\fix}[1]{\textcolor{blue}{\textbf{[FIX:} #1\textbf{]}}}
+\newcommand{\fix}[1]{\textcolor{violet}{\textbf{[FIX:} #1\textbf{]}}}
+
+
+% Fix or revise something
+\newcommand{\question}[1]{\textcolor{purple}{#1\textbf{]}}}
 
 % Remove or consider deleting something
 \newcommand{\remove}[1]{\textcolor{purple}{\textbf{[REMOVE:} #1\textbf{]}}}
@@ -179,6 +206,12 @@
 \pagenumbering{roman}
 
 \input{WRITEUP_AND_IMAGES/TEXT_FILES/titlepage}
+
+
+% \chapter*{}\
+
+% \emph{The shadows cast were only light and dust.}
+
 \chapter*{Dedication}\
 
 Dedication goes here... 
@@ -213,24 +246,30 @@ Acknowledgments if any...
 \include{WRITEUP_AND_IMAGES/TEXT_FILES/Polarization Equations}
 
 
-\include{WRITEUP_AND_IMAGES/TEXT_FILES/Chapter1}
+\include{WRITEUP_AND_IMAGES/TEXT_FILES/Introduction}
 
-\include{WRITEUP_AND_IMAGES/TEXT_FILES/Chapter2}
 
-\include{WRITEUP_AND_IMAGES/TEXT_FILES/Chapter3}
+\include{WRITEUP_AND_IMAGES/TEXT_FILES/Data}
 
-\include{WRITEUP_AND_IMAGES/TEXT_FILES/Chapter4}
 
-\include{WRITEUP_AND_IMAGES/TEXT_FILES/Chapter5}
 
-\include{WRITEUP_AND_IMAGES/TEXT_FILES/Chapter6}
+\include{WRITEUP_AND_IMAGES/TEXT_FILES/Methods}
+
+\include{WRITEUP_AND_IMAGES/TEXT_FILES/Results}
+
+\include{WRITEUP_AND_IMAGES/TEXT_FILES/Discussion}
+
+
+\include{WRITEUP_AND_IMAGES/TEXT_FILES/Conclusion}
+
+
+
+
+
 
 \include{WRITEUP_AND_IMAGES/TEXT_FILES/Chapter7}
 
-\include{WRITEUP_AND_IMAGES/TEXT_FILES/Chapter8}
-
-\include{WRITEUP_AND_IMAGES/TEXT_FILES/Chapter9}
-
+\include{WRITEUP_AND_IMAGES/TEXT_FILES/Other/Quotes}
 
 \bibliographystyle{plainnat}
 \bibliography{WRITEUP_AND_IMAGES/MastersThesis}
