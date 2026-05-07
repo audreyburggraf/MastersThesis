@@ -1,0 +1,10 @@
+{
+    "hidden_dims": [
+        150,
+        150,
+        150,
+        150
+    ],
+    "dropout_rate": 0.0,
+    "quant": "ems"
+}
