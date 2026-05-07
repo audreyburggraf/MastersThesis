@@ -1,7 +1,8 @@
 \documentclass[12pt]{report}
 
 %------------------- declaring packages---------------------------------
-
+\usepackage{pgfplotstable}
+\usepackage{booktabs}
 
 % styling and graphics-based
 
@@ -55,6 +56,25 @@
 \newcommand{\degg}{$^\circ$ }
 
 
+\newcommand{\micron}{$\mu$m }
+%===============================
+\newcommand{\sft}{$sf$ }
+\newcommand{\sftNS}{$sf$}
+\newcommand{\sfeq}{sf }
+
+\newcommand{\sfbest}{$sf_{best}$ }
+\newcommand{\sfbestNS}{$sf_{best}$}
+\newcommand{\sfbestEQ}{sf_{best}}
+%===============================
+\newcommand{\amax}{$a_{\text{max}}$ }
+\newcommand{\amaxEQ}{a_{\text{max}} }
+
+
+\newcommand{\amaxbest}{$a_{\text{max, best}}$ }
+\newcommand{\amaxbestNS}{$a_{\text{max, best}}$}
+%===============================
+
+
 \newcommand{\stokesI}{Stokes \emph{I} }
 \newcommand{\SI}{Stokes \emph{I} }
 \newcommand{\SIns}{Stokes \emph{I}}
@@ -63,6 +83,21 @@
 
 \newcommand{\SQ}{Stokes \emph{Q} }
 \newcommand{\SU}{Stokes \emph{U} }
+
+%===============================
+\newcommand{\Pw}{$P\omega$ }
+
+\newcommand{\Pwmodel}{$P\omega_{model}$ }
+\newcommand{\PwmodelEQ}{P\omega_{model}}
+
+%===============================
+\newcommand{\POLF}{POLF }
+\newcommand{\POLFeq}{\mathcal{P}_F}
+
+\newcommand{\POLFobs}{$\mathcal{P}_{F, obs}$}
+\newcommand{\POLFobsEQ}{\mathcal{P}_{F, obs}}
+%===============================
+
 
 \newcommand{\POLIub}{$\mathcal{P}_\text{obs}$}
 \newcommand{\POLIsym}{$\mathcal{P}_I$}
@@ -265,10 +300,6 @@ Acknowledgments if any...
 
 
 
-
-
-\include{WRITEUP_AND_IMAGES/TEXT_FILES/Chapter7}
-
 \include{WRITEUP_AND_IMAGES/TEXT_FILES/Other/Quotes}
 
 \bibliographystyle{plainnat}
@@ -277,9 +308,8 @@ Acknowledgments if any...
 
 \appendix
 
-\include{WRITEUP_AND_IMAGES/TEXT_FILES/AppendixA}
+\include{WRITEUP_AND_IMAGES/TEXT_FILES/Appendix}
 
-\include{WRITEUP_AND_IMAGES/TEXT_FILES/Appendix/ParameterTable}
 
 
 \end{document}

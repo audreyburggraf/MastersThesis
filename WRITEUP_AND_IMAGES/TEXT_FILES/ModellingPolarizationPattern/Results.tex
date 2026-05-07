@@ -1,81 +1,83 @@
 \subsection{Ratio Model}
 
 
+The results of the ratio model are presented in Table \ref{tab:ratio_model_chi2}. The best fit (lowest chi-squared) are bolded. 
+
+
+The best ratio fit plots are presented in Figure \ref{fig:best-ratio-models}. 
+
+
+
+
+
+
+
+\begin{table}[h!]
+\centering
+\caption{\add{Caption}. \note{This is Band 4 nterms2, Band 7 nterms 2. Last updated on Monday May 4th.}}
+\begin{tabular}{cccccc}
+\toprule
+\multicolumn{2}{c}{\textbf{Ratio Model}} & \textbf{Band 4} & \textbf{Band 5} & \textbf{Band 6} & \textbf{Band 7} \\
+\midrule
+100 U& 0 A  & 1.439 & 0.481 & 1.382 & 0.344 \\
+90  U& 10 A & 1.452 & 0.464 & 1.389 & 0.331 \\
+80  U& 20  A& 1.472 & 0.447 & 1.401 & 0.320 \\
+70  U& 30 A & 1.505 & 0.434 & 1.426 & \textbf{0.314} \\
+60  U& 40 A & 1.560 & \textbf{0.431} & 1.479 & 0.318 \\
+50  U& 50 A & 1.668 & 0.507 & 1.629 & 0.366 \\
+40  U& 60 A & 1.603 & 0.636 & 1.474 & 0.430 \\
+30  U& 70 A & 1.478 & 0.644 & \textbf{1.370} & 0.382 \\
+20  U& 80 A & 1.170 & 0.668 & 1.374 & 0.411 \\
+10  U& 90 A & 0.850 & 0.693 & 1.379 & 0.441 \\
+0   U& 100 A & \textbf{0.847} & 0.745 & 1.384 & 0.716 \\
+\bottomrule
+\end{tabular}
+\label{tab:ratio_model_chi2}
+\end{table}
+
+
+
 
 
 % PLOTS
 % ----------------------------------------
 % ----------------------------------------
-% \begin{figure*}[h]
-%   \centering
-%   \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Ratio/IRS63_best_ratio_BAND4.pdf}
-%   \caption{\textcolor{red}{Add caption.}}
-%   \label{fig: best-ratio-model-band4}
-% \end{figure*}
-
-
-% \begin{figure*}[h]
-%   \centering
-%   \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Ratio/IRS63_best_ratio_BAND5.pdf}
-%   \caption{Same as Figure \ref{fig: best-ratio-model-band4} but for Band 5.}
-%   \label{fig: best-ratio-model-band5}
-% \end{figure*}
-
-
-% \begin{figure*}[h]
-%   \centering
-%   \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Ratio/IRS63_best_ratio_BAND6.pdf}
-%   \caption{Same as Figure \ref{fig: best-ratio-model-band4} but for Band 6.}
-%   \label{fig: best-ratio-model-band6}
-% \end{figure*}
-
-
-% \begin{figure*}[h]
-%   \centering
-%   \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Ratio/IRS63_best_ratio_BAND7.pdf}
-%   \caption{Same as Figure \ref{fig: best-ratio-model-band4} but for Band 7.}
-%   \label{fig: best-ratio-model-band7}
-% \end{figure*}
-% ----------------------------------------
-% ----------------------------------------
 \begin{figure*}[h]
   \centering
-  % First figure
+
+  % Row 1
   \begin{minipage}{0.48\textwidth}
     \centering
     \includegraphics[width=\linewidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Ratio/IRS63_best_ratio_BAND4.pdf}
-    \caption{\add{caption}}
-    \label{fig: best-ratio-model-band4}
-  \end{minipage}%
+    \textbf{(a) Band 4}
+  \end{minipage}
   \hfill
-  % Second figure
   \begin{minipage}{0.48\textwidth}
     \centering
     \includegraphics[width=\linewidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Ratio/IRS63_best_ratio_BAND5.pdf}
-    \caption{Same as Figure \ref{fig: best-ratio-model-band4} but for Band 5.}
-    \label{fig: best-ratio-model-band5}
+    \textbf{(b) Band 5}
   \end{minipage}
-\end{figure*}
 
+  \vspace{0.5cm}
 
-
-\begin{figure*}[h]
-  \centering
-  % First figure
+  % Row 2
   \begin{minipage}{0.48\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Ratio/IRS63_best_ratio_BAND4.pdf}
-    \caption{Same as Figure \ref{fig: best-ratio-model-band6} but for Band 6.}
-    \label{fig: best-ratio-model-band6}
-  \end{minipage}%
+    \includegraphics[width=\linewidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Ratio/IRS63_best_ratio_BAND6.pdf}
+    \textbf{(c) Band 6}
+  \end{minipage}
   \hfill
-  % Second figure
   \begin{minipage}{0.48\textwidth}
     \centering
     \includegraphics[width=\linewidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Ratio/IRS63_best_ratio_BAND7.pdf}
-    \caption{Same as Figure \ref{fig: best-ratio-model-band4} but for Band 7.}
-    \label{fig: best-ratio-model-band7}
+    \textbf{(d) Band 7}
   \end{minipage}
+
+  \caption{
+  \add{caption}
+  }
+
+  \label{fig:best-ratio-models}
 \end{figure*}
 % ----------------------------------------
 % ----------------------------------------
@@ -89,79 +91,113 @@
 \subsection{Gaussian Model}
 
 
+Here, we present the results of the Gaussian model. Since there are 150 combinations, I will only report the top 5 lowest chi-squared values
+
+
+The observed versus Gaussian vectors are presented in Figure \ref{fig:best-gaussian-models}. 
+
+
+At each band the Gaussian model chi-squared value is lower than the one for the ratio value, indicating that the Gaussian model is a better fit. 
+
+\begin{table}[h!]
+\centering
+\caption{\add{Caption}. \note{This is Band 4 nterms2, Band 7 nterms 2. Last updated on Monday May 4th.}}
+\begin{tabular}{c ccc c}
+\toprule
+\textbf{Band} & $\boldsymbol{\phi}$ & \textbf{BMAJ} & \textbf{BMIN} & $\boldsymbol{\chi^2}$ \\
+\midrule
+
+\textbf{Band 4} & 7 & 10 & 20 & \textbf{0.834} \\
+ & 6 & 10 & 20 & 0.835 \\
+ & 4 & 20 & 10 & 0.836 \\
+ & 5 & 20 & 10 & 0.836 \\
+ & 6 & 20 & 10 & 0.837 \\
+
+\midrule
+
+\textbf{Band 5} & 5 & 40 & 40 & \textbf{0.540} \\
+ & 5 & 50 & 40 & 0.542 \\
+ & 4 & 50 & 40 & 0.543 \\
+ & 6 & 50 & 40 & 0.543 \\
+ & 7 & 50 & 40 & 0.544 \\
+
+\midrule
+
+\textbf{Band 6} & 3 & 20 & 20 & \textbf{1.374} \\
+ & 2 & 10 & 30 & 1.374 \\
+ & 4 & 20 & 20 & 1.374 \\
+ & 5 & 30 & 20 & 1.374 \\
+ & 3 & 10 & 30 & 1.375 \\
+
+\midrule
+
+\textbf{Band 7} & 7 & 50 & 30 & \textbf{0.127} \\
+ & 6 & 50 & 30 & 0.129 \\
+ & 7 & 40 & 30 & 0.131 \\
+ & 5 & 50 & 30 & 0.132 \\
+ & 6 & 40 & 30 & 0.133 \\
+
+\bottomrule
+\end{tabular}
+\label{tab:gaussian_top5}
+\end{table}
+
+
+
+
+
+\begin{figure*}[h]
+  \centering
+  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/AllGaussian.pdf}
+  \caption{\note{This plot will be cleaned up significantly if it is being used!!!!! I don't want to waste time making it neat if it is not necessary.}}
+\end{figure*}
+
+
+
+
 % PLOTS
 % ----------------------------------------
 % ----------------------------------------
-% \begin{figure*}[h]
-%   \centering
-%   \includegraphics[width=0.8\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/IRS63_best_gaussian_BAND4.pdf}
-%   \caption{\textcolor{red}{Add caption.}}
-%   \label{fig: best-gaussian-model-band4}
-% \end{figure*}
-
-
-% \begin{figure*}[h]
-%   \centering
-%   \includegraphics[width=0.8\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/IRS63_best_gaussian_BAND5.pdf}
-%   \caption{Same as Figure \ref{fig: best-gaussian-model-band4} but for Band 5.}
-%   \label{fig: best-gaussian-model-band5}
-% \end{figure*}
-
-
-% \begin{figure*}[h]
-%   \centering
-%   \includegraphics[width=0.8\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/IRS63_best_gaussian_BAND6.pdf}
-%   \caption{Same as Figure \ref{fig: best-gaussian-model-band4} but for Band 6.}
-%   \label{fig: best-gaussian-mdoel-band6}
-% \end{figure*}
-
-
-% \begin{figure*}[h]
-%   \centering
-%   \includegraphics[width=0.8\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/IRS63_best_gaussian_BAND7.pdf}
-%   \caption{Same as Figure \ref{fig: best-gaussian-model-band4} but for Band 7.}
-%   \label{fig: best-gaussian-model-band7}
-% \end{figure*}
-% ----------------------------------------
-% ----------------------------------------
 \begin{figure*}[h]
   \centering
-  % First figure
+
+  % Row 1
   \begin{minipage}{0.48\textwidth}
     \centering
     \includegraphics[width=\linewidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/IRS63_best_gaussian_BAND4.pdf}
-    \caption{\add{caption}}
-    \label{fig: best-gaussian-model-band4}
-  \end{minipage}%
+    \textbf{(a) Band 4}
+  \end{minipage}
   \hfill
-  % Second figure
   \begin{minipage}{0.48\textwidth}
     \centering
     \includegraphics[width=\linewidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/IRS63_best_gaussian_BAND5.pdf}
-    \caption{Same as Figure \ref{fig: best-gaussian-model-band4} but for Band 5.}
-    \label{fig: best-gaussian-model-band5}
+    \textbf{(b) Band 5}
   \end{minipage}
-\end{figure*}
 
+  \vspace{0.5cm}
 
-
-\begin{figure*}[h]
-  \centering
-  % First figure
+  % Row 2
   \begin{minipage}{0.48\textwidth}
     \centering
     \includegraphics[width=\linewidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/IRS63_best_gaussian_BAND6.pdf}
-    \caption{Same as Figure \ref{fig: best-gaussian-model-band4} but for Band 6.}
-    \label{fig: best-gaussian-model-band6}
-  \end{minipage}%
+    \textbf{(c) Band 6}
+  \end{minipage}
   \hfill
-  % Second figure
   \begin{minipage}{0.48\textwidth}
     \centering
     \includegraphics[width=\linewidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/IRS63_best_gaussian_BAND7.pdf}
-    \caption{Same as Figure \ref{fig: best-gaussian-model-band4} but for Band 7.}
-    \label{fig: best-gaussian-model-band7}
+    \textbf{(d) Band 7}
   \end{minipage}
+
+  \caption{
+  \add{caption}
+  }
+
+  \label{fig:best-gaussian-models}
 \end{figure*}
 % ----------------------------------------
 % ----------------------------------------
+
+
+
+
