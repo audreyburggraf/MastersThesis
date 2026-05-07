@@ -1,0 +1,165 @@
+From the geometric models of the polarization pattern discussed in \ref{sec: methods/modelling polarization pattern}, we know where we have uniform polarization, or where we have dust self-scattering. This is the region we want to study the dust in \add{why?}. 
+%
+%
+%
+%
+%
+% ----------------------------------------------
+\subsection{Dust Composition}
+% \label{sec: measured_POLF}
+% ----------------------------------------------
+We are assuming DSHARP dust grains, and to model the dust we are using code from \cite{dsharp_code}. 
+
+
+
+\begin{table}[h!]
+\centering
+\caption{\add{caption and actual references}}
+\begin{tabular}{llll}
+\toprule
+\textbf{Material} & \textbf{Volume Fraction} & \textbf{Mass Fraction} & \textbf{Source} \\
+\midrule
+Water Ice      & 0.3642  & 0.2000 & (Warren \& Brandt 2008) \\
+Astronomical Silicates  & 0.1670  & 0.3290 & (Draine 2003)  \\
+Troilite  & 0.02578 & 0.07434 & (Henning \& Stognienko 1996) \\
+Organics  & 0.4430  & 0.3966 & (Henning \& Stognienko 1996)\\
+\bottomrule
+\end{tabular}
+\label{tab:dsharp_composition}
+\end{table}
+
+% ----------------------------------------------
+
+
+\subsubsection{Porosity}
+The first thing we need to define is the porosty of the dust using a value of $f$. \add{more information}. The grid of $f$ values we chose are $f = 1, 0.75, 0.5, 0.25$. The porosity is defined by $1- f$, so the higher the porosity (more like the sponge), the lower the $f$ value is. In Table \ref{tab:dsharp_density} we can see that as the $f$ value decreases, so does the densiity. 
+
+\begin{table}[h!]
+\centering
+\caption{\add{caption} \note{The density needs to be formatted better, will fix if i should keep this table in the writeup}}
+\begin{tabular}{ll}
+\toprule
+\textbf{Porosity ($f$)} & \textbf{Density (g/cm$^3$)} \\
+\midrule
+1    & 1.675278719712058 \\
+0.75 & 1.2564590397840436 \\
+0.5  & 0.837639359856029 \\
+0.25 & 0.4188196799280145 \\
+\bottomrule
+\end{tabular}
+\label{tab:dsharp_density}
+\end{table}
+% ----------------------------------------------
+\subsubsection{Lambda Values}
+\add{text}
+
+% ----------------------------------------------
+\subsubsection{\amax Values}
+\add{text}
+% ----------------------------------------------
+\subsubsection{Refractiveness (spelling/title?)}
+When we define the porosity we also get information on the refectiveness of the dust, in the form of the n and k vlaues. \add{probably something in the introduction explainig what this is}. 
+
+The n and k data, along with the desnity, \amax and a grid of $\lambda$ values is what we feed into a fucntion called \texttt{do.get\_opacities}. \add{expand on this}. From this function we get the values: $q_abs$, $q_sca$, S1, S2, theta, $rho_s$, $k_abs$, $k_Sca$, $a$, lam. \add{what this all is}. 
+
+% ----------------------------------------------
+\subsubsection{Mass}
+Since we are assuming spherical dust grains, the size of the dust grain, \amax, is the radius of the dust grain. Since we know the radius and we know the desnity, we can calculate the mass of the dust grain using
+\begin{equation}
+    \text{mass} = \rho \cdot \frac{4\pi}{3} \amaxEQ^3.
+\end{equation}
+% ----------------------------------------------
+\subsubsection{res scatter \& zscat}
+% ----------------------------------------------
+%
+%
+%
+%
+%
+% ----------------------------------------------
+\subsubsection{\Pw distribution}
+% ----------------------------------------------
+%
+%
+%
+%
+%
+% ----------------------------------------------
+\subsection{Measuring Observed POLF}
+\label{sec: measured_POLF}
+% ----------------------------------------------
+\add{Why we need measured POLF}
+
+
+We want to know the observed POLF value at each band, in the area where we see dust self-scattering. There are a few ways that we did this:
+\begin{itemize}
+    \item POLF value at the pixel with the highest \SI value 
+    \item POLF value at the pixel with the highest \POLI value
+    \item Using the best fit Gaussian map, take all of the uniform values (equal to 1 within a tolerence of 0.001), and use \texttt{numpy.mean} of all of the POLF values within this mask. 
+\end{itemize}
+\noindent All of these POLF values can be found in Table \ref{tab:polf_comparison}. We chose to use the POLF value at the highest \SI pixel value \add{why}. 
+
+
+\begin{table}[h!]
+\centering
+\caption{\add{Caption}. \note{Rounded to 3 decimal places. Values last updated May 6th.}}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Band} & $\boldsymbol{\mathrm{POLF}_{\mathrm{Gaussian}}}$ & $\boldsymbol{\mathrm{POLF}_{\mathrm{max\,POLI}}}$ & $\boldsymbol{\mathrm{POLF}_{\mathrm{max\,Stokes\,I}}}$ \\
+\midrule
+
+Band 4             & 1.188 & 1.561 & 1.368  \\
+Band 5             & 0.933 & 1.052 & 0.991  \\
+Band 5 (robust -1) & 1.377 & 1.514 & 1.403  \\
+Band 6             & 1.445 & 1.486 & 1.464  \\
+Band 7             & 0.830 & 1.084 & 1.042  \\
+
+\bottomrule
+\end{tabular}
+\label{tab:polf_comparison}
+\end{table}
+% ----------------------------------------------
+%
+%
+%
+%
+%
+% ----------------------------------------------
+\subsection{Finding Scale Factor and associated values}
+% \label{sec: measured_POLF}
+% ----------------------------------------------
+To calculate the scale factor (\sftNS) we loop over all \amax values in the chosen grid \add{this grid}, we take the \Pwmodel values from the dust model, and \POLFobs (constant) and calculate the scale factor between the two:
+\begin{equation}
+\sfeq = \frac{\PwmodelEQ}{\POLFobsEQ},
+    \label{eq: sf}
+\end{equation}
+\noindent for each \amax value and for each band that is included in the fit. This means for each \amax there are $n$ \sft values, where $n$ is the number of bands included in the fit. At each \amax value, we take the standard deviation between the $n$ values using \texttt{numpy.std}. The best \sft (\sfbestNS) is the lowest standard deviation value. 
+
+From this, we also know the \amax value where this \sfbest value is, giving us the best fit \amax value (\amaxbestNS)
+
+
+\subsubsection{Trouble Value}
+In the spherical model only considering Bands 4 and 7 at a porosity value of $f = 0.75$ I got a weird result where the best value was at a grain size that did not make sense. This was a fluke that the best value was at that grain size. It found the best \amax was at 613 \micron with a scale factor of 7.36, and the second best \amax value was at 209.78 \micron with a scale factor of 1.60 so I chose overrided it and chose the second best value. 
+% ----------------------------------------------
+%
+%
+%
+%
+%
+% ----------------------------------------------
+\subsubsection{Calculating chi-squared}
+% \label{sec: measured_POLF}
+% ----------------------------------------------
+When calculating the chi-squared value, we consider \emph{all} bands, not just the ones that were used in the fit. However, when we measure the chi-squared value we \emph{never} include the typical Band 5 data. The data for Band 5 that is included in the chi-squared calculation is the robust = -1 data.
+
+When we calculate the chi-squared value we use the equation:
+\begin{equation}
+\chi^2 = \sum_{all bands} (\POLFeq_{,obs} - \POLFeq_{,model})^2,
+    \label{eq: chi_squared_dust_model}
+\end{equation}
+\noindent where $\POLFeq_{obs}$ is the observed \POLF value (the marker value) and $\POLFeq_{model}$ is the \Pw value multiplied by the scale factor. This value is taken at the \amaxbest value 
+% ----------------------------------------------
+%
+%
+%
+%
