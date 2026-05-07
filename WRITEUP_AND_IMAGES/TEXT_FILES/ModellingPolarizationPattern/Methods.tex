@@ -45,6 +45,60 @@ For example, if we are looking at the 50U and 50A case, then we do:
 % ----------------------------------------------------------
 \subsection{Gaussian Model}
 % ----------------------------------------------------------
+The Gaussian model process is where we test various Gaussian models by changing values of phi, BMAJ and BMIN and minimize chi squared. 
+
+In the gaussian model, phi refers to the rotation of the model, BMAJ is the major axis of thw Gaussina dn BMIN in the minor axis of the Gaussian. 
+
+
+
+
+
+
+
+We input various values into the Gaussian model to test. The values we test are:
+\begin{centering}
+    phi: 2, 3, 4, 5, 6, 7,
+    BMAJ: 10, 20, 30, 40, 50,
+    BMIN: 10, 20, 30, 40, 50,
+\end{centering}
+\noindent where phi has units of \add{units} and BMAJ and BMIN are in units of pixels. 
+
+
+The method calculated the Gaussan model for each combination of (phi, BMAJ, BMIN) using a 2d flat-topped tilted gaussian model. To do this we make x- and y-values ranging from (0, $n_x$) and (0, $n_y$) where $n_x$ and $n_y$ are in pixels. We get the beam full width half max (FWHM) from the header file. We need to convert the FWHM to standard deviation using:
+\begin{equation}
+    \sigma_i = \frac{\text{beam FWHM}}{2\sqrt{2 \ln{n}}},
+    \label{eq: FWHM_to_sigma}
+\end{equation}
+\noindent where the subscript of $i$ refers to either minor or major. \add{where does this equation come from.}
+
+
+We calculate the (mean) centre coordinates by:
+\begin{eqnarray}
+    X_{shifted} &= x - x_{c},\\
+    Y_{shifted} &= y - y_{c}\\
+\end{eqnarray}
+\noindent where $x_c$ and $y_c$ are the centre positions \note{make sure these are the same symbols throughout}, and $x$ and $y$ are the pixels. 
+
+
+We create a rotation matrix:
+\add{rotation matrix}
+
+The coordinates are then rotated:
+\add{how we rotate}
+    
+and then we compute the super-Gaussian with the function:
+\begin{equation}
+\text{Gaussian} =  \frac{1} {\sigma_x \sigma_y  \sqrt{2\pi}} \times 
+\exp\left[-\half \left(\left|\frac{X_{rot}}{\sigma_x}\right|^\phi + \left|\frac{Y_{rot}}{ \sigma_y}\right|^\phi\right)\right]
+    \label{eq: gaussian_eq}
+\end{equation}
+
+The Gaussian is then normalized to a maximum of 1 by \texttt{   gaussian /= np.max(gaussian)}. 
+
+
+At the end, the Gaussian is a spatial weighting map of values between 0 and 1. This twells is from a value of 0 to 1 how \emph{important each pixel is}. Simular to the 100U 0A model, we are weighing uniform bu 100\%, here the Gaussian model is 100\%. We can also make a non-gaussian model which is 1 - Gaussian Model. 
+
+From this we plug it into the mix\_StokesQU\_and_generate\_vectors function to make the Q and U grids and then get PA. 
 
 
 
@@ -58,7 +112,20 @@ For example, if we are looking at the 50U and 50A case, then we do:
 % ----------------------------------------------------------
 \subsection{Determining the Best Model}
 % ----------------------------------------------------------
+To determine the goodness-of-fit we use a chi-squared value. First we calculate the value of chi-squared by:
 
+\begin{equation}
+    \chi^2 = \Sigma (O - E)^2,
+    \label{eq: chi_sq}
+\end{equation}
+\noindent where $O$ is the observed angle and $E$ is the angle from the model. \question{should I be normalizing by $E$?}
+
+The value of $\chi^2$ is then normalized by
+\begin{equation}
+    \chi^2_{reduced} = \frac{1}{N - ndof} \times \chi^2,
+    \label{eq: chi_sq_reduced}
+\end{equation}
+\noindent where $N$ is the number of angles we are testing minus the degrees of freedom. For the ratio model there is one degree of freedom and for the Gaussian method there is 3. 
 
 
 
