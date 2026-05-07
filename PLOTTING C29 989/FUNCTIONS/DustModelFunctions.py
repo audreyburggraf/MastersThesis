@@ -350,6 +350,8 @@ def find_sf_v3(bands,
 
             sf_medians.append(np.median(sf_i))
             sf_stds.append(np.std(sf_i))
+            
+#             print(sf_i)
 
         sf_medians = np.array(sf_medians)
         sf_stds = np.array(sf_stds)
