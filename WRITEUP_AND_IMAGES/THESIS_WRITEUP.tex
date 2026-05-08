@@ -35,16 +35,23 @@
 % ALMA Band Wavelength "Constants"
 %====================================
 % Band 4
-\newcommand{\bandfourmm}{\ensuremath{2.1~\mathrm{mm}}}  
+\newcommand{\bandfourmmNS}{\ensuremath{2.1~\mathrm{mm}}}  
 
+\newcommand{\bandfourmm}{\ensuremath{2.1~\mathrm{mm}} }  
 % Band 5 
-\newcommand{\bandfivemm}{\ensuremath{1.5~\mathrm{mm}}}
+\newcommand{\bandfivemmNS}{\ensuremath{1.5~\mathrm{mm}}}
+
+\newcommand{\bandfivemm}{\ensuremath{1.5~\mathrm{mm}} }
 
   % Band 6 
-\newcommand{\bandsixmm}{\ensuremath{1.3~\mathrm{mm}}}
+\newcommand{\bandsixmmNS}{\ensuremath{1.3~\mathrm{mm}}}
+
+\newcommand{\bandsixmm}{\ensuremath{1.3~\mathrm{mm}} }
 
  % Band 7 
-\newcommand{\bandsevenmm}{\ensuremath{0.87~\mathrm{mm}}}
+\newcommand{\bandsevenmmNS}{\ensuremath{0.87~\mathrm{mm}}}
+
+\newcommand{\bandsevenmm}{\ensuremath{0.87~\mathrm{mm}} }
 %====================================
 
 \newcommand{\half}{\frac{1}{2}}
@@ -54,9 +61,7 @@
 % Paramter/word/unit commands
 %===============================
 \newcommand{\degg}{$^\circ$ }
-
-
-\newcommand{\micron}{$\mu$m }
+\newcommand{\deggNS}{$^\circ$}
 %===============================
 \newcommand{\sft}{$sf$ }
 \newcommand{\sftNS}{$sf$}
@@ -69,12 +74,16 @@
 \newcommand{\amax}{$a_{\text{max}}$ }
 \newcommand{\amaxEQ}{a_{\text{max}} }
 
-
+\newcommand{\amaxtext}{$a_{\text{max}}$ }
 \newcommand{\amaxbest}{$a_{\text{max, best}}$ }
 \newcommand{\amaxbestNS}{$a_{\text{max, best}}$}
 %===============================
+\newcommand{\kscaEQ}{\kappa_{\text{sca}}}
+\newcommand{\ksca}{$\kscaEQ$ } 
 
-
+\newcommand{\kabsEQ}{\kappa_{\text{abs}}}
+\newcommand{\kabs}{$\kabsEQ$ } 
+%===============================
 \newcommand{\stokesI}{Stokes \emph{I} }
 \newcommand{\SI}{Stokes \emph{I} }
 \newcommand{\SIns}{Stokes \emph{I}}
@@ -115,9 +124,15 @@
 
 \newcommand{\mmt}{millimeter }
 
-
+%===============================
 \newcommand{\micron}{$\mu$m }
-\newcommand{\amaxtext}{$a_{\text{max}}$ }
+\newcommand{\micronNS}{$\mu$m}
+
+%===============================
+\newcommand{\cmsq}{cm$^2$ }
+%===============================
+
+
 %===============================
 % This is here incase we want to make AU written as au, i've seen both but like AU better
 \newcommand{\AU}{AU}
@@ -249,15 +264,25 @@
 
 \chapter*{Dedication}\
 
+
+\add{Here is how I will add the text on things I need to add}
+
+\question{Here is how I add text where I have a question}
+
+\note{Here is how I add text on a note I have}
+
+\quoted{Text in this format is when I directly copy text from a source, and it should be followed by the source it was from. This text is yet to be put into my own words. }
+
 Dedication goes here... 
 
 \addcontentsline{toc}{chapter}{Dedication}
 
+% ----------------------------------------
 \chapter*{Abstract}
-
-The abstract goes here....
-
 \addcontentsline{toc}{chapter}{Abstract}
+
+\input{WRITEUP_AND_IMAGES/TEXT_FILES/Abstract}
+% ----------------------------------------
 
 \chapter*{Acknowledgements}
 
