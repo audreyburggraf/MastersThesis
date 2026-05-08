@@ -1,4 +1,128 @@
-\subsection{Spherical Grains}
+\subsection{Spherical Dust Modelling}
+%
+%
+%
+%
+%
+% ----------------------------------------------
+\subsection{Replicating Figures}
+% \label{sec: measured_POLF}
+% ----------------------------------------------
+\subsubsection{Scattering Opacities}
+To begin the spherical dust modeling, one of the first steps was to ensure that I could recreate figures that have been make previously. In Figure \ref{fig: Kataoka2015Figure1Recreation}, I present my recreation of Figure 1 from \cite{Kataoka_2015}. In this figure we show the absorption and scattering opacities in units of \cmsq per gram as a function of wavelength for a maximum graim sizes of 1 \micron and 100 \micron. 
+
+We can see that at a smaller dust grain (red lines, \amax = 1 \micronNS), the absoprtion opacity is much greater than the scattering opacity. 
+
+For the larger dust grain (blue lines, \amax = 100 \micronNS), from 0.1-1 mm ($10^2 - 10^3$\micronNS), the scattering efficiency is larger than absorption. 
+
+
+
+
+\begin{figure*}[h]
+  \centering
+  \includegraphics[width=0.6\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/Kataoka2015Fig1.pdf}
+  \caption{\add{caption}}
+  \label{fig: Kataoka2015Figure1Recreation}
+\end{figure*}
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+% ----------------------------------------------
+\subsubsection{Polarization \& Scattering Angle}
+% ----------------------------------------------
+In Figure \ref{fig: Kataoka2015Figure2Recreation}, I replicated Figure 2 from \cite{Kataoka_2015} for the four bands I am looking at. In these plots we look at how polarization changes with scattering angle. Here, we plot \quoted{the degree of polarization due to single scatting averaged by the size distribution for several maximum grain sizes} \cite{Kataoka_2015}. $N_{11}$ is calculated in Equation \ref{eq: N11}. 
+
+We see that when we are looking at smaller grains with a size of 10 \micron and 100 \micron the polarization degree peaks at a scatting angle of $\theta$ = 90\deggNS. 
+
+
+\begin{figure*}[h]
+  \centering
+  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/Kataoka2015Fig2.pdf}
+  \caption{\add{caption} \note{I chose the same y-axis bounds as the paper. I am not sure id these were chosen for a specific reason, I am thinkning making the y-axis go from -0.5 to 1 would make mak ethe lines easier to see.}}
+  \label{fig: Kataoka2015Figure2Recreation}
+\end{figure*}
+% ----------------------------------------------
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+% ----------------------------------------------
+\subsubsection{Polarization Efficiency\& Grain Size}
+% ----------------------------------------------
+In Figure \ref{fig: Kataoka2015Figure3Recreation}, I replicated Figure 3 from \cite{Kataoka_2015} for the four bands I am looking at. This plot shows the albedo, calculated using Equation \ref{eq: omega} and polarization $P$ as a function of maximum grain size in units of micron. 
+
+We observe that when the grain size is small, polarization dominates and the albedo is 0. \add{more, also about \amax greater than $\lambda/2\pi$. }
+
+
+\begin{figure*}[h]
+  \centering
+  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/P_vs_w_vs_grainsize_grid.pdf}
+  \caption{\add{caption}}
+  \label{fig: Kataoka2015Figure3Recreation}
+\end{figure*}
+% ----------------------------------------------
+%
+%
+%
+%
+%
+%
+% ----------------------------------------------
+\subsubsection{\Pw}
+% ----------------------------------------------
+In Figure \ref{fig: Pw_vs_grainsize}, I replicated Figure 4 from \cite{Kataoka_2015} for the four bands I am looking at. This figure shows \Pw at our wavelengths, as a function of \amax. 
+
+The \amax value at the peak \Pw value for each band is summarized in Table \ref{tab: amax_peak_values}. \quoted{This suggests that detection and non-detection of polarization for a wide range of sub-millimeter, millimeter, and centimeter wavelengths can put a strong constraint on the grain size. } \cite{Kataoka_2015}. 
+
+\begin{table}[h!]
+\centering
+\caption{\add{Maximum grain size corresponding to the peak $P\omega$ value for each band.}}
+\begin{tabular}{ccc}
+\toprule
+\textbf{Band} & $\boldsymbol{a_{\max}}$ ($\mu$m) \\
+\midrule
+
+Band 4   & 296.7 \\
+Band 5   & 246.6 \\
+Band 6   & 195.6 \\
+Band 7  & 135.1 \\
+
+\bottomrule
+\end{tabular}
+\label{tab: amax_peak_values}
+\end{table}
+
+
+\begin{figure*}[h]
+  \centering
+  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/Pw_vs_grainsize.pdf.pdf}
+  \caption{\add{caption} \note{I will probably confirm 100\% that these are the right curves and I did not make any changes.}}
+  \label{fig: Pw_vs_grainsize}
+\end{figure*}
+% ----------------------------------------------
+%
+%
+%
+%
+%
+%
+%
+\subsection{Fit Results}
+% \label{sec: measured_POLF}
+% ----------------------------------------------
 In Table \ref{tab:dust_model_fits_spherical} we report the scale factor, chi-squared and maximum dust grain size for 4 values of posisity, with multiple fit types. 
 
 
@@ -65,4 +189,8 @@ This figure highlights how the Band 5 marker (yellow triangle) is significantly 
 
 
 % ----------------------------------------------
-\subsection{Non-Spherical Grains}
+
+
+
+
+

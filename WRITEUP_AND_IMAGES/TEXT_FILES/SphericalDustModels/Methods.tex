@@ -1,4 +1,7 @@
 From the geometric models of the polarization pattern discussed in \ref{sec: methods/modelling polarization pattern}, we know where we have uniform polarization, or where we have dust self-scattering. This is the region we want to study the dust in \add{why?}. 
+
+In this dust model, we assume the dust grains are spherical with a radius $a$. 
+% ----------------------------------------------
 %
 %
 %
@@ -8,13 +11,15 @@ From the geometric models of the polarization pattern discussed in \ref{sec: met
 \subsection{Dust Composition}
 % \label{sec: measured_POLF}
 % ----------------------------------------------
-We are assuming DSHARP dust grains, and to model the dust we are using code from \cite{dsharp_code}. 
+The composition of the dust grains is held constant, and is called DSHARP dust. DSHARP dust is a mixture of water ice, astronomical silicates, troilite and organics, with their respective volume and mass fractions listed in Table \ref{tab:dsharp_composition}. Additionally in the table are the references where the refractive index data is taken from. 
+
+To do a lot of the code associated with this portion of the project, code from \cite{dsharp_code} is used. This code has a few assumptions wrapped up into it. It uses Mie theory to calculate capacities. \add{One sentence on what Mie theory/mie scattering is}. 
 
 
 
 \begin{table}[h!]
 \centering
-\caption{\add{caption and actual references}}
+\caption{DSHARP dust composition used for spherical dust modeling. \add{ actual references} \note{the paper also has bulk density if that is good to include.}}
 \begin{tabular}{llll}
 \toprule
 \textbf{Material} & \textbf{Volume Fraction} & \textbf{Mass Fraction} & \textbf{Source} \\
@@ -62,6 +67,7 @@ When we define the porosity we also get information on the refectiveness of the 
 
 The n and k data, along with the desnity, \amax and a grid of $\lambda$ values is what we feed into a fucntion called \texttt{do.get\_opacities}. \add{expand on this}. From this function we get the values: $q_abs$, $q_sca$, S1, S2, theta, $rho_s$, $k_abs$, $k_Sca$, $a$, lam. \add{what this all is}. 
 
+This method is validated by reproducing Figure 1 from \cite{Kataoka_2015}, shown in Figure \ref{fig: Kataoka2015Figure1Recreation}. 
 % ----------------------------------------------
 \subsubsection{Mass}
 Since we are assuming spherical dust grains, the size of the dust grain, \amax, is the radius of the dust grain. Since we know the radius and we know the desnity, we can calculate the mass of the dust grain using
@@ -71,13 +77,37 @@ Since we are assuming spherical dust grains, the size of the dust grain, \amax, 
 % ----------------------------------------------
 \subsubsection{res scatter \& zscat}
 % ----------------------------------------------
-%
-%
-%
-%
-%
+
+
+The polarization dependence on scattering angle is explored in Figure \ref{fig: Kataoka2015Figure2Recreation}
+
+\add{Something about $N_{11}$}
+
+\begin{equation}
+    N_{11} = -\frac{Z_{12}}{Z_{11}}
+    \label{eq: N11}
+\end{equation}
+
+
+Albedo $\omega$, calculated from:
+\begin{equation}
+    \omega = \frac{\kscaEQ}{\kabsEQ + \kscaEQ},
+    \label{eq: omega}
+\end{equation}
+\noindent this equation is from \cite{Kataoka_2015}. 
+
+The polarization is given by $N_{11}$ at a scattering angle of 90\degg. 
+% ----------------------------------------------
+
 % ----------------------------------------------
 \subsubsection{\Pw distribution}
+% ----------------------------------------------
+
+We explore the dependence of polarization efficienct on grain size in Figure 
+
+When we multiply the polarization $P$ and albedo $\omega$ together, \quoted{it gives the grain size that contributs most to the polarization at any observing wavelength because the actual observed quantities are Stokes parameters $Q$ and $U$, which is proportional \Pw represents a window function for the grain size detectable with polarization observations. I other words, \Pw represents a window function for the grain size detectable with polarization observations} \cite{Kataoka_2015}. 
+
+This \Pw factor is explored in Figure \ref{fig: Pw_vs_grainsize}.
 % ----------------------------------------------
 %
 %
