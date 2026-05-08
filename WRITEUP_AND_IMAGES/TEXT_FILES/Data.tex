@@ -2,10 +2,7 @@
 \label{ch_data}
 
 
-Wording Ideas:
-\begin{itemize}
-    \item\ \quoted{In this paper, we present ALMA polarization observations of IRS 63 for 4 wavelengths: \bandfourmm, \bandfivemm, \bandsixmm and \bandsevenmm \cite{Stephens_2017}}.
-\end{itemize}
+
 
 
 \section{Source: IRS 63}
@@ -18,15 +15,34 @@ Wording ideas:
 The distance to the disk is 132 pc away. 
 
 \section{\alma Observations}
+\note{In \cite{Stephens_2017} he includes information about the program (cycle 4), ALMA configurations, correlator tuning, calibrators (bandpass, flux, phase and polarization}
 
-Wording:
-\begin{itemize}
-    \item\ \quoted{With the ALMA Cycle 4 program 2016.1.00162.S (PI: I. Stephens), we observed polarized emission toward HL Tau at \bandsevenmm (Band 7) and \bandsixmm (Band 6) on 2016 December 4 and 2017 July 12, respectively\cite{Stephens_2017}}.
-     \item\ \quoted{The ALMA configurations for \bandseven and \bandsixmm were C40-4 and C40-5, respectively \cite{Stephens_2017}}.
-    \item\ \quoted{At \bandsevenmm, the correlator was tuned for four 1.75 GHz spectral windows at center sky frequencies of 336.5, X, X, and X GHz \cite{Stephens_2017}}.
-    \item\ \quoted{For both wavelengths, the bandpass and flux calibrator was X, the phase calibrator was X, and the polarization calibrator was X.  \cite{Stephens_2017}}.
-    \item \quoted{Section 2 } \cite{Kataoka_2017}
-\end{itemize}
+
+
+
+\begin{table}[h!]
+\centering
+\caption{\add{Caption} \note{Date is DATE-OBS. Frequency is CRVAL3. } \quoted{PA is measured counterclockwise from north} \cite{Stephens_2017} \question{should i include distance and spatial resolution?}}
+\begin{tabular}{ccccccc}
+\toprule
+\textbf{Band} & \textbf{$\lambda$ } & \textbf{$\nu$ (GHz)} & \textbf{Beam ($''\times''$)} & \textbf{PA ($^\circ$)} & \textbf{Pixel ($''$)} & \textbf{Date} \\
+\midrule
+
+Band 4 & \bandfourmm  & 145 & 0.18 $\times$ 0.13 & -81.0 & 0.018 & 2019-09-01 \\
+% ------------------------------------
+Band 5 &  \bandfivemm & 203 & 0.33 $\times$ 0.27 & -88.9 & 0.018 & 2022-08-10 \\
+% ------------------------------------
+Band 6 &  \bandsixmm & 233 & 0.27 $\times$ 0.20 & -68.6 & 0.018 & 2017-05-20 \\
+% ------------------------------------
+Band 7 &  \bandsevenmm & 344 & 0.28 $\times$ 0.17 & -81.2 & 0.018 & 2022-08-21 \\
+% ------------------------------------
+\bottomrule
+\end{tabular}
+\label{tab: alma_observations}
+\end{table}
+
+
+
 
 
 
@@ -35,15 +51,15 @@ Wording:
 \begin{table}[h!]
 \centering
 \caption{Center position and position angle were found using a fit of the cleaned image on \texttt{CASA}. }
-\begin{tabular}{ccccccc}
+\begin{tabular}{cccccc}
 \toprule
-\multirow{2}{*}{} & \multicolumn{2}{c}{\textbf{Center position (J2000)}} & \textbf{Wavelength} & \textbf{PA} & \textbf{Next} \\
-& R.A. (h, m, s) & Decl. ($^\circ$,$'$,$''$) & (mm) & ($^\circ$)  & unit & \\
+\multirow{2}{*}{} & \multicolumn{2}{c}{\textbf{Center position (J2000)}}  & \textbf{Disk PA}  \\
+& R.A. (h, m, s) & Decl. ($^\circ$,$'$,$''$)  & ($^\circ$)  \\
 \midrule 
-\textbf{Band 4} & 16:31:35.656 & -24:01:29.992 & \bandfourmm & 145.9 & 0 \\
-\textbf{Band 5} & 16:31:35.656 & -24:01:30.086 & \bandfivemm  & 140.25 (check) & 0   \\
-\textbf{Band 6} & 16:31:35.657 & -24:01:29.935 & \bandsixmm & 148.0 & 0   \\
-\textbf{Band 7} & 16:31:35.656 & -24:01:30.089 & \bandsevenmm & 139.65 & 0 \\
+\textbf{Band 4} & 16:31:35.656 & -24:01:29.992 & 145.9  \\
+\textbf{Band 5} & 16:31:35.656 & -24:01:30.086   & 140.25 (check)   \\
+\textbf{Band 6} & 16:31:35.657 & -24:01:29.935  & 148.0   \\
+\textbf{Band 7} & 16:31:35.656 & -24:01:30.089  & 139.65  \\
 \bottomrule
 \end{tabular}
 \label{tab: source_info}
@@ -51,22 +67,7 @@ Wording:
 
 
 
-\begin{table}[h!]
-\centering
-\caption{Center position and position angle were found using a fit of the cleaned image on \texttt{CASA}. }
-\begin{tabular}{ccccccc}
-\toprule
-\multirow{2}{*}{} & \multicolumn{2}{c}{\textbf{Center position (J2000)}} & \textbf{Wavelength} & \textbf{PA} & \textbf{Next} \\
-& R.A. (h, m, s) & Decl. ($^\circ$,$'$,$''$) & (mm) & ($^\circ$)  & unit & \\
-\midrule 
-\textbf{Band 4} & 16:31:35.656 & -24:01:29.992 & \bandfourmm & 145.9 & 0 \\
-\textbf{Band 5} & 16:31:35.656 & -24:01:30.086 & \bandfivemm  & 140.25 (check) & 0   \\
-\textbf{Band 6} & 16:31:35.657 & -24:01:29.935 & \bandsixmm & 148.0 & 0   \\
-\textbf{Band 7} & 16:31:35.656 & -24:01:30.089 & \bandsevenmm & 139.65 & 0 \\
-\bottomrule
-\end{tabular}
-\label{tab: beam_info}
-\end{table}
+
 
 
 
@@ -93,9 +94,6 @@ Observed polarized intensity is given by \POLIub, and it has a corresponding deb
     \item\ \quoted{After a quick clean, we performed a series of phase-only self-calibration iteration, and images were cleaned after each self-calibration iteration with progressively shorter solution intervals   \cite{Stephens_2017}}.
     \item\ \quoted{We first performed several rounds of self calibration to the \StokesI image only, and then did a final round of self calibration on all four Stokes parameters \cite{Stephens_2017}}.
     \item\ \quoted{Images were primary beam corrected.   \cite{Stephens_2017}}.
-    \item\ \quoted{The synthesized beams for X, X, and X were X with a position angle (measured counterclockwise from north) of X; X at X and X at X respectively  \cite{Stephens_2017}}.
-    \item\ \quoted{Given a distance to HL Tau of $\sim$ 140 pc \theircite, the spatial resolution is X, X and X \AU respectively  \cite{Stephens_2017}}.
-    \item \quoted{Section 2} \cite{Kataoka_2017}
 \end{itemize}
 
 
