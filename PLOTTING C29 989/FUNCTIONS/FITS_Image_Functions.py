@@ -571,5 +571,44 @@ def unstretch(stretched_value, vmin, vmax, base=100):
 
 
 
+def GetInfoFromHeader(header, 
+                      lam_precision = 1):
+    
+    # Get the frequency 
+    freq = header['CRVAL3']
+    freq_GHz = freq / (1e9)
+    print(f'The frequency is {freq_GHz:.0f} GHz')
+    
+    
+    # Confirm wavelength 
+    c = 2.998e8
+    lam = c / freq * 1000
+    print(f'\nThe wavelength is {lam:.{lam_precision}f} mm')
+    
+    
+    # Get the beam size in arcseconds
+    # Note: in the header it has units of degrees
+    bmaj = deg_to_arcsec(header['BMAJ'])  
+    bmin = deg_to_arcsec(header['BMIN'])
+    bpa  = header['BPA']
+    
+    print(f'\nBeam: {bmaj:.2f}" x {bmin:.2f}" (PA = {bpa:.1f}°)')
+    
+    
+    # -----------------------------
+    # Pixel scale (arcsec/pixel)
+    # -----------------------------
+    pix = deg_to_arcsec(abs(header['CDELT1']))
+    
+    print(f'Pixel scale: {pix:.3f}" per pixel')
+    
+    
+    
+    # Get the date
+    date = header['DATE-OBS']
+    print(f'\nThe date is {date}')
+    
+
+
 
 
