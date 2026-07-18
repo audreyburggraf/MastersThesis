@@ -666,7 +666,10 @@ def plot_scale_factor_resultsGlitterin(bands,
                                        fig_y_size = 5,
                                        plot_sf = 1,
                                        custom_lw = None,
-                                       chi_sq_precision = 3):
+                                       chi_sq_precision = 4,
+                                       band_label_fs = 15,
+                                       marker_legend_size = 15,
+                                      for_poster = False):
     
     sf = sf_results['best_sf']
     rvol_max_best_micron = sf_results['best_rvol_max_micron']
@@ -772,10 +775,11 @@ def plot_scale_factor_resultsGlitterin(bands,
         # Plot rvol_max grid and P omega multiplied by the scale factor
         # ---------------------------------------------------
         if b not in ["Band 5 robust -1", "Band 5 robust -2"]:
+            print(f'[{constants.alma_band_plot_labels[b]}]')
             ax.plot(rvol_max_micron,
                     results[b]['P_omega'] * sf,
                        color=band_colors[j],
-                       label= f'{constants.alma_band_plot_labels[b]}',
+                       #label= f'{constants.alma_band_plot_labels[b]}',
                        lw=bands_lw[j],
                        ls=band_ls[j]
                       )
@@ -813,7 +817,8 @@ def plot_scale_factor_resultsGlitterin(bands,
     ax.text(x_pos, y_pos + y_gap,  f'$\chi^2$ = {chi_sq:.{chi_sq_precision}f}', transform=ax.transAxes, fontsize = fs)
 
 
-    ax.text(x_pos, y_pos + 2*y_gap, f'sf = {sf:.2f}', transform=ax.transAxes, fontsize = fs)
+    if for_poster == False:
+        ax.text(x_pos, y_pos + 2*y_gap, f'sf = {sf:.2f}', transform=ax.transAxes, fontsize = fs)
 
     # Add the a_max to the text
     ax.text(x_pos, y_pos, rf'$a_{{\mathrm{{max}}}}$ = {rvol_max_best_micron:.0f} $\mu$m', 
@@ -828,43 +833,36 @@ def plot_scale_factor_resultsGlitterin(bands,
     # ----------------------------------------------------
     start = 0.9 # y
     c = 0
+    marker_legend_handles = []
+    bands_labels = ['Band 4', 'Band 5', 'Band 5 robust -1', 'Band 6', 'Band 7']
     # Loop over each band 
-    for j, b_label in enumerate(bands):
+    for j, b_label in enumerate(bands_labels):
         
         if "robust" in b_label:
-            label = b_label.replace(" robust ", "\nrobust ")
+            label = b_label.replace(" robust ", "\nrob. ")
             c = c + 0.075
         else:
             label = b_label
 
-        ax.text(0.01, start - c,
-                   label,
-                   transform=ax.transAxes,
-                   fontsize=15,
-                   color=band_colors[j])
+#         ax.text(0.01, start - c,
+#                    label,
+#                    transform=ax.transAxes,
+#                    fontsize=15,
+#                    color=band_colors[j])
+        
+        handle = Line2D(
+        [0], [0],
+        marker = ms[j],  
+        color='none',
+        markerfacecolor=band_colors[j],
+        markeredgecolor=band_colors[j],
+        markersize=marker_legend_size,
+        linestyle='None',
+        label=label)
+            
         c = c + 0.1
+        marker_legend_handles.append(handle)
         # ----------------------------------------------------
-        
-        
-    # Add a legend for the line style
-    # ----------------------------------------------------
-    legend_elements = [
-        Line2D([0], [0], color='black', linestyle='-', lw = 5, label='Included'),
-        Line2D([0], [0], color='black', linestyle='--', lw = 5, label='Excluded')
-    ]
-
-    # Line style
-    fs = 15
-    legend1 = ax.legend(handles=legend_elements, 
-                        fontsize = fs, 
-                        frameon=False, 
-                        title="Fit", 
-                        title_fontsize = fs,
-                        loc = 'lower right')
-    
-    
-    ax.add_artist(legend1)
-    # ----------------------------------------------------
 
     
     
@@ -873,11 +871,29 @@ def plot_scale_factor_resultsGlitterin(bands,
     ax.legend(handles=marker_handles, 
                  fontsize = 15, 
                  frameon=False, 
-                 title="Obs. POLF", 
+#                  title="Obs. POLF", 
                  title_fontsize = 15,
                  loc = 'upper right',
                  handletextpad=-3.8,
                  handlelength=0.2)   
+    # ----------------------------------------------------
+    
+    
+    
+    # Add the names of the bands in the correct colour
+    # ----------------------------------------------------
+    legend = ax.legend(
+        handles=marker_legend_handles,
+        fontsize = band_label_fs,
+        frameon=False,
+        loc='upper right',
+        handletextpad=0.5, # Cotrols distance between marker and text 
+        handlelength=1, # Cotrols distance between marker and text 
+        labelspacing=0.6 # Controls vertical gap between the markers
+    )
+    
+    for text, color in zip(legend.get_texts(), band_colors):
+        text.set_color(color)
     # ----------------------------------------------------
 
 

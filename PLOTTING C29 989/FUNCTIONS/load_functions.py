@@ -27,3 +27,7 @@ from POLF_Functions import *
 from DebiasFunctions import * 
 from GalaxyContaminationFunctions import * 
 from UnitConversion import * 
+from DustModelJustAMAX import *
+from DustModelJustAMAX_Plot import *
+from DebuggingPlot import *
+from ZhangFunctions import * 

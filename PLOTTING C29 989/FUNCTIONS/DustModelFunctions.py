@@ -299,9 +299,9 @@ def find_sf_v3(bands,
     fit_indices = [band_to_index[b] for b in bands_included_in_fit]
     
     
-    a_max_f_dist_micron = {}
+    a_max_times_f_dist_micron = {}
     P_times_omega = {}
-    best_a_max_f = {}
+    best_a_max_times_f = {}
     POLF_obs = {}
     best_sf = {}
     best_idx_arr = {}
@@ -318,8 +318,8 @@ def find_sf_v3(bands,
         df = pd.read_csv(P_omega_data_folder_path + fname)
 
         # x-axis
-        a_max_vals = df["a_max_f_micron"].values
-        a_max_f_dist_micron[f] = a_max_vals
+        a_max_times_f_vals = df["a_max_f_micron"].values
+        a_max_times_f_dist_micron[f] = a_max_times_f_vals
 
         # ALL bands
         Pw = np.column_stack([
@@ -335,7 +335,7 @@ def find_sf_v3(bands,
 
 
         # Loop over each a_max grid point
-        for i in range(len(a_max_vals)):
+        for i in range(len(a_max_times_f_vals)):
 
             Pw_model = Pw[i, :]  # all bands
 
@@ -372,7 +372,7 @@ def find_sf_v3(bands,
 
                 
                 # Print results 
-                print(rf'The best a_max_f is: {a_max_vals[best_idx]}')
+                print(rf'The best a_max_times_f is: {a_max_times_f_vals[best_idx]}')
                 print(rf'At this value, the best sf is : {sf_medians[best_idx]}')
                 print(' ')
                 
@@ -382,12 +382,12 @@ def find_sf_v3(bands,
 
                 
                 # Print results 
-                print(rf'The second best best a_max_f is: {a_max_vals[second_best_idx]}')
+                print(rf'The second best a_max_times_f is: {a_max_times_f_vals[second_best_idx]}')
                 print(rf'At this value, the best sf is : {sf_medians[second_best_idx]}')
                 print(' ')
                 
                 # Print results 
-                print(rf'The third best a_max_f is: {a_max_vals[third_best_idx]}')
+                print(rf'The third best a_max_times_f is: {a_max_times_f_vals[third_best_idx]}')
                 print(rf'At this value, the best sf is : {sf_medians[third_best_idx]}')
                 print(' ')
                 
@@ -398,7 +398,7 @@ def find_sf_v3(bands,
         # ----------------------------------------
         
       
-        best_a_max_f[f] = a_max_vals[best_idx]
+        best_a_max_times_f[f] = a_max_times_f_vals[best_idx]
         best_sf[f] = sf_medians[best_idx]
         best_idx_arr[f] = best_idx
         POLF_obs[f] = np.array([
@@ -410,11 +410,11 @@ def find_sf_v3(bands,
 
     if print_results:
         print("best_idx:", best_idx)
-        print("Best a_max:", best_a_max_f)
+        print("Best a_max * f:", best_a_max_times_f)
         print("Best SF:", best_sf)
 
     # return values
-    return a_max_f_dist_micron, P_times_omega, best_a_max_f, POLF_obs, best_sf, best_idx_arr
+    return a_max_times_f_dist_micron, P_times_omega, best_a_max_times_f, POLF_obs, best_sf, best_idx_arr
 
 
 

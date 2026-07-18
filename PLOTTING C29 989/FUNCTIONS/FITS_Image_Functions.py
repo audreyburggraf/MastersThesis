@@ -574,6 +574,10 @@ def unstretch(stretched_value, vmin, vmax, base=100):
 def GetInfoFromHeader(header, 
                       lam_precision = 1):
     
+    # Get the date
+    date = header['DATE-OBS']
+    print(f'\nThe date is {date}')
+    
     # Get the frequency 
     freq = header['CRVAL3']
     freq_GHz = freq / (1e9)
@@ -586,13 +590,6 @@ def GetInfoFromHeader(header,
     print(f'\nThe wavelength is {lam:.{lam_precision}f} mm')
     
     
-    # Get the beam size in arcseconds
-    # Note: in the header it has units of degrees
-    bmaj = deg_to_arcsec(header['BMAJ'])  
-    bmin = deg_to_arcsec(header['BMIN'])
-    bpa  = header['BPA']
-    
-    print(f'\nBeam: {bmaj:.2f}" x {bmin:.2f}" (PA = {bpa:.1f}°)')
     
     
     # -----------------------------
@@ -604,9 +601,16 @@ def GetInfoFromHeader(header,
     
     
     
-    # Get the date
-    date = header['DATE-OBS']
-    print(f'\nThe date is {date}')
+
+    
+    # Now for the information in the second table
+    # Get the beam size in arcseconds
+    # Note: in the header it has units of degrees
+    bmaj = deg_to_arcsec(header['BMAJ'])  
+    bmin = deg_to_arcsec(header['BMIN'])
+    bpa  = header['BPA']
+    
+    print(f'\nBeam: {bmaj:.2f}" x {bmin:.2f}" (PA = {bpa:.1f}°)')
     
 
 

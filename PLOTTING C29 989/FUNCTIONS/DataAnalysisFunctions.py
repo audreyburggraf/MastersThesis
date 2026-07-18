@@ -69,27 +69,44 @@ def normalize_angle(angle_rad):
 
 def calculate_chi_squared_v2(observed_value, expected_value):
     
-    # Normalize both observed and expected angles
-    observed_value_norm = np.array([normalize_angle(angle) for angle in observed_value])
-    expected_value_norm = np.array([normalize_angle(angle) for angle in expected_value])
+#     # Normalize both observed and expected angles
+#     observed_value_norm = np.array([normalize_angle(angle) for angle in observed_value])
+#     expected_value_norm = np.array([normalize_angle(angle) for angle in expected_value])
     
-    observed_value = np.array(observed_value)
-    expected_value = np.array(expected_value)
+    observed_value_arr = np.array(observed_value)
+    expected_value_arr = np.array(expected_value)
+    
+    
+    abs_diff = np.abs(observed_value_arr - expected_value_arr)
+    
+    pi_minus_diff = np.pi - abs_diff
+    
+    delta_theta = np.minimum(abs_diff, np.pi - abs_diff)
+    
+    chi_squared = np.sum(delta_theta**2)
+    
+    return chi_squared
                        
 
     # Option 1: Raw chi-squared
-    diff_sq_raw = (observed_value - expected_value) ** 2
-    chi_squared_raw = np.sum(diff_sq_raw)
+#     diff_sq_raw = (observed_value_arr - expected_value_arr) ** 2
+#     chi_squared_raw = np.sum(diff_sq_raw)
 
-    # Option 2: Chi-squared with normalized angles
-    observed_value_norm = np.array([normalize_angle(angle) for angle in observed_value])
-    expected_value_norm = np.array([normalize_angle(angle) for angle in expected_value])
+#     # Option 2: Chi-squared with normalized angles
+#     observed_value_norm = np.array([normalize_angle(angle) for angle in observed_value])
+#     expected_value_norm = np.array([normalize_angle(angle) for angle in expected_value])
 
-    diff_sq_norm = (observed_value_norm - expected_value_norm) ** 2
-    chi_squared_norm = np.sum(diff_sq_norm)
+#     diff_sq_norm = (observed_value_norm - expected_value_norm) ** 2
+#     chi_squared_norm = np.sum(diff_sq_norm)
 
     # Return the minimum of the two
-    return min(chi_squared_raw, chi_squared_norm)
+    # return min(chi_squared_raw, chi_squared_norm)
+    
+    
+#     delta_theta = observed_value_arr - expected_value_arr
+#     delta_theta = (delta_theta + np.pi/2) % np.pi - np.pi/2
+#     chi_squared = np.sum(delta_theta**2)
+    
 
 
 
