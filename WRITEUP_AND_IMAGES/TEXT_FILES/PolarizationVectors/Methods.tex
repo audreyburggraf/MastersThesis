@@ -1,58 +1,86 @@
-By looking at the polarization morphology, made uup of polarization vectors, we can infer the dominant polarization mechanisms within the disk, and by doing this at each band, we can see how the morphology changes. We start by getting the polarization vectors, and then later we will create models to fit the morphologies. 
 
 
 
-A vector could be made at each \add{how we make each vector}.
+\subsection{\SCC{Polarization Vector Sampling}}
+\SCC{The Nyquist-Shannon sampling theorem} was used to determine the pixel spacing between polarization vectors. This ensures the vector spacing is not under- or over-sampled with respect to the relative size of the beam at each wavelength. This theorem ensures that the distance \SCC{between each vector is no larger than half of the size of the beam}. 
 
-
-\subsubsection{Sampling}
-The Nyquist-Shannon sampling theorem was used to determine the pixel spacing between vectors to make sure we are not under- or over-sampling relative to the size of the beam at each band. 
-
-To follow this sampling, we ensure that the distance between each vector is no larger than half of the size of the beam. To do this, we take the size of the beam in pixels by:
+The size of the beam in pixels is:
 \begin{equation}
-    \text{Beam Size =} \sqrt{BMAJ \cdot BMIN},
+    \text{Beam Size =} \sqrt{BMIN \cdot BMAJ},
+    \label{eq: beam_size}
 \end{equation}
-\noindent where $BMAJ$ and $BMIN$ are the sizes of the major and minor axes of the beam in units of pixels. Then the sampling step is taken to be the the nearest integer of Beam Size/2. The steps between each vector for each band are summarized in Table \ref{tab: vector_info}. 
+\noindent where $BMIN$ and $BMAJ$ are the minor and major axes of the beam, listed in Table \ref{tab: source_info} in units of arcseconds. These values were converted to pixels using the image pixel scale of $0.018''\,\mathrm{pixel}^{-1}$ before using Equation \ref{eq: beam_size}. The beam size was divided in half, rounded to the nearest integer using \texttt{round}, and gave us the step size between vectors. 
 
-
-\subsubsection{Vector Length} 
-
-The length of these vectors are all normalized to the same length, and are not scaled based on the strength of the (\SI or \POLIsym) value at its corresponding pixel. The length of these vectors were chosen using guess and check, and just scaled to what looks best. The length of the vectors for each band are summarized in Table \ref{tab: vector_info}. 
-
-\subsubsection{Testing Reliability} 
-
-Beyond the step size, we also have to ensure that the vector is reliable. The vector is plotted if it meets the conditions:
-\begin{equation}
-    \frac{\POLIeq}{\POLIerreq} >  \quad \text{ and } \PAerr < 10^\circ,
-    \label{eq: vector_conditions}
-\end{equation}
-\noindent where $\sigma_\theta$ is the uncertainty for polarization angle in degrees. These conditions were chosen based on the ones from \cite{sadavoy_dust_2019}, without the condition that $I/\sigma_I>3$ since IRS 63 is so bright and well-resolved, this condition was not necessary for our analysis. 
+%The pixel step sizes for each wavelength are summarized in Table \ref{tab: vector_info}. 
 
 
 
+\subsection{Reliability Criteria}
+\label{sec: methods_vector_criteria}
+In addition to the sampling spacing explained above, a polarization vector was only plotted if it satisfied the following criteria:
+\begin{enumerate}
+    \item $\frac{\POLIeq}{\POLIerrEQ} >$ 4 (\bfour, \bfive, \bsevenNS) or $\frac{\POLIeq}{\POLIerrEQ} >$ 3 (\bsixNS)
+    \item $\PAerrEQ < 10^\circ$.
+\end{enumerate}
+\noindent These two criteria were adapted from the selection criteria from \citep{sadavoy_dust_2019}, without the additional condition of $I/\sigma_I>3$. This could be excluded for our analysis as IRS 63 is bright and well-resolved, meaning it has a high S/N ratio in the area around the disk, meaning this condition is already met. The threshold of $\frac{\POLIeq}{\POLIerrEQ} >3$ was used for \bsix because of its lower sensitivity. Using a threshold of 4 excluded almost 10 additional  polarization vectors. 
 
-\begin{table}[h!]
-\centering
-\caption{\add{caption}}
-\begin{tabular}{ccccccc}
-\toprule
-\multirow{2}{*}{} & \multicolumn{3}{c}{\textbf{Stokes Errors (mJy)}} & \textbf{Step} & \textbf{Vector Length} &  \\
-& I & Q & U & pix  &  pix & \\
-\midrule 
-\textbf{Band 4} & Ierr & Qerr & Uerr & 4 & 2 \\
-\textbf{Band 5} & 0.0143745 & 0.013025 & 0.01525  & 8 & 6   \\
-\textbf{Band 6} & Ierr & Qerr & Uerr & 6 & 4   \\
-\textbf{Band 7} & 0.035175 & 0.02625 & 6 & 6 & 4 \\
-\bottomrule
-\end{tabular}
-\label{tab: vector_info}
-\end{table}
+
+
+
+% \subsubsection{\sent{Vector Direction \& Length} \SC{cut this section}}
+% At each sampled pixel that satisfied the selection criteria, a polarization vector was calculated. The polarization vectors were plotted at a constant length ($\mathcal{L}$) at each wavelength. Only the direction of the vectors was required to examine the polarization morphology, so the vectors were not scaled by any value such as \SI or polarized intensity. The vector lengths were chosen to improve visualization and avoid overlapping vectors and were found using trial and error. The vector lengths for each wavelength are summarized in Table \ref{tab: vector_info}. 
+
+% Both the length and the orientation of each vector were required for plotting. The orientation of the vector is its polarization angle $\theta$ at the selected pixel. The horizontal and vertical components of the vector were calculated using:
+
+% \begin{equation}
+% \begin{aligned}
+%     \Delta x &= \mathcal{L} \cos\left(\theta + 90 \deggEQ\right), \\
+%     \Delta y &= \mathcal{L} \sin\left(\theta + 90\deggEQ \right).
+% \end{aligned}
+% % \label{eq: vectors}
+% \end{equation}
+
+% \noindent The vector is centred on the selected pixel, with half of its length on each side of the pixel. The polarization vector was plotted using the Cartesian coordinate system, but the polarization angles were measured using the astronomical coordinate system. In both coordinate systems, angles increase as you go counterclockwise from the 0\degg point, but the 0\degg direction is east in Cartesian and north in astronomical. Therefore, a $90 \deggEQ$ offset was added to account for this difference. 
 
 
 
 
 
 
+% \begin{table}[h!]
+% \centering
+% \caption{Summary of conditions used to create polarization vector maps. \note{Last updated June 26th.} \SC{cut this table}}
+% \begin{tabular}{lcccc}
+% \toprule
+% \textbf{Property} &
+% \textbf{\bandfourmm} &
+% \textbf{\bandfivemm} &
+% \textbf{\bandsixmm} &
+% \textbf{\bandsevenmm} \\
+% \midrule
+
+% Step (pix)
+% & 4
+% & 8
+% & 6
+% & 6 \\
+
+% Vector Length (pix)
+% & 2
+% & 6
+% & 4
+% & 4 \\
+
+% \POLI Cutoff
+% & 4
+% & 4
+% & 3
+% & 4 \\
+
+% \bottomrule
+% \end{tabular}
+% \label{tab: vector_info}
+% \end{table}
 
 
 
@@ -61,39 +89,5 @@ Beyond the step size, we also have to ensure that the vector is reliable. The ve
 
 
 
-
-
-
-\begin{figure*}[h]
-  \centering
-  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/StokesI_POLI/IRS63_StokesI_POLI_vectors_BAND4.pdf}
-  \caption{\quoted{\stokesI (left) and polarized intensity (right) for IRS 63 at ALMA Band 4 (\bandfourlambda). The polarization vectors are shown as black lines. Vectors are shown for pixels with \add{conditions}. The beam is shown in the lower left corner. The \stokesI maps have a log colour scale and the polarized intensity maps have a linear scale \cite{sadavoy_dust_2019}}}
-  \label{fig: StokesI_POLI_B4}
-\end{figure*}
-
-
-\begin{figure*}[h]
-  \centering
-  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/StokesI_POLI/IRS63_StokesI_POLI_vectors_BAND5.pdf}
-  \caption{Same as Figure \ref{fig: StokesI_POLI_B4}, except for Band 5 (\bandfivelambda).}
-  \label{fig: StokesI_POLI_B5}
-\end{figure*}
-
-
-
-\begin{figure*}[h]
-  \centering
-  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/StokesI_POLI/IRS63_StokesI_POLI_vectors_BAND6.pdf}
-  \caption{Same as Figure \ref{fig: StokesI_POLI_B4}, except for Band 6 (\bandsixlambda).}
-  \label{fig: StokesI_POLI_B6}
-\end{figure*}
-
-
-\begin{figure*}[h]
-  \centering
-  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/StokesI_POLI/IRS63_StokesI_POLI_vectors_debiased_BAND7.pdf}
-  \caption{Same as Figure \ref{fig: StokesI_POLI_B4}, except for Band 7 (\bandsevenlambda).}
-  \label{fig: StokesI_POLI_B7}
-\end{figure*}
 
 

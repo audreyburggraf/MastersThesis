@@ -5,7 +5,7 @@
 \usepackage{booktabs}
 
 % styling and graphics-based
-
+\usepackage{threeparttable}
 \usepackage{graphicx} 
 \usepackage{emptypage}
 \usepackage{geometry}
@@ -36,22 +36,40 @@
 %====================================
 % Band 4
 \newcommand{\bandfourmmNS}{\ensuremath{2.1~\mathrm{mm}}}  
+\newcommand{\bfourNS}{\bandfourmmNS}
 
-\newcommand{\bandfourmm}{\ensuremath{2.1~\mathrm{mm}} }  
+\newcommand{\bandfourmm}{\ensuremath{2.1~\mathrm{mm}} } 
+
+\newcommand{\bfour}{\bandfourmm}
+
 % Band 5 
 \newcommand{\bandfivemmNS}{\ensuremath{1.5~\mathrm{mm}}}
 
+
 \newcommand{\bandfivemm}{\ensuremath{1.5~\mathrm{mm}} }
+
+\newcommand{\bfiveNS}{\bandfivemmNS}
+\newcommand{\bfive}{\bandfivemm}
+
+\newcommand{\bfiverobust}{\bandfivemm (\texttt{robust = -1})}
 
   % Band 6 
 \newcommand{\bandsixmmNS}{\ensuremath{1.3~\mathrm{mm}}}
 
+
 \newcommand{\bandsixmm}{\ensuremath{1.3~\mathrm{mm}} }
+
+\newcommand{\bsixNS}{\bandsixmmNS}
+\newcommand{\bsix}{\bandsixmm}
 
  % Band 7 
 \newcommand{\bandsevenmmNS}{\ensuremath{0.87~\mathrm{mm}}}
 
+
 \newcommand{\bandsevenmm}{\ensuremath{0.87~\mathrm{mm}} }
+
+\newcommand{\bsevenNS}{\bandsevenmmNS}
+\newcommand{\bseven}{\bandsevenmm}
 %====================================
 
 \newcommand{\half}{\frac{1}{2}}
@@ -61,29 +79,49 @@
 % Paramter/word/unit commands
 %===============================
 \newcommand{\degg}{$^\circ$ }
+\newcommand{\deggEQ}{^\circ }
 \newcommand{\deggNS}{$^\circ$}
 %===============================
-\newcommand{\sft}{$sf$ }
-\newcommand{\sftNS}{$sf$}
-\newcommand{\sfeq}{sf }
+\newcommand{\sff}{!!}
+\newcommand{\sfNS}{!!}
+\newcommand{\sfeq}{\text{SF}}
 
 \newcommand{\sfbest}{$sf_{best}$ }
-\newcommand{\sfbestNS}{$sf_{best}$}
-\newcommand{\sfbestEQ}{sf_{best}}
+\newcommand{\sfbestNS}{SF$_{\text{best}}$}
+\newcommand{\sfbestEQ}{\text{SF}_{\text{best}}}
 %===============================
+\newcommand{\amaxNS}{$a_{\text{max}}$}
 \newcommand{\amax}{$a_{\text{max}}$ }
 \newcommand{\amaxEQ}{a_{\text{max}} }
 
 \newcommand{\amaxtext}{$a_{\text{max}}$ }
-\newcommand{\amaxbest}{$a_{\text{max, best}}$ }
-\newcommand{\amaxbestNS}{$a_{\text{max, best}}$}
+
+\newcommand{\amaxbestEQ}{a_{\text{max, best}}}
+\newcommand{\amaxbest}{$\amaxbestEQ$ }
+\newcommand{\amaxbestNS}{$\amaxbestEQ$}
 %===============================
 \newcommand{\kscaEQ}{\kappa_{\text{sca}}}
 \newcommand{\ksca}{$\kscaEQ$ } 
+\newcommand{\kscaNS}{$\kscaEQ$} 
+
+\newcommand{\kscaeffEQ}{\kappa_{\text{sca,eff}}}
+\newcommand{\kscaeff}{$\kscaeffEQ$ } 
 
 \newcommand{\kabsEQ}{\kappa_{\text{abs}}}
 \newcommand{\kabs}{$\kabsEQ$ } 
 %===============================
+\newcommand{\SIerrEQ}{\sigma_I}
+\newcommand{\SQerrEQ}{\sigma_Q}
+\newcommand{\SUerrEQ}{\sigma_U}
+
+\newcommand{\SIerrNS}{$\SIerrEQ$}
+\newcommand{\SQerrNS}{$\SQerrEQ$}
+\newcommand{\SUerrNS}{$\SUerrEQ$}
+
+\newcommand{\SIerr}{$\SIerrEQ$ }
+\newcommand{\SQerr}{$\SQerrEQ$ }
+\newcommand{\SUerr}{$\SUerrEQ$ }
+
 \newcommand{\stokesI}{Stokes \emph{I} }
 \newcommand{\SI}{Stokes \emph{I} }
 \newcommand{\SIns}{Stokes \emph{I}}
@@ -93,36 +131,79 @@
 \newcommand{\SQ}{Stokes \emph{Q} }
 \newcommand{\SU}{Stokes \emph{U} }
 
+\newcommand{\SV}{Stokes \emph{V} }
+\newcommand{\SVns}{Stokes \emph{V}}
+%===============================
+\newcommand{\weffEQ}{\omega_{\text{eff}} }
+\newcommand{\weff}{$\weffEQ$}
+%===============================
+\newcommand{\Zoo}{$Z_{12}$ }
+\newcommand{\Zot}{$Z_{11}$ }
+
 %===============================
 \newcommand{\Pw}{$P\omega$ }
 
-\newcommand{\Pwmodel}{$P\omega_{model}$ }
-\newcommand{\PwmodelEQ}{P\omega_{model}}
+\newcommand{\Pwmodel}{$P\omega_\text{{model}}$ }
+\newcommand{\PwmodelEQ}{P\omega_\text{{model}}}
 
+\newcommand{\PwmodeliEQ}{P\omega_{\text{model, i}}}
+\newcommand{\PwmodeliNS}{$\PwmodeliEQ$}
+\newcommand{\Pwmodeli}{$\PwmodeliEQ$ }
 %===============================
-\newcommand{\POLF}{POLF }
 \newcommand{\POLFeq}{\mathcal{P}_F}
+\newcommand{\POLFns}{$\POLFeq$}
+\newcommand{\POLF}{$\POLFeq$ }
 
-\newcommand{\POLFobs}{$\mathcal{P}_{F, obs}$}
-\newcommand{\POLFobsEQ}{\mathcal{P}_{F, obs}}
+
+\newcommand{\POLFobsEQ}{\mathcal{P}_{F, \text{obs}}}
+\newcommand{\POLFobs}{$\POLFobsEQ$ }
+\newcommand{\POLFobsNS}{$\POLFobsEQ$}
+
+\newcommand{\POLFobsiEQ}{\mathcal{P}_{F, \text{obs, i}}}
+\newcommand{\POLFobsi}{$\POLFobsiEQ$ }
+\newcommand{\POLFobsiNS}{$\POLFobsiEQ$}
+
+\newcommand{\POLFerrEQ}{\sigma_{\mathcal{P}F}}
+
+\newcommand{\POLFerr}{$\POLFerrEQ$}
+
+% \newcommand{\POLFobs}{$\mathcal{P}_{F, obs}$}
+% \newcommand{\POLFobsEQ}{\mathcal{P}_{F, obs}}
+%===============================
+% OBSERVED POLI
+\newcommand{\POLIobsNS}{$\mathcal{P}_\text{obs}$}
+
+\newcommand{\POLIobs}{\POLIobsNS }
+
+\newcommand{\POLIobsEQ}{\mathcal{P}_\text{obs}}
+
+% \newcommand{\POLIub}{$\mathcal{P}_\text{obs}$}
+\newcommand{\POLI}{$\mathcal{P}_I$ }
+\newcommand{\POLIns}{$\mathcal{P}_I$}
+% \newcommand{\POLI}{\POLIub }
+% \newcommand{\POLIns}{\POLIub}
+\newcommand{\POLIeq}{\mathcal{P}_I}
+\newcommand{\POLIerr}{$\sigma_{\mathcal{P}I}$ }
+\newcommand{\POLIerrNS}{$\sigma_{\mathcal{P}I}$}
+\newcommand{\POLIerrEQ}{\sigma_{\mathcal{P}I}}
+
+\newcommand{\POLIbrightEQ}{\mathcal{P}_{I\text{,bright}}}
 %===============================
 
 
-\newcommand{\POLIub}{$\mathcal{P}_\text{obs}$}
-\newcommand{\POLIsym}{$\mathcal{P}_I$}
-\newcommand{\POLI}{POLI }
-\newcommand{\POLIns}{POLI}
-\newcommand{\POLIeq}{\mathcal{P}_I}
-\newcommand{\POLIerr}{$\sigma_\mathcal{P}_I$}
-\newcommand{\POLIerreq}{\sigma_{\mathcal{P}_I}}
-
-\newcommand{\PAerr}{\sigma_\theta}
+\newcommand{\PAerrEQ}{\sigma_\theta}
+\newcommand{\PAerr}{$\PAerrEQ$}
 %===============================
 \newcommand{\alma}{\emph{ALMA} }
+
 
 \newcommand{\submm}{submillimeter }
 
 \newcommand{\mmt}{millimeter }
+
+%===============================
+\newcommand{\BrobustNS}{B5$_{\texttt{robust=-1}}$}
+\newcommand{\Brobust}{\BrobustNS }
 
 %===============================
 \newcommand{\micron}{$\mu$m }
@@ -131,11 +212,16 @@
 %===============================
 \newcommand{\cmsq}{cm$^2$ }
 %===============================
-
-
+\newcommand{\uv}{$(u, v)$ }
+\newcommand{\SNR}{S/N }
+\newcommand{\SNRns}{S/N}
+%===============================
 %===============================
 % This is here incase we want to make AU written as au, i've seen both but like AU better
 \newcommand{\AU}{AU}
+%===============================
+
+\newcommand{\mjybeam}{mJy beam$^{-1}$}
 %===============================
 % Word short forms 
 
@@ -160,18 +246,30 @@
 % Fix or revise something
 \newcommand{\fix}[1]{\textcolor{violet}{\textbf{[FIX:} #1\textbf{]}}}
 
+%===============================
+\definecolor{colour1}{HTML}{ac0002}
+\definecolor{colour2}{HTML}{e16526}
+\definecolor{colour3}{HTML}{263339}
+\definecolor{colour4}{HTML}{3a621b}
+%===============================
+\newcommand{\draft}[1]{\textcolor{colour1}{#1}}
+\newcommand{\ReadyToSend}[1]{\textcolor{colour2}{ #1}}
+\newcommand{\sent}[1]{\textcolor{colour3}{ #1}}
+\newcommand{\revone}[1]{\textcolor{colour4}{ #1}}
+%===============================
 
 % Fix or revise something
-\newcommand{\question}[1]{\textcolor{purple}{#1\textbf{]}}}
+\newcommand{\question}[1]{\textcolor{purple}{\textbf{Q:} #1\textbf{}}}
 
-% Remove or consider deleting something
-\newcommand{\remove}[1]{\textcolor{purple}{\textbf{[REMOVE:} #1\textbf{]}}}
+% Sarah's comments
+\definecolor{sc}{HTML}{F23AE4}
+\newcommand{\SC}[1]{\textcolor{sc}{\textbf{SC:} #1\textbf{}}}
+\newcommand{\SCC}[1]{\textcolor{sc}{#1\textbf{}}}
+
 
 % Comment to yourself
 \newcommand{\note}[1]{\textcolor{teal}{\textit{[NOTE: #1]}}}
 
-% Placeholder for a missing number/value
-\newcommand{\numtodo}[1]{\textcolor{orange}{\textbf{[NUMBER NEEDED:} #1\textbf{]}}}
 
 % Direct quote with quotation marks added automatically
 % I will use this for when I want to add information from a paper as a placeholder, but before I change it to my own words
@@ -269,9 +367,24 @@
 
 \question{Here is how I add text where I have a question}
 
+\SC{This is what text looks like where I add text in for Sarah's comments from pdf's}
+
 \note{Here is how I add text on a note I have}
 
 \quoted{Text in this format is when I directly copy text from a source, and it should be followed by the source it was from. This text is yet to be put into my own words. }
+
+
+\draft{This is an unedited draft}
+
+\ReadyToSend{This means its edited and ready to send to Sarah to review}
+
+\sent{This means this section was sent to Sarah}
+
+\revone{This means this section has been revised after sarahs first look}
+
+
+*Make sure when (ref1, ref2) its in chronological order
+* take out all \ draft
 
 Dedication goes here... 
 
@@ -303,19 +416,21 @@ Acknowledgments if any...
 \pagenumbering{arabic}
 
 
-\include{WRITEUP_AND_IMAGES/TEXT_FILES/Polarization Equations}
 
 
-\include{WRITEUP_AND_IMAGES/TEXT_FILES/Introduction}
+\include{WRITEUP_AND_IMAGES/TEXT_FILES/Introduction/Introduction}
 
 
-\include{WRITEUP_AND_IMAGES/TEXT_FILES/Data}
+\include{WRITEUP_AND_IMAGES/TEXT_FILES/Interferometry}
+
+
+\include{WRITEUP_AND_IMAGES/TEXT_FILES/Data/Data}
 
 
 
-\include{WRITEUP_AND_IMAGES/TEXT_FILES/Methods}
 
-\include{WRITEUP_AND_IMAGES/TEXT_FILES/Results}
+\include{WRITEUP_AND_IMAGES/TEXT_FILES/Chapter4}
+\include{WRITEUP_AND_IMAGES/TEXT_FILES/Chapter5}
 
 \include{WRITEUP_AND_IMAGES/TEXT_FILES/Discussion}
 
