@@ -1,0 +1,92 @@
+\section{Imaging}
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Image Reconstruction}
+
+The inverse Fourier transform of the complex visibilities in the \uv plane (Equation \ref{eq: V(u,v)}), given by the equation:
+\begin{equation}
+    I(l,m) = \int_{-\infty}^\infty V(u,v) e^{2\pi i(ul+vm)}dudv,
+    \label{eq: I(l, m)}
+\end{equation}
+\noindent converts the visibilities into the image domain \citep{Thompson}. Since the \uv coverage is incomplete, this produces a `dirty image', rather than a perfect reconstruction \citep{Marvil2026}. Because of the incomplete \uv coverage, the dirty image is inherently convolved with a point spread function called the `dirty beam' \citep{Marvil2026}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Weighting Schemes}
+% ------------------------------------------------
+Before the inverse Fourier transform is taken, each visibility in the \uv plane is given a weight, which influences the properties of the dirty beam \citep{Marvil2026}. When each visibility is weighted equally, this is called \emph{natural weighting}, which gives the best signal-to-noise ratio (\SNRns) for detecting faint objects \citep{Monnier, Thompson}. \SCC{When visibilities are weighted such that each portion of the \uv plane is weighted equally, it is called \emph{uniform weighting}, and gives a higher angular resolution but lower sensitivity} \citep{Monnier}. 
+
+A `robust' parameter was introduced in \cite{briggs} for a weighting scheme called Briggs weighting. The robust parameter controls a balance between the two extremes of natural and uniform to find an ideal trade-off between \SNR and high angular resolution \citep{Monnier, Marvil2026}. The robust parameter goes from -2 to 2, where -2 is uniform weighting, 0 is midway, and 2 is natural weighting \citep{Thompson}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\subsection{Deconvolution (CLEAN)}
+% ------------------------------------------------
+
+
+Deconvolution is the process of removing the effects of the dirty beam from the dirty image, typically using the algorithm CLEAN \citep{Marvil2026, Thompson}. The first step in the CLEAN algorithm is to locate the brightest point of the dirty image, subtract a scaled copy of the dirty beam centred on this point, and record the position and brightness as CLEAN components \citep{Monnier}. This process is repeated iteratively until only the residual noise is left \citep{Thompson}. The image is then convolved with the final CLEAN beam, called the synthesized beam, which is a smooth Gaussian with the same full width at half maximum (FWHM) as the dirty beam \citep{Thompson}. The residual image is added back, producing the final CLEAN image \citep{Thompson}. 
+
+
+\SC{It may be worth noting that clean builds a model of the image based on delta functions or small Gaussians of flux through an iterative process.}
+
+\SC{Rather than use CLEAN, you should use \texttt{clean} because this is a code function and not an acronym.}
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Self-Calibration}
+
+Self-calibration is an additional calibration step that can be done after standard calibration.
+In standard calibration sources such as quasars are used, but in self-calibration the science target itself is used as the calibrator for both phase and amplitude calibration \citep{Marvil2}. The process of self-calibration is useful to remove artifacts \SCC{from the source due to calibration errors, or remove artifacts from a background source due to direction-independent calibration errors} \citep{Marvil2}. The specific details on the self-calibration process used in this project are described in Chapter \ref{ch_data}.
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The clean bean is a Gaussian fit to the central peak of the PSF \citep{Marvil2026}. 
+
+% \quoted{The dirty image is the inverse transiform of the measured visibilities, which is typicall created by evaluating the visibilities on a regular grid, then using the Fast Fourier Transform} \citep{Marvil2026}. 
+
+
+
+
+% Primary beam is determined by the size of the dish \citep{Ludovici2026}. 
+
+% The synthesized bean is determined by the separation of the telescope \citep{Ludovici2026}. 
+
+
+% The dirty bean (PSF) is the result of the system to a point source \citep{Ludovici2026}. 
+
+
+% The point spread function (PSF) is a convolutional image feature due to incomplete UV sampling (dirty beam) \citep{Marvil2026}. The PSF is \quoted{what every point source looks like in the dirty image (also called the dirty beam), it is the Fourier transofrm of th gridded wrights.} \citep{Marvil2026}. 
+
+
+% However, before this is done we need to learn about the observation conditions, via the phase stability \citep{Marvil2}. To do this, you identidt a long scan on a nright calibrator (bandpass) and plot the phase vs. time for a single baseline \citep{Marvil2}. What we look for is a coherence time (peak to peak time) to be $\lessim 1$ minuite. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+

@@ -1,0 +1,170 @@
+The following equations used in this section are from \cite{CoudeEquations}, with variables summarized in Table \ref{tab: stokes_polar_variables}. The numerical results of the errors are presented in Table \ref{tab: stokes_errors}.
+
+
+
+\begin{table}[h!]
+\centering
+\caption{Summary of Stokes and polarization symbols, associated error symbols, and units.}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Parameter} & \textbf{Symbol} & \textbf{Error Symbol} & \textbf{Units}  \\
+\midrule
+
+
+\SI
+& I
+& \SIerr
+& \mjybeam \\
+
+\SQ
+& Q
+& \SQerr
+& \mjybeam \\
+
+\SU
+& U
+& \SUerr
+& \mjybeam \\
+
+
+
+Unbiased Polarized Intensity
+& \POLIobs
+& N/A
+& \mjybeam \\
+
+
+Biased Polarized Intensity
+& \POLI
+& \POLIerr
+& \mjybeam \\
+
+Polarization Fraction (debiased)
+& \POLF
+& \POLFerr
+& unitless, or \% \\
+
+
+Polarization Angle (debiased)
+& $\theta$
+& \PAerr
+& $\deg$ \\
+
+
+
+
+
+\bottomrule
+\end{tabular}
+\label{tab: stokes_polar_variables}
+\end{table}
+
+
+
+
+
+
+% ---------------------------------------------
+\subsubsection{Errors for Stokes Parameters}
+
+For the data at wavelengths I calibrated, the errors for \SI, \SQ and \SU were estimated by averaging the maximum standard deviation in four different regions far from the bright source at the centre. To compare these errors with the \bsix error maps that were provided to me for this project, I will take every pixel in the map. 
+
+
+% ---------------------------------------------
+\subsubsection{Polarization Fraction}
+Using the debiased polarized intensity, the (debiased) polarization fraction can be calculated by:
+\begin{equation}
+    \POLFeq = \POLIeq/I,
+    \label{eq: POLF}
+\end{equation}
+\noindent where $I$ is \SI. The uncertainty on polarization fraction is:
+
+\begin{equation}
+    \POLFerrEQ = \POLFeq \left[\left(\frac{\POLIerrEQ}{\POLIeq}\right)^2 + \left(\frac{\SIerrEQ}{I}\right)^2\right]^{1/2}.
+     \label{eq: POLF_error}
+\end{equation}
+   
+
+% ---------------------------------------------
+
+\subsubsection{Polarization Angle}
+
+The polarization position angle, $\theta$ is calculated by: 
+\begin{equation}
+\theta = \half \tan ^{-1} \frac{U}{Q},
+    \label{eq: PA}
+\end{equation}
+\noindent with an uncertainty calculated by:
+
+\begin{equation}
+    \PAerrEQ = \frac{1}{2} 
+    \frac{\sqrt{(U\SQerrEQ)^2 + (Q\SUerrEQ)^2}}{Q^2 + U^2}.
+    \label{eq: PA_error}
+\end{equation}
+
+% ---------------------------------------------
+
+
+
+
+
+
+
+
+
+\begin{table}[h!]
+\centering
+\caption{Summary of error values for Stokes and polarization patterns. \SIerrNS, \SQerr and \SUerr are constants at \bfourNS, \bfive and \bsevenNS, and their constant values are reported. The remaining error values vary with pixel and the average on the map is reported in this table, calculated using \texttt{np.mean} and \texttt{np.nanmean} for \bsix. Units for each error can be found in Table \ref{tab: stokes_polar_variables}. \note{Last updated June 18th, Band 4 is nterms 2, Band 5 is nterms 5 robust 0.5 and Band 7 is nterms 2. }. \question{why is \bsix PA error so high? did i assume deg and its rad?} \add{Band 5 robust -1 not 0.5}}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Property} & \textbf{\bandfourmm} & \textbf{\bandfivemm } & \textbf{\bandsixmm } & \textbf{\bandsevenmm} \\
+\midrule
+
+
+\SIerr 
+& 0.0138
+& 0.0144
+& 0.1605
+& 0.0352 \\
+
+\SQerr
+& 0.0096
+& 0.0130
+& 0.0610
+& 0.0262 \\
+
+\SUerr 
+& 0.0101
+& 0.0152
+& 0.0610
+& 0.0244 \\
+
+
+
+\POLIerr
+& 0.0097
+& 0.0142
+& 0.0610
+& 0.0263 \\
+
+
+\POLFerr 
+& -38997946.7091
+& -1336777907.9366
+& -10460822.0
+&  -8293473.6074 \\
+
+\PAerr (deg)
+& 0.0750
+& -0.3770
+& 1.1687554403207413e+24
+& 0.2183 \\
+
+
+
+
+
+\bottomrule
+\end{tabular}
+\label{tab: stokes_errors}
+\end{table}
