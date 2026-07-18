@@ -1,0 +1,68 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Calibration}
+% ------------------------------------------------
+
+
+Calibration is the process of removing the effects of instrumental and atmospheric factors in visibility data before they are combined into an image \citep{Thompson}. The best calibration strategy is to observe a calibration source, an object with well-known properties. Different calibration steps require calibrators with different properties, such as brightness, size, and location close to the science target.
+
+
+
+
+
+Before calibration begins, contaminated data due to random glitches or bad data values are flagged and removed to make calibration as effective as possible \citep{Fissel2026}, \citep{Thompson}. 
+
+\SC{citing}
+
+
+The first step of the calibration process is bandpass calibration, which corrects for frequency-dependent instrumental effects \citep{CASA2012,Ricci2017}. The best calibrator source for this is a very bright quasar with a flat spectrum that may not be located near the science target \citep{Bendo2026}.
+
+
+
+The next step is phase and amplitude gain calibration, which corrects time-dependent atmospheric and instrumental variations during the observation \citep{Ricci2017}. A bright, point-like quasar close to the science target is used as a gain calibrator as it is observed frequently throughout the observation \citep{Ricci2017}.
+
+
+
+
+
+
+
+The last step is flux calibration, which scales the relative amplitudes to the correct flux density scale \citep{Ricci2017}. A good flux calibrator is a source with a well-known flux density, usually a solar system object or quasar \citep{Ricci2017}
+
+
+\SC{comment}
+
+% \quoted{Flux (amplitude) calibration: two steps. 1. Use calibration devices with knwon temperatures (hotload and ambient) to measure System Temperature frequently. 2. Use a source of knwn flux to convert the signal measured at the antenna to a common unit (Janskey, Jy). If the calibrator is resolved, r has sppectral lines, a model for the source is needed. The derived amplitude vs time corrections for the flux calibrator are then applied to the science target.} \citep{Ricci2017}.
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Ideal calibration sources are to be unresolved since the response to such a source is predictable and should vary only slowly and smoothly with time, and precise details of its visibility are not required; a strong calibrator with a good SNR in a short time, and the position of the calibrator should be close to the target position  \citep{Thompson}.
+
+
+% There are teo categories. First, slow changing: antenna position, pointing or gain corrections with elevation, shadowing, can be characterized then applied to all observations \citep{Fissel2026}. Secondly fast chaning: variable phaes delay from the atmosphere, flcuations in system temperature, phase drifts in the LO, must be monitored during science observations by oberving calibrators \citep{Fissel2026}. 
+
+
+% \quoted{Bandpass: Correct frequency-dependent telescope response} \citep{Ricci2017}.
+
+
+% \quoted{Visibilities are calibrated by determining the complex gains (amplitude and phase), the frequency response (bandpass) and flux scale for each antena} \citep{Ricci2017}.
+
+
+% Typically, you want the calibration source to be close to your target as the antennas have to point to the calibration source multiple times through observations \add{cite?}. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% \quoted{first pass is atmospheric correction from water vapour radiometers readings. final correction from gain calibrator (point source near the target) is observed every few minuites throughout the observation} \citep{Ricci2017}.
+
+
+
+% \quoted{Phase calibratin: This provides a moel of atmospheric phase change along the line of sight to the science target that can be comesated for in the data } \citep{Ricci2017}.
+
+% \quoted{Phase and amplitude gain calibratoron: remove effects of time-varying phases/amplitude due to atmospheric or instumental variations } \citep{Ricci2017}.
+% \quoted{Atmospheric phase correction: variations in the amount of predictable water vapour cause fluctuations, patches of air with different water vapour (and hence index of refraction) affect the incoming wave front differently} \citep{Ricci2017}.
+
+
