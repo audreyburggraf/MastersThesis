@@ -127,7 +127,8 @@ def add_min_major_ticks_wcs(ax, axis_num_fs = None, sf = 1):
     
     
 # -----------------------------------------------------------------------------------------
-def add_band_label(ax, band, label, text_fs, fontcolor, constants):
+def add_band_label(ax, band, label,  constants, fontcolor = 'black', x_pos = 0.05, y_pos = 0.9, label_fs = constants.text_fs,
+                  va='baseline' ):
     """
     Add a Band label or wavelength label to an axis.
 
@@ -182,10 +183,11 @@ def add_band_label(ax, band, label, text_fs, fontcolor, constants):
         return
 
     # Draw the label
-    ax.text(0.05, 0.90, text,
+    ax.text(x_pos, y_pos, text,
             transform=ax.transAxes,
-            fontsize=text_fs,
-            color=fontcolor)
+            fontsize= label_fs,
+            color=fontcolor,
+           va = va)
 # -----------------------------------------------------------------------------------------
 # Used ChatGpt to help make this function to save time
 # Note I already have a function but this is upated 
@@ -225,7 +227,7 @@ def add_StokesI_cbar(im, ax, normalized_ticks, unstretched_ticks,
 
     return cbar
 # -----------------------------------------------------------------------------------------
-def MinorAxisSlice(ax, minor_x, minor_y):
+def MinorAxisSlice(ax, minor_x, minor_y, fontsize = 25, loc = 'lower right'):
     
     
     ax.plot(minor_x, 
@@ -235,7 +237,7 @@ def MinorAxisSlice(ax, minor_x, minor_y):
         lw = 7, 
        ls = "--")
 
-    ax.legend(fontsize = 25, loc = 'lower right', frameon = False)
+    ax.legend(fontsize = fontsize, loc = loc, frameon = False)
 # -----------------------------------------------------------------------------------------   
     
     
@@ -1983,6 +1985,12 @@ alma_band_ms = {
 
 
 
+
+
+
+
+
+# --------------------------------------------------------------------------------------
 def plot_scale_factor_results(bands,        # These are the bands we are looking at
                               bands_labels, 
                               bands_included_in_fit, # These are the values that were fit
@@ -1999,7 +2007,9 @@ def plot_scale_factor_results(bands,        # These are the bands we are looking
 #                               hlines = False,
                               custom_lw = None,
                               custom_text_x = None,
-                             chi_sq_precision = 3):
+                             chi_sq_precision = 3,
+                             x_axis = 'amax_f',
+                             for_poster = False):
     band_ls = [
     '-' if b in bands_included_in_fit else '--'
     for b in bands
@@ -2051,7 +2061,11 @@ def plot_scale_factor_results(bands,        # These are the bands we are looking
 
     
         # x-axis label
-        ax[i].set_xlabel(r'$a_{\mathrm{max}} f / \mu\mathrm{m}$', fontsize=axis_label_fs*plot_sf)
+        if x_axis == 'amax_f':
+            ax[i].set_xlabel(r'$a_{\mathrm{max}} f / \mu\mathrm{m}$', fontsize=axis_label_fs*plot_sf)
+            
+        elif x_axis == 'amax':
+            ax[i].set_xlabel(r'$a_{\mathrm{max}}  [\mu\mathrm{m}]$', fontsize=axis_label_fs*plot_sf)
     
         # Set ticks
         ax[i].minorticks_on()
@@ -2065,9 +2079,13 @@ def plot_scale_factor_results(bands,        # These are the bands we are looking
         # ---------------------------------------------------------------------------------------
         # ---------------------------------------------------------------------------------------
 
-        # Labels on plot
+        # f labels on plot
         # ---------------------------------------------------------------------------------------
-        ax[i].set_title(f'$f$ = {f:.2f}', fontsize=50)
+        if for_poster == False:
+            ax[i].set_title(f'$f$ = {f:.2f}', fontsize=50)
+        
+        if for_poster == True:
+            ax[i].text(x_pos, 0.15,  f'$\chi^2$ = {chi_sq:.{chi_sq_precision}f}', transform=ax[i].transAxes, fontsize = 30)
         # ---------------------------------------------------------------------------------------
 
 
@@ -2101,13 +2119,23 @@ def plot_scale_factor_results(bands,        # These are the bands we are looking
                 fc = 'none'
                 marker_lw = 5
 
-            ax[i].scatter(a_max[f], 
+            # Pick the x-axis location for the markers based on the type of plot
+            # ---------------------------------------------------------------------
+            if x_axis == 'amax_f':
+                xloc_marker = a_max[f] * f
+            # ---------------------------------------------------------------------
+            elif x_axis == 'amax':
+                xloc_marker = a_max[f]
+            # ---------------------------------------------------------------------
+            # Plot the POLF markers
+            ax[i].scatter(xloc_marker, 
                           POLF_markers[b],
                           marker=ms[j], 
                           s=400,
                           facecolors=fc,
                           edgecolors=ec,
-                         linewidths=marker_lw)
+                          linewidths=marker_lw)
+            # ---------------------------------------------------------------------
 
         
             marker_handles.append(
@@ -2121,13 +2149,22 @@ def plot_scale_factor_results(bands,        # These are the bands we are looking
                    linestyle='None'))
 
             if b not in ["Band 5 robust -1", "Band 5 robust -2"]:
-                ax[i].plot(a_max_f_dist_micron[f],
-                           P_times_omega[f][:, idx] * sf[f],
-                           color=band_colors[j],
-                           label=f'{bands_labels[j]}',
-                           lw=bands_lw[j],
-                           ls=band_ls[j]
-                          )
+                
+                if x_axis == 'amax_f':
+                    ax[i].plot(a_max_f_dist_micron[f],
+                               P_times_omega[f][:, idx] * sf[f],
+                               color=band_colors[j],
+                               label=f'{bands_labels[j]}',
+                               lw=bands_lw[j],
+                               ls=band_ls[j])
+                
+                elif x_axis == 'amax':
+                    ax[i].plot(a_max_f_dist_micron[f] / f,
+                                   P_times_omega[f][:, idx] * sf[f],
+                                   color=band_colors[j],
+                                   label=f'{bands_labels[j]}',
+                                   lw=bands_lw[j],
+                                   ls=band_ls[j])
 
         # Calculate chi_sq
         # ---------------------------------------------
@@ -2173,10 +2210,12 @@ def plot_scale_factor_results(bands,        # These are the bands we are looking
         
         ax[i].text(x_pos, 0.15,  f'$\chi^2$ = {chi_sq:.{chi_sq_precision}f}', transform=ax[i].transAxes, fontsize = 30)
 
-        ax[i].text(x_pos, 0.25, f'sf = {sf[f]:.2f}', transform=ax[i].transAxes, fontsize = 30)
+        # Only add sf if for_poster = False
+        if for_poster == False:
+            ax[i].text(x_pos, 0.25, f'sf = {sf[f]:.2f}', transform=ax[i].transAxes, fontsize = 30)
 
         # Add the a_max to the text
-        ax[i].text(x_pos, 0.05, rf'$a_{{\mathrm{{max}}}}$ = {a_max[f]/f:.0f} $\mu$m', 
+        ax[i].text(x_pos, 0.05, rf'$a_{{\mathrm{{max}}}}$ = {a_max[f]:.0f} $\mu$m', 
                    transform=ax[i].transAxes, 
                    fontsize = 30)
         
@@ -2189,22 +2228,38 @@ def plot_scale_factor_results(bands,        # These are the bands we are looking
     # Add coloured text for each Band in the far right plot
     # ----------------------------------------------------
     # ----------------------------------------------------
-    start = 0.9
+    start = 0.9 # This is the starting vertical position
     c = 0
+    marker_legend_handles = []
+    
     # Loop over each band 
     for j, b_label in enumerate(bands_labels):
         
         if "robust" in b_label:
-            label = b_label.replace(" robust ", "\nrobust ")
-            c = c + 0.075
+            label = b_label.replace(" robust ", "\nrob. ")
+            c = c + 0.075 # This controls the vertical spacing 
         else:
             label = b_label
+            
+            
+        handle = Line2D(
+            [0], [0],
+            marker = ms[j],  
+            color='none',
+            markerfacecolor=band_colors[j],
+            markeredgecolor=band_colors[j],
+            markersize=20,
+            linestyle='None',
+            label=label)
 
-        ax[3].text(0.70, start - c,
-                   label,
-                   transform=ax[3].transAxes,
-                   fontsize=30,
-                   color=band_colors[j])
+        marker_legend_handles.append(handle)
+
+#         ax[3].text(0.75, # This controls the horizontal position
+#                    start - c, 
+#                    label,
+#                    transform=ax[3].transAxes,
+#                    fontsize=30,
+#                    color=band_colors[j])
         c = c + 0.1
         
         
@@ -2215,30 +2270,46 @@ def plot_scale_factor_results(bands,        # These are the bands we are looking
     ]
 
     # Line style
-    ax[2].legend(handles=legend_elements, fontsize = 30, frameon=False, title="Fit", title_fontsize = 30)   
+#     ax[2].legend(handles=legend_elements, fontsize = 30, frameon=False, title="Fit", title_fontsize = 30)   
     
     # ----------------------------------------------------
     # ----------------------------------------------------
 
+    
+    
     # Markers
-    ax[1].legend(handles=marker_handles, 
-                 fontsize = 30, 
-                 frameon=False, 
-                 title="Obs. POLF", 
-                 title_fontsize = 30,
-                 loc = 'upper right',
-                 handletextpad=-3.8,
-                 handlelength=0.2)   
+#     ax[3].legend(handles=marker_handles, 
+#                  fontsize = 30, 
+#                  frameon=False, 
+#                  # title="Obs. POLF", 
+#                  title_fontsize = 30,
+#                  loc = 'upper right',
+#                  handletextpad=3.5,
+#                  handlelength=1,  
+#             )
+    legend = ax[3].legend(
+            handles=marker_legend_handles,
+            fontsize=30,
+            frameon=False,
+            loc='upper right',
+            handletextpad=0.5, # Cotrols distance between marker and text 
+            handlelength=1, # Cotrols distance between marker and text 
+            labelspacing=0.6 # Controls vertical gap between the markers
+        )
+    
+    for text, color in zip(legend.get_texts(), band_colors):
+        text.set_color(color)
 #     # ----------------------------------------------------
 #     # ----------------------------------------------------
 
 
 
-
+# 
 
     return fig, ax
     
 
 # --------------------------------------------------------------------------------------
+
 
 

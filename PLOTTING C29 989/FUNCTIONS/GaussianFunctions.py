@@ -84,6 +84,7 @@ def calculate_gaussian_2d(x_values, y_values, sigma_x, sigma_y, mean_x, mean_y):
     
     # Normalize the Gaussian to a maximum of 1
     gaussian /= np.max(gaussian)
+    
 
     return gaussian
 # ----------------------------------------------------------------------------------------

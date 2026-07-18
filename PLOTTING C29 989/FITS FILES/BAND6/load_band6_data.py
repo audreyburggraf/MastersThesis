@@ -137,6 +137,8 @@ nx, ny = StokesI_mJy.shape
 
 BMAJ_deg, BMIN_deg, BMAJ_pix, BMIN_pix, BPA_deg_cartesian, reference_length_pix, RA_centre_pix, Dec_centre_pix, xmin, xmax, ymin, ymax = get_plotting_parameters(StokesI_header, StokesI_wcs, 'Band 6')
 
+print(f'In load_band6_data.py, ymax = {ymax}')
+
 
 
 

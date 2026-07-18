@@ -3,6 +3,7 @@
 import sys
 import pandas as pd
 from pathlib import Path
+import os
 
 # Add the directory where constants.py is located to sys.path
 sys.path.append("/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/")
@@ -70,7 +71,17 @@ def get_plotting_parameters(StokesI_header, StokesI_wcs, band):
     # Define the plot boundaries (xmin, xmax, ymin, ymax)
     xmin, xmax = RA_max_pix, RA_min_pix
     ymin, ymax = Dec_min_pix, Dec_max_pix
+    
+    print("band =", band)
+    print("max_str =", repr(max_str))
+    print("StokesI_wcs CRPIX =", StokesI_wcs.wcs.crpix)
+    print("StokesI_wcs CDELT =", StokesI_wcs.wcs.cdelt)
+    
+    pixel_scale_arcsec = abs(StokesI_wcs.wcs.cdelt[0]) * 3600
+    print(f"Pixel scale = {pixel_scale_arcsec:.3f} arcsec/pixel")
 
+    print("Dec_max_pix =", Dec_max_pix)
+    print(" ")
 
 
 #     if band == 6:
@@ -503,7 +514,94 @@ def load_beam_info(bands, print_things = True):
     
     
 
+# ------------------------------------------------------------
+# Function to build band dictionary
+# ------------------------------------------------------------
+def BuildBandDictionary(
+    band_data_folder_path,
+    StokesI_wcs,
+    xmin,
+    xmax,
+    ymin,
+    ymax,
+    reference_length_pix,
+    reference_length_AU,
+    BMAJ_pix,
+    BMIN_pix,
+    BPA_deg_cartesian,
+    max_length_pix,
+    reference_fraction,
+    POLI_debiased_mJy
+):
+
+    # --------------------------------------------------------
+    # Load saved files
+    # --------------------------------------------------------
+    ratios = np.load(
+        os.path.join(band_data_folder_path,
+                     "GaussianUniformRatios_best.npy")
+    )
+
+    VectorsActual = np.load(
+        os.path.join(band_data_folder_path,
+                     "vector_data_actual_cartesian.npy")
+    )
+    VectorsGaussian = np.load(
+        os.path.join(band_data_folder_path,
+                     "vector_data_gaussian_best.npy")
+    )
+
+    params = pd.read_csv(
+        os.path.join(band_data_folder_path,
+                     "best_gaussian_params.csv")
+    )
     
+    slice_points = np.load(
+        os.path.join(band_data_folder_path, "slice_points.npy"),
+        allow_pickle=True,
+    ).item()
+
+    # --------------------------------------------------------
+    # Make dictionary
+    # --------------------------------------------------------
+    BandDict = {
+
+        'band_data_folder_path': band_data_folder_path,
+        
+        'StokesI_wcs': StokesI_wcs,
+
+        'ratios': ratios,
+
+        'xmin': xmin,
+        'xmax': xmax,
+        'ymin': ymin,
+        'ymax': ymax,
+
+        'reference_length_pix': reference_length_pix,
+        'reference_length_AU': reference_length_AU,
+
+        'BMAJ_pix': BMAJ_pix,
+        'BMIN_pix': BMIN_pix,
+        'BPA_deg_cartesian': BPA_deg_cartesian,
+
+        'max_length_pix': max_length_pix,
+        'reference_fraction': reference_fraction,
+
+        'phi': params["phi"].iloc[0],
+        'BMAJ': params["BMAJ"].iloc[0],
+        'BMIN': params["BMIN"].iloc[0],
+        'chi2': params["chi2"].iloc[0],
+
+        'VectorsActual': VectorsActual,
+        'VectorsGaussian': VectorsGaussian,
+
+        'POLI_debiased_mJy': POLI_debiased_mJy,
+        
+        'minor_x': slice_points['minor_x'],
+        'minor_y': slice_points['minor_y'], 
+    }
+
+    return BandDict    
     
     
 

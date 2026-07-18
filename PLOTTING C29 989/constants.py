@@ -7,6 +7,7 @@ from scipy.optimize import minimize
 
 
 # Font sizes
+# ---------------------------------------------
 title_fs = 25
 axis_label_fs = 20
 axis_num_fs = 20
@@ -15,7 +16,32 @@ legend_text_fs = 15
 cbar_fs = 20
 text_fs = 28
 cbar_num_fs = 20
+# ---------------------------------------------
+poster_lw = 5
+poster_axis_label_fs = 28.5
+poster_axis_num_fs = 27.5
+poster_text1_fs = 40
+poster_text2_fs = 30
+poster_spine_width = 1.5
 
+poster_colour_bands_fs = 24
+poster_colour_bands_legend_ms = 25
+poster_colour_bands_ms = 250
+# ---------------------------------------------
+poster_refx = 49.8
+poster_refy = 12.15
+# ---------------------------------------------
+# These ones are for testing
+# poster_lw = 25
+# poster_axis_label_fs = 5
+# poster_axis_num_fs = 5
+# poster_text1_fs = 5
+# poster_text2_fs = 5
+# poster_spine_width = 10
+# poster_colour_bands_fs = 5
+# poster_colour_bands_legend_ms = 5
+# poster_colour_bands_ms = 50000
+# ---------------------------------------------
 
 
 normalized_cbar_ticks = np.array([0, 0.2, 0.4, 0.6, 0.8, 1])

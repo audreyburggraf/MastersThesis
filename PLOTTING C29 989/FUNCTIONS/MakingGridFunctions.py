@@ -143,6 +143,7 @@ def make_vectors(ny, nx,
         raise ValueError(f"Unsupported band: {band}")
 
     default_step, POLI_err_cutoff = band_parameters[band]
+    print(rf'In make_vectors: the POLI_err_cutoff is {POLI_err_cutoff}')
 
     # If step wasn't passed, use the band default
     if step is None:

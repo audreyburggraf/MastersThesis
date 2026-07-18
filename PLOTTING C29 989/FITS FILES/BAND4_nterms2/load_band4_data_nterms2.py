@@ -23,12 +23,13 @@ from IntroductionFunctions import *
 from POLF_Functions import *
 # ------------------------------------------
 
-StokesI_file         = loc + "IRS63_BAND4_nterms2_StokesI_clean_nopbcorr.fits"
-StokesQ_file         = loc + "IRS63_BAND4_nterms2_StokesQ_clean_nopbcorr.fits"
-StokesU_file         = loc + "IRS63_BAND4_nterms2_StokesU_clean_nopbcorr.fits"
-POLI_biased_file     = loc + "POLI_biased_mJy_BAND4_nterms2.fits"
-POLI_err_file        = loc + "POLI_err_mJy_BAND4_nterms2.fits"
-POLI_dedebiased_file = loc + "POLI_debiased_mJy_BAND4_nterms2.fits"
+StokesI_file             = loc + "IRS63_BAND4_nterms2_StokesI_clean_nopbcorr.fits"
+StokesQ_file             = loc + "IRS63_BAND4_nterms2_StokesQ_clean_nopbcorr.fits"
+StokesU_file             = loc + "IRS63_BAND4_nterms2_StokesU_clean_nopbcorr.fits"
+POLI_biased_file         = loc + "POLI_biased_mJy_BAND4_nterms2.fits"
+POLI_err_file            = loc + "POLI_err_mJy_BAND4_nterms2.fits"
+POLI_dedebiased_file     = loc + "POLI_debiased_mJy_BAND4_nterms2.fits"
+StokesI_beforeclean_file = loc + "BAND4_v2_before_clean.fits"
 
 
 # Stokes I
@@ -47,7 +48,15 @@ nx, ny = StokesI_mJy.shape
 StokesI_err_mJy = np.full((ny, nx), constants.StokesI_err_mJy_band4_nterms2)
 # -------------------------------------------------------------------------------------------------------
 
+# Stokes I before clean
+# -------------------------------------------------------------------------------------------------------
+_, _, StokesI_beforeclean_Jy, _ = read_in_file(StokesI_beforeclean_file)
 
+StokesI_beforeclean_mJy = convert_jy_to_mjy(StokesI_beforeclean_Jy)
+
+# Stretch the Stokes I data and get the cbar ticks
+StokesI_stretched_beforeclean_mJy, _ = normalize_stokesI_for_cmap(StokesI_beforeclean_mJy)
+# -------------------------------------------------------------------------------------------------------
 
 # Stokes Q
 # -------------------------------------------------------------------------------------------------------

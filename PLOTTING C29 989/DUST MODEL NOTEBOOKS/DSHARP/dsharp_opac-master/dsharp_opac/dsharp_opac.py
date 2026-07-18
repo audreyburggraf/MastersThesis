@@ -2767,6 +2767,9 @@ def get_dsharp_mix(fm_ice=0.2, porosity=0.0, rule='Bruggeman'):
     return diel_const, rho_s
 
 
+
+
+
 def get_ricci_mix(extrapol=False, lmax=None, rule='Bruggeman'):
     """
     This method calculates the mixed mie coefficients as in Ricci et al. 2010.
