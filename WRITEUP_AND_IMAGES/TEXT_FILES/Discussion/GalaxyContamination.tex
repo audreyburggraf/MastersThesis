@@ -37,11 +37,11 @@ During the data analysis of the ALMA images, we noticed a faint source in the ba
 
 % ---------------------------------------------------------
 
-It was predicted that this background source may be a background galaxy. The method used to determine the likelihood of detecting a background galaxy was adapted from Section 5.5 in in \cite{sadavoy_dust_2019}. 
+It was predicted that this background source may be a background galaxy. The method used to determine the likelihood of detecting a background galaxy was adapted from Section 5.5 in in \citep{sadavoy_dust_2019}. 
 
 \add{Some sentence about why we can't do this at Band 5.}
 
-Using \cite{GC_Number_Counts} for the Band 7 number counts, the Schecter function is used to find the number of galaxies per \question{area?}
+Using \citep{GC_Number_Counts} for the Band 7 number counts, the Schecter function is used to find the number of galaxies per \question{area?}
 \begin{equation}
 \frac{dN}{dS}= N_0 \left(\frac{S}{S_0}\right)^\alpha \exp \left(- \frac{S}{S_0}\right)
 = 923\left(\frac{S}{S_0}\right)^{-1.7} \exp \left(- \frac{S}{S_0}\right),
@@ -59,8 +59,23 @@ The signal to noise ratio of the background source is $\sim$9.4391 in Band 7. Th
 
 I used the primary beam file provided to replicate Figures 11 and 12 from the paper. I then wanted to use these methods to apply them to my source. 
 
+The cumulative probability of \add{add here} at $5\sigma$, $9\sigma$ and $20\sigma$ is 58.49\%, 39.89\% and 19.55\%  respectively.
 
 
 
+\begin{figure*}[h]
+  \centering
+  \includegraphics[width=0.8\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/GalaxyContamination/Probabilities_Band7.pdf}
+  \caption{Galaxy contamination for Band 7.}
+  \label{fig: GalaxyContamination_Prob_B7}
+\end{figure*}
+
+
+
+
+
+
+
+Based on the calculations, the probability of the source being a background galaxy is non-negligible. This result has no direct implications on the results of this project, but rather is a fun side branch result. 
 
 
