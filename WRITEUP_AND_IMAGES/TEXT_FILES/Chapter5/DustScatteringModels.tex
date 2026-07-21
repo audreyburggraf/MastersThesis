@@ -77,19 +77,28 @@ Three different methods were tested:
 
 The results from these three methods for each wavelength are summarized in Table \ref{tab:polf_comparison}. Each of these options was tested to determine the best match. \question{Here, do I say max \SI was the best, or in the results do I show all three and show \SI was the best, do I even need to say we tested three?}
 
+% Last updated July 19th
 \begin{table}[h!]
 \centering
-\caption{Results of the three methods tested to find a polarization fraction value in the region where dust self-scattering was seen. Values were all rounded to three decimal places. \note{Values last updated May 6th.}}
+\caption{Results of the three methods tested to find a polarization fraction value in the region where dust self-scattering was seen. Values were all rounded to three decimal places. \note{Values last updated May 6th.} \question{Keep both Band 5 or just robust =-1?}}
 \begin{tabular}{lccc}
 \toprule
 \textbf{Band} & $\boldsymbol{\mathrm{POLF}_{\mathrm{Gaussian}}}$ & $\boldsymbol{\mathrm{POLF}_{\mathrm{max\,\POLIeq}}}$ & $\boldsymbol{\mathrm{POLF}_{\mathrm{max\text{ }I}}}$ \\
 \midrule
 
-\bfour             & 1.188 & 1.561 & 1.368  \\
-\bfive             & 0.933 & 1.052 & 0.991  \\
-\bfive (\texttt{robust = -1}) & 1.377 & 1.514 & 1.403  \\
-\bsix              & 1.445 & 1.486 & 1.464  \\
-\bseven            & 0.830 & 1.084 & 1.042  \\
+\bfour             
+& 1.188 & 1.561 & 1.368  \\
+
+\bfive             
+& 0.933 & 1.052 & 0.991  \\
+
+\bfive (\texttt{robust = -1}) & 1.309 & 1.514 & 1.403  \\
+
+\bsix              
+& 1.445 & 1.486 & 1.464  \\
+
+\bseven            
+& 0.830 & 1.084 & 1.042  \\
 
 \bottomrule
 \end{tabular}
@@ -136,7 +145,7 @@ Not all wavelengths were included in the fit for the best scale factor. To explo
 
 \begin{table}[ht]
 \centering
-\caption{Summary of the wavelength combinations used for finding the best scale factor.}
+\caption{Summary of the wavelength combinations used for finding the best scale factor. \question{Remove B5 and just keep robust = -1?}}
 \label{tab:fit_combinations}
 \begin{tabular}{lll}
 \hline

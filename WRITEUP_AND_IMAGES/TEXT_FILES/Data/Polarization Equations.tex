@@ -4,7 +4,7 @@ The following equations used in this section are from \cite{CoudeEquations}, wit
 
 \begin{table}[h!]
 \centering
-\caption{Summary of Stokes and polarization symbols, associated error symbols, and units.}
+\caption{Summary of Stokes and polarization symbols, associated error symbols, and units. \SC{Maybe give these as uJy/beam}}
 \begin{tabular}{lccc}
 \toprule
 \textbf{Parameter} & \textbf{Symbol} & \textbf{Error Symbol} & \textbf{Units}  \\
@@ -65,13 +65,13 @@ Polarization Angle (debiased)
 
 
 % ---------------------------------------------
-\subsubsection{Errors for Stokes Parameters}
+\subsection{Errors for Stokes Parameters}
 
-For the data at wavelengths I calibrated, the errors for \SI, \SQ and \SU were estimated by averaging the maximum standard deviation in four different regions far from the bright source at the centre. To compare these errors with the \bsix error maps that were provided to me for this project, I will take every pixel in the map. 
+For the data at wavelengths I calibrated, the errors for \SI, \SQ and \SU were estimated by averaging the maximum standard deviation in four different regions far from the bright source at the centre. To compare these errors with the \bsix error maps that were provided to me for this project, I will take every pixel in the map. \SC{unclear}
 
 
 % ---------------------------------------------
-\subsubsection{Polarization Fraction}
+\section{Polarization Fraction}
 Using the debiased polarized intensity, the (debiased) polarization fraction can be calculated by:
 \begin{equation}
     \POLFeq = \POLIeq/I,
@@ -114,7 +114,7 @@ The polarization position angle, $\theta$ is calculated by:
 
 \begin{table}[h!]
 \centering
-\caption{Summary of error values for Stokes and polarization patterns. \SIerrNS, \SQerr and \SUerr are constants at \bfourNS, \bfive and \bsevenNS, and their constant values are reported. The remaining error values vary with pixel and the average on the map is reported in this table, calculated using \texttt{np.mean} and \texttt{np.nanmean} for \bsix. Units for each error can be found in Table \ref{tab: stokes_polar_variables}. \note{Last updated June 18th, Band 4 is nterms 2, Band 5 is nterms 5 robust 0.5 and Band 7 is nterms 2. }. \question{why is \bsix PA error so high? did i assume deg and its rad?} \add{Band 5 robust -1 not 0.5}}
+\caption{Summary of error values for Stokes and polarization patterns. \SIerrNS, \SQerr and \SUerr are constants at \bfourNS, \bfive and \bsevenNS, and their constant values are reported. The remaining error values vary with pixel and the average on the map is reported in this table, calculated using \texttt{np.mean} and \texttt{np.nanmean} for \bsix. Units for each error can be found in Table \ref{tab: stokes_polar_variables}. \note{Last updated June 18th, Band 4 is nterms 2, Band 5 is nterms 5 robust 0.5 and Band 7 is nterms 2. }. \question{why is \bsix PA error so high? did i assume deg and its rad?} \add{Band 5 robust -1 not 0.5} \SC{Also, give these units in uJy/beam so that you don't have so many zeros}, more comments, caption too long, another comment}
 \begin{tabular}{lcccc}
 \toprule
 \textbf{Property} & \textbf{\bandfourmm} & \textbf{\bandfivemm } & \textbf{\bandsixmm } & \textbf{\bandsevenmm} \\
