@@ -15,7 +15,7 @@ To clean the data,  \texttt{tclean} was used in Common Astronomy Software Applic
 The \SI images at each band had an interactive clean at both phase and amplitude calibration. We began with a shallow phase calibration, and progressively cleaned deeper each time for a total of three rounds. Then, two rounds of amplitude and phase self calibration. \SC{Add more info.} Additionally, the \SQ and \SU data were also cleaned using a non-interactive phase calibration using the final mask from the amplitude calibration at its respective wavelength.  \SC{Add more info}
 
 
-Below, in Figure \ref{fig: BeforeAndAfterClean}, is an example of IRS 63 at \bfour before and after self calibration. We can see how cleaning the image removed background noise. The \SNR values also improved, going from 660 to 2655. \question{Report the S/N change for the other bands?}. The final self-calibrated \SI maps produced using this method are presented in Chapter \ref{sec: chap4_stokesI}.
+Below, in Figure \ref{fig: BeforeAndAfterClean}, is an example of IRS 63 at \bfour before and after self calibration. We can see how cleaning the image removed background noise. The \SNR values also improved, going from 660 to 2655. \question{Report the S/N change for the other bands?}. 
 
 
 \SC{It may be worth here or in the previous section to explain how self-calibration can improve the S/N.}
@@ -79,16 +79,16 @@ Disk PA ($^\circ$)
 & 139.7 \\
 
 \texttt{nterms}
+& 2
 & \add{num}
-& \add{num}
-& \add{num} 
-& \add{num} \\
+& 2 \question{?} 
+& 2 \\
 
 \texttt{robust}
-& \add{num}
-& \add{num}
-& \add{num} 
-& \add{num} \\
+& 0.5
+& -1
+& 0.5 \question{?} 
+& 0.5 \\
 
 
 
