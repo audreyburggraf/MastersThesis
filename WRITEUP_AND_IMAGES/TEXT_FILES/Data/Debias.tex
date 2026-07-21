@@ -6,7 +6,7 @@ The unbiased polarized intensity, \POLIobsNS, is calculated from \SQ ($Q$) and \
     \POLIobsEQ = \sqrt{Q^2 + U^2},
     \label{eq: POLI}
 \end{equation}
-\noindent which always yields a positive value as $Q$ and $U$ are both squared. To eliminate this bias towards an always positive, and as a result, lager polarized intensity value, we need to  calculate a debiased polarized intensity value. 
+\noindent which always yields a positive value as $Q$ and $U$ are both squared. \SCC{comment} To eliminate this bias towards an always positive, and as a result, larger polarized intensity value, we need to  calculate a debiased polarized intensity value. 
 
 The polarized intensity was de-biased using the method explained in \cite{sadavoy_dust_2019}, originally from \cite{HullDebias}, with equations from \cite{CoudeEquations}. This method calculated the debiased polarized intensity, \POLIns, with a corresponding error of \POLIerr with the equation:
 
@@ -14,7 +14,7 @@ The polarized intensity was de-biased using the method explained in \cite{sadavo
     \text{PDF}(\POLIeq|\POLIobsEQ, \POLIerrEQ)=\frac{\POLIobsEQ}{\POLIerrEQ^2} I_0(x)\exp\left[-\frac{(\POLIobsEQ^2 + \POLIeq^2)}{2\POLIerrEQ^2}{}\right],
     \label{eq: debias}
 \end{equation}
-\noindent where PDF is the probability density function. Here, $I_0(x)$ is the Bessel function for the Bessel parameter $x = \POLIobsEQ \POLIeq/\POLIerrEQ^2$. The most likely \POLI will create a peak in Equation \ref{eq: debias}, so the debiased value is calculated by minimizing the negative value of the PDF in Equation \ref{eq: debias} using \texttt{scipy.optimize.minimize\_scalar}. Only the pixels with a S/N$<9$ were diabsed with this method. \question{add a sentence on why 9 was used?} 
+\noindent where PDF is the probability density function. Here, $I_0(x)$ is the Bessel function for the Bessel parameter $x = \POLIobsEQ \POLIeq/\POLIerrEQ^2$. The most likely \POLI will create a peak in Equation \ref{eq: debias}, so the debiased value is calculated by minimizing the negative value of the PDF in Equation \ref{eq: debias} using \texttt{scipy.optimize.minimize\_scalar}. Only the pixels with a S/N$<9$ were diabsed with this method. \question{add a sentence on why 9 was used? \SCC{A}} 
 
 The pixels with S/N$>9$ do not need to be treated the same way since their emission is so bright, and are debiased using the standard maximum likelihood calculation method from \cite{VaillancourtDebias}:
 \begin{equation}
