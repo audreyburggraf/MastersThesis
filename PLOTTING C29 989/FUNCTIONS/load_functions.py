@@ -31,3 +31,4 @@ from DustModelJustAMAX import *
 from DustModelJustAMAX_Plot import *
 from DebuggingPlot import *
 from ZhangFunctions import * 
+from July19 import * 

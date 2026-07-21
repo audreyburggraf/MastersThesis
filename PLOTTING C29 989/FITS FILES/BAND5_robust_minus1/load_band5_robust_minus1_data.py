@@ -26,9 +26,13 @@ from POLF_Functions import *
 
 
 # Define file paths
-StokesI_file = band5_robust_minus1_data_folder_path + "IRS63_BAND5_StokesI_redo_nterms1_robust_minus1.fits"
-StokesQ_file = band5_robust_minus1_data_folder_path + "IRS63_BAND5_StokesQ_redo_nterms1_robust_minus1.fits"
-StokesU_file = band5_robust_minus1_data_folder_path + "IRS63_BAND5_StokesU_redo_nterms1_robust_minus1.fits"
+loc = band5_robust_minus1_data_folder_path
+StokesI_file         = loc + "IRS63_BAND5_StokesI_redo_nterms1_robust_minus1.fits"
+StokesQ_file         = loc + "IRS63_BAND5_StokesQ_redo_nterms1_robust_minus1.fits"
+StokesU_file         = loc + "IRS63_BAND5_StokesU_redo_nterms1_robust_minus1.fits"
+POLI_debiased_file   = loc + "POLI_debiased_mJy_BAND5_robust_minus1.fits"
+POLI_biased_file     = loc + "POLI_biased_mJy_BAND5_robust_minus1.fits"
+POLI_err_file        = loc + "POLI_err_mJy_BAND5_robust_minus1.fits"
 
 
 # Stokes I
@@ -71,27 +75,32 @@ StokesU_err_mJy = np.full((ny, nx), constants.StokesU_err_mJy_band5_robust_minus
 
 
 
-# Polarization Intensity
+# # Polarization Intensity
+# # -------------------------------------------------------------------------------------------------------
+# POLI_calc = calculate_polarized_intensity(StokesQ_mJy, StokesU_mJy)
+# POLI_mJy = POLI_calc
+
+# # Ensure POLI_mJy is shaped (ny, nx)
+# POLI_mJy_resized = POLI_mJy[:ny, :nx]
+
+
+# # Save data
+# hdu = fits.PrimaryHDU(data=POLI_mJy, header=StokesI_header)
+# hdu.writeto(band5_robust_minus1_data_folder_path + "POLI_mJy_calculated_BAND5_robust_minus1.fits", overwrite=True)
+
+# # _, _, POLI_Jy, _ = read_in_file(POLI_file)
+# # POLI_mJy = convert_jy_to_mjy(POLI_Jy)
+# # -------------------------------------------------------------------------------------------------------
+# # Polarization Intensity error
+# # -------------------------------------------------------------------------------------------------------
+# POLI_err_mJy = calculate_polarized_intensity_err(StokesQ_mJy, StokesU_mJy, StokesQ_err_mJy, StokesU_err_mJy)
+# # -------------------------------------------------------------------------------------------------------
+_, _, POLI_biased_mJy, _ = read_in_file(POLI_biased_file, dimensions = 2)
+
+_, _, POLI_debiased_mJy, _ = read_in_file(POLI_debiased_file, dimensions = 2)
+
+_, _, POLI_err_mJy, _ = read_in_file(POLI_err_file, dimensions = 2)
 # -------------------------------------------------------------------------------------------------------
-POLI_calc = calculate_polarized_intensity(StokesQ_mJy, StokesU_mJy)
-POLI_mJy = POLI_calc
-
-# Ensure POLI_mJy is shaped (ny, nx)
-POLI_mJy_resized = POLI_mJy[:ny, :nx]
-
-
-# Save data
-hdu = fits.PrimaryHDU(data=POLI_mJy, header=StokesI_header)
-hdu.writeto(band5_robust_minus1_data_folder_path + "POLI_mJy_calculated_BAND5_robust_minus1.fits", overwrite=True)
-
-# _, _, POLI_Jy, _ = read_in_file(POLI_file)
-# POLI_mJy = convert_jy_to_mjy(POLI_Jy)
-# -------------------------------------------------------------------------------------------------------
-# Polarization Intensity error
-# -------------------------------------------------------------------------------------------------------
-POLI_err_mJy = calculate_polarized_intensity_err(StokesQ_mJy, StokesU_mJy, StokesQ_err_mJy, StokesU_err_mJy)
-# -------------------------------------------------------------------------------------------------------
-
 
 
 # Polarization Angle
@@ -134,7 +143,7 @@ stream_ymin = 490
 stream_ymax = 540
 
 
-POLI_mJy_nostream = POLI_mJy.copy()
+POLI_mJy_nostream = POLI_debiased_mJy.copy()
 POLI_mJy_nostream[stream_ymin:stream_ymax+1, stream_xmin:stream_xmax+1] = np.nan
 # -------------------------------------------------------------------------------------------------------
 
@@ -175,17 +184,16 @@ StokesU_grid_100Azimuthal = results['StokesU_grid_100Azimuthal']
 
 # Get stream vectors
 # -------------------------------------------------------------------------------------------------------
-
-POLI_mJy_stream = POLI_mJy.copy()
+POLI_mJy_stream = POLI_debiased_mJy.copy()
 POLI_mJy_stream[:, :] = np.nan  # Set everything to NaN
 
 # Fill in only the stream region
-POLI_mJy_stream[stream_ymin:stream_ymax+1, stream_xmin:stream_xmax+1] = POLI_mJy[stream_ymin:stream_ymax+1, stream_xmin:stream_xmax+1]
+POLI_mJy_stream[stream_ymin:stream_ymax+1, stream_xmin:stream_xmax+1] = POLI_debiased_mJy[stream_ymin:stream_ymax+1, stream_xmin:stream_xmax+1]
 
 results_stream = generate_polarization_vectors(ny, nx,
                                                xmin, xmax, ymin, ymax, # This is for the nterms test
                                                RA_centre_pix, Dec_centre_pix,
-                                               constants.minor_angle_rad_sky_band5_v0,
+                                               constants.minor_angle_rad_sky_band5,
                                                StokesI_mJy, 
                                                POLI_mJy_stream, POLI_err_mJy,
                                                PA_rad + np.pi/2, PA_err_deg,

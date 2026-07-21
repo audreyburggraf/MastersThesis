@@ -110,6 +110,8 @@ def run_DSHARP(f, a_max_test_cm, a_max_dist_cm, lambda_bands_cm, lambda_dist_cm,
 
     mass_grams = calculate_grain_mass(a_max_dist_cm, rho_g_cm3, "cm")
     
+    
+    
     res_scatter = do.get_opacities(a_max_dist_cm, lambda_bands_cm, rho_g_cm3, oc, n_angle=100)
     
     print("S1 shape:", res_scatter["S1"].shape)
@@ -126,12 +128,8 @@ def run_DSHARP(f, a_max_test_cm, a_max_dist_cm, lambda_bands_cm, lambda_dist_cm,
                                     res_scatter['S1'], res_scatter['S2'], 
                                     theta=res_scatter['theta'], 
                                     k_sca=res_scatter['k_sca'])['zscat']
-    
-    print("zscat shape:", zscat.shape)
-    print("Any NaNs?", np.isnan(zscat).any())
-    print("Max Z11:", np.nanmax(zscat[...,0]))
-    print("Min Z11:", np.nanmin(zscat[...,0]))
 
+    
     theta = res_scatter['theta']
     
     
@@ -139,63 +137,63 @@ def run_DSHARP(f, a_max_test_cm, a_max_dist_cm, lambda_bands_cm, lambda_dist_cm,
 # DEBUG: inspect single-grain Mueller matrix
 # ----------------------------------------------------
 
-    iw = 1      # Band 5
+#     iw = 1      # Band 5
 
-    # Print summary for several grain sizes
-    for target in [1e-4, 1e-3, 1e-2, 1e-1, 3e-1, 1]:
+#     # Print summary for several grain sizes
+#     for target in [1e-4, 1e-3, 1e-2, 1e-1, 3e-1, 1]:
 
-        igrain = np.argmin(np.abs(a_max_dist_cm - target))
+#         igrain = np.argmin(np.abs(a_max_dist_cm - target))
 
-        Z11 = zscat[igrain, iw, :, 0]
-        Z12 = zscat[igrain, iw, :, 1]
-        P = -Z12 / Z11
+#         Z11 = zscat[igrain, iw, :, 0]
+#         Z12 = zscat[igrain, iw, :, 1]
+#         P = -Z12 / Z11
 
-        print(
-            f"target={target:.3e} cm   "
-            f"actual={a_max_dist_cm[igrain]:.3e} cm   "
-            f"P90={P[np.argmin(np.abs(theta-90))]:.3f}   "
-            f"Pmax={np.nanmax(P):.3f}   "
-            f"Pmin={np.nanmin(P):.3f}"
-        )
+#         print(
+#             f"target={target:.3e} cm   "
+#             f"actual={a_max_dist_cm[igrain]:.3e} cm   "
+#             f"P90={P[np.argmin(np.abs(theta-90))]:.3f}   "
+#             f"Pmax={np.nanmax(P):.3f}   "
+#             f"Pmin={np.nanmin(P):.3f}"
+#         )
 
 
     # ---------------- Plot ONE grain ----------------
 
-    target = 3e-1                      # choose which grain to inspect
-    igrain = np.argmin(np.abs(a_max_dist_cm - target))
+#     target = 3e-1                      # choose which grain to inspect
+#     igrain = np.argmin(np.abs(a_max_dist_cm - target))
 
-    Z11 = zscat[igrain, iw, :, 0]
-    Z12 = zscat[igrain, iw, :, 1]
-    P_single = -Z12 / Z11
+#     Z11 = zscat[igrain, iw, :, 0]
+#     Z12 = zscat[igrain, iw, :, 1]
+#     P_single = -Z12 / Z11
 
-    print("\nSingle grain")
-    print("----------------")
-    print(f"Requested amax = {target:.3e} cm")
-    print(f"Nearest grid point = {a_max_dist_cm[igrain]:.3e} cm")
+#     print("\nSingle grain")
+#     print("----------------")
+#     print(f"Requested amax = {target:.3e} cm")
+#     print(f"Nearest grid point = {a_max_dist_cm[igrain]:.3e} cm")
 
-    i90 = np.argmin(np.abs(theta - 90))
+#     i90 = np.argmin(np.abs(theta - 90))
 
-    print(f"P(90°) = {P_single[i90]:.4f}")
-    print(f"Pmax   = {np.nanmax(P_single):.4f}")
-    print(f"Pmin   = {np.nanmin(P_single):.4f}")
-    print(f"theta(Pmax) = {theta[np.nanargmax(P_single)]:.1f} deg")
+#     print(f"P(90°) = {P_single[i90]:.4f}")
+#     print(f"Pmax   = {np.nanmax(P_single):.4f}")
+#     print(f"Pmin   = {np.nanmin(P_single):.4f}")
+#     print(f"theta(Pmax) = {theta[np.nanargmax(P_single)]:.1f} deg")
 
-    import matplotlib.pyplot as plt
+#     import matplotlib.pyplot as plt
 
-    plt.figure(figsize=(7,5))
+#     plt.figure(figsize=(7,5))
 
-    plt.plot(theta, Z11 / np.max(Z11), label="Z11 / max(Z11)")
-    plt.plot(theta, -Z12 / np.max(np.abs(Z12)), label="-Z12 / max(|Z12|)")
-    plt.plot(theta, P_single, linewidth=3, label="P = -Z12/Z11")
+#     plt.plot(theta, Z11 / np.max(Z11), label="Z11 / max(Z11)")
+#     plt.plot(theta, -Z12 / np.max(np.abs(Z12)), label="-Z12 / max(|Z12|)")
+#     plt.plot(theta, P_single, linewidth=3, label="P = -Z12/Z11")
 
-    plt.axvline(90, color="k", linestyle=":")
+#     plt.axvline(90, color="k", linestyle=":")
 
-    plt.xlabel("Scattering angle (deg)")
-    plt.ylabel("Normalized value")
-    plt.title(f"Single grain: amax = {a_max_dist_cm[igrain]:.3e} cm")
-    plt.legend()
-    plt.grid()
-    plt.show()
+#     plt.xlabel("Scattering angle (deg)")
+#     plt.ylabel("Normalized value")
+#     plt.title(f"Single grain: amax = {a_max_dist_cm[igrain]:.3e} cm")
+#     plt.legend()
+#     plt.grid()
+#     plt.show()
     
     
     

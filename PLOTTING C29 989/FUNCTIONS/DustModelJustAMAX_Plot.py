@@ -39,17 +39,20 @@ def plot_scale_factor_results_JUST_AMAX(bands,                  # These are the 
                                         plot_sf = 1.5,       # This controls how much the text labels are scaled by
                                         ymin = -0.1, 
                                         ymax = 1.7, 
+                                        xmin = 1e1, xmax = 1e4, 
                                         custom_lw = None,
                                         custom_text_x = None,
                                         chi_sq_precision = 3,
                                         fig_x = 30, fig_y = 8,
                                         for_poster = False,
+                                        for_writeup = False,
+                                        for_slideshow = False,
                                         f_fs = 45, 
                                         f_x = 0.05, f_y = 0.9,
                                         spine_width = 1,
                                         included_lw = 5,
                                         marker_border = False,
-                                        BandLegend_bbox_to_anchor=(1.0, 1.0),
+                                        BandLegend_bbox_to_anchor=(0.4, 0.75),
                                         BandLegend_handletextpad=0.5,
                                         BandLegend_handlelength=1,
                                         BandLegend_labelspacing=0.6
@@ -89,13 +92,21 @@ def plot_scale_factor_results_JUST_AMAX(bands,                  # These are the 
         band_legend_fs = constants.poster_colour_bands_fs
         marker_size = constants.poster_colour_bands_ms
     # ---------------------------
+    elif for_slideshow:
+        num_fs = 30
+        xy_axis_fs = 40
+        stats_fs = 40
+        legend_marker_size = 20
+        band_legend_fs = 35
+        marker_size = 600
+    # ---------------------------
     else: 
         num_fs = axis_num_fs*plot_sf
         xy_axis_fs = axis_label_fs * plot_sf
         stats_fs = 30
         legend_marker_size = 20
         band_legend_fs = 30
-        marker_size = 400
+        marker_size = 600
     # ---------------------------
     
     # Set the colors and marker size for each band 
@@ -103,7 +114,7 @@ def plot_scale_factor_results_JUST_AMAX(bands,                  # These are the 
     ms = []
 
     for b in bands:
-        if for_poster and b == "Band 5 robust -1":
+        if b == "Band 5 robust -1":
             band_colors.append(alma_band_colors["Band 5"])
             ms.append(constants.alma_band_ms["Band 5"])
         else:
@@ -136,11 +147,13 @@ def plot_scale_factor_results_JUST_AMAX(bands,                  # These are the 
 
         # Make the x-axis log scale 
         ax[i].set_xscale("log")
+        ax[i].set_xlim(xmin, xmax)
 
 
             
-        if for_poster:
-            ax[i].set_xlabel('Maximum grain size [$\mu$m]', fontsize = xy_axis_fs)
+        if for_poster or for_slideshow:
+            #ax[i].set_xlabel('Maximum grain size [$\mu$m]', fontsize = xy_axis_fs)
+            fig.supxlabel('Maximum grain size [$\mu$m]', fontsize = xy_axis_fs)
         
         else:
             ax[i].set_xlabel(r'$a_{\mathrm{max}}  [\mu\mathrm{m}]$', fontsize = xy_axis_fs)
@@ -223,7 +236,8 @@ def plot_scale_factor_results_JUST_AMAX(bands,                  # These are the 
                     s=marker_size,
                     facecolors=fc,
                     edgecolors=ec,
-                    linewidths=marker_lw
+                    linewidths=marker_lw,
+                    zorder = 5
                 )
             # ---------------------------------------------------------------------
 
@@ -238,14 +252,15 @@ def plot_scale_factor_results_JUST_AMAX(bands,                  # These are the 
                    markersize=15,
                    linestyle='None'))
 
-            if b not in ["Band 5 robust -1", "Band 5 robust -2"]:
+           # if b not in ["Band 5 robust -1", "Band 5 robust -2"]:
 
-                ax[i].plot(a_max_dist_micron_by_f[f],
-                               P_times_omega_by_f[f][:, idx] * sf_by_f[f],
-                               color=band_colors[j],
-                               label=b,
-                               lw=bands_lw[j],
-                               ls=band_ls[j])
+            ax[i].plot(a_max_dist_micron_by_f[f],
+                           P_times_omega_by_f[f][:, idx] * sf_by_f[f],
+                           color=band_colors[j],
+                           label=b,
+                           lw=bands_lw[j],
+                           ls=band_ls[j],
+                           zorder = 1)
         
                 
         x_pos = 0.05 
@@ -254,16 +269,16 @@ def plot_scale_factor_results_JUST_AMAX(bands,                  # These are the 
             x_pos = x_pos + custom_text_x[i]
         
         
-        
-        ax[i].text(x_pos, 0.15,  f'$\chi^2$ = {chi_sq_by_f[f]:.{chi_sq_precision}f}', transform=ax[i].transAxes, fontsize = stats_fs)
+        if for_slideshow == False:
+            ax[i].text(x_pos, 0.8,  f'$\chi^2$ = {chi_sq_by_f[f]:.{chi_sq_precision}f}', transform=ax[i].transAxes, fontsize = stats_fs)
 
         # Only add sf if for_poster = False
-        if for_poster == False:
-            ax[i].text(x_pos, 0.25, f'sf = {sf_by_f[f]:.2f}', transform=ax[i].transAxes, fontsize = stats_fs)
+        if not for_poster and not for_slideshow and not for_writeup:
+            ax[i].text(x_pos, 0.7, f'sf = {sf_by_f[f]:.2f}', transform=ax[i].transAxes, fontsize = stats_fs)
 
 
         # Add the a_max to the text
-        ax[i].text(x_pos, 0.05, rf'$a_{{\mathrm{{max}}}}$ = {best_a_max_by_f[f]:.0f} $\mu$m', 
+        ax[i].text(x_pos, 0.9, rf'$a_{{\mathrm{{max}}}}$ = {best_a_max_by_f[f]:.0f} $\mu$m', 
                    transform=ax[i].transAxes, 
                    fontsize = stats_fs)
         

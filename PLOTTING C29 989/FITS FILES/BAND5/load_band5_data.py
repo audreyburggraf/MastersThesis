@@ -32,7 +32,7 @@ StokesQ_file         = loc + "IRS63_BAND5_StokesQ_redo_nterms1.fits"
 StokesU_file         = loc + "IRS63_BAND5_StokesU_redo_nterms1.fits"
 POLI_biased_file     = loc + "POLI_biased_mJy_BAND5.fits"
 POLI_err_file        = loc + "POLI_err_mJy_BAND5.fits"
-POLI_dedebiased_file = loc + "POLI_debiased_mJy_BAND5.fits"
+POLI_debiased_file = loc + "POLI_debiased_mJy_BAND5.fits"
 
 
 # Stokes I
@@ -99,7 +99,7 @@ StokesU_err_mJy = np.full((ny, nx), constants.StokesU_err_mJy_band5)
 # -------------------------------------------------------------------------------------------------------
 _, _, POLI_biased_mJy, _ = read_in_file(POLI_biased_file, dimensions = 2)
 
-_, _, POLI_debiased_mJy, _ = read_in_file(POLI_dedebiased_file, dimensions = 2)
+_, _, POLI_debiased_mJy, _ = read_in_file(POLI_debiased_file, dimensions = 2)
 
 _, _, POLI_err_mJy, _ = read_in_file(POLI_err_file, dimensions = 2)
 # -------------------------------------------------------------------------------------------------------

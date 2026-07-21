@@ -154,6 +154,8 @@ def add_band_label(ax, band, label,  constants, fontcolor = 'black', x_pos = 0.0
         4: 4,
         "Band 5": 5,
         5: 5,
+        "Band 5 robust -1": 51,
+        51: 51,
         "Band 6": 6,
         6: 6, 
         "Band 7": 7,
@@ -162,7 +164,7 @@ def add_band_label(ax, band, label,  constants, fontcolor = 'black', x_pos = 0.0
     }
 
     if band not in band_map:
-        print("add_band_label only accepts: 'Band 4', '4',  'Band 5', '5', 'Band 6','6',  'Band 7', 'Band 7 nterms2', '7', ")
+        print("add_band_label only accepts: 'Band 4', '4',  'Band 5', '5', 'Band 5 robust -1', '51', 'Band 6','6',  'Band 7', 'Band 7 nterms2', '7', ")
         return
 
     b = band_map[band]
@@ -688,6 +690,8 @@ def create_base_plot(band, StokesI_wcs, plotting_data, cbar_label, cmap,
         b = 5
     elif band == "Band 5":
         b = 5
+    elif band == "Band 5 robust -1":
+        b = 51
     elif band == "Band 6":
         b = 6
     elif band == "Band 7 nterms2":
@@ -959,6 +963,8 @@ def create_stokes_i_plus_one_base_plot(band,
             b = 4
         elif band == "Band 5":
             b = 5
+        elif band == "Band 5 robust -1":
+            b = 51
         elif band == "Band 6":
             b = 6
         elif band == "Band 7 nterms2":
