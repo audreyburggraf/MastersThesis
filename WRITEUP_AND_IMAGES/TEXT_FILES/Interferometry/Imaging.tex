@@ -26,23 +26,20 @@ The inverse Fourier transform of the complex visibilities in the \uv plane (Equa
 % ------------------------------------------------
 Before the inverse Fourier transform is taken, each visibility in the \uv plane is given a weight, which influences the properties of the dirty beam \citep{Marvil2026}. When each visibility is weighted equally, this is called \emph{natural weighting}, which gives the best signal-to-noise ratio (\SNRns) for detecting faint objects \citep{Monnier, Thompson}. \SCC{When visibilities are weighted such that each portion of the \uv plane is weighted equally, it is called \emph{uniform weighting}, and gives a higher angular resolution but lower sensitivity} \citep{Monnier}. 
 
-A `robust' parameter was introduced in \cite{briggs} for a weighting scheme called Briggs weighting. The robust parameter controls a balance between the two extremes of natural and uniform to find an ideal trade-off between \SNR and high angular resolution \citep{Monnier, Marvil2026}. The robust parameter goes from -2 to 2, where -2 is uniform weighting, 0 is midway, and 2 is natural weighting \citep{Thompson}
+A `robust' parameter was introduced in \cite{briggs} for a weighting scheme called Briggs weighting. The robust parameter controls a balance between the two extremes of natural and uniform to find an ideal trade-off between \SNR and high angular resolution \citep{Marvil2026, Monnier}. The robust parameter goes from -2 to 2, where -2 is uniform weighting, 0 is midway, and 2 is natural weighting \citep{Thompson}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\subsection{Deconvolution (CLEAN)}
+\subsection{Deconvolution (\clean)}
 % ------------------------------------------------
 
 
-Deconvolution is the process of removing the effects of the dirty beam from the dirty image, typically using the algorithm CLEAN \citep{Marvil2026, Thompson}. The first step in the CLEAN algorithm is to locate the brightest point of the dirty image, subtract a scaled copy of the dirty beam centred on this point, and record the position and brightness as CLEAN components \citep{Monnier}. This process is repeated iteratively until only the residual noise is left \citep{Thompson}. The image is then convolved with the final CLEAN beam, called the synthesized beam, which is a smooth Gaussian with the same full width at half maximum (FWHM) as the dirty beam \citep{Thompson}. The residual image is added back, producing the final CLEAN image \citep{Thompson}. 
+Deconvolution is the process of removing the effects of the dirty beam from the dirty image, typically using the algorithm \clean \citep{Marvil2026, Thompson}. The first step in the \clean algorithm is to locate the brightest point of the dirty image, subtract a scaled copy of the dirty beam centred on this point, and record the position and brightness as \clean components \citep{Monnier}. This process is repeated iteratively until only the residual noise is left \citep{Thompson}. The image is then convolved with the final \clean beam, called the synthesized beam, which is a smooth Gaussian with the same full width at half maximum (FWHM) as the dirty beam \citep{Thompson}. The residual image is added back, producing the final \clean image \citep{Thompson}. 
 
 
 \SC{It may be worth noting that clean builds a model of the image based on delta functions or small Gaussians of flux through an iterative process.}
-
-\SC{Rather than use CLEAN, you should use \texttt{clean} because this is a code function and not an acronym.}
-
 
 
 

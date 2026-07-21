@@ -11,25 +11,93 @@ The best ratio fit plots are presented in Figure \ref{fig:best-ratio-models}.
 
 
 
-
+% This was updated to Band 5 robust = -1 on July 18th
+% These numbers might need to be changed if we change how we calculate chi^2
+% This is Band 4 nterms2, Band 7 nterms 2.
 \begin{table}[h!]
 \centering
-\caption{\add{Caption}. \note{This is Band 4 nterms2, Band 7 nterms 2. Last updated on Monday May 4th.}\add{Band 5 robust -1 not 0.5? or is it already -1}}
+\caption{\add{Caption}.}
 \begin{tabular}{cccccc}
 \toprule
-\multicolumn{2}{c}{\textbf{Ratio Model}} & \textbf{Band 4} & \textbf{Band 5} & \textbf{Band 6} & \textbf{Band 7} \\
+\multicolumn{2}{c}{\textbf{Ratio Model}} & \textbf{\bfour} & \textbf{\bfive} & \textbf{\bsix} & \textbf{\bseven} \\
 \midrule
-100 U& 0 A  & 1.439 & 0.481 & 1.382 & 0.344 \\
-90  U& 10 A & 1.452 & 0.464 & 1.389 & 0.331 \\
-80  U& 20  A& 1.472 & 0.447 & 1.401 & 0.320 \\
-70  U& 30 A & 1.505 & 0.434 & 1.426 & \textbf{0.314} \\
-60  U& 40 A & 1.560 & \textbf{0.431} & 1.479 & 0.318 \\
-50  U& 50 A & 1.668 & 0.507 & 1.629 & 0.366 \\
-40  U& 60 A & 1.603 & 0.636 & 1.474 & 0.430 \\
-30  U& 70 A & 1.478 & 0.644 & \textbf{1.370} & 0.382 \\
-20  U& 80 A & 1.170 & 0.668 & 1.374 & 0.411 \\
-10  U& 90 A & 0.850 & 0.693 & 1.379 & 0.441 \\
-0   U& 100 A & \textbf{0.847} & 0.745 & 1.384 & 0.716 \\
+100 U
+& 0 A  
+& 1.439 % Band 4 
+& 0.815 % Band 5 
+& 1.382 % Band 6  
+& 0.344 \\
+
+
+90  U
+& 10 A 
+& 1.452 % Band 4
+& 0.813 % Band 5  
+& 1.389 % Band 6  
+& 0.331 \\
+
+80  U
+& 20  A
+& 1.472 % Band 4 
+& 0.809 % Band 5  
+& 1.401 % Band 6  
+& 0.320 \\
+
+70  U
+& 30 A 
+& 1.505 % Band 4 
+& 0.803 % Band 5  
+& 1.426 % Band 6 
+& \textbf{0.314}\\
+
+60  U
+& 40 A 
+& 1.560 % Band 4 
+& 0.792 % Band 5
+& 1.479 % Band 6 
+& 0.318 \\
+
+50  U
+& 50 A 
+& 1.668 % Band 4 
+& 0.778 % Band 5  
+& 1.629 % Band 6  
+& 0.366 \\
+
+40  U
+& 60 A 
+& 1.603 % Band 4 
+& 0.778 % Band 5  
+& 1.474 % Band 6  
+& 0.430 \\
+
+30  U
+& 70 A 
+& 1.478 % Band 4 
+& 0.773 % Band 5
+& \textbf{1.370} 
+& 0.382 \\
+
+20  U
+& 80 A 
+& 1.170 % Band 4 
+& 0.769 % Band 5  
+& 1.374 % Band 6  
+& 0.411 \\
+
+10  U
+& 90 A 
+& 0.850 % Band 4
+& 0.767 % Band 5  
+& 1.379 % Band 6 
+& 0.441 \\
+
+0   U
+& 100 A 
+& \textbf{0.847} 
+& \textbf{0.765}
+& 1.384 
+& 0.716 \\
 \bottomrule
 \end{tabular}
 \label{tab:ratio_model_chi2}
@@ -54,7 +122,7 @@ The best ratio fit plots are presented in Figure \ref{fig:best-ratio-models}.
   \hfill
   \begin{minipage}{0.48\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Ratio/IRS63_best_ratio_BAND5.pdf}
+    \includegraphics[width=\linewidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Ratio/IRS63_best_ratio_BAND5_robust_minus1.pdf}
     \textbf{(b) Band 5}
   \end{minipage}
 
@@ -74,7 +142,7 @@ The best ratio fit plots are presented in Figure \ref{fig:best-ratio-models}.
   \end{minipage}
 
   \caption{
-  \add{caption}
+  \add{caption, make this a grid} \note{Change to $\Delta\alpha$ and $\Delta \delta$ if we chose to do that for other plots.} \note{Update to band 5 robust -1}
   }
 
   \label{fig:best-ratio-models}
@@ -99,15 +167,19 @@ The observed versus Gaussian vectors are presented in Figure \ref{fig:best-gauss
 
 At each band the Gaussian model chi-squared value is lower than the one for the ratio value, indicating that the Gaussian model is a better fit. 
 
+% This was updated to Band 5 robust = -1 on July 18th
+% Needs updating if we change how we calculate chi squared
+% Band 4 and Band 7 nterms 2
+
 \begin{table}[h!]
 \centering
-\caption{\add{Caption}. \note{This is Band 4 nterms2, Band 7 nterms 2. Last updated on Monday May 4th.}}
+\caption{\add{Caption}.}
 \begin{tabular}{c ccc c}
 \toprule
 \textbf{Band} & $\boldsymbol{\phi}$ & \textbf{BMAJ} & \textbf{BMIN} & $\boldsymbol{\chi^2}$ \\
 \midrule
 
-\textbf{Band 4} & 7 & 10 & 20 & \textbf{0.834} \\
+\textbf{\bfour} & 7 & 10 & 20 & \textbf{0.834} \\
  & 6 & 10 & 20 & 0.835 \\
  & 4 & 20 & 10 & 0.836 \\
  & 5 & 20 & 10 & 0.836 \\
@@ -115,15 +187,15 @@ At each band the Gaussian model chi-squared value is lower than the one for the 
 
 \midrule
 
-\textbf{Band 5} & 5 & 40 & 40 & \textbf{0.540} \\
- & 5 & 50 & 40 & 0.542 \\
- & 4 & 50 & 40 & 0.543 \\
- & 6 & 50 & 40 & 0.543 \\
- & 7 & 50 & 40 & 0.544 \\
+\textbf{\bfive} & 5 & 30 & 20 & \textbf{0.7595} \\
+ & 4 & 30 & 20 & 0.7596 \\
+ & 6 & 30 & 20 & 0.7596 \\
+ & 7 & 30 & 20 & 0.7596 \\
+ & 3 & 30 & 20 & 0.7596 \\
 
 \midrule
 
-\textbf{Band 6} & 3 & 20 & 20 & \textbf{1.374} \\
+\textbf{\bsix} & 3 & 20 & 20 & \textbf{1.374} \\
  & 2 & 10 & 30 & 1.374 \\
  & 4 & 20 & 20 & 1.374 \\
  & 5 & 30 & 20 & 1.374 \\
@@ -131,7 +203,7 @@ At each band the Gaussian model chi-squared value is lower than the one for the 
 
 \midrule
 
-\textbf{Band 7} & 7 & 50 & 30 & \textbf{0.127} \\
+\textbf{\seven} & 7 & 50 & 30 & \textbf{0.127} \\
  & 6 & 50 & 30 & 0.129 \\
  & 7 & 40 & 30 & 0.131 \\
  & 5 & 50 & 30 & 0.132 \\
@@ -149,7 +221,7 @@ At each band the Gaussian model chi-squared value is lower than the one for the 
 \begin{figure*}[h]
   \centering
   \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/AllGaussian.pdf}
-  \caption{\note{This plot will be cleaned up significantly if it is being used!!!!! I don't want to waste time making it neat if it is not necessary.}}
+  \caption{\add{caption, make this a grid}\note{This plot will be cleaned up significantly if it is being used!!!!! I don't want to waste time making it neat if it is not necessary.} \note{Change to $\Delta\alpha$ and $\Delta \delta$ if we chose to do that for other plots.} \note{Update to band 5 robust -1}}
 \end{figure*}
 
 
@@ -170,7 +242,7 @@ At each band the Gaussian model chi-squared value is lower than the one for the 
   \hfill
   \begin{minipage}{0.48\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/IRS63_best_gaussian_BAND5.pdf}
+    \includegraphics[width=\linewidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/IRS63_best_gaussian_BAND5_robust_minus1}
     \textbf{(b) Band 5}
   \end{minipage}
 
@@ -190,7 +262,7 @@ At each band the Gaussian model chi-squared value is lower than the one for the 
   \end{minipage}
 
   \caption{
-  \add{caption}
+  \add{caption, make this a grid} \note{Change to $\Delta\alpha$ and $\Delta \delta$ if we chose to do that for other plots.} \note{Update to band 5 robust -1}
   }
 
   \label{fig:best-gaussian-models}
