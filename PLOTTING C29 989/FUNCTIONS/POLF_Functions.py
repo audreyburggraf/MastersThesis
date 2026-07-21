@@ -229,9 +229,9 @@ def get_all_POLF_and_save(StokesI_mJy, POLI_mJy, POLF, UniformRatios, band, gaus
     
 #     POLF_avg_sigma = find_POLF_avg(band, StokesI_mJy, POLF, sigma_cutoff)
     
-    print(rf'POLF_Gaussian = {POLF_Gaussian}')
-    print(rf'POLF_maxPOLI = {POLF_maxPOLI}')
-    print(rf'POLF_maxStokesI = {POLF_maxStokesI}')
+    print(rf'POLF_Gaussian = {POLF_Gaussian * 100:.3f}')
+    print(rf'POLF_maxPOLI = {POLF_maxPOLI * 100:.3f}')
+    print(rf'POLF_maxStokesI = {POLF_maxStokesI * 100:.3f}')
 #     print(rf'POLF_avg_sigma = {POLF_avg_sigma}')
     
     data_dict = {

@@ -70,6 +70,7 @@ lambda_mm = {
     "Band 5": 1.7,
     "Band 5 robust -2": 1.7, 
     "Band 5 robust -1": 1.7, 
+    51: 1.7,
     # Band 6
     6: 1.3,
     "Band 6": 1.3,
@@ -123,6 +124,7 @@ alma_band_colors = {
     5: "darkorange",  
     50: "darkorange",  
     52: "darkorange",  
+    51: "darkorange", 
     "Band 5": "darkorange",
     "Band 5 v0": "darkorange",
     "Band 5 nterms 2": "darkorange",
@@ -804,7 +806,7 @@ vector_length_values = {
     "band5": 6,
     "band5_v0": 6,
     "band5_robust_minus2": 6, 
-    "band5_robust_minus1": 6,
+    "band5_robust_minus1": 5,
     
     "band6": 4,
     "band6_smooth": 4,

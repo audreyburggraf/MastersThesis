@@ -337,6 +337,7 @@ def load_beam_info(bands, print_things = True):
         "Band 5": ("band5_data_folder_path", "beam_BAND5.csv"),
         "Band 5 v0": ("band5_v0_data_folder_path", "beam_BAND5_v0.csv"),
         "Band 5 nterms2": ("band5_nterms2_data_folder_path", "beam_BAND5_nterms2.csv"),
+        "Band 5 robust -1": ("band5_robust_minus1_data_folder_path", "beam_BAND5_robust_minus1.csv"),
         "Band 5 robust -2": ("band5_robust_minus2_data_folder_path", "beam_BAND5_robust_minus2.csv"),
 
         "Band 6": ("band6_data_folder_path", "beam_BAND6.csv"),
@@ -531,7 +532,8 @@ def BuildBandDictionary(
     BPA_deg_cartesian,
     max_length_pix,
     reference_fraction,
-    POLI_debiased_mJy
+    POLI_debiased_mJy,
+    StokesI_mJy
 ):
 
     # --------------------------------------------------------
@@ -596,6 +598,7 @@ def BuildBandDictionary(
         'VectorsGaussian': VectorsGaussian,
 
         'POLI_debiased_mJy': POLI_debiased_mJy,
+        'StokesI_mJy': StokesI_mJy,
         
         'minor_x': slice_points['minor_x'],
         'minor_y': slice_points['minor_y'], 
