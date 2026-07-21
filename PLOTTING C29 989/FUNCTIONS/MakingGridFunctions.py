@@ -128,7 +128,7 @@ def make_vectors(ny, nx,
         'Band 5': (constants.step_band5, 4),
         'Band 5 v0': (constants.step_band5_v0, 4),
         'Band 5 robust -2': (constants.step_band5_robust_minus2, 4),
-        'Band 5 robust -1': (constants.step_band5_robust_minus1, 2.4),
+        'Band 5 robust -1': (constants.step_band5_robust_minus1, 2),
 
         'Band 6': (constants.step_band6, 3),
         'Band 6 smooth': (constants.step_band6_smooth, 3),
