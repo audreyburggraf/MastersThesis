@@ -17,6 +17,7 @@ import constants
 # ------------------------------------------
 from FITS_Image_Functions import * 
 from PolarizationFunctions import *
+from UnitConversion import * 
 # ------------------------------------------
 
 
@@ -146,6 +147,35 @@ def reccomended_step_count(StokesI_header):
     # Sampling recommendation
     sampling_step = round(beam_pix/2)
     print(f"Recommended sampling step: every {sampling_step} pixels")
+    
+# -------------------------------------------------------------------------------------------- 
+def print_errors(band, StokesI_mJy, StokesI_err_mJy, StokesQ_err_mJy, StokesU_err_mJy, POLI_err_mJy, POLF_err, PA_err_deg):
+    
+    # Find max Stokes I 
+    ymax, xmax = np.unravel_index(np.nanargmax(StokesI_mJy), StokesI_mJy.shape)
+    
+    const_err_vars = ['Stokes I', 'Stokes Q', 'Stokes U', 'POLI']
+    for i, SV in enumerate([StokesI_err_mJy, StokesQ_err_mJy, StokesU_err_mJy, POLI_err_mJy]):
+
+        # Stokes errors and debiased POLI are constant for Band 4, 5, 7
+        if band in (4, 5, 7):
+            SV_err_mJy = SV[0,0]
+            SV_err_uJy = milli_to_micro(SV_err_mJy)
+            print(rf'{const_err_vars[i]} err: {SV_err_mJy:.4f} mJy, or {SV_err_uJy:.2f} micro Jy')
+         
+        # Band 6 they are not all the same 
+        else:
+            SV_err_uJy = milli_to_micro(SV)
+            print(rf'{const_err_vars[i]} error: mean: {np.nanmean(SV_err_uJy):.2f}, maximum: {np.nanmax(SV_err_uJy):.2f}, at Stokes I maximum: {SV_err_uJy[ymax, xmax]:.2f}')
+        
+    
+    # Polarization fraction error is NOT the same 
+    POLF_err_percent = POLF_err * 100
+    print(rf'POLF error: mean: {np.nanmean(POLF_err_percent):.4f}, maximum: {np.nanmax(POLF_err_percent):.4f}, at Stokes I maximum: {POLF_err_percent[ymax, xmax]:.4f}, ALL MULTIPLIED BY 100')
+    
+    
+    # Polarization fraction error is NOT the same 
+    print(rf'PA error: mean: {np.nanmean(PA_err_deg):.4f}, maximum: {np.nanmax(PA_err_deg):.4f}, at Stokes I maximum: {PA_err_deg[ymax, xmax]:.4f}')
 # -------------------------------------------------------------------------------------------- 
 
 
@@ -177,7 +207,7 @@ def generate_polarization_vectors(ny, nx,
     
     
     # Get vector and angles for the actual data
-    vector_data_actual_cartesian, vector_angle_actual_sky, vector_mask, in_plot_mask = make_vectors(ny, nx,  
+    vector_data_actual_cartesian, vector_angle_actual_sky, vector_angle_actual_sky_errors, vector_mask, in_plot_mask = make_vectors(ny, nx,  
                                                                                       xmin, xmax, ymin, ymax, 
                                                                                       POLI_mJy, POLI_err_mJy,
                                                                                       PA_real_sky_rad, PA_err_deg,
@@ -189,7 +219,7 @@ def generate_polarization_vectors(ny, nx,
     
     # Get the vector and angle data for the 100 Uniform case 
     # Currently not saving the mask here
-    vector_data_100Uniform_cartesian, vector_angle_100Uniform_sky, _, _ = make_vectors(ny, nx,  
+    vector_data_100Uniform_cartesian, vector_angle_100Uniform_sky, _, _, _ = make_vectors(ny, nx,  
                                                                                     0, 0, 0, 0, # We dont need these here 
                                                                                     POLI_mJy, POLI_err_mJy,
                                                                                     PA_grid_100Uniform, PA_err_deg,
@@ -197,7 +227,7 @@ def generate_polarization_vectors(ny, nx,
     
     # Get the vector and angle data for the 100 Azimuthal case 
     # Currently not saving the mask here
-    vector_data_100Azimuthal_cartesian, vector_angle_100Azimuthal_sky, _, _ = make_vectors(ny, nx, 
+    vector_data_100Azimuthal_cartesian, vector_angle_100Azimuthal_sky,_,  _, _ = make_vectors(ny, nx, 
                                                                                         0, 0, 0, 0, # We dont need these here 
                                                                                         POLI_mJy, POLI_err_mJy,
                                                                                         PA_grid_100Azimuthal, PA_err_deg,
@@ -211,6 +241,7 @@ def generate_polarization_vectors(ny, nx,
     results = {
         'vector_data_actual_cartesian': vector_data_actual_cartesian,
         'vector_angle_actual_sky': vector_angle_actual_sky,
+        'vector_angle_actual_sky_errors': vector_angle_actual_sky_errors,
         'vector_data_100Uniform_cartesian': vector_data_100Uniform_cartesian,
         'vector_angle_100Uniform_sky': vector_angle_100Uniform_sky,
         'vector_data_100Azimuthal_cartesian': vector_data_100Azimuthal_cartesian,
@@ -552,6 +583,11 @@ def BuildBandDictionary(
         os.path.join(band_data_folder_path,
                      "vector_data_gaussian_best.npy")
     )
+    
+    VectorsRatio = np.load(
+        os.path.join(band_data_folder_path,
+                     "vector_data_ratio_best.npy")
+    )
 
     params = pd.read_csv(
         os.path.join(band_data_folder_path,
@@ -596,6 +632,7 @@ def BuildBandDictionary(
 
         'VectorsActual': VectorsActual,
         'VectorsGaussian': VectorsGaussian,
+        'VectorsRatio': VectorsRatio,
 
         'POLI_debiased_mJy': POLI_debiased_mJy,
         'StokesI_mJy': StokesI_mJy,

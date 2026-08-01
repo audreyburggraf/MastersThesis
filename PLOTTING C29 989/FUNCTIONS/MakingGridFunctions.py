@@ -128,7 +128,7 @@ def make_vectors(ny, nx,
         'Band 5': (constants.step_band5, 4),
         'Band 5 v0': (constants.step_band5_v0, 4),
         'Band 5 robust -2': (constants.step_band5_robust_minus2, 4),
-        'Band 5 robust -1': (constants.step_band5_robust_minus1, 2),
+        'Band 5 robust -1': (constants.step_band5_robust_minus1, 3),
 
         'Band 6': (constants.step_band6, 3),
         'Band 6 smooth': (constants.step_band6_smooth, 3),
@@ -156,6 +156,7 @@ def make_vectors(ny, nx,
     # Empty arrays
     vectors_cartesian = []
     vector_angles_sky = []
+    vector_PA_errors = [] 
     
     for x in range(0, nx, step):
         for y in range(0, ny, step):
@@ -165,6 +166,7 @@ def make_vectors(ny, nx,
                 vector_cartesian, PA_rad_sky = compute_polarization_vector(x, y, PA_grid, band, vector_len_pix)
                 vectors_cartesian.append(vector_cartesian)
                 vector_angles_sky.append(PA_rad_sky)
+                vector_PA_errors.append(PA_err_deg[y, x])
                 
                 # Save the mask
                 vector_mask[y, x] = True
@@ -176,7 +178,7 @@ def make_vectors(ny, nx,
                     in_plot_mask[y, x] = True
     
     
-    return vectors_cartesian, vector_angles_sky, vector_mask, in_plot_mask
+    return vectors_cartesian, vector_angles_sky, vector_PA_errors, vector_mask, in_plot_mask
 # --------------------------------------------------------------------------
 
 

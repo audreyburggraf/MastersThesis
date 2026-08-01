@@ -123,6 +123,12 @@ POLF_err = calculate_polarized_fraction_err(StokesQ_mJy, StokesU_mJy, StokesI_mJ
 BMAJ_deg, BMIN_deg, BMAJ_pix, BMIN_pix, BPA_deg_cartesian, reference_length_pix, RA_centre_pix, Dec_centre_pix, xmin, xmax, ymin, ymax = get_plotting_parameters(StokesI_header, StokesI_wcs, 'Band 7 nterms2')
 
 
+xmin = xmin + constants.plot_zoom_pixels
+xmax = xmax - constants.plot_zoom_pixels
+ymin = ymin + constants.plot_zoom_pixels
+ymax = ymax - constants.plot_zoom_pixels
+
+
 
 # Find the debiased vectors
 # -------------------------------------------------------------------------------------------------------
@@ -139,6 +145,7 @@ results = generate_polarization_vectors(ny, nx,
 # Accessing the actual vector data and angles
 vector_data_actual_cartesian = results['vector_data_actual_cartesian']
 vector_angle_actual_sky = results['vector_angle_actual_sky']
+vector_angle_actual_sky_errors = results['vector_angle_actual_sky_errors']
 
 
 vector_data_100Uniform_cartesian = results['vector_data_100Uniform_cartesian']

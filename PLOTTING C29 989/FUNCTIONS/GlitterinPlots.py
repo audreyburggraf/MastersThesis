@@ -604,6 +604,53 @@ def P_vs_omega_twin_axis(results_all, wavelength_labels, wavelengths_cm):
 #
 
 
+# This is the same as in DustModelJustAMAX
+def calculate_chi_squared_for_sf(Pw,
+                          best_idx,
+                          best_sf,
+                          POLF_obs_all,
+                          POLF_err_obs_all,
+                          bands):
+    """
+    Calculate the chi-squared value for the best-fitting model.
+
+    Parameters
+    ----------
+    Pw : ndarray
+        Shape (N_a_max, N_bands). Model P*omega values.
+    best_idx : int
+        Index of the best a_max.
+    best_sf : float
+        Best scale factor.
+    POLF_obs_all : ndarray
+        Observed polarization fractions.
+    bands : list
+        List of band names (e.g. ["Band 4", "Band 5", ...]).
+
+    Returns
+    -------
+    chi_sq : float
+    """
+
+    chi_sq = 0
+
+    for band_idx, band in enumerate(bands):
+#         print(band)
+
+        if band == "Band 5":
+            continue
+
+        POLF_obs     = POLF_obs_all[band_idx]
+        POLF_obs_err = POLF_err_obs_all[band_idx]
+        POLF_model   = Pw[best_idx, band_idx] * best_sf
+
+        chi_sq += ((POLF_obs - POLF_model) / POLF_obs_err) ** 2
+
+    return chi_sq
+
+
+
+
 
 def Pomega_Plot(results, BandsIndex,
                 text_fs = constants.text_fs , 
@@ -669,7 +716,52 @@ def plot_scale_factor_resultsGlitterin(bands,
                                        chi_sq_precision = 4,
                                        band_label_fs = 15,
                                        marker_legend_size = 15,
-                                      for_poster = False):
+                                      for_poster = False,
+                                      poster_scale = 1,
+                                      xmin = 30, #1e-3 + 20
+                                      xmax = 1e3 + 20,
+                                      for_slideshow = False,
+                                       BandLegend_bbox_to_anchor = (0.45, 0.85),
+                                        BandLegend_handletextpad=0.5,
+                                        BandLegend_handlelength=1,
+                                        BandLegend_labelspacing=0.6,
+                                        plot_markers = True
+                                        ):
+    
+    # Change sizes of things if for_poster or not
+    # ---------------------------
+    if for_poster:
+        axisnum_fs = poster_axis_num_fs* poster_scale
+        xy_axis_fs = poster_axis_label_fs * poster_scale
+        stats_fs = poster_text2_fs * poster_scale
+        band_label_fs = poster_colour_bands_fs * poster_scale
+        marker_legend_size = poster_colour_bands_legend_ms * poster_scale**2 * 1.1
+        marker_size = poster_colour_bands_ms * poster_scale**2
+        bands_labels = ['Band 4', 'Band 5 robust -1', 'Band 6', 'Band 7']
+        legend_bands = ['Band 4', 'Band 5 robust -1', 'Band 6', 'Band 7']
+        # ---------------------------
+    elif for_slideshow:
+        num_fs = axis_num_fs
+        xy_axis_fs = axis_label_fs
+        stats_fs = 20
+        legend_marker_size = 15
+        band_legend_fs = 20
+        marker_size = 500
+        bands_labels = ['Band 4', 'Band 5', 'Band 6', 'Band 7']
+        legend_bands = ['Band 4', 'Band 5', 'Band 6', 'Band 7']
+#         BandLegend_bbox_to_anchor = (0.45, 0.85)
+    # ---------------------------
+    else: 
+        axisnum_fs = axis_num_fs*plot_sf
+        xy_axis_fs = axis_label_fs * plot_sf
+        stats_fs = 15
+        #band_label_fs = 15
+        band_legend_fs = 20
+        marker_size = 600
+        bands_labels = ['Band 4', 'Band 5 robust -1', 'Band 6', 'Band 7']
+        legend_bands = ['Band 4', 'Band 5 robust -1', 'Band 6', 'Band 7']
+    # ---------------------------
+    
     
     sf = sf_results['best_sf']
     rvol_max_best_micron = sf_results['best_rvol_max_micron']
@@ -682,29 +774,81 @@ def plot_scale_factor_resultsGlitterin(bands,
     for b in bands
     ]
     
+#     if custom_lw is None:
+#         # default behavior
+#         bands_lw = [
+#             3 if b in bands_included_in_fit else 2
+#             for b in bands
+#         ]
+#     else:
+#         # override where specified
+#         bands_lw = [
+#             custom_lw.get(b, 3 if b in bands_included_in_fit else 2)
+#             for b in bands
+#         ]
+    # Set default line widths
+    # ------------------------------------------------
+    if for_poster:
+        included_lw = poster_lw * poster_scale
+    else:
+        included_lw = 5
+
+    excluded_lw = included_lw * (2/3)
+
     if custom_lw is None:
-        # default behavior
         bands_lw = [
-            3 if b in bands_included_in_fit else 2
+            included_lw if b in bands_included_in_fit else excluded_lw
             for b in bands
         ]
     else:
-        # override where specified
         bands_lw = [
-            custom_lw.get(b, 3 if b in bands_included_in_fit else 2)
+            custom_lw.get(
+                b,
+                included_lw if b in bands_included_in_fit else excluded_lw
+            )
             for b in bands
         ]
+    # ------------------------------------------------
+
     # ----------------------------------------------------------------
     # Set the colors and marker size for each band 
     # ----------------------------------------------------------------
-    band_colors = [alma_band_colors[b] for b in bands]
-    ms = [constants.alma_band_ms[b] for b in bands]
+    band_colors = []
+    ms = []
+
+    for b in bands:
+
+        if b == "Band 5 robust -1":
+            band_colors.append(alma_band_colors["Band 5"])
+            ms.append(constants.alma_band_ms["Band 5"])
+
+        else:
+            band_colors.append(alma_band_colors[b])
+            ms.append(constants.alma_band_ms[b])
     # ----------------------------------------------------------------
     
     
     # Get POLF values
     # ----------------------------------------------------------------
     POLF_markers = dict(zip(df_POLF["Band"], df_POLF["POLF_maxStokesI"]))
+    
+    polf_columns = {
+        'gaussian': 'POLF_Gaussian',
+        'max Stokes I': 'POLF_maxStokesI',
+        'POLI': 'POLF_maxPOLI',
+        'mean': 'POLF_mean'
+    }
+    
+    polf_err_columns = {
+    #'gaussian': 'POLF_err_Gaussian',
+    'max Stokes I': 'POLF_err_maxStokesI',
+    'POLI': 'POLF_err_maxPOLI',
+    #'mean': 'POLF_err_mean'   # if you have this column
+    }
+    
+    POLF_index = "max Stokes I"
+    POLF_obs_all = df_POLF[polf_columns[POLF_index]].values
+    POLF_err_obs_all = df_POLF[polf_err_columns[POLF_index]].values
     # ----------------------------------------------------------------
     
     
@@ -716,13 +860,22 @@ def plot_scale_factor_resultsGlitterin(bands,
     # ----------------------------------------------------------------
     # Make x-axis log
     ax.set_xscale('log')
+    ax.set_xlim(xmin, xmax)
     
     # Label the x- and y-axis labels
-    ax.set_ylabel('P $\omega$', fontsize=axis_label_fs)
-    ax.set_xlabel('Maximum grain size [$\mu$m]', fontsize=axis_label_fs * plot_sf)
+    ax.set_ylabel('P $\omega$', fontsize = xy_axis_fs)
+    ax.set_xlabel('Maximum grain size [$\mu$m]', fontsize = xy_axis_fs)
     
     # Adjust ticks
-    add_min_major_ticks(ax)
+    # ------------------------
+    if for_poster:
+        add_min_major_ticks(ax, axis_num_fs = axisnum_fs)
+        
+
+    else:
+        add_min_major_ticks(ax) 
+    # ------------------------
+
     # ----------------------------------------------------------------
     
 
@@ -737,28 +890,43 @@ def plot_scale_factor_resultsGlitterin(bands,
     
     # Loop over each band 
     for j, b in enumerate(bands):
+        print(f"j = {j}, len(ms) = {len(ms)}, band = {b}")
 
         idx = bands.index(b)
 
         # Set the face and edge color of the POLF markers
-        # ---------------------------------------------------
         fc = constants.alma_band_colors[b]
         ec = constants.alma_band_colors[b]
         marker_lw = 0 
 
-        # Customize Band 5
-        if b in ["Band 5"]:
+        # For poster: make Band 5 robust -1 look like Band 5
+        if b == "Band 5 robust -1":
+            fc = constants.alma_band_colors["Band 5"]
+            ec = constants.alma_band_colors["Band 5"]
+
+        # Normal Band 5 is hollow only when NOT poster
+        if b == "Band 5" and not for_poster:
             fc = 'none'
             marker_lw = 5
         # ---------------------------------------------------
         # Plot the POLF values at the best amax
-        ax.scatter(rvol_max_best_micron, 
-                   POLF_markers[b],
-                   marker=ms[j], 
-                   s=100,
-                   facecolors=fc,
-                   edgecolors=ec,
-                   linewidths=marker_lw)
+        # Plot marker?
+        plot_marker = True
+
+        if for_poster and b == "Band 5":
+            plot_marker = False
+
+        if plot_marker:
+            ax.scatter(
+                rvol_max_best_micron,
+                POLF_markers[b],
+                marker=ms[j],
+                s=marker_size,
+                facecolors=fc,
+                edgecolors=ec,
+                linewidths=marker_lw,
+                zorder = 5
+            )
         # ---------------------------------------------------
 
 
@@ -774,14 +942,15 @@ def plot_scale_factor_resultsGlitterin(bands,
 
         # Plot rvol_max grid and P omega multiplied by the scale factor
         # ---------------------------------------------------
-        if b not in ["Band 5 robust -1", "Band 5 robust -2"]:
+        if b not in ["Band 5 robust -2"]:
             print(f'[{constants.alma_band_plot_labels[b]}]')
             ax.plot(rvol_max_micron,
                     results[b]['P_omega'] * sf,
                        color=band_colors[j],
                        #label= f'{constants.alma_band_plot_labels[b]}',
                        lw=bands_lw[j],
-                       ls=band_ls[j]
+                       ls=band_ls[j],
+                    zorder = 1
                       )
         # ---------------------------------------------------
     
@@ -791,7 +960,7 @@ def plot_scale_factor_resultsGlitterin(bands,
 
         best_idx = sf_results['best_idx_arr']
 
-        for b in bands:
+        for b_idx, b in enumerate(bands):
 
             # optional: skip Band 5 if you want
             if b == "Band 5":
@@ -799,11 +968,21 @@ def plot_scale_factor_resultsGlitterin(bands,
 
             POLF_obs = POLF_markers[b]
             POLF_model = results[b]['P_omega'][best_idx] * sf
+            POLF_obs_err = POLF_err_obs_all[b_idx]
 
-            chi_sq_running_sum += (POLF_obs - POLF_model)**2
+            chi_sq_running_sum += ((POLF_obs - POLF_model) / POLF_obs_err) ** 2
 
         chi_sq = chi_sq_running_sum
+#         chi_sq = calculate_chi_squared_for_sf(
+#             results[b]['P_omega'],
+#             best_idx,
+#             sf,
+#             POLF_obs_all,
+#             POLF_err_obs_all,
+#             bands,
+#         )
         # ---------------------------------------------
+        print('Fix chi^2')
         
         
         
@@ -813,17 +992,18 @@ def plot_scale_factor_resultsGlitterin(bands,
     y_gap = 0.1
         
         
-    fs = 15
-    ax.text(x_pos, y_pos + y_gap,  f'$\chi^2$ = {chi_sq:.{chi_sq_precision}f}', transform=ax.transAxes, fontsize = fs)
+    if for_slideshow == False:
+        ax.text(x_pos, y_pos + y_gap,  f'$\chi^2$ = {chi_sq:.{chi_sq_precision}f}', transform=ax.transAxes, fontsize = stats_fs)
 
 
-    if for_poster == False:
-        ax.text(x_pos, y_pos + 2*y_gap, f'sf = {sf:.2f}', transform=ax.transAxes, fontsize = fs)
+    if for_slideshow == False:
+        #or_poster == False or 
+        ax.text(x_pos, y_pos + 2*y_gap, f'sf = {sf:.2f}', transform=ax.transAxes, fontsize = stats_fs)
 
     # Add the a_max to the text
     ax.text(x_pos, y_pos, rf'$a_{{\mathrm{{max}}}}$ = {rvol_max_best_micron:.0f} $\mu$m', 
                transform=ax.transAxes, 
-               fontsize = fs)
+               fontsize = stats_fs)
         
         
         
@@ -834,13 +1014,19 @@ def plot_scale_factor_resultsGlitterin(bands,
     start = 0.9 # y
     c = 0
     marker_legend_handles = []
-    bands_labels = ['Band 4', 'Band 5', 'Band 5 robust -1', 'Band 6', 'Band 7']
     # Loop over each band 
+    j = 0
     for j, b_label in enumerate(bands_labels):
         
-        if "robust" in b_label:
+        
+
+        if b_label == "Band 5 robust -1":
+            label = "Band 5"
+
+        elif "robust" in b_label:
             label = b_label.replace(" robust ", "\nrob. ")
             c = c + 0.075
+
         else:
             label = b_label
 
@@ -850,15 +1036,33 @@ def plot_scale_factor_resultsGlitterin(bands,
 #                    fontsize=15,
 #                    color=band_colors[j])
         
+        if b_label == "Band 5 robust -1":
+            color = alma_band_colors["Band 5"]
+            marker = constants.alma_band_ms["Band 5"]
+            #b_label = "Band 5"
+
+        elif b_label == "Band 6":
+            color = alma_band_colors["Band 6"]
+            marker = constants.alma_band_ms["Band 6"]
+
+        elif b_label == "Band 7":
+            color = alma_band_colors["Band 7"]
+            marker = constants.alma_band_ms["Band 7"]
+
+        else:
+            color = alma_band_colors[b_label]
+            marker = constants.alma_band_ms[b_label]
+
         handle = Line2D(
-        [0], [0],
-        marker = ms[j],  
-        color='none',
-        markerfacecolor=band_colors[j],
-        markeredgecolor=band_colors[j],
-        markersize=marker_legend_size,
-        linestyle='None',
-        label=label)
+            [0], [0],
+            marker=marker,
+            color='none',
+            markerfacecolor=color,
+            markeredgecolor=color,
+            markersize=marker_legend_size,
+            linestyle='None',
+            label=label
+        )
             
         c = c + 0.1
         marker_legend_handles.append(handle)
@@ -883,24 +1087,39 @@ def plot_scale_factor_resultsGlitterin(bands,
     # Add the names of the bands in the correct colour
     # ----------------------------------------------------
     legend = ax.legend(
-        handles=marker_legend_handles,
-        fontsize = band_label_fs,
-        frameon=False,
-        loc='upper right',
-        handletextpad=0.5, # Cotrols distance between marker and text 
-        handlelength=1, # Cotrols distance between marker and text 
-        labelspacing=0.6 # Controls vertical gap between the markers
-    )
+            handles=marker_legend_handles,
+            fontsize= band_legend_fs,
+            frameon=False,
+            loc='upper right',
+            bbox_to_anchor=BandLegend_bbox_to_anchor,
+            handletextpad=BandLegend_handletextpad, # Cotrols distance between marker and text 
+            handlelength=BandLegend_handlelength, # Cotrols distance between marker and text 
+            labelspacing=BandLegend_labelspacing # Controls vertical gap between the markers
+        )
     
-    for text, color in zip(legend.get_texts(), band_colors):
+    legend_colors = [
+        alma_band_colors["Band 4"],
+        alma_band_colors["Band 5"],
+        alma_band_colors["Band 6"],
+        alma_band_colors["Band 7"]
+    ]
+
+    for text, color in zip(legend.get_texts(), legend_colors):
         text.set_color(color)
     # ----------------------------------------------------
 
 
+#     fig.subplots_adjust(
+#         left=0.15,
+#         right=0.97,
+#         bottom=0.18,
+#         top=0.95
+#     )
 
 
 
     return fig, ax
     
 
+# --------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------

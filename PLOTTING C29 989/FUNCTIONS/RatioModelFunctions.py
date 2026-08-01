@@ -1,4 +1,5 @@
 import sys
+import matplotlib.pyplot as plt
 
 # Add the directory where constants.py is located to sys.path
 sys.path.append("/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/")
@@ -329,7 +330,7 @@ def ratio_model(StokesQ_grid_100Uniform, StokesU_grid_100Uniform,
     results = {}
 
     for ratio1, ratio2 in testing_ratios:
-        PA_grid, StokesQ_grid, StokesU_grid, vectors_data, vectors_angle = mix_StokesQU_and_generate_vectors(
+        PA_grid, StokesQ_grid, StokesU_grid, vectors_data, vectors_angle, _ = mix_StokesQU_and_generate_vectors(
             ratio1, ratio2,
             StokesQ_grid_100Uniform, StokesU_grid_100Uniform,
             StokesQ_grid_100Azimuthal, StokesU_grid_100Azimuthal,
@@ -451,7 +452,7 @@ def ratio_model(StokesQ_grid_100Uniform, StokesU_grid_100Uniform,
     
 
 
-def find_best_fit_ratio_model(expected_angles, observed_angle_list, print_results=True):
+def find_best_fit_ratio_model(expected_angles, observed_angle_list, vector_PA_errors, print_results=True):
     """
     Identifies the best-fitting ratio model for a set of observed vector angles
     by minimizing the Chi-squared statistic compared to expected angles.
@@ -470,7 +471,7 @@ def find_best_fit_ratio_model(expected_angles, observed_angle_list, print_result
     chi_squared_values = []
 
     for observed_angles in observed_angle_list:
-        chi_squared = calculate_chi_squared_reduced(observed_angles, expected_angles, 1)
+        chi_squared = calculate_chi_squared_reduced(observed_angles, expected_angles, vector_PA_errors, 1)
 #         chi_squared = calculate_chi_squared_v2(observed_angles, expected_angles)
         chi_squared_values.append(chi_squared)
        
@@ -485,8 +486,99 @@ def find_best_fit_ratio_model(expected_angles, observed_angle_list, print_result
 
         print("Chi-squared values for ratio models:")
         for label, chi in zip(labels, chi_squared_values):
-            print(f'  {label}: χ² = {chi:.3f}')
+            print(f'  {label}: χ² = {chi * 10:.2f}')
 
-        print(f'\nBest-fit ratio model: {labels[min_index]} (χ² = {chi_squared_values[min_index]:.3f})')
+        print(f'\nBest-fit ratio model: {labels[min_index]} (χ² = {chi_squared_values[min_index] * 10:.2f})')
 
     return min_index
+
+
+
+
+
+
+
+def PlotRatioExample(band, StokesI_wcs, vector_data_plotting_grid,
+                     xmin, xmax, ymin, ymax,
+                    fig_x_size = 15, 
+                    fig_y_size = 6.5):
+    
+#     POLI_mJy, 
+#                     StokesI_wcs, soft_colormap_v2, 
+#                     
+# reference_length_pix, reference_length_AU,
+#                     BMAJ_pix, BMIN_pix, BPA_deg_cartesian, 
+#                     max_length_pix, reference_fraction,
+#                     vector_data_actual_cartesian, vector_data_plotting_grid, 
+#                     fs_scale = 0.5):
+    
+    # Define the figure and subplots
+    fig, axes = plt.subplots(1, 3, figsize=(fig_x_size, fig_y_size), constrained_layout=True, 
+                             subplot_kw={'projection': StokesI_wcs},
+#                              gridspec_kw={'wspace': -1},
+                             sharey = True)
+
+
+    axes[0].text(0.05, 0.8, f"{constants.lambda_mm[band]} mm", transform=axes[0].transAxes, fontsize=constants.text_fs)
+    
+    plotting_indicies = [0, 10, 1]
+    N = [100, 50, 0]
+    titles = ['100Uni + 0 Azi', '50Uni + 50Azi', '0Uni + 100Azi']
+    # Loop through subplots
+    for i, ax in enumerate(axes.flat):
+
+
+    
+
+        # Add vector plots
+        idx = plotting_indicies[i]
+        #ax.set_title(ratio_grid_plot_titles[idx], fontsize=20)
+        
+        #ax.text(0.05, 0.90, f"$N$ = {N[i]}", transform=ax.transAxes, fontsize=constants.text_fs)
+        ax.text(0.05, 0.90, f"{titles[i]}", transform=ax.transAxes, fontsize=constants.text_fs)
+        
+        
+        for row in vector_data_plotting_grid[idx]:
+            ax.plot([row[0], row[1]], [row[2], row[3]], color='black', lw = 3, label = 'Model')
+
+
+        # ---------------------------------------------------------------------
+        # Set y-axis labels and ticks 
+        # ---------------------------------------------------------------------
+        if i == 0:
+            ax.set_ylabel('Declination (ICRS)', fontsize=constants.axis_label_fs)
+            ax.tick_params(axis="y", which="both", left=True, labelleft=True)
+        else:
+            ax.tick_params(axis="y", which="both", left=True, labelleft=False)
+        # ---------------------------------------------------------------------
+        # Set x-axis labels and ticks
+        # ---------------------------------------------------------------------
+        ax.set_xlabel('Right Ascension (ICRS)', fontsize=constants.axis_label_fs)
+        ax.tick_params(axis="x", which="both", bottom=True, labelbottom=True)
+        # ---------------------------------------------------------------------
+
+
+        # Set x and y limits
+        # ---------------------------------------------------------------------
+        ax.set_xlim(xmin, xmax)
+        ax.set_ylim(ymin, ymax)
+        print(rf'({xmin}, {xmax}), ({ymin}, {ymax})')
+        # ---------------------------------------------------------------------
+        
+        
+        ax.minorticks_on()
+        ax.tick_params(axis="x", which="major", direction="in", bottom=True, top=True, length=7, labelsize=constants.axis_num_fs - 2)
+        ax.tick_params(axis="y", which="major", direction="in", left=True, right=True, length=7, labelsize=constants.axis_num_fs - 2)
+
+        # Minor axis ticks
+        # --------------------------------------------------------
+        ra = ax.coords['ra']
+
+        # --- Minor ticks ---
+        ra.display_minor_ticks(True)
+        ra.set_ticks_position(('b', 't'))
+        ra.tick_params(which='minor', length=4)
+        # --------------------------------------------------------
+    
+    return fig, axes
+# ----------------------------------------------------------------------------------------------------------------------

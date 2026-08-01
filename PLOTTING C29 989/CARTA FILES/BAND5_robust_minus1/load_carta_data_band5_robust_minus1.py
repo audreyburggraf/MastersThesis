@@ -34,7 +34,7 @@ carta_minor_data_mJy_StokesI   = np.array(carta_minor_df_StokesI["Value (Jy/beam
 
 
 # ------------------------------------------------------------------------------------------------------
-carta_major_df_POLI = pd.read_csv(loc + "IRS63_POLI_CARTA_MAJOR_AXIS_BAND5_robust_minus1_18.csv", 
+carta_major_df_POLI = pd.read_csv(loc + "IRS63_POLI_debiased_CARTA_MAJOR_AXIS_BAND5_robust_minus1_18.csv", 
                        delim_whitespace=True,  # Auto-detects spaces/tabs as delimiter
                        header=None, 
                        skiprows = 6,
@@ -48,7 +48,7 @@ carta_major_data_mJy_POLI   = np.array(carta_major_df_POLI["Value (Jy/beam)"]) *
 
 
 # ------------------------------------------------------------------------------------------------------
-carta_minor_df_POLI = pd.read_csv(loc + "IRS63_POLI_CARTA_MINOR_AXIS_BAND5_robust_minus1_18.csv", 
+carta_minor_df_POLI = pd.read_csv(loc + "IRS63_POLI_debiased_CARTA_MINOR_AXIS_BAND5_robust_minus1_18.csv", 
                        delim_whitespace=True,  # Auto-detects spaces/tabs as delimiter
                        header=None, 
                        skiprows = 6,

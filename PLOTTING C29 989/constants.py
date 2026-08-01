@@ -6,6 +6,13 @@ import matplotlib.pyplot as plt
 from scipy.optimize import minimize
 
 
+# Add the directory where constants.py is located to sys.path
+sys.path.append("/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/")
+
+# Now you can import constants.py
+import constants
+
+
 # Font sizes
 # ---------------------------------------------
 title_fs = 25
@@ -16,6 +23,10 @@ legend_text_fs = 15
 cbar_fs = 20
 text_fs = 28
 cbar_num_fs = 20
+# ---------------------------------------------
+writeup_grid_lw = 2.2
+
+plot_zoom_pixels = 20
 # ---------------------------------------------
 poster_lw = 5
 poster_axis_label_fs = 28.5
@@ -55,21 +66,21 @@ lambda_mm = {
     # Band 3
     3: 3.1,
     # Band 4
-    4: 2.0,
-    42: 2.0,
-    "Band 4": 2.0,
-    "Band 4 nterms2": 2.0,
-    "Band 4 nterms2 robust -1": 2.0,
-    "Band 4 nterms2 smooth": 2.0,
-    "Band 4 nterms2 smooth B6": 2.0,
-    "Band 4 nterms2 smooth B6 B7": 2.0,
+    4: 2.1,
+    42: 2.1,
+    "Band 4": 2.1,
+    "Band 4 nterms2": 2.1,
+    "Band 4 nterms2 robust -1": 2.1,
+    "Band 4 nterms2 smooth": 2.1,
+    "Band 4 nterms2 smooth B6": 2.1,
+    "Band 4 nterms2 smooth B6 B7": 2.1,
     # Band 5
-    5: 1.7, 
-    50: 1.7,
-    52: 1.7,
-    "Band 5": 1.7,
-    "Band 5 robust -2": 1.7, 
-    "Band 5 robust -1": 1.7, 
+    5: 1.5, 
+    50: 1.5,
+    52: 1.5,
+    "Band 5": 1.5,
+    "Band 5 robust -2": 1.5, 
+    "Band 5 robust -1": 1.5, 
     51: 1.7,
     # Band 6
     6: 1.3,

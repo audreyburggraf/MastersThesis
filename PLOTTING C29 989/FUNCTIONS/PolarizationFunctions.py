@@ -353,14 +353,14 @@ def mix_StokesQU_and_generate_vectors(Uniform_ratio, Azimuthal_ratio,
     PA_grid_mixed_rad_sky = calculate_polarization_angle(StokesQ_grid_mixed, StokesU_grid_mixed)
                              
     # Generate polarization vectors
-    vector_mixed_cartesian, vector_mixed_angle_rad_sky, _, _ = make_vectors(ny, nx, 
+    vector_mixed_cartesian, vector_mixed_angle_rad_sky, vector_mixed_angle_rad_sky_errors, _, _ = make_vectors(ny, nx, 
                                                                          0,0,0,0, # Here is xmin, xmax, ymin, ymax
                                                                       POLI_mJy, POLI_err_mJy, 
                                                                       PA_grid_mixed_rad_sky, PA_err_deg,
                                                                       band,
                                                                       step)
 
-    return PA_grid_mixed_rad_sky, StokesQ_grid_mixed, StokesU_grid_mixed, vector_mixed_cartesian, vector_mixed_angle_rad_sky
+    return PA_grid_mixed_rad_sky, StokesQ_grid_mixed, StokesU_grid_mixed, vector_mixed_cartesian, vector_mixed_angle_rad_sky, vector_mixed_angle_rad_sky_errors
 
 
 

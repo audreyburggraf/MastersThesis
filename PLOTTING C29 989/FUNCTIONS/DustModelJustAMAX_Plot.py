@@ -55,7 +55,9 @@ def plot_scale_factor_results_JUST_AMAX(bands,                  # These are the 
                                         BandLegend_bbox_to_anchor=(0.4, 0.75),
                                         BandLegend_handletextpad=0.5,
                                         BandLegend_handlelength=1,
-                                        BandLegend_labelspacing=0.6
+                                        BandLegend_labelspacing=0.6,
+                                        plot_markers = True,
+                                        plot_band_legend = True
                                         ):
     band_ls = [
     '-' if b in bands_included_in_fit else '--'
@@ -97,7 +99,7 @@ def plot_scale_factor_results_JUST_AMAX(bands,                  # These are the 
         xy_axis_fs = 40
         stats_fs = 40
         legend_marker_size = 20
-        band_legend_fs = 35
+        band_legend_fs = 32.5
         marker_size = 600
     # ---------------------------
     else: 
@@ -196,15 +198,15 @@ def plot_scale_factor_results_JUST_AMAX(bands,                  # These are the 
         marker_handles = []
         # plot each band for this f
         for j, b in enumerate(bands):
-            
+
             idx = bands.index(b)
-            
-            
+
+
 #             print(rf'At band {b}, the POLF_obs value is: {POLF_obs[f][idx]}')
 #             print(' ')
 
             fc = band_colors[j]
-    
+
             if marker_border:
                 ec = 'black'
                 marker_lw = 1.5
@@ -228,7 +230,7 @@ def plot_scale_factor_results_JUST_AMAX(bands,                  # These are the 
             if for_poster and b == "Band 5":
                 plot_marker = False
 
-            if plot_marker:
+            if plot_markers:
                 ax[i].scatter(
                     best_a_max_by_f[f],
                     POLF_markers[b],
@@ -239,9 +241,9 @@ def plot_scale_factor_results_JUST_AMAX(bands,                  # These are the 
                     linewidths=marker_lw,
                     zorder = 5
                 )
-            # ---------------------------------------------------------------------
+        # ---------------------------------------------------------------------
 
-        
+
             marker_handles.append(
             Line2D([0], [0],
                    marker=ms[j],
@@ -252,7 +254,7 @@ def plot_scale_factor_results_JUST_AMAX(bands,                  # These are the 
                    markersize=15,
                    linestyle='None'))
 
-           # if b not in ["Band 5 robust -1", "Band 5 robust -2"]:
+       # if b not in ["Band 5 robust -1", "Band 5 robust -2"]:
 
             ax[i].plot(a_max_dist_micron_by_f[f],
                            P_times_omega_by_f[f][:, idx] * sf_by_f[f],
@@ -342,30 +344,31 @@ def plot_scale_factor_results_JUST_AMAX(bands,                  # These are the 
     ]
     # ----------------------------------------------------
     # ----------------------------------------------------
-        
-    legend = ax[3].legend(
-            handles=marker_legend_handles,
-            fontsize= band_legend_fs,
-            frameon=False,
-            loc='upper right',
-            bbox_to_anchor=BandLegend_bbox_to_anchor,
-            handletextpad=BandLegend_handletextpad, # Cotrols distance between marker and text 
-            handlelength=BandLegend_handlelength, # Cotrols distance between marker and text 
-            labelspacing=BandLegend_labelspacing # Controls vertical gap between the markers
-        )
-    
-    if for_poster:
-        legend_colors = [
-            alma_band_colors["Band 4"],
-            alma_band_colors["Band 5"],
-            alma_band_colors["Band 6"],
-            alma_band_colors["Band 7"]
-        ]
-    else:
-        legend_colors = band_colors
+    #if plot_markers: 
+    if plot_band_legend:
+        legend = ax[3].legend(
+                handles=marker_legend_handles,
+                fontsize= band_legend_fs,
+                frameon=False,
+                loc='upper right',
+                bbox_to_anchor=BandLegend_bbox_to_anchor,
+                handletextpad=BandLegend_handletextpad, # Cotrols distance between marker and text 
+                handlelength=BandLegend_handlelength, # Cotrols distance between marker and text 
+                labelspacing=BandLegend_labelspacing # Controls vertical gap between the markers
+            )
 
-    for text, color in zip(legend.get_texts(), legend_colors):
-        text.set_color(color)
+        if for_poster:
+            legend_colors = [
+                alma_band_colors["Band 4"],
+                alma_band_colors["Band 5"],
+                alma_band_colors["Band 6"],
+                alma_band_colors["Band 7"]
+            ]
+        else:
+            legend_colors = band_colors
+
+        for text, color in zip(legend.get_texts(), legend_colors):
+            text.set_color(color)
 #     # ----------------------------------------------------
 #     # ----------------------------------------------------
 

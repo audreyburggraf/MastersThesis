@@ -110,15 +110,22 @@ def calculate_chi_squared_v2(observed_value, expected_value):
 
 
 
-def calculate_chi_squared_reduced(observed_value, expected_value, deg_of_freedom):
+def calculate_chi_squared_reduced(observed_value, expected_value, errors, deg_of_freedom):
     
-    chi_squared = calculate_chi_squared_v2(observed_value, expected_value)
+    # print(f'in calculate_chi_squared_reduced, the length is... obs: {len(observed_value)}, exp{len(expected_value)}, errors: {len(errors)}')
+    obs = np.array(observed_value)
+    exp = np.array(expected_value)
+    err = np.array(errors)
     
-    N = len(observed_value)
+    
+    chi_squared = np.sum(((obs - exp) / err) ** 2) 
+    
+    N = len(obs)
         
     nu = N - deg_of_freedom
     
     reduced_chi_squared = (1/nu) * chi_squared
+    
     
     
     return reduced_chi_squared
@@ -137,3 +144,4 @@ def calculate_chi_squared(observed_value, expected_value, tolerance=1e-6):
     
     
     return chi_squared
+
