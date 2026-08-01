@@ -138,7 +138,7 @@ def find_gaussian_POLF(band, UniformRatios, POLF, tolerance=0.001):
 
 
 # --------------------------------------------------------------------------------------
-def find_POLF_at_max_POLI(StokesI_mJy, POLI_mJy, POLF, print_statements = False):
+def find_POLF_at_max_POLI(StokesI_mJy, POLI_mJy, POLF, POLF_err, print_statements = False):
     # Find index of max POLI, ignoring NaNs
     y_max, x_max = np.unravel_index(np.nanargmax(POLI_mJy), POLI_mJy.shape)
 
@@ -147,6 +147,7 @@ def find_POLF_at_max_POLI(StokesI_mJy, POLI_mJy, POLF, print_statements = False)
     corresponding_I = StokesI_mJy[y_max, x_max]
     calc_avg_POLF = max_POLI / corresponding_I
     POLF_maxPOLI = POLF[y_max, x_max]
+    POLF_err_maxPOLI = POLF_err[y_max, x_max]
 
     if print_statements:
         print(rf'The maximum POLI value is {max_POLI:.3f}, and it happens at the index ({y_max}, {x_max})')
@@ -154,12 +155,12 @@ def find_POLF_at_max_POLI(StokesI_mJy, POLI_mJy, POLF, print_statements = False)
         print(rf'At that index, the calculated POLF value is {calc_avg_POLF:.4f} or {calc_avg_POLF * 100:.2f}%')
         print(rf'At that index, the map POLF value is {POLF_maxPOLI:.4f}')
     
-    return POLF_maxPOLI
+    return POLF_maxPOLI, POLF_err_maxPOLI
 # --------------------------------------------------------------------------------------
 
 
 # --------------------------------------------------------------------------------------
-def find_POLF_at_max_StokesI(StokesI_mJy, POLI_mJy, POLF, print_statements = False):
+def find_POLF_at_max_StokesI(StokesI_mJy, POLI_mJy, POLF, POLF_err, print_statements = False):
 
     
 # Find index of max Stokes I, ignoring NaNs
@@ -170,6 +171,7 @@ def find_POLF_at_max_StokesI(StokesI_mJy, POLI_mJy, POLF, print_statements = Fal
     corresponding_POLI = POLI_mJy[y_max, x_max]
     calc_avg_POLF = corresponding_POLI / max_StokesI
     POLF_maxStokesI = POLF[y_max, x_max]
+    POLF_err_maxStokesI = POLF_err[y_max, x_max]
 
     if print_statements:
         print(rf'The maximum Stokes I value is {max_StokesI:.3f}, at index ({y_max}, {x_max})')
@@ -177,7 +179,7 @@ def find_POLF_at_max_StokesI(StokesI_mJy, POLI_mJy, POLF, print_statements = Fal
         print(rf'Calculated POLF = {calc_avg_POLF:.4f} or {calc_avg_POLF * 100:.2f}%')
         print(rf'Map POLF value = {POLF_maxStokesI:.4f}')
 
-    return POLF_maxStokesI
+    return POLF_maxStokesI, POLF_err_maxStokesI
 # --------------------------------------------------------------------------------------
 
 
@@ -185,7 +187,7 @@ def find_POLF_at_max_StokesI(StokesI_mJy, POLI_mJy, POLF, print_statements = Fal
 
 
 # --------------------------------------------------------------------------------------
-def get_all_POLF_and_save(StokesI_mJy, POLI_mJy, POLF, UniformRatios, band, gaussian_tolerance = 0.001, sigma_cutoff = 5, print_statements = False):
+def get_all_POLF_and_save(StokesI_mJy, POLI_mJy, POLF, POLF_err, UniformRatios, band, gaussian_tolerance = 0.001, sigma_cutoff = 5, print_statements = False):
 
     band_paths = {
     'Band 4': (constants.band4_data_folder_path, "constants_BAND4.csv"),
@@ -223,9 +225,9 @@ def get_all_POLF_and_save(StokesI_mJy, POLI_mJy, POLF, UniformRatios, band, gaus
     POLF_Gaussian = find_gaussian_POLF(band, UniformRatios, POLF, gaussian_tolerance)
     
     
-    POLF_maxPOLI = find_POLF_at_max_POLI(StokesI_mJy, POLI_mJy, POLF, print_statements)
+    POLF_maxPOLI, POLF_err_maxPOLI = find_POLF_at_max_POLI(StokesI_mJy, POLI_mJy, POLF, POLF_err, print_statements)
     
-    POLF_maxStokesI = find_POLF_at_max_StokesI(StokesI_mJy, POLI_mJy, POLF, print_statements)
+    POLF_maxStokesI, POLF_err_maxStokesI = find_POLF_at_max_StokesI(StokesI_mJy, POLI_mJy, POLF, POLF_err, print_statements)
     
 #     POLF_avg_sigma = find_POLF_avg(band, StokesI_mJy, POLF, sigma_cutoff)
     
@@ -237,7 +239,9 @@ def get_all_POLF_and_save(StokesI_mJy, POLI_mJy, POLF, UniformRatios, band, gaus
     data_dict = {
         "POLF_Gaussian": [POLF_Gaussian],
         "POLF_maxPOLI": [POLF_maxPOLI],
+        "POLF_err_maxPOLI": [POLF_err_maxPOLI],
         "POLF_maxStokesI": [POLF_maxStokesI],
+        "POLF_err_maxStokesI": [POLF_err_maxStokesI],
 #         "POLF_avg_sigma": [POLF_avg_sigma],
     }
 
@@ -262,7 +266,9 @@ def load_POLF(bands, print_things = False):
         'Band': [],
         'POLF_Gaussian': [],
         'POLF_maxPOLI': [],
+        'POLF_err_maxPOLI': [],
         'POLF_maxStokesI': [],
+        'POLF_err_maxStokesI': [],
 #         'POLF_avg_sigma': [],
     }
 
@@ -309,7 +315,9 @@ def load_POLF(bands, print_things = False):
         results['Band'].append(band)
         results['POLF_Gaussian'].append(df.at[0, "POLF_Gaussian"] * 100)
         results['POLF_maxPOLI'].append(df.at[0, "POLF_maxPOLI"] * 100)
+        results['POLF_err_maxPOLI'].append(df.at[0, "POLF_err_maxPOLI"] * 100)
         results['POLF_maxStokesI'].append(df.at[0, "POLF_maxStokesI"] * 100)
+        results['POLF_err_maxStokesI'].append(df.at[0, "POLF_err_maxStokesI"] * 100)
 #         results['POLF_avg_simga'].append(df.at[0, "POLF_avg_simga"] * 100)
     
 
@@ -317,7 +325,7 @@ def load_POLF(bands, print_things = False):
     # Convert to DataFrame
     df_POLF = pd.DataFrame(results)
 
-    df_POLF["POLF_mean"] = df_POLF[["POLF_Gaussian", "POLF_maxPOLI", "POLF_maxStokesI"]].mean(axis=1)
+    df_POLF["POLF_mean"] = df_POLF[["POLF_Gaussian", "POLF_maxPOLI", "POLF_err_maxPOLI", "POLF_maxStokesI", "POLF_err_maxStokesI"]].mean(axis=1)
 
     
     return df_POLF

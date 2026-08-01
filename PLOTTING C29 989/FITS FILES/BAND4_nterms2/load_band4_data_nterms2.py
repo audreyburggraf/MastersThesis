@@ -131,6 +131,11 @@ BMAJ_deg, BMIN_deg, BMAJ_pix, BMIN_pix, BPA_deg_cartesian, reference_length_pix,
 
 nx, ny = StokesI_mJy.shape
 
+xmin = xmin + constants.plot_zoom_pixels
+xmax = xmax - constants.plot_zoom_pixels
+ymin = ymin + constants.plot_zoom_pixels
+ymax = ymax - constants.plot_zoom_pixels
+
 
 
 
@@ -151,6 +156,7 @@ results = generate_polarization_vectors(ny, nx,
 # Accessing the actual vector data and angles
 vector_data_actual_cartesian = results['vector_data_actual_cartesian']
 vector_angle_actual_sky = results['vector_angle_actual_sky']
+vector_angle_actual_sky_errors = results['vector_angle_actual_sky_errors']
 
 
 vector_data_100Uniform_cartesian = results['vector_data_100Uniform_cartesian']

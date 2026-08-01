@@ -33,6 +33,8 @@ def calculate_scale_factors(a_max_vals,
 
     sf_medians = []
     sf_stds = []
+    
+    print(f'fit_indicies: {fit_indices}')
 
     for i in range(len(a_max_vals)):
 
@@ -58,6 +60,7 @@ def calculate_chi_squared_for_sf(Pw,
                           best_idx,
                           best_sf,
                           POLF_obs_all,
+                          POLF_err_obs_all,
                           bands):
     """
     Calculate the chi-squared value for the best-fitting model.
@@ -83,14 +86,16 @@ def calculate_chi_squared_for_sf(Pw,
     chi_sq = 0
 
     for band_idx, band in enumerate(bands):
+#         print(band)
 
         if band == "Band 5":
             continue
 
-        POLF_obs = POLF_obs_all[band_idx]
-        POLF_model = Pw[best_idx, band_idx] * best_sf
+        POLF_obs     = POLF_obs_all[band_idx]
+        POLF_obs_err = POLF_err_obs_all[band_idx]
+        POLF_model   = Pw[best_idx, band_idx] * best_sf
 
-        chi_sq += (POLF_obs - POLF_model)**2
+        chi_sq += ((POLF_obs - POLF_model) / POLF_obs_err) ** 2
 
     return chi_sq
 # --------------------------------------------------------------------------------------------------------
@@ -132,8 +137,17 @@ def find_sf_v4(bands,
     polf_columns = {
         'gaussian': 'POLF_Gaussian',
         'max Stokes I': 'POLF_maxStokesI',
+#         'max Stokes I err': 'POLF_err_maxStokesI',
         'POLI': 'POLF_maxPOLI',
+#         'POLI_err': 'POLF_err_maxPOLI',
         'mean': 'POLF_mean'
+    }
+    
+    polf_err_columns = {
+    #'gaussian': 'POLF_err_Gaussian',
+    'max Stokes I': 'POLF_err_maxStokesI',
+    'POLI': 'POLF_err_maxPOLI',
+    #'mean': 'POLF_err_mean'   # if you have this column
     }
     
     
@@ -164,6 +178,8 @@ def find_sf_v4(bands,
 
 
     POLF_obs_all = df_POLF[polf_columns[POLF_index]].values
+    POLF_err_obs_all = df_POLF[polf_err_columns[POLF_index]].values
+   
 
     
 
@@ -236,6 +252,7 @@ def find_sf_v4(bands,
             best_idx,
             best_sf,
             POLF_obs_all,
+            POLF_err_obs_all,
             bands,
         )
         # ---------------------------------------------
@@ -330,6 +347,13 @@ def find_sf_v5(bands,
         'mean': 'POLF_mean'
     }
     
+    polf_err_columns = {
+    #'gaussian': 'POLF_err_Gaussian',
+    'max Stokes I': 'POLF_err_maxStokesI',
+    'POLI': 'POLF_err_maxPOLI',
+    #'mean': 'POLF_err_mean'   # if you have this column
+    }
+    
     
     if POLF_index not in polf_columns:
         raise ValueError(
@@ -358,6 +382,7 @@ def find_sf_v5(bands,
 
 
     POLF_obs_all = df_POLF[polf_columns[POLF_index]].values
+    POLF_err_obs_all = df_POLF[polf_err_columns[POLF_index]].values
 
     
 
@@ -438,6 +463,7 @@ def find_sf_v5(bands,
             best_idx,
             best_sf,
             POLF_obs_all,
+            POLF_err_obs_all,
             bands,
         )
         # ---------------------------------------------

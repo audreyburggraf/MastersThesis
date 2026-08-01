@@ -6,6 +6,7 @@ import math
 from matplotlib.ticker import ScalarFormatter
 from matplotlib.patches import Patch
 from matplotlib.lines import Line2D
+from matplotlib.gridspec import GridSpec
 
 # Import Functions
 from FITS_Image_Functions import *
@@ -96,7 +97,7 @@ def add_reference_scale_bar(ax, xmin, xmax, ymin, ymax,
 # -----------------------------------------------------------------------------------------
 # This function is only curreny. used in making some glitterin plots
 
-def add_min_major_ticks(ax, axis_num_fs = None, sf = 1):
+def add_min_major_ticks(ax, axis_num_fs = None, sf = 1, top = True):
     
     if axis_num_fs  is None:
         axis_num_fs  = constants.axis_num_fs  * sf
@@ -104,10 +105,10 @@ def add_min_major_ticks(ax, axis_num_fs = None, sf = 1):
         
     # Adjust ticks
     ax.minorticks_on()
-    ax.tick_params(axis="x", which="major", direction="in", bottom=True, top=True, length=7, labelsize=axis_num_fs)
-    ax.tick_params(axis="y", which="major", direction="in", bottom=True, top=True, length=7, labelsize=axis_num_fs)
+    ax.tick_params(axis="x", which="major", direction="in", bottom=True, top=top, length=7, labelsize=axis_num_fs)
+    ax.tick_params(axis="y", which="major", direction="in", bottom=True, top=top, length=7, labelsize=axis_num_fs)
 
-    ax.tick_params(axis="x", which="minor", direction="in", bottom=True, top=True, length=4)
+    ax.tick_params(axis="x", which="minor", direction="in", bottom=True, top=top, length=4)
     ax.tick_params(axis="y", which="minor", direction="in", left=True, right=True, length=4)
 # -----------------------------------------------------------------------------------------
 def add_min_major_ticks_wcs(ax, axis_num_fs = None, sf = 1):

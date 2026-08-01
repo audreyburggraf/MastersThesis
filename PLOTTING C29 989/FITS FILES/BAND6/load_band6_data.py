@@ -99,7 +99,7 @@ POLI_err_mJy = convert_jy_to_mjy(POLI_err_Jy)
 
 # Polarization Angle
 # -------------------------------------------------------------------------------------------------------
-_, _, PA_deg, _ = read_in_file(PA_file)
+PA_header, _, PA_deg, _ = read_in_file(PA_file)
 PA_rad = np.radians(PA_deg)
 # -------------------------------------------------------------------------------------------------------
 
@@ -140,6 +140,12 @@ BMAJ_deg, BMIN_deg, BMAJ_pix, BMIN_pix, BPA_deg_cartesian, reference_length_pix,
 print(f'In load_band6_data.py, ymax = {ymax}')
 
 
+xmin = xmin + constants.plot_zoom_pixels
+xmax = xmax - constants.plot_zoom_pixels
+ymin = ymin + constants.plot_zoom_pixels
+ymax = ymax - constants.plot_zoom_pixels
+
+
 
 
 # Find the vectors
@@ -157,6 +163,7 @@ results = generate_polarization_vectors(ny, nx,
 # Accessing the actual vector data and anglesf
 vector_data_actual_cartesian = results['vector_data_actual_cartesian']
 vector_angle_actual_sky = results['vector_angle_actual_sky']
+vector_angle_actual_sky_errors = results['vector_angle_actual_sky_errors']
 
 
 vector_data_100Uniform_cartesian = results['vector_data_100Uniform_cartesian']

@@ -4,6 +4,7 @@ from collections import defaultdict
 
 
 
+
 import sys
 import os
 
@@ -17,6 +18,7 @@ from FITS_Image_Functions import *
 from PolarizationFunctions import *
 from PlottingWithFunction import *
 from DataAnalysisFunctions import *
+# from PlottingWithFunction import *
 
 from custom_colormap import *
 
@@ -264,7 +266,7 @@ def gaussian_2d_flat_topped_tilted_model(nx, ny, theta_rad, phi, BMAJ_pix, BMIN_
 def run_gaussian_model(theta_rad, phi_values, BMAJ_values_pix, BMIN_values_pix, RA_centre_pix, Dec_centre_pix, 
                        StokesQ_grid_100Uniform, StokesU_grid_100Uniform,
                        StokesQ_grid_100Azimuthal, StokesU_grid_100Azimuthal,
-                       vector_angle_actual_sky,
+                       vector_angle_actual_sky, vector_angle_actual_sky_errors,
                        ny, nx, 
                        POLI_mJy, POLI_err_mJy, 
                        PA_err_deg,
@@ -331,7 +333,7 @@ def run_gaussian_model(theta_rad, phi_values, BMAJ_values_pix, BMIN_values_pix, 
 
                 # Recover the Q, U and vector angle
                 # -------------------------------------------------------------------------------------------------------------
-                _, _, _, vectors_data, vectors_angle = mix_StokesQU_and_generate_vectors(GaussianUniformRatios,
+                _, _, _, vectors_data, vectors_angle, _  = mix_StokesQU_and_generate_vectors(GaussianUniformRatios,
                                                                                          GaussianAzimuthalRatios, 
                                                                                          StokesQ_grid_100Uniform, 
                                                                                          StokesU_grid_100Uniform,
@@ -354,7 +356,9 @@ def run_gaussian_model(theta_rad, phi_values, BMAJ_values_pix, BMIN_values_pix, 
 
                 # Calculate and append chi squared 
                 # --------------------------------------------------------------
-                chi_squared = calculate_chi_squared_reduced(vectors_angle, vector_angle_actual_sky, 3)
+                chi_squared = calculate_chi_squared_reduced(vectors_angle, 
+                                                            vector_angle_actual_sky, 
+                                                            vector_angle_actual_sky_errors, 3)
 #                 chi_squared = calculate_chi_squared_v2(vectors_angle, vector_angle_actual_sky) # (observed, expected)
                 # --------------------------------------------------------------
                 
@@ -702,3 +706,168 @@ def make_gaussian_grids(gaussian_values, phi_values, BMAJ_values_pix, BMIN_value
 
 #     plt.tight_layout()
 # # ----------------------------------------------------------------------------------------
+
+
+
+
+def plot_gaussian_ratio_grid(B4, B5, B6, B7, 
+                             labels, 
+                             cmap = soft_colormap_no_red, 
+                             fig_x_size=14, fig_y_size=12,
+                             cbar_label="Gaussian Uniform Ratio",
+                             vmin=0, vmax=1):
+
+    bands = [B4, B5, B6, B7]
+    #labels = ["Band 4", "Band 5", "Band 6", "Band 7"]
+
+    fig = plt.figure(figsize=(fig_x_size, fig_y_size))
+    gs = GridSpec(2, 2, figure=fig)
+
+    axes = []
+
+    for i, band_data in enumerate(bands):
+
+        row = i // 2
+        col = i % 2
+
+        ax = fig.add_subplot(gs[row, col], projection=band_data['StokesI_wcs'])
+        axes.append(ax)
+
+        im = ax.imshow(
+            band_data['ratios'],
+            origin='lower',
+            cmap=cmap,
+            vmin=vmin,
+            vmax=vmax
+        )
+
+        ax.set_xlim(band_data['xmin'], band_data['xmax'])
+        ax.set_ylim(band_data['ymin'], band_data['ymax'])
+
+#         ax.text(
+#             0.05, 0.90, labels[i],
+#             transform=ax.transAxes,
+#             fontsize=constants.text_fs,
+#             color='black'
+#         )
+        
+        ax.text(
+        0.05, 0.35,
+        rf"$\phi={band_data['phi']}$" + "\n" +
+        rf"BMAJ$={band_data['BMAJ']}$" + "\n" +
+        rf"BMIN$={band_data['BMIN']}$" + "\n" +
+        rf"$\chi^2={band_data['chi2']:.3f}$",
+        transform=ax.transAxes,
+        fontsize=constants.text_fs * 0.7,
+        color='black',
+        va='top',
+        ha='left',
+#         bbox=dict(facecolor='white', alpha=0.7, edgecolor='none')
+    )
+        
+        
+
+        ax.set_xlabel("Right Ascension (ICRS)", fontsize=constants.axis_label_fs)
+        ax.set_ylabel("Declination (ICRS)", fontsize=constants.axis_label_fs)
+
+        ax.tick_params(axis="x", which="major", direction="in", 
+                       bottom=True, top=True, length=7, 
+                       labelsize=constants.axis_num_fs)
+
+        ax.tick_params(axis="y", which="major", direction="in", 
+                       left=True, right=True, length=7, 
+                       labelsize=constants.axis_num_fs)
+        
+        add_band_label(ax, labels[i], 'wavelength', constants)
+
+    # One shared colour bar
+    cbar = fig.colorbar(im, ax=axes, orientation='vertical', 
+                        fraction=0.035, pad=0.04)
+
+    cbar.set_label(cbar_label, fontsize=constants.cbar_fs)
+    cbar.ax.tick_params(labelsize=constants.cbar_num_fs)
+
+    return fig, axes
+
+
+
+
+def GaussianVectorGrid(B4, B5, B6, B7, labels, 
+                       cmap=soft_colormap_no_red, 
+                       fig_x_size=14, fig_y_size=12,
+                       cbar_label="Gaussian Uniform Ratio",
+                       cbar_pad = 0.1,
+                       cbar_shrink = 1,
+):
+
+    bands = [B4, B5, B6, B7]
+    #labels = ["Band 4", "Band 5 robust -1", "Band 6", "Band 7"]
+
+    fig = plt.figure(figsize=(fig_x_size, fig_y_size))
+    gs = GridSpec(2, 2, figure=fig)
+
+    axes = []
+
+    for i, band_data in enumerate(bands):
+
+        row = i // 2
+        col = i % 2
+
+        ax = fig.add_subplot(gs[row, col], projection=band_data['StokesI_wcs'])
+        axes.append(ax)
+
+
+        # Add data
+        # ---------------------------------------------------------------------------
+        im = ax.imshow(band_data['POLI_mJy'], cmap=cmap)
+        # ---------------------------------------------------------------------------
+
+
+        # Set axis limits
+        # ---------------------------------------------------------------------------
+        ax.set_xlim(band_data['xmin'], band_data['xmax'])
+        ax.set_ylim(band_data['ymin'], band_data['ymax'])
+        # ---------------------------------------------------------------------------
+
+#         ax.text(
+#             0.05, 0.90, labels[i],
+#             transform=ax.transAxes,
+#             fontsize=constants.text_fs,
+#             color='black'
+#         )
+        
+        # Colorbar
+        # ---------------------------------------------------------------------------
+        cbar = fig.colorbar(im, ax=ax, orientation='horizontal', pad=cbar_pad, shrink = cbar_shrink)
+        cbar.set_label('Polarized Intensity (mJy/beam)', fontsize=cbar_fs)
+        cbar.ax.tick_params(labelsize=cbar_num_fs, which='major', length=7, direction="in")
+        cbar.ax.tick_params(which='minor', length=4, direction="in")
+        # ---------------------------------------------------------------------------
+        
+        
+        # Axis labels and ticks
+        # ---------------------------------------------------------------------------
+        if row == 1:
+            ax.set_xlabel("Right Ascension", fontsize=constants.axis_label_fs)
+            
+            ax.tick_params(axis="x", which="major", direction="in", 
+                   bottom=True, top=True, length=7, 
+                   labelsize=constants.axis_num_fs)
+        
+        if col == 0 :
+            ax.set_ylabel("Declination", fontsize=constants.axis_label_fs)
+
+
+            ax.tick_params(axis="y", which="major", direction="in", 
+                           left=True, right=True, length=7, 
+                           labelsize=constants.axis_num_fs)
+        # ---------------------------------------------------------------------------
+
+#     # One shared colour bar
+#     cbar = fig.colorbar(im, ax=axes, orientation='vertical', 
+#                         fraction=0.035, pad=0.04)
+
+#     cbar.set_label(cbar_label, fontsize=constants.cbar_fs)
+#     cbar.ax.tick_params(labelsize=constants.cbar_num_fs)
+
+    return fig, axes
