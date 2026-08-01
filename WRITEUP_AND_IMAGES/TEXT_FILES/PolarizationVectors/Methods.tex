@@ -2,12 +2,14 @@
 
 
 \subsection{Polarization Vector Sampling}
-The \SI maps produced using \texttt{tclean} have a pixel scale that oversamples the synthesized beam to improve image reconstruction \citep{Brogan}. Instead of plotting a polarization vector at each pixel, vectors are plotted with a spacing of approximately half of the beam size, following the Nyquist-Shannon sampling theorem \citep{Shannon}. The effective beam size in pixels is calculated using:
+The \SI maps produced using \texttt{tclean} have a pixel scale that oversamples the synthesized beam to improve image reconstruction \citep{Brogan}. Becuase of this, plotting a polarization vector at each pixel would oversample the polarization morphology. Instead, vectors are plotted with a spacing of approximately half of the synthesized beam size, following the Nyquist-Shannon sampling theorem \citep{Shannon}. 
+
+The effective beam size in pixels was calculated using:
 \begin{equation}
     \text{Beam Size =} \sqrt{BMIN \cdot BMAJ},
     \label{eq: beam_size}
 \end{equation}
-\noindent where $BMIN$ and $BMAJ$ are the synthesized beam minor and major axes, listed in Table \ref{tab: source_info} in units of arcseconds. The beam dimensions were converted from arcseconds to pixels using the image pixel size of $0.018''\,\mathrm{pixel}^{-1}$, and the vector spacing was taken to be half of the beam size (Equation \ref{eq: beam_size}), rounded to the nearest integer. 
+\noindent where $BMIN$ and $BMAJ$ are the synthesized beam minor and major axes respectively, listed in Table \ref{tab: source_info} in units of arcseconds. The beam dimensions were converted from arcseconds to pixels using the image pixel size of $0.018''\,\mathrm{pixel}^{-1}$. The polarization vector spacing was set to be half of the beam size (Equation \ref{eq: beam_size}), and rounded to the nearest integer number of pixels.
 
 
 
@@ -23,10 +25,10 @@ The \SI maps produced using \texttt{tclean} have a pixel scale that oversamples 
 \label{sec: methods_vector_criteria}
 In addition to the sampling spacing explained above, a polarization vector was only plotted if it satisfied the following criteria:
 \begin{enumerate}
-    \item $\frac{\POLIeq}{\POLIerrEQ} >$ 4 (\bfourNS, \bsevenNS) or $\frac{\POLIeq}{\POLIerrEQ} >$ 3 (\bsixNS) or $\frac{\POLIeq}{\POLIerrEQ} >$ 3 (\bsixNS) or $\frac{\POLIeq}{\POLIerrEQ} >$ 2.4 (\bfiveNS)  \note{can change this}
+    \item $\frac{\POLIeq}{\POLIerrEQ} >$ 4 (\bfourNS, \bsevenNS) or $\frac{\POLIeq}{\POLIerrEQ} >$ 3 (\bfiveNS, \bsixNS) 
     \item $\PAerrEQ < 10^\circ$.
 \end{enumerate}
-\noindent These two criteria were adapted from the selection criteria from \citep{sadavoy_dust_2019}, without the additional condition of $I/\sigma_I>3$. This could be excluded for our analysis as IRS 63 is bright and well-resolved, meaning it has a high S/N ratio in the area around the disk, meaning this condition is already met. The threshold of $\frac{\POLIeq}{\POLIerrEQ} >3$ was used for \bsix because of its lower sensitivity. Using a threshold of 4 excluded almost 10 additional  polarization vectors. \add{Band 5 cutoff explanation}
+\noindent These two criteria were adapted from the selection criteria from \citep{sadavoy_dust_2019}, without the additional condition of $I/\sigma_I>3$. This could be excluded for our analysis as IRS 63 is bright and well-resolved, meaning it has a high S/N ratio in the area around the disk, meaning this condition is already met. The threshold of $\frac{\POLIeq}{\POLIerrEQ} >3$ was used for \bfive and \bsix because of their sensitivities. Using a threshold of 4 excluded many additional polarization vectors.
 
 
 

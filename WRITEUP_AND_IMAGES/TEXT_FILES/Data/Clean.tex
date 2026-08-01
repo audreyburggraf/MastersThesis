@@ -7,8 +7,7 @@
 In this section, the self-calibration details for this project are summarized. The data at \bfourNS, \bfive and \bseven were calibrated as part of this project, and the \bsix data were provided from \cite{sadavoy_dust_2019}.
 
 
-To clean the data,  \texttt{tclean} was used in Common Astronomy Software Applications (CASA) version 5.6.1-8 \SCC{add casa citation}. The images were cleaned using the multi-scale multi-frequency deconvolution algorithm (MS-MFS, \texttt{deconvolver = `mtmfs'}). Different values of nterms were explored and no significant change between \texttt{nterms = 1} and nterms = 2 were found. The images presented in this thesis have nterms = 2 for \bfour and \bsevenNS, nterms = 1 for \bfive and \bsixNS. 
-\question{band 5 nterms = ?} The Briggs weighting scheme was used with \texttt{robust = 0.5} for all wavleengths except the \bfive data where w\texttt{robust = -1} was used to better match the resolution of the other datasets (see Chapter \ref{sec: discussion_band5_data_issues} for more details). 
+To clean the data,  \texttt{tclean} was used in Common Astronomy Software Applications (CASA) version 5.6.1-8 \SCC{add casa citation}. The images were cleaned using the multi-scale multi-frequency deconvolution algorithm (MS-MFS, \texttt{deconvolver = `mtmfs'}). Different values of nterms were explored and no significant change between \texttt{nterms = 1} and nterms = 2 were found. The images presented in this thesis have \texttt{nterms = 2} for \bfour and \bsevenNS, \texttt{nterms = 1} for \bfive and \bsixNS. The Briggs weighting scheme was used with \texttt{robust = 0.5} for all wavleengths except the \bfive data where w\texttt{robust = -1} was used to better match the resolution of the other datasets (see Chapter \ref{sec: discussion_band5_data_issues} for more details). 
 
 
 
@@ -37,7 +36,7 @@ Below, in Figure \ref{fig: BeforeAndAfterClean}, is an example of IRS 63 at \bfo
 
 \begin{table}[h!]
 \centering
-\caption{Summary of properties of the cleaned images of IRS 63. \add{Band 5 robust -1 not 0.5, nterms and robust}}
+\caption{Summary of properties of the cleaned images of IRS 63. \question{Can I give + 83 as - 97?}  Units for Stokes errors can be found in Table \ref{tab: stokes_polar_variables}. }
 \begin{tabular}{lcccc}
 \toprule
 \textbf{Property} & \textbf{\bandfourmm} & \textbf{\bandfivemm } & \textbf{\bandsixmm } & \textbf{\bandsevenmm} \\
@@ -46,13 +45,13 @@ Below, in Figure \ref{fig: BeforeAndAfterClean}, is an example of IRS 63 at \bfo
 
 R.A. (h, m, s) 
 & 16:31:35.656 
-& 16:31:35.656 \note{check}
+& 16:31:35.656 % Updated July 22
 & 16:31:35.657  
 & 16:31:35.656 \\
 
 Decl. (J2000) 
 & -24:01:29.992 
-& -24:01:30.086 \note{check}
+& -24:01:30.086 % Updated July 22
 & -24:01:29.935 
 & -24:01:30.089 \\
 
@@ -67,33 +66,57 @@ Beam ($''\times''$)
 
 Beam PA ($^\circ$) 
 & -81.0 
-& -88.9 \add{$\Delta$ to rob-1}
+& +83.0 
 & -68.6
 & -81.2 \\
 
-
+% Deconvolved from beam
 Disk PA ($^\circ$) 
 & 145.9 
-& 148.39 \note{check}
+& 148.39 % This was checked on July 22
 & 148.0 
 & 139.7 \\
 
 \texttt{nterms}
 & 2
-& \add{num}
-& 2 \question{?} 
+& 1
+& 1
 & 2 \\
 
 \texttt{robust}
 & 0.5
 & -1
-& 0.5 \question{?} 
+& 0.5 
 & 0.5 \\
+
+
+
+\SIerr 
+& 13.75
+& 42.12
+& 71.01
+& 35.17 \\
+
+\SQerr
+& 9.65
+& 40.50
+& 27.00
+& 26.25 \\
+
+\SUerr 
+& 10.12
+& 40.80
+& 27.00
+& 24.35 \\
 
 
 
 \bottomrule
 \end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item \textbf{Note:} \SIerrNS, \SQerrNS, \SUerr are constant values for \bfourNS, \bfiveNS, and \bsevenNS, and are reported at maximum \SI value for \bsixNS. These errors are reported in units of \ujybeamNS. 
+\end{tablenotes}
 \label{tab: source_info}
 \end{table}
 
@@ -102,3 +125,45 @@ Disk PA ($^\circ$)
 
 % ---------------------------------------------
 
+
+
+% \begin{table}[h!]
+% \centering
+% \caption{Summary of error values for Stokes and polarization patterns. \question{why is \bsix PA error so high?} \SC{Also, give these units in uJy/beam so that you don't have so many zeros}, more comments, another comment}
+% \begin{tabular}{lllll}
+% \toprule
+% \textbf{Property} & \textbf{\bandfourmm} & \textbf{\bandfivemm } & \textbf{\bandsixmm } & \textbf{\bandsevenmm} \\
+% \midrule
+
+
+
+
+
+
+% \POLIerr
+% & 9.65
+% & 40.50
+% & 27.00
+% & 26.25 \\
+
+
+% \POLFerr 
+% & 0.0379
+% & 0.0743
+% & 0.0298
+% & 0.0141 \\
+
+% \PAerr (deg)
+% & -0.7909
+% & -1.5149
+% & 0.5823
+% & -0.4033 \\
+
+
+
+
+
+% \bottomrule
+% \end{tabular}
+% \label{tab: stokes_errors}
+% \end{table}
