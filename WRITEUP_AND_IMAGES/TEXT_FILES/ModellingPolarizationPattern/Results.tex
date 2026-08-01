@@ -16,88 +16,77 @@ The best ratio fit plots are presented in Figure \ref{fig:best-ratio-models}.
 % This is Band 4 nterms2, Band 7 nterms 2.
 \begin{table}[h!]
 \centering
-\caption{\add{Caption}.}
-\begin{tabular}{cccccc}
+\caption{\add{on July 25th but after adding $\chi^2$ to error every wavelength likes 100U the best. }. chi squared multiplied by 10 \note{Started updating }}
+\begin{tabular}{lcccc}
 \toprule
-\multicolumn{2}{c}{\textbf{Ratio Model}} & \textbf{\bfour} & \textbf{\bfive} & \textbf{\bsix} & \textbf{\bseven} \\
+\textbf{Ratio Model} & \textbf{\bfour} & \textbf{\bfive} & \textbf{\bsix} & \textbf{\bseven} \\
 \midrule
-100 U
-& 0 A  
-& 1.439 % Band 4 
-& 0.815 % Band 5 
+100Uni + 0Azi
+& \textbf{0.906} % Band 4 
+& 0.020 % Band 5 
 & 1.382 % Band 6  
-& 0.344 \\
+& \textbf{0.612} \\
 
 
-90  U
-& 10 A 
-& 1.452 % Band 4
-& 0.813 % Band 5  
+90Uni + 10Azi
+& 0.914 % Band 4
+& 0.020 % Band 5  
 & 1.389 % Band 6  
-& 0.331 \\
+& 0.656 \\
 
-80  U
-& 20  A
-& 1.472 % Band 4 
-& 0.809 % Band 5  
+80Uni + 20Azi
+& 0.929 % Band 4 
+& 0.020 % Band 5  
 & 1.401 % Band 6  
-& 0.320 \\
+& 0.739 \\
 
-70  U
-& 30 A 
-& 1.505 % Band 4 
+70Uni + 30Azi
+& 0.954 % Band 4 
 & 0.803 % Band 5  
 & 1.426 % Band 6 
-& \textbf{0.314}\\
+& 0.886\\
 
-60  U
-& 40 A 
-& 1.560 % Band 4 
-& 0.792 % Band 5
+60Uni + 40Azi
+& 0.999 % Band 4 
+& 0.021 % Band 5
 & 1.479 % Band 6 
-& 0.318 \\
+& 1.136 \\
 
-50  U
-& 50 A 
-& 1.668 % Band 4 
-& 0.778 % Band 5  
+50Uni + 50 Azi
+& 2.049 % Band 4 
+& 0.025 % Band 5  
 & 1.629 % Band 6  
-& 0.366 \\
+& 1.525 \\
 
-40  U
-& 60 A 
-& 1.603 % Band 4 
-& 0.778 % Band 5  
+40Uni + 60Azi
+& 1.388 % Band 4 
+& 0.025 % Band 5  
 & 1.474 % Band 6  
-& 0.430 \\
+& 2.308 \\
 
-30  U
-& 70 A 
-& 1.478 % Band 4 
-& 0.773 % Band 5
+30Uni + 70 Azi
+& 1.250 % Band 4 
+& 0.026 % Band 5
 & \textbf{1.370} 
-& 0.382 \\
+& 2.592 \\
 
-20  U
-& 80 A 
-& 1.170 % Band 4 
+20Uni + 80Azi
+& 1.098 % Band 4 
 & 0.769 % Band 5  
 & 1.374 % Band 6  
-& 0.411 \\
+& 3.427 \\
 
-10  U
-& 90 A 
-& 0.850 % Band 4
-& 0.767 % Band 5  
+10Uni + 90Azi
+& \textbf{0.091} % Band 4
+& 0.915 % Band 5  
 & 1.379 % Band 6 
-& 0.441 \\
+& 4.182 \\
 
-0   U
-& 100 A 
-& \textbf{0.847} 
+0Uni + 100Azi
+& 0.932
 & \textbf{0.765}
 & 1.384 
-& 0.716 \\
+& 4.429 \\
 \bottomrule
 \end{tabular}
 \label{tab:ratio_model_chi2}
@@ -154,6 +143,15 @@ The best ratio fit plots are presented in Figure \ref{fig:best-ratio-models}.
 
 
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Ratio/Best_grid.pdf}
+  \caption{\add{caption} \note{Change to $\Delta\alpha$ and $\Delta \delta$ if we chose to do that for other plots.} \note{tweak plot}}
+  \label{fig: RatioBestGrid}
+\end{figure}
+
+
+
 
 
 \subsubsection{Gaussian Model}
@@ -173,17 +171,18 @@ At each band the Gaussian model chi-squared value is lower than the one for the 
 
 \begin{table}[h!]
 \centering
-\caption{\add{Caption}.}
+\caption{\add{Caption}. \note{Last updated July 25th}}
 \begin{tabular}{c ccc c}
 \toprule
 \textbf{Band} & $\boldsymbol{\phi}$ & \textbf{BMAJ} & \textbf{BMIN} & $\boldsymbol{\chi^2}$ \\
 \midrule
 
-\textbf{\bfour} & 7 & 10 & 20 & \textbf{0.834} \\
- & 6 & 10 & 20 & 0.835 \\
- & 4 & 20 & 10 & 0.836 \\
- & 5 & 20 & 10 & 0.836 \\
- & 6 & 20 & 10 & 0.837 \\
+\textbf{\bfour} 
+& 4 & 20 & 10 & \textbf{0.834} \\
+ & 5 & 20 & 10 & 0.835 \\
+ & 6 & 20 & 10 & 0.836 \\
+ & 3 & 20 & 10 & 0.836 \\
+ & 7 & 20 & 10 & 0.837 \\
 
 \midrule
 
@@ -221,7 +220,7 @@ At each band the Gaussian model chi-squared value is lower than the one for the 
 \begin{figure*}[h]
   \centering
   \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/AllGaussian.pdf}
-  \caption{\add{caption, make this a grid}\note{This plot will be cleaned up significantly if it is being used!!!!! I don't want to waste time making it neat if it is not necessary.} \note{Change to $\Delta\alpha$ and $\Delta \delta$ if we chose to do that for other plots.} \note{Update to band 5 robust -1}}
+  \caption{\add{caption} \question{Include this figure? or is Figure \ref{fig: GaussianBestGrid} and Table \ref{tab: gaussian_model_info} enough?}}
 \end{figure*}
 
 
@@ -272,4 +271,10 @@ At each band the Gaussian model chi-squared value is lower than the one for the 
 
 
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/Best_grid.pdf}
+  \caption{\add{caption} \note{Change to $\Delta\alpha$ and $\Delta \delta$ if we chose to do that for other plots.} \note{tweak plot}}
+  \label{fig: GaussianBestGrid}
+\end{figure}
 
