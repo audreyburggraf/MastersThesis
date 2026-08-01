@@ -1,7 +1,4 @@
-Once the polarization vector maps were created, the observed polarization morphologies were modelled using two geometric models. 
-
-
-\SCC{The models were created to reproduce (this was crossed out)} the observed polarization morphologies, including azimuthal patterns, polarization vectors that uniformly align with the minor axis, and in between the two. This allows us to specify the regions of the disk where \SCC{each polarization pattern was dominant}.
+Once the polarization vector maps were created, the observed polarization morphologies were modelled using two geometric models. The models were created to reproduce the observed polarization morphologies, including azimuthal patterns, polarization vectors that uniformly align with the minor axis, and in between the two. This allows us to specify the regions of the disk where \SCC{each polarization pattern was dominant}.
 
 Ideally, some physical mechanisms (such as radiative transfer) would be included to make the models more realistic. For the purposes of this project, purely geometric models are sufficient \SC{because... give a bit more justification.}. The two geometric models are described below. 
 
@@ -69,8 +66,8 @@ U_{N}
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Ratio/RatioExamplesTest.pdf}
-  \caption{Example of the $N = 100, N=50$ and $N = 0$ cases of the ratio model for \bsevenNS. \note{Change to $\Delta\alpha$ and $\Delta \delta$ if we chose to do that for other plots.}}
+  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Ratio/RatioExamplesTest_Band4.pdf}
+  \caption{Example of the $N = 100, N=50$ and $N = 0$ cases of the ratio model for \bfourNS. \note{Change to $\Delta\alpha$ and $\Delta \delta$ if we chose to do that for other plots.} \note{tweak layout}}
   \label{fig: RatioExamples}
 \end{figure}
 
@@ -92,6 +89,13 @@ The second geometric model we tested is called the \emph{Gaussian model}. The ai
 \SC{Give some motivation for this.  We expect the disks to be optically thick at the center more than the edge.}
 
 To achieve this, we used a rotated \SCC{2-dimensional flat-topped Gaussian model} with three free parameters: $\phi$, BMIN and BMAJ, summarized in Table \ref{tab: gaussian_model_info}, and defined below.
+
+
+% \begin{equation}
+% f(x) = A \exp{\left(-\left(\frac{(x-x_0)^2}{2\signa_X^2}\right)^P\right)}
+%     \label{eq: super-Gaussian}
+% \end{equation}
+% \question{do I need to cite this? I got it from Wikipedia.}
 
 
 \begin{table}[h!]
@@ -121,12 +125,7 @@ BMAJ
 \end{table}
 
 \SC{Mention that you had the condition that BMIN <= BMAJ}
-The tested values of BMIN and BMAJ control the widths of the Gaussian model. The values are treated as a beam full width half maximum (FWHM), and were converted to standard deviations using the equation:
-\begin{equation}
-    \sigma_i = \frac{\text{FWHM}}{2\sqrt{2 \ln{2}}},
-    \label{eq: FWHM_to_sigma}
-\end{equation}
-\noindent where the subscript of $i$ refers to $m$ or $M$ for minor or major respectively.
+The tested values of BMIN and BMAJ control the widths of the Gaussian model by using them each as the FWHM in Equation \ref{eq: FWHM_to_sigma} to convert them to standard deviations. 
 
 The Gaussian was rotated to align with the major axis of the disk (position angle of the disk, Table \ref{tab: source_info}). The coordinates ($x, y$) were shifted with respect to the centre of the disk ($x_c, y_c$) and then rotated:
 \begin{equation}
@@ -177,13 +176,13 @@ U_{\text{Gaussian}}
 
 
 
-Some examples of the Gaussian map in colour scale, with vectors overlaid for four examples of different $\phi$, BMIN, BMAJ values are shown below in Figure \ref{fig: Methods/GaussianExamples}.
+Some examples of the Gaussian map in colour scale, with vectors overlaid for two randomly selected examples of different $\phi$, BMIN, BMAJ values are shown below in Figure \ref{fig: Methods/GaussianExamples}.
 
 
 \begin{figure*}[h]
   \centering
-  \includegraphics[width=0.8\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/CustomExamples.pdf}
-  \caption{Four examples of the Gaussian weights for various values of $\phi$, BMAJ and BMIN. These are for \bsevenNS. \SC{Take out the top 2 ones} \SC{Can you overlay the resulting vectors on these maps?}}
+  \includegraphics[width=0.8\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/CustomExamples_B4.pdf}
+  \caption{Two examples of the Gaussian weights for selected values of $\phi$, BMAJ and BMIN.}
   \label{fig: Methods/GaussianExamples}
 \end{figure*}
 
@@ -210,12 +209,12 @@ First, the difference in the observed and model-predicted polarization angle nee
     \label{eq: minimum_separation}
 \end{equation}
 
-\noindent where $\theta_{\text{obs}}$ is the observed polarization angle and $\theta_{\text{model}}$ is the polarization angle from either the ratio or Gaussian model. This angular difference was used in the calculations for the chi-squared value:
+\noindent where $\theta_{\text{obs}}$ is the observed polarization angle and $\theta_{\text{model}}$ is the polarization angle from either the ratio or Gaussian model. This angular difference was used in the calculations for the chi-a value:
 \begin{equation}
-    \chi^2 = \Sigma (\Delta \theta_i)^2,
+    \chi^2 = \sum \left(\frac{\Delta \theta_i}{\sigma_\theta}\right)^2,
     \label{eq: chi_sq}
 \end{equation}
-\noindent where the angular distance is summed over all sampled polarization vectors. \question{should I be dividing by the polarization angle errors?} \SC{Yes, because you want $\chi^2$ to be unitless.}
+\noindent where the angular distance is summed over all sampled polarization vectors. 
 
 The value of $\chi^2$ is then converted to a reduced chi-squared by:
 \begin{equation}
