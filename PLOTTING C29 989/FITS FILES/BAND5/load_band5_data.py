@@ -169,6 +169,7 @@ results = generate_polarization_vectors(ny, nx,
 # Accessing the actual vector data and anglesf
 vector_data_actual_cartesian = results['vector_data_actual_cartesian']
 vector_angle_actual_sky = results['vector_angle_actual_sky']
+vector_angle_actual_sky_errors = results['vector_angle_actual_sky_errors']
 
 vector_data_100Uniform_cartesian = results['vector_data_100Uniform_cartesian']
 vector_angle_100Uniform_sky = results['vector_angle_100Uniform_sky']
