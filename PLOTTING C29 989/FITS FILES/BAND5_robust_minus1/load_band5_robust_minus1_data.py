@@ -158,11 +158,12 @@ POLI_mJy_nostream[stream_ymin:stream_ymax+1, stream_xmin:stream_xmax+1] = np.nan
 # Find the vectors
 # -------------------------------------------------------------------------------------------------------
 # in the file:MakingGridFunctions.py make_vectors_band47
+print('No streamer')
 results = generate_polarization_vectors(ny, nx,
                                         xmin, xmax, ymin, ymax, # This is for the nterms test
                                         RA_centre_pix, Dec_centre_pix,
                                         constants.minor_angle_rad_sky_band5_v0,
-                                        StokesI_mJy, 
+                                        StokesI_mJy, StokesI_err_mJy, # If not keeping stokes I cutoff i can remove the error
                                         POLI_mJy_nostream, POLI_err_mJy,
                                         PA_rad, PA_err_deg,
                                         'Band 5 robust -1')
@@ -198,11 +199,12 @@ POLI_mJy_stream[:, :] = np.nan  # Set everything to NaN
 # Fill in only the stream region
 POLI_mJy_stream[stream_ymin:stream_ymax+1, stream_xmin:stream_xmax+1] = POLI_debiased_mJy[stream_ymin:stream_ymax+1, stream_xmin:stream_xmax+1]
 
+print('Streamer')
 results_stream = generate_polarization_vectors(ny, nx,
                                                xmin, xmax, ymin, ymax, # This is for the nterms test
                                                RA_centre_pix, Dec_centre_pix,
                                                constants.minor_angle_rad_sky_band5,
-                                               StokesI_mJy, 
+                                               StokesI_mJy, StokesI_err_mJy, # If not keeping stokes I cutoff i can remove the error
                                                POLI_mJy_stream, POLI_err_mJy,
                                                PA_rad + np.pi/2, PA_err_deg,
                                                'Band 5 robust -1')

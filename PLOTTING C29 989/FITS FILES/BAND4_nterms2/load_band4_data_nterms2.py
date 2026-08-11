@@ -143,11 +143,12 @@ ymax = ymax - constants.plot_zoom_pixels
 
 # Find the debiased vectors
 # -------------------------------------------------------------------------------------------------------
+print('Debiased')
 results = generate_polarization_vectors(ny, nx,
                                         xmin, xmax, ymin, ymax, # This is for the nterms test
                                         RA_centre_pix, Dec_centre_pix,
                                         constants.minor_angle_rad_sky_band4_nterms2,
-                                        StokesI_mJy,
+                                        StokesI_mJy, StokesI_err_mJy, # If not keeping stokes I cutoff i can remove the error
                                         POLI_debiased_mJy, POLI_err_mJy,
                                         PA_rad, PA_err_deg,
                                         'Band 4 nterms2')
@@ -185,11 +186,12 @@ in_plot_mask = results['in_plot_mask']
 
 # Find the biased vectors
 # -------------------------------------------------------------------------------------------------------
+print('Biased')
 results_biased = generate_polarization_vectors(ny, nx,
                                         xmin, xmax, ymin, ymax, # This is for the nterms test
                                         RA_centre_pix, Dec_centre_pix,
                                         constants.minor_angle_rad_sky_band4_nterms2,
-                                        StokesI_mJy,
+                                        StokesI_mJy, StokesI_err_mJy, # If not keeping stokes I cutoff i can remove the error
                                         POLI_biased_mJy, POLI_err_mJy,
                                         PA_rad, PA_err_deg,
                                         'Band 4 nterms2')

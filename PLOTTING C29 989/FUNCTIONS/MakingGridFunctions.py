@@ -143,7 +143,7 @@ def make_vectors(ny, nx,
         raise ValueError(f"Unsupported band: {band}")
 
     default_step, POLI_err_cutoff = band_parameters[band]
-    print(rf'In make_vectors: the POLI_err_cutoff is {POLI_err_cutoff}')
+    #print(rf'In make_vectors: the POLI_err_cutoff is {POLI_err_cutoff}')
 
     # If step wasn't passed, use the band default
     if step is None:
@@ -156,7 +156,9 @@ def make_vectors(ny, nx,
     # Empty arrays
     vectors_cartesian = []
     vector_angles_sky = []
-    vector_PA_errors = [] 
+    vector_PA_errors = []
+    
+    n_in_plot = 0 
     
     for x in range(0, nx, step):
         for y in range(0, ny, step):
@@ -176,8 +178,97 @@ def make_vectors(ny, nx,
 
                 if in_plot:
                     in_plot_mask[y, x] = True
+                    n_in_plot +=1
+   
+    #print(rf'     in make_vectors, "Total vectors: {len(vectors_cartesian)} and vectors in plot = {n_in_plot}')
     
+    return vectors_cartesian, vector_angles_sky, vector_PA_errors, vector_mask, in_plot_mask
+# --------------------------------------------------------------------------
+def make_vectors_StokesIcutoff(ny, nx, 
+                    xmin, xmax, ymin, ymax, 
+                    StokesI_mJy, StokesI_err_mJy, 
+                    POLI_mJy, POLI_err_mJy, 
+                    PA_grid, PA_err_deg, band, 
+                    step = None, vector_len_pix = None):
+    """
+    Generate vectors for Band 4 polarization data.
     
+    Parameters:
+    ny, nx: Dimensions of the grid
+    POLI_mJy: Polarization intensity
+    POLI_err_mJy: Error on polarization intensity
+    PA_grid: Polarization angle grid
+    PA_err_deg: Polarization angle error
+    
+    Returns:
+    vectors_cartesian: List of vectors in Cartesian coordinates
+    vector_angles_sky: List of polarization angles
+    """
+    
+    band_parameters = {
+        'Band 4': (constants.step_band4, 4),
+        'Band 4 nterms2': (constants.step_band4_nterms2, 4),
+        'Band 4 nterms2 robust -1': (constants.step_band4_nterms2_robust_minus1, 4),
+        'Band 4 nterms2 smooth': (constants.step_band4_nterms2_smooth, 4),
+        'Band 4 nterms2 smooth B6': (constants.step_band4_nterms2_smooth_B6, 4),
+        'Band 4 nterms2 smooth B6 B7': (constants.step_band4_nterms2_smooth_B6_B7, 4),
+
+        'Band 5': (constants.step_band5, 4),
+        'Band 5 v0': (constants.step_band5_v0, 4),
+        'Band 5 robust -2': (constants.step_band5_robust_minus2, 4),
+        'Band 5 robust -1': (constants.step_band5_robust_minus1, 3),
+
+        'Band 6': (constants.step_band6, 3),
+        'Band 6 smooth': (constants.step_band6_smooth, 3),
+        'Band 6 smooth B7': (constants.step_band6_smooth_B7, 3),
+
+        'Band 7 nterms2': (constants.step_band7_nterms2, 4),
+        'Band 7 nterms2 smooth': (constants.step_band7_nterms2_smooth, 4),
+        'Band 7 nterms2 smooth B6': (constants.step_band7_nterms2_smooth_B6, 4),
+    }
+
+    if band not in band_parameters:
+        raise ValueError(f"Unsupported band: {band}")
+
+    default_step, POLI_err_cutoff = band_parameters[band]
+    
+
+    # If step wasn't passed, use the band default
+    if step is None:
+        step = default_step
+        
+    # Make some empty grid that we will fill with the mask on if there is a vector or not
+    vector_mask = np.zeros((ny, nx), dtype=bool)
+    in_plot_mask = np.zeros((ny, nx), dtype=bool)
+    
+    # Empty arrays
+    vectors_cartesian = []
+    vector_angles_sky = []
+    vector_PA_errors = [] 
+    n_in_plot = 0 
+    for x in range(0, nx, step):
+        for y in range(0, ny, step):
+            if (StokesI_mJy[y, x] / StokesI_err_mJy[y, x] > 3
+                and POLI_mJy[y, x] / POLI_err_mJy[y, x] > POLI_err_cutoff
+                and PA_err_deg[y, x] < 10):
+                # Use the helper function to compute the vector
+                vector_cartesian, PA_rad_sky = compute_polarization_vector(x, y, PA_grid, band, vector_len_pix)
+                vectors_cartesian.append(vector_cartesian)
+                vector_angles_sky.append(PA_rad_sky)
+                vector_PA_errors.append(PA_err_deg[y, x])
+                
+                # Save the mask
+                vector_mask[y, x] = True
+                
+                # Check that the vector is in the plotting range 
+                in_plot = (xmin <= x <= xmax) and (ymin <= y <= ymax)
+
+                if in_plot:
+                    in_plot_mask[y, x] = True
+                    n_in_plot +=1
+                    
+    #print(rf'     in make_vectors_v2, "Total vectors: {len(vectors_cartesian)} and vectors in plot = {n_in_plot}')
+
     return vectors_cartesian, vector_angles_sky, vector_PA_errors, vector_mask, in_plot_mask
 # --------------------------------------------------------------------------
 

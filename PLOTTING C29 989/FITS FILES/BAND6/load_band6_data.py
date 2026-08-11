@@ -154,7 +154,7 @@ results = generate_polarization_vectors(ny, nx,
                                         xmin, xmax, ymin, ymax, # This is for xmin, xmax, ymin, ymax, for my nterms test
                                         RA_centre_pix, Dec_centre_pix,
                                         constants.minor_angle_rad_sky_band6,
-                                        StokesI_mJy, 
+                                        StokesI_mJy, StokesI_err_mJy, # If not keeping stokes I cutoff i can remove the error
                                         POLI_mJy, POLI_err_mJy,
                                         PA_rad, PA_err_deg,
                                         'Band 6')

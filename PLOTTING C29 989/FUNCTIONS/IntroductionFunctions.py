@@ -184,7 +184,7 @@ def generate_polarization_vectors(ny, nx,
                                   xmin, xmax, ymin, ymax, 
                                   RA_centre_pix, Dec_centre_pix,
                                   uniform_angle,
-                                  StokesI_mJy, 
+                                  StokesI_mJy, StokesI_err_mJy, 
                                   POLI_mJy, POLI_err_mJy,
                                   PA_real_sky_rad, PA_err_deg,
                                   band, 
@@ -207,11 +207,13 @@ def generate_polarization_vectors(ny, nx,
     
     
     # Get vector and angles for the actual data
-    vector_data_actual_cartesian, vector_angle_actual_sky, vector_angle_actual_sky_errors, vector_mask, in_plot_mask = make_vectors(ny, nx,  
+    vector_data_actual_cartesian, vector_angle_actual_sky, vector_angle_actual_sky_errors, vector_mask, in_plot_mask = make_vectors_StokesIcutoff(ny, nx,  
                                                                                       xmin, xmax, ymin, ymax, 
+                                                                                                                                                  StokesI_mJy, StokesI_err_mJy, 
                                                                                       POLI_mJy, POLI_err_mJy,
                                                                                       PA_real_sky_rad, PA_err_deg,
                                                                                       band, step, vector_len_pix)
+    
     
     # Make the PA grids for uniform and Azimuthal
     PA_grid_100Uniform   = make_PA_grid_100Uniform(ny,   nx, uniform_angle)
@@ -219,16 +221,18 @@ def generate_polarization_vectors(ny, nx,
     
     # Get the vector and angle data for the 100 Uniform case 
     # Currently not saving the mask here
-    vector_data_100Uniform_cartesian, vector_angle_100Uniform_sky, _, _, _ = make_vectors(ny, nx,  
+    vector_data_100Uniform_cartesian, vector_angle_100Uniform_sky, _, _, _ = make_vectors_StokesIcutoff(ny, nx,  
                                                                                     0, 0, 0, 0, # We dont need these here 
+                                                                                    StokesI_mJy, StokesI_err_mJy, 
                                                                                     POLI_mJy, POLI_err_mJy,
                                                                                     PA_grid_100Uniform, PA_err_deg,
                                                                                     band, step, vector_len_pix)
     
     # Get the vector and angle data for the 100 Azimuthal case 
     # Currently not saving the mask here
-    vector_data_100Azimuthal_cartesian, vector_angle_100Azimuthal_sky,_,  _, _ = make_vectors(ny, nx, 
+    vector_data_100Azimuthal_cartesian, vector_angle_100Azimuthal_sky,_,  _, _ = make_vectors_StokesIcutoff(ny, nx, 
                                                                                         0, 0, 0, 0, # We dont need these here 
+                                                                                        StokesI_mJy, StokesI_err_mJy, 
                                                                                         POLI_mJy, POLI_err_mJy,
                                                                                         PA_grid_100Azimuthal, PA_err_deg,
                                                                                         band, step, vector_len_pix)
@@ -564,7 +568,8 @@ def BuildBandDictionary(
     max_length_pix,
     reference_fraction,
     POLI_debiased_mJy,
-    StokesI_mJy
+    StokesI_mJy,
+    RA_centre_pix, Dec_centre_pix,
 ):
 
     # --------------------------------------------------------
@@ -639,6 +644,9 @@ def BuildBandDictionary(
         
         'minor_x': slice_points['minor_x'],
         'minor_y': slice_points['minor_y'], 
+        
+        'RA_centre_pix': RA_centre_pix, 
+        'Dec_centre_pix': Dec_centre_pix, 
     }
 
     return BandDict    
