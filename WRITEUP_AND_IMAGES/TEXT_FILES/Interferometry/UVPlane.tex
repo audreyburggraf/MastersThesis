@@ -14,11 +14,10 @@ The projected baseline between two antennas is decomposed into two coordinates $
 
 Each pair of telescopes measures one complex visibility, which describes the amplitude and phase of the interference pattern, as a function of time and frequency \citep{Ricci2017}.  Each complex visibility is a single Fourier component of the sky brightness distribution, and together they sample its Fourier transform \citep{Marvil2026, Monnier}. The visibility function  $V(u, v) $ is given by:
 \begin{equation}
-    V(u, v) = \int_{-\infty}^{\infty} I(l, m) e^{-2\pi j(ul + vm)} dl dm
+    V(u, v) = \int_{-\infty}^{\infty} I(l, m) e^{-2\pi i(ul + vm)} dl dm
     \label{eq: V(u,v)}
 \end{equation}
 \noindent where $I(l, m)$ is the intensity function, and $(l, m)$ are the angular sky coordinates  \citep{Marvil2026}. 
-\SC{you mean i here not j, right?}
 
 
 

@@ -1,8 +1,7 @@
-Once the polarization vector maps were created, the observed polarization morphologies were modelled using two geometric models. The models were created to reproduce the observed polarization morphologies, including azimuthal patterns, polarization vectors that uniformly align with the minor axis, and in between the two. This allows us to specify the regions of the disk where \SCC{each polarization pattern was dominant}.
+Once the polarization vector maps were created, the observed polarization morphologies were modelled using two geometric models. The models were created to reproduce the observed polarization morphologies, including azimuthal patterns (Figure \ref{fig: kataoka_polarization_morphologies}a), polarization vectors that uniformly align with the minor axis (Figure \ref{fig: kataoka_polarization_morphologies}b), and intermediate morphologies (\add{refer to HL Tau?}). Since scattering is expected to have a uniform patter (Chapter \ref{sec: dust_self_scattering} \note{check this}), the model allows us to specify the regions of the disk where scattering induced polarization dominates. 
 
-Ideally, some physical mechanisms (such as radiative transfer) would be included to make the models more realistic. For the purposes of this project, purely geometric models are sufficient \SC{because... give a bit more justification.}. The two geometric models are described below. 
 
-\SC{It may help to include a cartoon showing the two patterns.}
+Ideally, some physical mechanisms (such as radiative transfer) would be included to make the models more realistic. For the purposes of this project, purely geometric models are sufficient, as the goal is to identify the regions of the disk where the signatures of each polarization mechanism dominate, rather than to model the physical mechanisms that produce the observed patterns. The two geometric models are described below. 
 
 % ----------------------------------------------------------
 \subsection{Ratio Model}
@@ -41,7 +40,11 @@ U_x
 \end{aligned}
 % \label{eq:50U50A}
 \end{equation}
-\noindent where $x= 100$ corresponds to the pure uniform model and $x=0$ corresponds to the pure azimuthal model \add{source for these equations}. Additionally, $p$ is a constant polarization fraction which was chosen to be 0.02 based on observations presented in \citep{sadavoy_dust_2019} \note{I could be wrong on why we chose this value \SCC{answer}}.
+\noindent based from \cite{Montier}, where $x= 100$ corresponds to the pure uniform model and $x=0$ corresponds to the pure azimuthal model. The polarization fraction $p$ was set to be a fixed value of 0.02 based on observations presented in \cite{sadavoy_dust_2019}. 
+
+This value is expected to be reasonable for the uniform polarization morphology, but the polarization fraction may differ for the azimuthal morphology, meaning that the azimuthal case may be biased low.
+
+%This is consistent with values of 0.02-0.03 from \cite{Kataoka_2017}, 
 
 
 
@@ -85,10 +88,9 @@ U_{N}
 % ----------------------------------------------------------
 
 
-The second geometric model we tested is called the \emph{Gaussian model}. The aim of this model was to reproduce a polarization morphology that transitions from being aligned with the minor axis of the disk at the centre to more azimuthal on the outer parts of the disk.
-\SC{Give some motivation for this.  We expect the disks to be optically thick at the center more than the edge.}
+The second geometric model we tested is called the \emph{Gaussian model}. The aim of this model was to reproduce a polarization morphology that transitions from being aligned with the minor axis of the disk at the centre to more azimuthal towards the outer parts of the disk. This based on the expectation that the emission from the inner region is optically thick \citep{Kataoka_2015}, and optical thickness decreases towards the outer edge of the disk. 
 
-To achieve this, we used a rotated \SCC{2-dimensional flat-topped Gaussian model} with three free parameters: $\phi$, BMIN and BMAJ, summarized in Table \ref{tab: gaussian_model_info}, and defined below.
+To achieve this, we used a rotated 2-dimensional flat-topped Gaussian model\SCC{*} with three free parameters: $\phi$, BMIN and BMAJ, summarized in Table \ref{tab: gaussian_model_info}, and defined below.
 
 
 % \begin{equation}
@@ -100,8 +102,8 @@ To achieve this, we used a rotated \SCC{2-dimensional flat-topped Gaussian model
 
 \begin{table}[h!]
 \centering
-\caption{Summary of parameters and tested values in the Gaussian model. \note{Last updated June 26th.} \SC{Specify the units of BMIN and BMAJ (I think these are in pixels)}}
-\begin{tabular}{lcc}
+\caption{Summary of parameters and tested values in the Gaussian model.  }
+\begin{tabular}{lll}
 \toprule
 \textbf{Property} &
 \textbf{Meaning} &
@@ -112,11 +114,11 @@ $\phi$
 & super-Gaussian exponent
 & 2, 3, 4, 5, 6, 7\\
 
-BMIN
+BMIN (pixels)
 & minor axis of Gaussian
 & 10, 20, 30, 40, 50\\
 
-BMAJ
+BMAJ (pixels)
 & major axis of Gaussian
 & 10, 20, 30, 40, 50\\
 \bottomrule
@@ -124,8 +126,7 @@ BMAJ
 \label{tab: gaussian_model_info}
 \end{table}
 
-\SC{Mention that you had the condition that BMIN <= BMAJ}
-The tested values of BMIN and BMAJ control the widths of the Gaussian model by using them each as the FWHM in Equation \ref{eq: FWHM_to_sigma} to convert them to standard deviations. 
+The tested values of BMIN and BMAJ control the widths of the Gaussian model by using them each as the FWHM in Equation \ref{eq: FWHM_to_sigma} to convert them to standard deviations. Additionally, a condition of BMIN $\leqq $ BMAJ was required to ensure the minor axis was smaller than the major axis. 
 
 The Gaussian was rotated to align with the major axis of the disk (position angle of the disk, Table \ref{tab: source_info}). The coordinates ($x, y$) were shifted with respect to the centre of the disk ($x_c, y_c$) and then rotated:
 \begin{equation}
@@ -159,15 +160,15 @@ W_{\text{Uniform}} =  I_0
     \label{eq: Gaussian_model_I0}
 \end{equation}
 
-\noindent In Equation \ref{eq: gaussian_eq}, when $\phi=2$ the equation returns a standard 2D Gaussian, and values of $\phi>2$ create a flat-topped Gaussian. The Gaussian was normalized to a maximum of 1 so it could be used as pixel weights. This produced a weighted map of values from 0 to 1, \SCC{where values close to 1 favoured the uniform orientation and values near 0 favoured the azimuthal direction. Conversely, a second map can be created of 1 - Gaussian, where values close to 0 favour azimuthal, and values close to 1 favour uniform orientation}. These two maps act as our weights, rather than a constant like in the ratio model. The weighted \SQ and $U$ were calculated by:
+\noindent In Equation \ref{eq: gaussian_eq}, when $\phi=2$ the equation returns a standard 2D Gaussian, and values of $\phi>2$ create a flat-topped Gaussian. The Gaussian was normalized to a maximum of 1 so it could be used as pixel weights. This produced a weighted map of values from 0 to 1, where \Wuni sets the weight for the uniform morphology, and 1 - \Wuni sets the weight for the azimuthal morphology. With this approach, values of \Wuni close to 1 favour uniform polarization and values close to 0 favour azimuthal polarization. These two maps act as our weights, rather than a constant like in the ratio model. The weighted \SQ and $U$ were calculated by:
 \begin{equation}
 \begin{aligned}
 Q_{\text{Gaussian}}
-    &= W_{\text{Uniform}} \,Q_{100}
-     + (1 - W_{\text{Uniform}})\,Q_0, \\
+    &= \WuniEQ \,Q_{100}
+     + (1 - \WuniEQ)\,Q_0, \\
 U_{\text{Gaussian}}
-    &= W_{\text{Uniform}}\,U_{100}
-     + (1 - W_{\text{Uniform}})\,U_0,
+    &= \WuniEQ\,U_{100}
+     + (1 - \WuniEQ)\,U_0,
 \end{aligned}
 % \label{eq:50U50A}
 \end{equation}
@@ -189,7 +190,7 @@ Some examples of the Gaussian map in colour scale, with vectors overlaid for two
 
 
 
-
+\noindent \SCC{*Comment: Perhaps give the equation of the flat-topped Gaussian so that the reader knows what this is.  You can also mention that phi=2 is a standard Gaussian.} \note{Leaving this comment here in case I did not address it properly, but I have a sentence saying "In Equation \ref{eq: gaussian_eq}, when $\phi=2$ the equation returns a standard 2D Gaussian, and values of $\phi>2$ create a flat-topped Gaussian.", and Equation \ref{eq: gaussian_eq} shows the flat-topped Gaussian already. Maybe I should re-order things or provide a general flat-topped Gaussian equation?}
 
 
 % ----------------------------------------------------------
@@ -226,4 +227,7 @@ The value of $\chi^2$ is then converted to a reduced chi-squared by:
 
 
 % ----------------------------------------------------------
+
+
+
 

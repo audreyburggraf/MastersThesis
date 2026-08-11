@@ -7,7 +7,7 @@
 In this section, the self-calibration details for this project are summarized. The data at \bfourNS, \bfive and \bseven were calibrated as part of this project, and the \bsix data were provided from \cite{sadavoy_dust_2019}.
 
 
-To clean the data,  \texttt{tclean} was used in Common Astronomy Software Applications (CASA) version 5.6.1-8 \SCC{add casa citation}. The images were cleaned using the multi-scale multi-frequency deconvolution algorithm (MS-MFS, \texttt{deconvolver = `mtmfs'}). Different values of nterms were explored and no significant change between \texttt{nterms = 1} and nterms = 2 were found. The images presented in this thesis have \texttt{nterms = 2} for \bfour and \bsevenNS, \texttt{nterms = 1} for \bfive and \bsixNS. The Briggs weighting scheme was used with \texttt{robust = 0.5} for all wavleengths except the \bfive data where w\texttt{robust = -1} was used to better match the resolution of the other datasets (see Chapter \ref{sec: discussion_band5_data_issues} for more details). 
+To clean the data,  \texttt{tclean} was used in Common Astronomy Software Applications (CASA) version 5.6.1-8 \citep{CASA}. The images were cleaned using the multi-scale multi-frequency deconvolution algorithm (MS-MFS, \texttt{deconvolver = `mtmfs'}). Different values of nterms were explored and no significant change between \texttt{nterms = 1} and nterms = 2 were found. The images presented in this thesis have \texttt{nterms = 2} for \bfour and \bsevenNS, \texttt{nterms = 1} for \bfive and \bsixNS. The Briggs weighting scheme was used with \texttt{robust = 0.5} for all wavleengths except the \bfive data where \texttt{robust = -1} was used to better match the resolution of the other datasets (see Chapter \ref{sec: discussion_band5_data_issues} for more details). 
 
 
 
@@ -30,8 +30,7 @@ Below, in Figure \ref{fig: BeforeAndAfterClean}, is an example of IRS 63 at \bfo
 
 
 
-
-\SCC{The results of the self-cleaning process are presented in Table \ref{tab: source_info}, including the synthesized beam size, reported as major and minor axes and position angle. } Additionally, the centre position of the disk in Right Ascension (RA) and Declination (Dec) and the position angle of the disk found using \SCC{\texttt{imfit} in CASA.}
+Table \ref{tab: source_info} lists the resulting image resolution after self-calibration, including the synthesized beam parameters and clean details. The table also includes the disk centre position in Right Ascension (RA) and Declination (Dec), as well as the disk position angle found by fitting a Gaussian to the disk using \texttt{imfit} on CASA. The image sensitivities are also provided, and were determined using the method described in Chapter \ref{sec: stokes_errors}. 
 
 
 \begin{table}[h!]
