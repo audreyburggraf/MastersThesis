@@ -1,12 +1,15 @@
 
-
+\question{Call this unbiased or observed?}
 
 The unbiased polarized intensity, \POLIobsNS, is calculated from \SQ ($Q$) and \SU ($U$) using the equation: 
 \begin{equation}
-    \POLIobsEQ = \sqrt{Q^2 + U^2},
+    \POLIobsEQ = \sqrt{Q^2 + U^2}.
     \label{eq: POLI}
 \end{equation}
-\noindent which always yields a positive value as $Q$ and $U$ are both squared. \SCC{comment} To eliminate this bias towards an always positive, and as a result, larger polarized intensity value, we need to  calculate a debiased polarized intensity value. 
+\noindent Since \SQ and $U$ are squared, the equation always yields a positive value. This positive outcome produces a bias when either $Q$ or $U$ are dominated by noise. To account for this bias, a debiased polarized intensity is calculated. 
+% noise gives us Q and U not equal to 0 even when it should be 0, more noise -> higher POLI value
+
+
 
 The polarized intensity was de-biased using the method explained in \cite{sadavoy_dust_2019}, originally from \cite{HullDebias}, with equations from \cite{CoudeEquations}. This method calculated the debiased polarized intensity, \POLIns, with a corresponding error of \POLIerr with the equation:
 
