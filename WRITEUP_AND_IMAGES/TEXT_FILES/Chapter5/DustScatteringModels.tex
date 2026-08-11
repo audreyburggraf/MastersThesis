@@ -62,133 +62,57 @@ $\chi^2_{\mathrm{P}}$ & Chi-squared statistic for the polarization fraction fit 
 
 
 % ----------------------------------------------
-\subsection{\draft{Measuring Observed \POLF}}
+\subsection{Measuring Observed \POLF}
 \label{sec: measured_POLF}
 % ----------------------------------------------
-To compare the dust scattering models for spherical and irregular grains to observations, a single polarization fraction was needed at each wavelength. This value needed to be found in the region where the polarization morphology is aligned with the minor axis, or where dust self scattering dominates. 
-
-Three different methods were tested:
+A single polarization fraction value was obtained at each wavelength to compare to the dust scattering models. The models should be compared to the observations by taking the value in with evidence of self-scattering (uniform minor axis alignment). Three methods were tested to determine the best value:
 \begin{enumerate}
     \item The polarization fraction at the pixel with maximum \SI.
     \item The polarization fraction at the pixel with maximum polarized intensity.
-    \item The mean polarization fraction within the uniform area from the Gaussian model (= 1 $\pm$ 0.001). 
+    \item The mean polarization fraction within the uniform area from the Gaussian model ($W_{\text{uniform}}$= 1 $\pm$ 0.001, Equation \ref{eq: gaussian_eq}). 
 \end{enumerate}
 \noindent 
 
-The results from these three methods for each wavelength are summarized in Table \ref{tab:polf_comparison}. Each of these options was tested to determine the best match. \question{Here, do I say max \SI was the best, or in the results do I show all three and show \SI was the best, do I even need to say we tested three?}
+\noindent The values from these three methods at each wavelength are summarized in Table \ref{tab: polf_comparison}. The method that was selected was the maximum \SIns, denoted by \POLFobsNS. \question{Do I even need to say we tested three, or just report max Stokes I?}
 
 % Last updated July 19th
 \begin{table}[h!]
 \centering
-\caption{Results of the three methods tested to find a polarization fraction value in the region where dust self-scattering was seen. Values were all rounded to three decimal places. \note{Values last updated May 6th.} \question{Keep both Band 5 or just robust =-1?}}
+\caption{Results of the three methods tested to find a polarization fraction value in the region where dust self-scattering was observed. \question{Report Band 5 robust 0.5 as well? or just -1?}}
 \begin{tabular}{lccc}
 \toprule
-\textbf{Band} & $\boldsymbol{\mathrm{POLF}_{\mathrm{Gaussian}}}$ & $\boldsymbol{\mathrm{POLF}_{\mathrm{max\,\POLIeq}}}$ & $\boldsymbol{\mathrm{POLF}_{\mathrm{max\text{ }I}}}$ \\
+\textbf{Wavelength} & $\boldsymbol{\mathcal{P}_{\mathrm{F, Gaussian}}}$ & $\boldsymbol{\mathcal{P}_{\mathrm{F, max\,\POLIeq}}}$ & $\boldsymbol{\mathcal{P}_{\mathrm{F, max\text{ }I}}}$ \\
 \midrule
 
 \bfour             
-& 1.188 & 1.561 & 1.368  \\
+& 1.28
+& 1.56 
+& 1.37  \\
 
-\bfive             
-& 0.933 & 1.052 & 0.991  \\
+\bfive   (\texttt{robust = -0.5})          
+& 0.97 
+& 1.05
+& 0.99  \\
 
-\bfive (\texttt{robust = -1}) & 1.309 & 1.514 & 1.403  \\
+\bfive (\texttt{robust = -1}) 
+& 1.19
+& 1.51 
+& 1.40  \\
 
 \bsix              
-& 1.445 & 1.486 & 1.464  \\
+& 1.44 
+& 1.49 
+& 1.46  \\
 
 \bseven            
-& 0.830 & 1.084 & 1.042  \\
+& 0.86 
+& 1.08 
+& 1.04  \\
 
 \bottomrule
 \end{tabular}
-\label{tab:polf_comparison}
+\label{tab: polf_comparison}
 \end{table}
 % ----------------------------------------------
 
 
-
-% ----------------------------------------------
-\subsection{\draft{Determining the Best-Fit Scale Factor}}
-% \label{sec: measured_POLF}
-% ----------------------------------------------
-At this point, each wavelength has an observed polarization fraction (\POLFobsNS), and the dust model provides \Pwmodel as a function of \amaxNS. The \Pwmodel curves and \POLFobs values cannot be directly compared. \add{A sentence on why the model and observations cannot be directly compared.} A scale factor (SF) is introduced to enable direct comparison between models and observations. 
-
-
-The scale factor is calculated at each \amax value on this x-axis grid, given by:
-\begin{equation}
-\sfeq_i(\amaxEQ) = \frac{\POLFobsiEQ(\amaxEQ)}{\PwmodeliEQ(\amaxEQ)},
-    \label{eq: sf}
-\end{equation}
-\noindent where $i$ denotes the wavelength that is included in the fit. This provides the scale factor for each fitted wavelength at every value of \amaxNS. If the dust model correctly reproduces the observations, each fitted wavelength should find a similar scale factor. Therefore, for every value of \amax, the standard deviation of the scale factor values is taken using \texttt{numpy.std}:
-\begin{equation}
-    \text{SF}_{\text{STDEV}} = \text{STDEV}(\text{SF}_i(\amaxEQ).
-    \label{eq: sf_std}
-\end{equation}
-% \begin{equation}
-% \sfeq_{\text{STDEV}}(\amaxEQ) = \text{STDEV}\left(\frac{\POLFobsiEQ(\amaxEQ)}{\PwmodeliEQ(\amaxEQ)} \right).
-%     \label{eq: sf_median}
-% \end{equation}
-
-The best-fit grain size (\amaxbestNS) is defined as the value of \amax where the standard deviation of the scale factors was the lowest. The corresponding scale factor is called the best-fit scale factor (\sfbestNS). This scale factor is what the values of \Pwmodel are scaled by, allowing the model and observations to be directly compared.
- 
-% ----------------------------------------------
-%
-%
-%
-%
-%
-% ----------------------------------------------
-% \label{sec: measured_POLF}
-% ----------------------------------------------
-Not all wavelengths were included in the fit for the best scale factor. To explore the effects of each wavelength, four different fitting combinations were explored, summarized in Table \ref{tab:fit_combinations}. The standard Briggs weighted \bfive data is excluded from every fit. The reasoning behind this is discussed in Chapter \ref{sec: discussion_band5_data_issues}. 
-
-\begin{table}[ht]
-\centering
-\caption{Summary of the wavelength combinations used for finding the best scale factor. \question{Remove B5 and just keep robust = -1?}}
-\label{tab:fit_combinations}
-\begin{tabular}{lll}
-\hline
-\textbf{Fit} & \textbf{Wavelengths Included} & \textbf{Wavelengths Excluded} \\
-\hline
-All Wavelengths &
-B4, \BrobustNS, B6, B7 &
-B5 \\
-
-Without B5 &
-B4, B6, B7 &
-B5, \BrobustNS \\
-
-Without B6 &
-B4, \BrobustNS, B7 &
-B5, B6 \\
-
-B4 + B7 Only &
-B4, B7 &
-B5, \BrobustNS, B6 \\
-\hline
-\end{tabular}
-\vspace{0.4em}
-\footnotesize
-\parbox{\textwidth}{
-\textit{Note 1:} The two B5 datasets correspond to the same data but are imaged with Briggs weighting using different robust parameters.\\
-\textit{Note 2:} B4, B5, B6 and B7 correspond to 2.1 mm, 1.5 mm, 1.3 mm and 0.87 mm, respectively.
-}
-\end{table}
-
-
-To determine which fitting combination agrees best with the model, a chi-squared value ($\chi_\mathcal{P}^2$) is calculated for each fitting combination and porosity. The chi-squared value is calculated by summing the difference between the observed polarization fraction value and the \Pwmodel at the best-fit \amax value multiplied by the best-fit scale factor. It is summed over all bands, where ``all wavelengths'' refers to bfourNS, \bfive with \texttt{robust = -1}, \bsix and \bsevenNS. The standard Briggs weighted \bfive data is also excluded from all chi-squared calculations. The fitting combination and porosity that produced the lowest chi-squared value are chosen to be the best-fit model.
-\begin{equation}
-\chi_\mathcal{P}^2 = \sum_{all\text{ }bands} (\POLFobsEQ- [\PwmodelEQ (\amaxbestEQ) \times \sfbestEQ])^2.
-    \label{eq: chi_squared_dust_model}
-\end{equation}
-\question{Do I need to divide by an error to call it a chi-squared?}
-
-% ----------------------------------------------
-%
-%
-
-
-
-%
-%
