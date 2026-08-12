@@ -1,28 +1,39 @@
 
 
-Two grain geometries were explored in these models: spherical grains and irregular grains. \add{some sentence about what is the same and what is different about them}. 
+Two grain geometries were explored in these models: spherical grains and irregular grains. Both use the same dust composition and grain-size distribution (Chapter \ref{sec: model_assumptions}), but have different optical properties due to their shapes. Spherical dust grains are more commonly used since their scattering and absorption properties are much less computationally expensive. Alternatively, irregular dust grains are the more likely shape \citep{Lin2024}, but require more computation power. 
 
-From the geometric models of the polarization pattern discussed in \ref{sec: methods/modelling polarization pattern}, we know where we have uniform polarization, or where we have dust self-scattering. This is the region we want to study the dust in \add{why?}. 
 
+The geometric modelling of the observations in Chapter \ref{sec: methods/modelling polarization pattern} were used to identify the region of the disk at each wavelength where the observed polarization morphology is uniform along the minor axis, which is consistent with dust-self scattering. This region provides a constrains for the dust grain size (Chapter \add{reference}). The goal of the modelling is to model the dust properties in this region with spherical and irregular grains, and to compare the amount of polarized light to the observed polarization fraction from IRS 63 to constrain the dust grain size. 
 
 
 Many parameters are used throughout the dust model calculations. For ease, Table \ref{tab:dust_parameters} summarizes these parameters.
 % ----------------------------------------------
 \begin{table}[ht]
 \centering
-\caption{Summary of parameters used throughout the dust scattering model calculations.}
+\caption{Summary of parameters used throughout the dust scattering model calculations. \question{do i not need to define any of these?}}
 \label{tab:dust_parameters}
 
 \begin{tabular}{lll}
 \toprule
 \textbf{Symbol} & \textbf{Description} & \textbf{Units} \\
 \midrule
-$a_{\max}$ & Maximum dust grain size & $\mu$m \\
+$a_{\max}$ & Maximum dust grain size in distribution grid & $\mu$m \\
+$a$ & Radius of spherical grain & mm \\
+$x$ & Size parameter of spherical grain & --\\
+$\lambda$ & Observing wavelength & mm \\
+$\mathcal{P}$ & Dust grain porosity  & -- \\
 $f$ & Dust grain porosity (filling factor) & -- \\
+$m$ & -- & -- \\
+$n$ & Real part of the refractive index & -- \\
+$k$ & Imaginary part of the refractive index & -- \\
+\kabs & -- & -- \\
+\ksca & -- & -- \\
+$g$ & -- & -- \\
+$\omega$, \weff & -- & -- \\
+$P$ & -- & -- \\
+Z11, Z12 & -- & -- \\
+N11 & -- & -- \\
 $\Theta$ & Scattering Angle & \degg \\
-%$\lambda$ & Observing wavelength & mm \\
-%$n$ & Real part of the refractive index & -- \\
-%$k$ & Imaginary part of the refractive index & -- \\
 %$\rho$ & Dust grain material density & g cm$^{-3}$ \\
 %$m$ & Dust grain mass & g \\
 %$Z_{11}$ & Mueller matrix element describing scattered intensity & -- \\
@@ -31,29 +42,34 @@ $\Theta$ & Scattering Angle & \degg \\
 %$\kappa_{\mathrm{sca}}$ & Scattering opacity & cm$^2$ g$^{-1}$ \\
 %$\omega$ & Single-scattering albedo & -- \\
 $P$ & Polarization degree & -- \\
-\Pwmodel & Model polarization fraction & -- \\
+\Pwmodel \note{change??}& Model polarization fraction & -- \\
 \POLFobs & Observed polarization fraction & -- \\
 SF & Scale factor & -- \\
 $\chi^2_{\mathrm{P}}$ & Chi-squared statistic for the polarization fraction fit & -- \\
 \bottomrule
 \end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item \textbf{Note:} \lambda and $a$ is reported in mm, \amax is reported in \micron, but all three are in units of cm during the calculations.  
+\end{tablenotes}
 \end{table}
 % ----------------------------------------------
 
 
-\subsection{Model Assumptions (for both)}
+\subsection{Model Assumptions}
+\label{sec: model_assumptions}
 \input{WRITEUP_AND_IMAGES/TEXT_FILES/Chapter5/ModelAssumptions}
 % ----------------------------------------------
 
 
 
 
-\subsection{\draft{Spherical Dust Grains }}
+\subsection{Spherical Dust Grains }
 \input{WRITEUP_AND_IMAGES/TEXT_FILES/SphericalDustModels/Methods}
 
 
 
-\subsection{\draft{Irregular Dust Grains }}
+\subsection{Irregular Dust Grains }
 \input{WRITEUP_AND_IMAGES/TEXT_FILES/glitterinDustModels/Methods}
 
 
@@ -62,23 +78,23 @@ $\chi^2_{\mathrm{P}}$ & Chi-squared statistic for the polarization fraction fit 
 
 
 % ----------------------------------------------
-\subsection{Measuring Observed \POLF}
+\subsection{Measuring Observed Polarization Fraction}
 \label{sec: measured_POLF}
 % ----------------------------------------------
 A single polarization fraction value was obtained at each wavelength to compare to the dust scattering models. The models should be compared to the observations by taking the value in with evidence of self-scattering (uniform minor axis alignment). Three methods were tested to determine the best value:
 \begin{enumerate}
-    \item The polarization fraction at the pixel with maximum \SI.
-    \item The polarization fraction at the pixel with maximum polarized intensity.
-    \item The mean polarization fraction within the uniform area from the Gaussian model ($W_{\text{uniform}}$= 1 $\pm$ 0.001, Equation \ref{eq: gaussian_eq}). 
+    \item $\mathcal{P}_{\mathrm{F, max\text{ }I}}$: The polarization fraction at the pixel with maximum \SI.
+    \item $\mathcal{P}_{\mathrm{F, max\,\POLIeq}}$: The polarization fraction at the pixel with maximum polarized intensity.
+    \item  $\mathcal{P}_{\mathrm{F, Gaussian}}$: The mean polarization fraction within the uniform area from the Gaussian model ($W_{\text{uniform}}$= 1 $\pm$ 0.001, Equation \ref{eq: gaussian_eq}). 
 \end{enumerate}
 \noindent 
 
-\noindent The values from these three methods at each wavelength are summarized in Table \ref{tab: polf_comparison}. The method that was selected was the maximum \SIns, denoted by \POLFobsNS. \question{Do I even need to say we tested three, or just report max Stokes I?}
+\noindent The values from these three methods at each wavelength are summarized in Table \ref{tab: polf_comparison}. The best representation of the observations was method 1, where the polarization fraction was taken at the pixel with the maximum \SI value. This selected value is referred to by the observed polarization fraction, and is denoted by \POLFobsNS. 
 
 % Last updated July 19th
 \begin{table}[h!]
 \centering
-\caption{Results of the three methods tested to find a polarization fraction value in the region where dust self-scattering was observed. \question{Report Band 5 robust 0.5 as well? or just -1?}}
+\caption{Results of the three methods tested to find a polarization fraction value in the region where dust self-scattering was observed. }
 \begin{tabular}{lccc}
 \toprule
 \textbf{Wavelength} & $\boldsymbol{\mathcal{P}_{\mathrm{F, Gaussian}}}$ & $\boldsymbol{\mathcal{P}_{\mathrm{F, max\,\POLIeq}}}$ & $\boldsymbol{\mathcal{P}_{\mathrm{F, max\text{ }I}}}$ \\
@@ -89,12 +105,12 @@ A single polarization fraction value was obtained at each wavelength to compare 
 & 1.56 
 & 1.37  \\
 
-\bfive   (\texttt{robust = -0.5})          
-& 0.97 
-& 1.05
-& 0.99  \\
+% \bfive   (\texttt{robust = -0.5})          
+% & 0.97 
+% & 1.05
+% & 0.99  \\
 
-\bfive (\texttt{robust = -1}) 
+\bfive 
 & 1.19
 & 1.51 
 & 1.40  \\

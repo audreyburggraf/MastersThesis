@@ -1,10 +1,7 @@
 \subsubsection{Ratio Model}
+The results of the tested ratio models are presented in Table \ref{tab:ratio_model_chi2}, with the best fit at each wavelength bolded. The best fit at each wavelength is highlighted in Figure \ref{fig: RatioBestGrid}, with the observed vectors in black and the ratio model vectors in red.  
 
-
-The results of the ratio model are presented in Table \ref{tab:ratio_model_chi2}. The best fit (lowest chi-squared) are bolded. 
-
-
-The best ratio fit plots are presented in Figure \ref{fig: RatioBestGrid}. 
+\add{How the best-fit changes with wavelength?}
 
 
 
@@ -16,7 +13,7 @@ The best ratio fit plots are presented in Figure \ref{fig: RatioBestGrid}.
 % This is Band 4 nterms2, Band 7 nterms 2.
 \begin{table}[h!]
 \centering
-\caption{\add{on July 25th but after adding $\chi^2$ to error every wavelength likes 100U the best. }. chi squared multiplied by 10 \note{Started updating }}
+\caption{Results of ratio model testing for each wavelength, success defined by $\chi^2$ value (multiplied by 10), calculated using Equation \ref{eq: chi_sq_reduced}. Best fit at each wavelength has bold text. \add{FIX}}
 \begin{tabular}{lcccc}
 \toprule
 \textbf{Ratio Model} & \textbf{\bfour} & \textbf{\bfive} & \textbf{\bsix} & \textbf{\bseven} \\
@@ -89,6 +86,10 @@ The best ratio fit plots are presented in Figure \ref{fig: RatioBestGrid}.
 & 4.429 \\
 \bottomrule
 \end{tabular}
+% \begin{tablenotes}
+% \footnotesize
+% \item \textbf{Note:} Values of . 
+% \end{tablenotes}
 \label{tab:ratio_model_chi2}
 \end{table}
 
@@ -145,8 +146,8 @@ The best ratio fit plots are presented in Figure \ref{fig: RatioBestGrid}.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Ratio/Best_grid.pdf}
-  \caption{\add{caption} \note{Change to $\Delta\alpha$ and $\Delta \delta$ if we chose to do that for other plots.} \note{tweak plot}}
+  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Ratio/Best_grid_Delta.pdf}
+  \caption{Figure \ref{fig: StokesI_POLI_grid}, over-plotted with the polarization vectors in red from the best-fit ratio-model at each wavelength. The corresponding best-fit ratio-models are listed Table \ref{tab:ratio_model_chi2}. \note{Need to update this when the best-fit is changed.}}
   \label{fig: RatioBestGrid}
 \end{figure}
 
@@ -155,15 +156,10 @@ The best ratio fit plots are presented in Figure \ref{fig: RatioBestGrid}.
 
 
 \subsubsection{Gaussian Model}
+The results of the top 5 (out of 150) best (lowest $\chi^2$ value) Gaussian model comparison are presented in Table \ref{tab:gaussian_top5}. The best fit at each wavelength is highlighted in Figure \ref{fig: GaussianBestGrid}, with the observed vectors in black and the ratio model vectors in red.  
 
+\add{How it changes with wavelength}
 
-Here, we present the results of the Gaussian model. Since there are 150 combinations, I will only report the top 5 lowest chi-squared values
-
-
-The observed versus Gaussian vectors are presented in Figure \ref{fig: GaussianBestGrid}. 
-
-
-At each band the Gaussian model chi-squared value is lower than the one for the ratio value, indicating that the Gaussian model is a better fit. 
 
 % This was updated to Band 5 robust = -1 on July 18th
 % Needs updating if we change how we calculate chi squared
@@ -171,14 +167,14 @@ At each band the Gaussian model chi-squared value is lower than the one for the 
 
 \begin{table}[h!]
 \centering
-\caption{\add{Caption}. \note{Last updated July 25th}}
+\caption{Results of the top 5 best-fits (in descending order) at each wavelength from the Gaussian model. $\chi^2$ values were calculated using Equation \ref{eq: chi_sq_reduced} and multiplied by 10. Best fit at each wavelength has bold text. \note{Last updated July 25th, FIX THIS}}
 \begin{tabular}{c ccc c}
 \toprule
 \textbf{Band} & $\boldsymbol{\phi}$ & \textbf{BMAJ} & \textbf{BMIN} & $\boldsymbol{\chi^2}$ \\
 \midrule
 
 \textbf{\bfour} 
-& 4 & 20 & 10 & \textbf{0.834} \\
+& \textbf{4} & \textbf{20} & \textbf{10} & \textbf{0.834} \\
  & 5 & 20 & 10 & 0.835 \\
  & 6 & 20 & 10 & 0.836 \\
  & 3 & 20 & 10 & 0.836 \\
@@ -186,7 +182,8 @@ At each band the Gaussian model chi-squared value is lower than the one for the 
 
 \midrule
 
-\textbf{\bfive} & 5 & 30 & 20 & \textbf{0.7595} \\
+\textbf{\bfive} 
+& \textbf{5} & \textbf{30} & \textbf{20} & \textbf{0.7595} \\
  & 4 & 30 & 20 & 0.7596 \\
  & 6 & 30 & 20 & 0.7596 \\
  & 7 & 30 & 20 & 0.7596 \\
@@ -194,7 +191,8 @@ At each band the Gaussian model chi-squared value is lower than the one for the 
 
 \midrule
 
-\textbf{\bsix} & 3 & 20 & 20 & \textbf{1.374} \\
+\textbf{\bsix} 
+& \textbf{3} & \textbf{20} & \textbf{20} & \textbf{1.374} \\
  & 2 & 10 & 30 & 1.374 \\
  & 4 & 20 & 20 & 1.374 \\
  & 5 & 30 & 20 & 1.374 \\
@@ -202,7 +200,8 @@ At each band the Gaussian model chi-squared value is lower than the one for the 
 
 \midrule
 
-\textbf{\seven} & 7 & 50 & 30 & \textbf{0.127} \\
+\textbf{\seven} 
+& \textbf{7} & \textbf{50} & \textbf{30} & \textbf{0.127} \\
  & 6 & 50 & 30 & 0.129 \\
  & 7 & 40 & 30 & 0.131 \\
  & 5 & 50 & 30 & 0.132 \\
@@ -219,8 +218,8 @@ At each band the Gaussian model chi-squared value is lower than the one for the 
 
 \begin{figure*}[h]
   \centering
-  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/AllGaussian.pdf}
-  \caption{\add{caption} \question{Include this figure? or is Figure \ref{fig: GaussianBestGrid} and Table \ref{tab: gaussian_model_info} enough?}}
+  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/Best_grid_Delta_map.pdf}
+  \caption{\add{caption} \question{Include this figure? or is Figure \ref{fig: GaussianBestGrid} and Table \ref{tab: gaussian_model_info} enough?} \note{Update this if best changes}}
 \end{figure*}
 
 
@@ -273,8 +272,15 @@ At each band the Gaussian model chi-squared value is lower than the one for the 
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/Best_grid.pdf}
-  \caption{\add{caption} \note{Change to $\Delta\alpha$ and $\Delta \delta$ if we chose to do that for other plots.} \note{tweak plot}}
+  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/Best_grid_Delta.pdf}
+  \caption{Same as Figure \ref{fig: RatioBestGrid}, but for the best-fit Gaussian models. The corresponding best-fit Gaussian models are listed Table \ref{tab:gaussian_top5}.  \note{re-run if best fit changes}}
   \label{fig: GaussianBestGrid}
 \end{figure}
 
+
+
+
+\subsubsection{Ratio vs Gaussian Models}
+
+
+At each band the Gaussian model chi-squared value is lower than the one for the ratio value, indicating that the Gaussian model is a better fit. \add{more.}
