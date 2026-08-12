@@ -153,6 +153,7 @@ def add_band_label(ax, band, label,  constants, fontcolor = 'black', x_pos = 0.0
     band_map = {
         "Band 4": 4,
         4: 4,
+        42: 4,
         "Band 5": 5,
         5: 5,
         "Band 5 robust -1": 51,
@@ -162,10 +163,11 @@ def add_band_label(ax, band, label,  constants, fontcolor = 'black', x_pos = 0.0
         "Band 7": 7,
         "Band 7 nterms2": 7,
         7: 7, 
+        72: 7, 
     }
 
     if band not in band_map:
-        print("add_band_label only accepts: 'Band 4', '4',  'Band 5', '5', 'Band 5 robust -1', '51', 'Band 6','6',  'Band 7', 'Band 7 nterms2', '7', ")
+        print("add_band_label only accepts: 'Band 4', '4',  '42', 'Band 5', '5', 'Band 5 robust -1', '51', 'Band 6','6',  'Band 7', 'Band 7 nterms2', '7', '72' ")
         return
 
     b = band_map[band]

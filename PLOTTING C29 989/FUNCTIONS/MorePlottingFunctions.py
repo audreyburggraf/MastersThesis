@@ -37,6 +37,10 @@ text_fs = constants.text_fs
 
 alma_band_colors = constants.alma_band_colors
 alma_band_ms = constants.alma_band_ms
+
+
+writeup_grid_axis_label_fs = constants.writeup_grid_axis_label_fs 
+writeup_grid_axis_num_fs = constants.writeup_grid_axis_num_fs 
 # -----------------------------------------------------------------------------------------
 
 
@@ -301,6 +305,43 @@ from astropy.coordinates import SkyCoord, SkyOffsetFrame
 # def ra_offset_formatter(x, pos, centre_pix):
 #     return f'{(x - centre_pix) * 0.018:.1f}'
 
+
+
+
+# ChatGPT wrote this for me
+# ------------------
+def format_writeup_grid(
+    fig, cbar_label,
+    stokes_i_y=0.97,
+    ra_y=0.05,
+    dec_x=0.05,
+    wspace=0.085
+):
+
+    fig.text(
+        0.5,
+        stokes_i_y,
+        cbar_label,
+        ha='center',
+        va='top',
+        fontsize= constants.writeup_grid_axis_label_fs
+    )
+
+    fig.supxlabel(
+        r"$\Delta$ RA (arcsec)",
+        fontsize=constants.writeup_grid_axis_label_fs,
+        y=ra_y
+    )
+
+    fig.supylabel(
+        r"$\Delta$ Dec (arcsec)",
+        fontsize=constants.writeup_grid_axis_label_fs,
+        x=dec_x
+    )
+
+    fig.subplots_adjust(wspace=wspace)
+# ------------------    
+
 def MakeAllBandGridDelta(bands,
                          centre_strings,
                          plotting, 
@@ -318,7 +359,6 @@ def MakeAllBandGridDelta(bands,
                     x_pos = 0.06, 
                     y_pos = 0.85,
                     AU100_lw = 2.5,
-                    AU100_fs = 20, 
                     text_fs = 20, 
                     wspace = 0.12,
                    for_poster = False,
@@ -339,6 +379,7 @@ def MakeAllBandGridDelta(bands,
     else: 
         text_fs = text_fs
         spine_width = 1
+        AU100_fs = 20
     # ---------------------------
     
     
@@ -420,6 +461,12 @@ def MakeAllBandGridDelta(bands,
             
             im = ax.imshow(b['POLI_debiased_mJy'], cmap = cmap)
         # ---------------------------------------------------------
+        elif plotting == 'Gaussian Map':
+            cbar_label = r"$\mathrm{Gaussian\ Uniform\ Ratio}\ (W_{\mathrm{Uniform}})$"
+            
+            im = ax.imshow(b['ratios'], cmap = soft_colormap_no_red)
+        # ---------------------------------------------------------
+        
         else:
             return("parameter 'plotting' needs to equal 'Stokes I' or 'POLI'")
         # --------------------------------------------------------
@@ -445,17 +492,25 @@ def MakeAllBandGridDelta(bands,
 
         # Format colorbar
         cbar1.ax.tick_params(
-            labelsize=axis_num_fs,
+            labelsize=writeup_grid_axis_num_fs,
             which="major",
             length=4,
             direction="in",
             width=spine_width
         )
         
-        if i == 2:
-            for tick, label_cbar1 in zip(cbar1.get_ticks(), cbar1.ax.get_xticklabels()):
-                if tick == 0:
-                    label_cbar1.set_visible(False)
+        if plotting == 'POLI':
+            if i == 2:
+                for tick, label_cbar1 in zip(cbar1.get_ticks(), cbar1.ax.get_xticklabels()):
+                    if tick == 0:
+                        label_cbar1.set_visible(False)
+                    
+                    
+        if plotting == 'Gaussian Map':
+            if i != 3:
+                for tick, label_cbar1 in zip(cbar1.get_ticks(), cbar1.ax.get_xticklabels()):
+                    if tick == 1.0:
+                        label_cbar1.set_visible(False)
 
         cbar1.outline.set_linewidth(spine_width)
         
@@ -467,9 +522,13 @@ def MakeAllBandGridDelta(bands,
         #cbar1.set_label("Polarized Intensity [mJy beam$^{-1}$]",fontsize=cbar_label_fs)
         
         # Add the vectors
+        j = 0 
         if show_vectors:
-            for row in b['VectorsActual']:
-                ax.plot([row[0], row[1]], [row[2], row[3]], color='black', lw = vector_lw)
+            for j, row in enumerate(b['VectorsActual']):
+                if j == 0:
+                    ax.plot([row[0], row[1]], [row[2], row[3]], color='black', lw = vector_lw, label = 'Observations')
+                else:
+                    ax.plot([row[0], row[1]], [row[2], row[3]], color='black', lw = vector_lw)
 
         #centre_pix_x, centre_pix_y = ax.world_to_pixel(centre)
 
@@ -509,12 +568,13 @@ def MakeAllBandGridDelta(bands,
         x0 = line_x_pos - b['reference_length_pix']
         x1 = line_x_pos
 
-        ax.plot(
-            [x0, x1],
-            [line_y_pos, line_y_pos],
-            color='black',
-            linewidth=AU100_lw
-        )
+        if plotting != "Gaussian Map":
+            ax.plot(
+                [x0, x1],
+                [line_y_pos, line_y_pos],
+                color='black',
+                linewidth=AU100_lw
+            )
 
         # ---------------------------------------------------------
         # Convert midpoint from data coords -> axes coords
@@ -527,18 +587,19 @@ def MakeAllBandGridDelta(bands,
         x_axes, y_axes = axes_coords
 
         # Text directly above middle of line
-        ax.text(
-            x_axes,
-            y_axes + 0.015,
-            f"{b['reference_length_AU']} AU",
-            transform=ax.transAxes,
-            fontsize=AU100_fs,
-            ha='center',
-            va='bottom'
-        )
+        if plotting != "Gaussian Map":
+            ax.text(
+                x_axes,
+                y_axes + 0.015,
+                f"{b['reference_length_AU']} AU",
+                transform=ax.transAxes,
+                fontsize=AU100_fs,
+                ha='center',
+                va='bottom'
+            )
         
         add_band_label(ax, bands_idx[i], label, constants, x_pos = x_pos, y_pos = y_pos, 
-                       label_fs = text_fs, va = 'bottom')
+                       label_fs = 25, va = 'bottom')
         # ---------------------------------------------------------
     
     
@@ -546,7 +607,8 @@ def MakeAllBandGridDelta(bands,
         beam = Ellipse((beam_x_pos, beam_y_pos), width=b['BMAJ_pix'], height=b['BMIN_pix'],  
                    angle=b['BPA_deg_cartesian'], edgecolor='black', facecolor='none', alpha=1, lw=beam_lw)
         
-        ax.add_patch(beam)
+        if plotting != "Gaussian Map":
+            ax.add_patch(beam)
         
         # Hide the original RA/Dec WCS coordinates
         # ---------------------------------------------------------
@@ -581,8 +643,8 @@ def MakeAllBandGridDelta(bands,
         overlay[0].set_ticks(spacing=0.8* u.arcsec, direction='in', width=spine_width)
         overlay[1].set_ticks(spacing=0.8 * u.arcsec, direction='in', width=spine_width)
 
-        overlay[0].set_ticklabel(size=axis_num_fs)
-        overlay[1].set_ticklabel(size=axis_num_fs)
+        overlay[0].set_ticklabel(size=writeup_grid_axis_num_fs)
+        overlay[1].set_ticklabel(size=writeup_grid_axis_num_fs)
 
         if i != 0:
             overlay[1].set_ticklabel_visible(False)
@@ -601,30 +663,7 @@ def MakeAllBandGridDelta(bands,
     
     #fig.subplots_adjust(wspace=wspace)
    
-        
-
-    fig.text(
-            0.5,          # centered
-            0.95,         # adjust as needed
-            cbar_label,
-            ha='center',
-            va='top',
-            fontsize=cbar_label_fs
-        )
-
-    fig.supxlabel(
-        "$\Delta$ RA (arcsec)",
-        fontsize=axis_label_fs,
-        y=0.1
-    )
-
-    fig.supylabel(
-        "$\Delta$ Dec (arcsec)",
-        fontsize=axis_label_fs,
-        x=0.08
-    )
-
-    fig.subplots_adjust(wspace= 0.075)
+    format_writeup_grid(fig, cbar_label)
     
     
     return fig, axes
