@@ -503,7 +503,8 @@ def find_best_fit_ratio_model(expected_angles, observed_angle_list, vector_PA_er
 def PlotRatioExample(band, StokesI_wcs, vector_data_plotting_grid,
                      xmin, xmax, ymin, ymax,
                     fig_x_size = 15, 
-                    fig_y_size = 6.5):
+                    fig_y_size = 6.5,
+                    xy_axes = True):
     
 #     POLI_mJy, 
 #                     StokesI_wcs, soft_colormap_v2, 
@@ -515,7 +516,8 @@ def PlotRatioExample(band, StokesI_wcs, vector_data_plotting_grid,
 #                     fs_scale = 0.5):
     
     # Define the figure and subplots
-    fig, axes = plt.subplots(1, 3, figsize=(fig_x_size, fig_y_size), constrained_layout=True, 
+    fig, axes = plt.subplots(1, 3, figsize=(fig_x_size, fig_y_size), 
+                             #constrained_layout=True, 
                              subplot_kw={'projection': StokesI_wcs},
 #                              gridspec_kw={'wspace': -1},
                              sharey = True)
@@ -547,23 +549,30 @@ def PlotRatioExample(band, StokesI_wcs, vector_data_plotting_grid,
         # ---------------------------------------------------------------------
         # Set y-axis labels and ticks 
         # ---------------------------------------------------------------------
-        if i == 0:
-            ax.set_ylabel('Declination (ICRS)', fontsize=constants.axis_label_fs)
-            ax.tick_params(axis="y", which="both", left=True, labelleft=True)
+        if xy_axes:
+            if i == 0:
+                ax.set_ylabel('Declination (ICRS)', fontsize=constants.axis_label_fs)
+                ax.tick_params(axis="y", which="both", left=True, labelleft=True)
+            else:
+                ax.tick_params(axis="y", which="both", left=True, labelleft=False)
+            # ---------------------------------------------------------------------
+            # Set x-axis labels and ticks
+            # ---------------------------------------------------------------------
+            ax.set_xlabel('Right Ascension (ICRS)', fontsize=constants.axis_label_fs)
+            ax.tick_params(axis="x", which="both", bottom=True, labelbottom=True)
+            # ---------------------------------------------------------------------
         else:
             ax.tick_params(axis="y", which="both", left=True, labelleft=False)
-        # ---------------------------------------------------------------------
-        # Set x-axis labels and ticks
-        # ---------------------------------------------------------------------
-        ax.set_xlabel('Right Ascension (ICRS)', fontsize=constants.axis_label_fs)
-        ax.tick_params(axis="x", which="both", bottom=True, labelbottom=True)
-        # ---------------------------------------------------------------------
+            ax.tick_params(axis="x", which="both", bottom=False, labelbottom=False)
+            ax.set_xlabel(' ', fontsize = 0)
+            
 
 
         # Set x and y limits
         # ---------------------------------------------------------------------
-        ax.set_xlim(xmin, xmax)
-        ax.set_ylim(ymin, ymax)
+        diff = constants.plot_zoom_pixels - 10
+        ax.set_xlim(xmin + diff, xmax - diff)
+        ax.set_ylim(ymin + diff, ymax - diff)
         print(rf'({xmin}, {xmax}), ({ymin}, {ymax})')
         # ---------------------------------------------------------------------
         
@@ -574,13 +583,14 @@ def PlotRatioExample(band, StokesI_wcs, vector_data_plotting_grid,
 
         # Minor axis ticks
         # --------------------------------------------------------
-        ra = ax.coords['ra']
+#         ra = ax.coords['ra']
 
-        # --- Minor ticks ---
-        ra.display_minor_ticks(True)
-        ra.set_ticks_position(('b', 't'))
-        ra.tick_params(which='minor', length=4)
+#         # --- Minor ticks ---
+#         ra.display_minor_ticks(True)
+#         ra.set_ticks_position(('b', 't'))
+#         ra.tick_params(which='minor', length=4)
         # --------------------------------------------------------
+    
     
     return fig, axes
 # ----------------------------------------------------------------------------------------------------------------------
