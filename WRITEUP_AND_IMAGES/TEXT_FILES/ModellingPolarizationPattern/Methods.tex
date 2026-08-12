@@ -40,9 +40,7 @@ U_x
 \end{aligned}
 % \label{eq:50U50A}
 \end{equation}
-\noindent based from \cite{Montier}, where $x= 100$ corresponds to the pure uniform model and $x=0$ corresponds to the pure azimuthal model. The polarization fraction $p$ was set to be a fixed value of 0.02 based on observations presented in \cite{sadavoy_dust_2019}. 
-
-This value is expected to be reasonable for the uniform polarization morphology, but the polarization fraction may differ for the azimuthal morphology, meaning that the azimuthal case may be biased low.
+\noindent based from \cite{Montier}, where $x= 100$ corresponds to the pure uniform model and $x=0$ corresponds to the pure azimuthal model. The polarization fraction $p$ was set to be a fixed value of 0.02 based on observations presented in \cite{sadavoy_dust_2019}. This value is expected to be reasonable for the uniform polarization morphology, but the polarization fraction may differ for the azimuthal morphology, meaning that the azimuthal case may be biased low.
 
 %This is consistent with values of 0.02-0.03 from \cite{Kataoka_2017}, 
 
@@ -69,8 +67,8 @@ U_{N}
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Ratio/RatioExamplesTest_Band4.pdf}
-  \caption{Example of the $N = 100, N=50$ and $N = 0$ cases of the ratio model for \bfourNS. \note{Change to $\Delta\alpha$ and $\Delta \delta$ if we chose to do that for other plots.} \note{tweak layout}}
+  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Ratio/RatioExamplesTest_Band4_NoAxes.pdf}
+  \caption{Example of the $N = 100, N=50$ and $N = 0$ cases of the ratio model for \bfourNS.}
   \label{fig: RatioExamples}
 \end{figure}
 
@@ -90,7 +88,8 @@ U_{N}
 
 The second geometric model we tested is called the \emph{Gaussian model}. The aim of this model was to reproduce a polarization morphology that transitions from being aligned with the minor axis of the disk at the centre to more azimuthal towards the outer parts of the disk. This based on the expectation that the emission from the inner region is optically thick \citep{Kataoka_2015}, and optical thickness decreases towards the outer edge of the disk. 
 
-To achieve this, we used a rotated 2-dimensional flat-topped Gaussian model\SCC{*} with three free parameters: $\phi$, BMIN and BMAJ, summarized in Table \ref{tab: gaussian_model_info}, and defined below.
+
+To achieve this, we used a rotated 2-dimensional flat-topped Gaussian model\SCC{*} with three free parameters: $\phi$, BMIN and BMAJ, summarized in Table \ref{tab: gaussian_model_info}. The tested values of BMIN and BMAJ control the widths of the Gaussian model by using them each as the FWHM in Equation \ref{eq: FWHM_to_sigma} to convert them to standard deviations. Additionally, a condition of BMIN $\leqq $ BMAJ was required to ensure the minor axis was smaller than the major axis. 
 
 
 % \begin{equation}
@@ -126,7 +125,6 @@ BMAJ (pixels)
 \label{tab: gaussian_model_info}
 \end{table}
 
-The tested values of BMIN and BMAJ control the widths of the Gaussian model by using them each as the FWHM in Equation \ref{eq: FWHM_to_sigma} to convert them to standard deviations. Additionally, a condition of BMIN $\leqq $ BMAJ was required to ensure the minor axis was smaller than the major axis. 
 
 The Gaussian was rotated to align with the major axis of the disk (position angle of the disk, Table \ref{tab: source_info}). The coordinates ($x, y$) were shifted with respect to the centre of the disk ($x_c, y_c$) and then rotated:
 \begin{equation}
@@ -200,7 +198,7 @@ Some examples of the Gaussian map in colour scale, with vectors overlaid for two
 
 
 % ----------------------------------------------------------
-\subsection{Comparing Geometric Models}
+\subsection{Comparison of Geometric Models}
 % ----------------------------------------------------------
 In both the ratio model and the Gaussian model, many combinations were tested. To quantify the \emph{goodness-of-fit} of each model, a chi-squared value was used. 
 
@@ -224,7 +222,7 @@ The value of $\chi^2$ is then converted to a reduced chi-squared by:
 \end{equation}
 \noindent where $n$ is the number of sampled polarization vectors and $k$ is the degrees of freedom. For the ratio model, there is one degree of freedom, and for the Gaussian method, there are three ($\phi$, BMIN, and BMAJ). 
 
-
+\question{LS or $\chi^2$?}
 
 % ----------------------------------------------------------
 
