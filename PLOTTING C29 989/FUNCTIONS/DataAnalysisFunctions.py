@@ -118,7 +118,12 @@ def calculate_chi_squared_reduced(observed_value, expected_value, errors, deg_of
     err = np.array(errors)
     
     
-    chi_squared = np.sum(((obs - exp) / err) ** 2) 
+    # Minimum angular separation, accounting for the 180° PA ambiguity
+    raw_diff = np.abs(obs - exp)
+    pa_diff = np.minimum(raw_diff,  np.pi - raw_diff)
+    
+    
+    chi_squared = np.sum((pa_diff / err) ** 2) 
     
     N = len(obs)
         
