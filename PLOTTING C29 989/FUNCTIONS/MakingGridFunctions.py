@@ -168,7 +168,7 @@ def make_vectors(ny, nx,
                 vector_cartesian, PA_rad_sky = compute_polarization_vector(x, y, PA_grid, band, vector_len_pix)
                 vectors_cartesian.append(vector_cartesian)
                 vector_angles_sky.append(PA_rad_sky)
-                vector_PA_errors.append(PA_err_deg[y, x])
+                vector_PA_errors.append(np.abs(PA_err_deg[y, x]))
                 
                 # Save the mask
                 vector_mask[y, x] = True

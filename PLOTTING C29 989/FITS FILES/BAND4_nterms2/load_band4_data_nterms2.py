@@ -143,7 +143,6 @@ ymax = ymax - constants.plot_zoom_pixels
 
 # Find the debiased vectors
 # -------------------------------------------------------------------------------------------------------
-print('Debiased')
 results = generate_polarization_vectors(ny, nx,
                                         xmin, xmax, ymin, ymax, # This is for the nterms test
                                         RA_centre_pix, Dec_centre_pix,

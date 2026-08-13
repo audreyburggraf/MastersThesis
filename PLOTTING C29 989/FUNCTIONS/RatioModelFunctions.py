@@ -488,9 +488,9 @@ def find_best_fit_ratio_model(expected_angles, observed_angle_list, vector_PA_er
 
         print("Chi-squared values for ratio models:")
         for label, chi in zip(labels, chi_squared_values):
-            print(f'  {label}: χ² = {chi * 10:.2f}')
+            print(f'  {label}: χ² = {chi:.2f}')
 
-        print(f'\nBest-fit ratio model: {labels[min_index]} (χ² = {chi_squared_values[min_index] * 10:.2f})')
+        print(f'\nBest-fit ratio model: {labels[min_index]} (χ² = {chi_squared_values[min_index]:.2f})')
 
     return min_index
 
