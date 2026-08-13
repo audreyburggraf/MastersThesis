@@ -1,13 +1,16 @@
+To ensure that the spherical dust modelling was correct, this phase of the project started by replicating many plots from \cite{Kataoka_2015} to ensure the models accurately replicated the behaviour of the optical properties of the scattered light. 
+
+
+
+%
+%
+
 
 
 % ----------------------------------------------
-\subsubsection{Dust Opacities as a Function of Observing Wavelength}
+\subsection{Dust Opacities as a Function of Observing Wavelength}
 % ----------------------------------------------
-To begin the spherical dust modeling, one of the first steps was to ensure that I could recreate figures that have been make previously. In Figure \ref{fig: Kataoka2015Figure1Recreation}, I present my recreation of Figure 1 from \cite{Kataoka_2015}. In this figure we show the absorption and scattering opacities in units of \cmsq per gram as a function of wavelength for a maximum graim sizes of 1 \micron and 100 \micron. 
-
-We can see that at a smaller dust grain (red lines, \amax = 1 \micronNS), the absoprtion opacity is much greater than the scattering opacity. 
-
-For the larger dust grain (blue lines, \amax = 100 \micronNS), from 0.1-1 mm ($10^2 - 10^3$\micronNS), the scattering efficiency is larger than absorption. 
+The replication of Figure 1 from \cite{Kataoka_2015} is presented in Figure \ref{fig: Kataoka2015Figure1Recreation}. This figure shows how the absorption and scattering mass capacities in units of \cmsq per gram for dust grains of size \amax = 1 \micron and 100 \micron change with observing wavelength. It can be concluded from this figure that for smaller dust grain (red lines, \amax = 1 \micronNS), the absorption opacity is much greater than the scattering opacity. Alternatively, for the larger dust grain (blue lines, \amax = 100 \micronNS), from roughly 0.1-2 mm ($10^2 - 2\times10^3$ \micronNS), the scattering opacity is greater than the absorption opacity. The observing wavelengths in this project range between \bseven to \bfourNS, which essentially fall within this range. This tells us that within our observing wavelengths, smaller dust grains are less efficient at scattering than large dust grains. But at the lower and upper bounds of \bseven and \bfour the scattering and absopption is relatively similar. \add{connect this back to the Pw plot}
 
 
 
@@ -15,23 +18,22 @@ For the larger dust grain (blue lines, \amax = 100 \micronNS), from 0.1-1 mm ($1
 \begin{figure*}[h]
   \centering
   \includegraphics[width=0.6\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/Kataoka2015Fig1.pdf}
-  \caption{\add{caption}}
+  \caption{Absorption and scattering mass opacities as a function of observing wavelength for grain sizes of 1\micron and 100 \micronNS. Recreation of Figure 1 from \cite{Kataoka_2015}. }
   \label{fig: Kataoka2015Figure1Recreation}
 \end{figure*}
 % ----------------------------------------------
 
 % ----------------------------------------------
-\subsubsection{Polarization Dependence on Scattering Angle}
+\subsection{Polarization Dependence on Scattering Angle}
 % ----------------------------------------------
-In Figure \ref{fig: Kataoka2015Figure2Recreation}, I replicated Figure 2 from \cite{Kataoka_2015} for the four bands I am looking at. In these plots we look at how polarization changes with scattering angle. Here, we plot \quoted{the degree of polarization due to single scatting averaged by the size distribution for several maximum grain sizes} \citep{Kataoka_2015}. $N_{11}$ is calculated in Equation \ref{eq: N11}. 
+A replication of Figure 2 from \cite{Kataoka_2015} is presented in \ref{fig: Kataoka2015Figure2Recreation}. It was replicated for the four wavelengths this project is focusing on. This figure explores how polarization changes with scattering angle, and highlights how the polarization peaks at a scattering angle of for smaller dust grains (10 \micron and 100 \micronNS). Alternatively, for much larger dust grains (1 mm and 1 cm), the polarization degree remains much closer to 0, indicating that polarization from scattering is not efficient at larger grains. 
 
-We see that when we are looking at smaller grains with a size of 10 \micron and 100 \micron the polarization degree peaks at a scatting angle of $\theta$ = 90\deggNS. 
 
 
 \begin{figure*}[h]
   \centering
   \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/Kataoka2015Fig2_grid.pdf}
-  \caption{\add{caption} \note{I chose the same y-axis bounds as the paper. I am not sure id these were chosen for a specific reason, I am thinkning making the y-axis go from -0.5 to 1 would make mak ethe lines easier to see.} \question{Make this one row to take up less space or will that be too small?} \note{make y-axis = P}}
+  \caption{Degree of polarization as a function of scattering angle for maximum grain sizes of 10 \micronNS, 100 \mironNS, 1 mm and 1 cm. This is a replication of Figure 2 from \cite{Kataoka_2015}.}
   \label{fig: Kataoka2015Figure2Recreation}
 \end{figure*}
 
@@ -43,17 +45,15 @@ We see that when we are looking at smaller grains with a size of 10 \micron and 
 
 
 % ----------------------------------------------
-\subsubsection{Polarization and Albedo as a Function of Grain Size}
+\subsection{Polarization and Albedo as a Function of Grain Size}
 % ----------------------------------------------
-In Figure \ref{fig: Kataoka2015Figure3Recreation}, I replicated Figure 3 from \cite{Kataoka_2015} for the four bands I am looking at. This plot shows the albedo, calculated using Equation \ref{eq: omega} and polarization $P$ as a function of maximum grain size in units of micron. 
-
-We observe that when the grain size is small, polarization dominates and the albedo is 0. \add{more, also about \amax greater than $\lambda/2\pi$. }
+In Figure \ref{fig: Kataoka2015Figure3Recreation}, Figure 3 from \cite{Kataoka_2015} was recreated for the four wavelengths from this project. The figure shows how polarization and albedo change with grain size. The main idea is that polarization is much more efficient for smaller grains, and quickly drops off as the dust grains get large. Alternatively, the albedo (scattering) is much more efficient for larger grains, as there is more surface area for the light to reflect off of. Additionally, a grey line is added at the characteristic grain size. We expect the polarization from scattering to peak at this value for each wavleength, which is what is observed. 
 
 
 \begin{figure*}[h]
   \centering
-  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/P_vs_w_vs_grainsize_grid.pdf}
-  \caption{\add{caption} \question{Make this one row to take up less space or will that be too small?}}
+  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/P_vs_w_eff_vs_grainsize_grid_smooth.pdf}
+  \caption{Plot of polarization $P$ in red and effective albedo as in blue a function of grain size. \question{Make this one row to take up less space or will that be too small?}. The characteristic grain size for each wavelength is overplotted in grey, highlighting that is roughly correcponts to the local maximima of both curves. This is a recreation of Figure 3 from \cite{Kataoka_2015}.}
   \label{fig: Kataoka2015Figure3Recreation}
 \end{figure*}
 
@@ -62,40 +62,56 @@ We observe that when the grain size is small, polarization dominates and the alb
 
 
 % ----------------------------------------------
-\subsubsection{$P\omega$ as a Function of Grain Size}
+\subsection{$\mathbf{P\omega}$ as a Function of Grain Size}
 % ----------------------------------------------
+Figure \ref{fig: Pw_vs_grainsize} is a replication of Figure 4 from \cite{Kataoka_2015} for the observing wavelengths this project focuses on. This figure explores \Pw as a function of grain size, which is similar to \ref{fig: Kataoka2015Figure3Recreation}, but with both lines being multiplied together rather than plotted separately. This plot highlights the polarized scattering efficiency, which peaks at roughly the characteristic grain size, which is plotted with a dashed line in the respective colour. 
 
-In Figure \ref{fig: Pw_vs_grainsize}, I replicated Figure 4 from \cite{Kataoka_2015} for the four bands I am looking at. This figure shows \Pw at our wavelengths, as a function of \amax. 
+This plot shows that we expect to be able to detect grain sizes on the order of hundreds of microns. As discussed in Chapter \ref{sec: intro_mw}, using multi-wavelength observations allows us to simultaneously fit all wavelengths to place a better constraint on the grain size. How this is done is explained in Chapter \ref{sec: ch5_determining_abest}. 
 
-The \amax value at the peak \Pw value for each band is summarized in Table \ref{tab: amax_peak_values}. \quoted{This suggests that detection and non-detection of polarization for a wide range of sub-millimeter, millimeter, and centimeter wavelengths can put a strong constraint on the grain size. } \citep{Kataoka_2015}. 
 
+
+% ------------------------------------------------------
 \begin{table}[h!]
 \centering
-\caption{\add{Maximum grain size corresponding to the peak $P\omega$ value for each band.}}
-\begin{tabular}{ccc}
+\caption{Maximum grain size corresponding to the peak $P\omega$ value, and characteristic grain size as a dashed line for each wavelength in Figure \ref{fig: Pw_vs_grainsize}.}
+\label{tab:amax_peak_values}
+\begin{tabular}{lcccc}
 \toprule
-\textbf{Band} & $\boldsymbol{a_{\max}}$ ($\mu$m) \\
+\textbf{Parameter} & \textbf{\bfour} & \textbf{\bfive} & \textbf{\bsix} & \textbf{\bseven} \\
 \midrule
+$a_{\max}$ (\micronNS)
+& 307.88
+& 223.71
+& 196.46
+& 134.50 \\
 
-Band 4   & 296.7 \\
-Band 5   & 246.6 \\
-Band 6   & 195.6 \\
-Band 7  & 135.1 \\
+$a_{\text{char}}$ (\micronNS)
+& 334.23
+& 238.73
+& 206.90
+& 138.46 \\
 
 \bottomrule
 \end{tabular}
 \label{tab: amax_peak_values}
 \end{table}
+% ------------------------------------------------------
+
+
 
 
 \begin{figure*}[h]
   \centering
-  \includegraphics[width=0.75\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/Pw_vs_grainsize.pdf}
-  \caption{\add{caption} \note{I will probably confirm 100\% that these are the right curves and I did not make any changes.} \note{Update to band 5 robust -1 and zhang model?}}
+  \includegraphics[width=0.75\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/Pw_vs_grainsize_smooth.pdf}
+  \caption{Polarization curves (\PwNS) versus grain size for each wavelength. Over-plotted as a dashed line with matching colour is the characteristic grain size. This is a recreation of Figure 4 from \cite{Kataoka_2015}}
   \label{fig: Pw_vs_grainsize}
 \end{figure*}
 % ----------------------------------------------
 
 
-\subsubsection{Zhang plots?}
-%\add{Replicating \cite{Zhang2023} Figures?}
+
+\noindent \question{Zhang plots?}
+
+
+
+\noindent \question{Should I add a section about replicating plots from glitterin?}
