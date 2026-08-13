@@ -1,10 +1,14 @@
 \subsubsection{Geometry \& Mie Theory}
+% \label{sec: ch5_mie_achar}
 
 Spherical dust grains were studied first as they require less computation power. The size of the dust grains are defined by a radius ($a$), with a resulting size parameter ($x$) defined by:
 \begin{equation}
     x = \frac{2\pi a}{\lambda},
 \end{equation}
-\noindent where $\lambda$ is the observing wavelength \citep{Zhang2023}. The size parameter controls the way the light interacts with the dust grains, specifically, the regime change (Mie theory) is defined by:
+\noindent where $\lambda$ is the observing wavelength \citep{Zhang2023}. When the size parameter is roughly equal to 1, the linear polarization fraction is at a maximum of about 1\% \add{cite, is this true}. The grain size that causes $x=1$ is called the characteristic grain size, and is therefore equal to $\lambda/2\pi$. 
+
+
+The size parameter controls the way the light interacts with the dust grains, specifically, the regime change (Mie theory) is defined by:
 \begin{enumerate}
     \item $x << 1$: small particle, Rayleigh regime,
     \item $x \sim 1$: Mie regime,
@@ -39,16 +43,16 @@ For each porosity ($\mathcal{P} = 1 - f$), the \texttt{DSHARP} code was used to 
 
 \begin{table}[h!]
 \centering
-\caption{Summary densities calculated using \texttt{DSHARP} for each filling factor. \note{update this to the proper density values}}
+\caption{Summary densities calculated using \texttt{DSHARP} for each filling factor.}
 \begin{tabular}{ll}
 \toprule
 \textbf{Filling Factor (\boldmath$f$)} &
 \textbf{Density (g/cm\boldmath$^3$)} \\
 \midrule
 1.0    & 1.675 \\
-0.5 & 1.256 \\
-0.3  & 0.838 \\
-0.1 & 0.419 \\
+0.5 & 0.838 \\
+0.3  & 0.503 \\
+0.1 & 0.168 \\
 \bottomrule
 \end{tabular}
 \label{tab:dsharp_density}
@@ -104,7 +108,7 @@ An additional term that can be calculated is the single scattering albedo, the f
     \weffEQ = \frac{\kscaeffEQ}{\kabsEQ + \kscaeffEQ},
     \label{eq: omega}
 \end{equation}
-\noindent \citep{Zhang2023}.
+\noindent \citep{Zhang2023}. \question{Only show eff?}
 
 
 
@@ -119,19 +123,15 @@ An additional term that can be calculated is the single scattering albedo, the f
 
 
 % ----------------------------------------------
-\subsubsection{Mueller Matrix \& Computing Polarization Degree, $\mathbf{P}$ }
+\subsubsection{Mueller Matrix \& Computing Polarization, $\mathbf{P}$ }
 
 
-The Mueller matrix (or scattering matrix) describes the scattering properties of dust grains \citep{Kataoka_2015}, and is calculated using \texttt{DSHARP}. Two relevant matrix elements are \Zot and \Zoo, which represent linear polarized scattering and total scattering respectively \citep{Zhang2023}. The ratio between the two results in the degree of polarization ($P$) \citep{Kataoka_2015}:
-\begin{equation}
-    P = \left|\frac{Z_{12}}{Z_{11}}\right|.
-\end{equation}
-\noindent  The polarization degree depends on the scattering angle \citep{Kataoka_2015}, which is explored in Figure \ref{fig: Kataoka2015Figure2Recreation}. The scattering peaks at a scattering angle of 90\deggNS, which is the value we are taking. 
+The Mueller matrix (or scattering matrix) describes the scattering properties of dust grains \citep{Kataoka_2015}, and is calculated using \texttt{DSHARP}. Two relevant matrix elements are \Zoo and \ZootNS, which represent linear polarized scattering and total scattering respectively \citep{Zhang2023}. The ratio between the two results, averaged with the size distribution ($-Z_{12, \text{eff}}/Z_{11, \text{eff}}$) is the degree of polarization \citep{Kataoka_2015}.  The polarization degree depends on the scattering angle \citep{Kataoka_2015}, which is explored in Figure \ref{fig: Kataoka2015Figure2Recreation}. In this figure its shown that there is a peak at a scattering angle of 90\degg (for smaller grain sizes), and the degree of polarization at 90\degg is referred to as polarization, denoted by $P$. 
 
-\begin{equation}
-    N_{11} = -\frac{Z_{12}}{Z_{11}}
-    \label{eq: N11}
-\end{equation}
+% \begin{equation}
+%     N_{11} = -\frac{Z_{12}}{Z_{11}}
+%     \label{eq: N11}
+% \end{equation}
 
 
 
@@ -140,10 +140,9 @@ The Mueller matrix (or scattering matrix) describes the scattering properties of
 % ----------------------------------------------
 
 % ----------------------------------------------
-\subsubsection{\Pw distribution} 
+\subsubsection{$\mathbf{P\omega}$ distribution} 
 % ----------------------------------------------
-\note{bold title} \note{$P\omega$ vs $P\omega_{eff}$?}
-The product of the polarization degree (at a scattering angle of 90\deggNS) and albedo ($P\omega$) provides a measurement of of the contribution of each grain size to the scattered polarized light at a specific observing wavelength. For single scattering, \Pw can be used to determine the grain sizes that can be detected with with polarization observations \citep{Kataoka_2015}. This \Pw factor versus grain size is explored in Figure \ref{fig: Pw_vs_grainsize}. 
+The product of the polarization and albedo (\Pw) provides a measurement of of the contribution of each grain size to the scattered polarized light at a specific observing wavelength. For single scattering, \Pweff can be used to determine the grain sizes that can be detected with with polarization observations \citep{Kataoka_2015}. This \Pweff factor versus grain size is explored in Figure \ref{fig: Pw_vs_grainsize}. It should be noted that the notation of \Pw is used, but this is really $P_{eff} \times \omega_{eff}$. 
 
 
 % \quoted{The product of the polarization and the albedo, Pw, gives the grain size that contributes most to the polarization at any observing wavelength because the actual observed quantities are Stokes parameters Q and U, which is proportional Pw in the case of single scattering. In other words, Pw represents a window function for the grain size detectable with polarization observations.}.
