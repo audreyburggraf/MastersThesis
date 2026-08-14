@@ -1,16 +1,19 @@
 
 % ----------------------------------------------
-\subsubsection{Challenges and Solution }
-
-Up to this point, in the field, majority of dust grain modelling has used the assumption of spherical grains. Models with non-spherical grains are more realistic to the actual dust grains in a disk, however they are associated with additinal complications and a lot of computation power needed. 
-
-Non-spherical dust grain modeling has become more accessable usiong the code called \texttt{glitterin} from \cite{glitterin}.
-
-% ----------------------------------------------
+Spherical dust grain modelling is a much more common approach in the field due to easier calculations and shorter commutation time. However, as mentioned previously, it is though that it is more realistic that the dust grains in disks are non-spherical. The change in shape affects the scattering properties of the dust grains, which is where the difficult part of the modelling comes in. Non-spherical (irregular) dust grain modelling has become more accessible with \texttt{glitterin} from \cite{glitterin}, a neural network for dust grain light-scattering. An example of six irregular grain shapes are shown in Figure \ref{fig: glitterin_dust_grains}. 
 
 
 
-% ----------------------------------------------
-\subsubsection{\texttt{glitterin} Code }
-% ----------------------------------------------
-% ----------------------------------------------
+
+\begin{figure*}[h]
+  \centering
+  \includegraphics[width=0.6\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/NOTMINE/glitterinFigure1.png}
+  \caption{Example of six irregular particles from \texttt{glitterin}. Figure from \cite{glitterin}. \note{ask for permission} }
+  \label{fig: glitterin_dust_grains}
+\end{figure*}
+
+
+
+\question{As far as I know, glitterin is using $\omega$ and not $\omega_{eff}$, meaning when I present the results for spherical vs irregular, i'm comparing $P\omega_{eff}$ vs $P\omega$. I am not entirely sure how to get the $g$ factor I need to calculate $\omega_{eff}$ with gitterin. I only switched to $\omega_{eff}$ because of \cite{Zhang2023}. Should I switch the spherical back to just $\omega$?}
+
+\question{Go into more detail about glitterin?}
