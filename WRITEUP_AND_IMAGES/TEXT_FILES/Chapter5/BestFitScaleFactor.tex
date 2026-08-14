@@ -32,10 +32,10 @@ The best-fit grain size (\amaxbestNS) is defined as the value of \amax where the
 % ----------------------------------------------
 Multiple fits were tested to determine the effect of each wavelength of data on the success of the fit. The fits were (1) all wavelengths, (2) no \bfiveNS, (3) no \bsixNS, and (4) just \bfour and \bsevenNS. A chi-squared value was calculated at each fitting combination and porosity to determine the agreement between the model and observations, given by: 
 \begin{equation}
-\chi_\mathcal{P}^2 = \sum_{all\text{ }wavelengths} (\POLFobsEQ- [\PwmodelEQ (\amaxbestEQ) \times \sfbestEQ])^2.
+\chi_\mathcal{P}^2 = \sum_{all\text{ }wavelengths} \left(\frac{\POLFobsEQ- [P\omega (\amaxbestEQ) \times \sfbestEQ]}{\POLFerrEQ}\right)^2.
     \label{eq: chi_squared_dust_model}
 \end{equation}
-\noindent \add{divide by errors.} The calculation is summed over \emph{all wavelengths} as each wavelength was included in the $\chi_\mathcal{P}^2$ calculation, despite if it was included in the fit for the scale factor value or not. The fitting combination and porosity that produced the lowest chi-squared value was chosen to be the best-fit model.
+\noindent The calculation is summed over \emph{all wavelengths} as each wavelength was included in the $\chi_\mathcal{P}^2$ calculation, despite if it was included in the fit for the scale factor value or not. The fitting combination and porosity that produced the lowest chi-squared value was chosen to be the best-fit model.
 
 % The standard Briggs weighted \bfive data is excluded from every fit. The reasoning behind this is discussed in Chapter \ref{sec: discussion_band5_data_issues}. 
 
