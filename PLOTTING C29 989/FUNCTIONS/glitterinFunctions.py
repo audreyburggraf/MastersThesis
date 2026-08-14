@@ -7,6 +7,8 @@ import matplotlib.pyplot as plt
 from UnitConversion import *
 from glitterin_LabDistributionFunc import *
 from tqdm import tqdm
+
+from DustModelJustAMAX import *
 # ------------------------------------------------------------
 #
 #
@@ -23,6 +25,7 @@ nndir = "/Users/audreyburggraf/Desktop/QUEEN'S/THESIS RESEARCH/PLOTTING C29 989/
 
 # Create the scattering wrapper
 producer = glitterin.user.ScatteringProducer(nndir=nndir)
+from glitterin.user import extrapolate_small_a
 # ------------------------------------------------------------
 #
 #
@@ -491,7 +494,7 @@ def add_P_to_results_all(results_all, wavelength_labels, theta):
         res = results_all[label]
         a = res['r_vol']
 
-        # ✅ CORRECT distribution (mass-weighted MRN)
+        # distribution (mass-weighted MRN)
         distri_template = a**(-0.5)
         distri_template /= distri_template.sum()
 
@@ -518,10 +521,10 @@ def add_P_to_results_all(results_all, wavelength_labels, theta):
 
             omega[ia] = k_s / (k_a + k_s)
 
-            # ✅ correct polarization averaging
+            # polarization averaging
             P[ia] = np.sum(P_per_a * distri)
 
-            # ✅ correct opacity averaging
+            # opacity averaging
             k_abs_eff[ia] = k_a
             k_sca_eff[ia] = k_s
 
@@ -710,6 +713,7 @@ def RunGlitterinPowerLawDist(amax_cm, w, w_units, n, k, amin_cm = 1e-5, Nsize = 
 
 
     return theta, sizes, mat, mat_dist
+
 # ------------------------------------------------------------ 
 def RunGlitterinPowerLawDistAveraged(indicies, data_w_cm, data_n, data_k, max_rvol_grid_cm):
 
@@ -777,7 +781,10 @@ def RunGlitterinPowerLawDistAveraged(indicies, data_w_cm, data_n, data_k, max_rv
 #
 # 
 # I am updating this so we can say what POLF we want to use 
-def find_sf_glitterin(results, AllBands, BandsInFit, df_POLF, POLF_index, print_results = True):
+def find_sf_glitterin(results, AllBands, BandsInFit, df_POLF, POLF_index, print_results = True,
+                      trouble=False,
+                      trouble_index=0,
+                      choose_trouble_index=False):
     
     
     # POLF Stuff
@@ -788,6 +795,14 @@ def find_sf_glitterin(results, AllBands, BandsInFit, df_POLF, POLF_index, print_
         'max Stokes I': 'POLF_maxStokesI',
         'POLI': 'POLF_maxPOLI',
         'mean': 'POLF_mean'
+    }
+    
+        
+    POLF_err_columns = {
+    #'gaussian': 'POLF_err_Gaussian',
+    'max Stokes I': 'POLF_err_maxStokesI',
+    'POLI': 'POLF_err_maxPOLI',
+    #'mean': 'POLF_err_mean'   # if you have this column
     }
     
     
@@ -801,6 +816,7 @@ def find_sf_glitterin(results, AllBands, BandsInFit, df_POLF, POLF_index, print_
     
     # Get all the POLF values together
     POLF_obs_all = df_POLF[POLF_columns[POLF_index]].values
+    POLF_err_obs_all = df_POLF[POLF_err_columns[POLF_index]].values
     # --------------------------------------------------------------------------    
         
     
@@ -870,16 +886,65 @@ def find_sf_glitterin(results, AllBands, BandsInFit, df_POLF, POLF_index, print_
 
     sf_medians = np.array(sf_medians)
     sf_stds = np.array(sf_stds)
-    # --------------------------------------------------------------------------   
+    
+    best_idx = np.argmin(sf_stds)
+    
+    
+    # --------------------------------------------------------------------------  
+    
+    
+    # Trouble index
+    # ------------------------------------------------------------
+
+    if trouble:
+
+        sorted_indices = np.argsort(sf_stds)
+
+        print('\nTrouble case')
+        print('Best few candidates:')
+
+        for rank, idx in enumerate(sorted_indices[:4], start=1):
+            print(
+                f'{rank}: '
+                f'a_max = {cm_to_micron(rvol_max_cm[idx]):.0f} micron, '
+                f'sf = {sf_medians[idx]:.2f}, '
+                f'sf_std = {sf_stds[idx]:.4f}'
+            )
+
+        if choose_trouble_index:
+
+            if trouble_index >= len(sorted_indices):
+                raise ValueError(
+                    f"trouble_index={trouble_index} is too large. "
+                    f"Only {len(sorted_indices)} valid candidates exist."
+                )
+
+            best_idx = sorted_indices[trouble_index]
+
+            print(
+                f'\nUsing trouble index {trouble_index}: '
+                f'a_max = {cm_to_micron(rvol_max_cm[best_idx]):.0f} micron'
+            )
+            
 
 
     # Choose best a_max where scatter is minimized
     # ---------------------------------------------
-    best_idx = np.argmin(sf_stds)
+    
 
     best_rvol_max_cm = rvol_max_cm[best_idx]
+#     best_idx_arr = best_idx
     best_sf = sf_medians[best_idx]
-    best_idx_arr = best_idx
+    
+    
+    chi_sq = calculate_chi_squared_for_sf(
+            Pw,
+            best_idx,
+            best_sf,
+            POLF_obs_all,
+            POLF_err_obs_all,
+            AllBands,
+        )
     
     POLF_obs = np.array([
         POLF_obs_all[band_to_index[b]] for b in AllBands
@@ -900,9 +965,10 @@ def find_sf_glitterin(results, AllBands, BandsInFit, df_POLF, POLF_index, print_
         'best_rvol_max_micron': cm_to_micron(best_rvol_max_cm),
         'POLF_obs': POLF_obs,
         'best_sf': best_sf,
-        'best_idx_arr': best_idx_arr,
+        'best_idx_arr': best_idx,
         'sf_medians': sf_medians,
-        'sf_stds': sf_stds
+        'sf_stds': sf_stds,
+        'chi_sq': chi_sq
     }
 
     return sf_results

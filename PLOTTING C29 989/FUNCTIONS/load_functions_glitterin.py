@@ -32,3 +32,4 @@ from GlitterinPlots import *
 from glitterinFunctions import *
 from UnitConversion import * 
 from glitterin_LabDistributionFunc import *
+from MorePlottingFunctions import *
