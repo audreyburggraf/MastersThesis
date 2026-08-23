@@ -38,6 +38,7 @@ text_fs = constants.text_fs
 
 alma_band_colors = constants.alma_band_colors
 alma_band_ms = constants.alma_band_ms
+lambda_mm = constants.lambda_mm
 
 
 writeup_grid_axis_label_fs = constants.writeup_grid_axis_label_fs 
@@ -463,7 +464,7 @@ def MakeAllBandGridDelta(bands,
             im = ax.imshow(b['POLI_debiased_mJy'], cmap = cmap)
         # ---------------------------------------------------------
         elif plotting == 'Gaussian Map':
-            cbar_label = r"$\mathrm{Gaussian\ Uniform\ Ratio}\ (W_{\mathrm{Uniform}})$"
+            cbar_label = r"$\mathrm{Gaussian\ Uniform\ Weights}\ (W_{\mathrm{Uniform}})$"
             
             im = ax.imshow(b['ratios'], cmap = soft_colormap_no_red)
         # ---------------------------------------------------------
@@ -707,7 +708,7 @@ def scale_factor_plot_for_writeup(bands,                  # These are the bands 
                                         spine_width = 1,
                                         included_lw = 5,
                                         marker_border = False,
-                                        BandLegend_bbox_to_anchor=(0.45, 0.85),
+                                        BandLegend_bbox_to_anchor=(0.5, 0.85),
                                         BandLegend_handletextpad=0.5,
                                         BandLegend_handlelength=1,
                                         BandLegend_labelspacing=0.6,
@@ -913,11 +914,11 @@ def scale_factor_plot_for_writeup(bands,                  # These are the bands 
     for b_label in legend_bands:
 
         if b_label == "Band 5 robust -1":
-            label = "Band 5"
+            label = lambda_mm["Band 5"]
             color = alma_band_colors["Band 5"]
             marker = constants.alma_band_ms["Band 5"]
         else:
-            label = b_label
+            label = lambda_mm[b_label]
             color = alma_band_colors[b_label]
             marker = constants.alma_band_ms[b_label]
 
@@ -930,7 +931,7 @@ def scale_factor_plot_for_writeup(bands,                  # These are the bands 
             markeredgecolor=color,
             markersize=legend_marker_size,
             linestyle='None',
-            label=label
+            label=f"{label} mm"
         )
 
         marker_legend_handles.append(handle)
@@ -1012,7 +1013,8 @@ def scale_factor_plot_for_writeup_glitterin(bands,                  # These are 
                                         band_legend_fs = 32.5,
                                         marker_size = 600,
                                         plot_sf = False,
-                                        plot_chi_sq = False):
+                                        plot_chi_sq = False,
+                                           legend_loc = 3):
     
     POLF_markers = dict(zip(df_POLF["Band"], df_POLF["POLF_maxStokesI"]))
     
@@ -1216,11 +1218,11 @@ def scale_factor_plot_for_writeup_glitterin(bands,                  # These are 
     for b_label in legend_bands:
 
         if b_label == "Band 5 robust -1":
-            label = "Band 5"
+            label = constants.lambda_mm["Band 5"]
             color = alma_band_colors["Band 5"]
             marker = constants.alma_band_ms["Band 5"]
         else:
-            label = b_label
+            label = constants.lambda_mm[b_label]
             color = alma_band_colors[b_label]
             marker = constants.alma_band_ms[b_label]
 
@@ -1233,7 +1235,7 @@ def scale_factor_plot_for_writeup_glitterin(bands,                  # These are 
             markeredgecolor=color,
             markersize=legend_marker_size,
             linestyle='None',
-            label=label
+            label=f"{label} mm"
         )
 
         marker_legend_handles.append(handle)
@@ -1248,7 +1250,7 @@ def scale_factor_plot_for_writeup_glitterin(bands,                  # These are 
     # ----------------------------------------------------
     #if plot_markers: 
     if plot_band_legend:
-        legend = ax[3].legend(
+        legend = ax[legend_loc].legend(
                 handles=marker_legend_handles,
                 fontsize= band_legend_fs,
                 frameon=False,
