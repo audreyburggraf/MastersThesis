@@ -7,7 +7,7 @@ To study the structure of IRS 63, intensity profiles were extracted along the mi
 \begin{figure*}[h]
   \centering
   \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Slices/MinorAxisSliceGrid_robust_minus1_Delta.pdf}
-  \caption{Location of the minor-axis slices extracted from the images at each wavelength. The same slice was used for both \SI and debiased polarized intensity. }
+  \caption{Locations of the minor-axis slices extracted from the images at each wavelength. The same slice was used for both \SI and debiased polarized intensity. }
   \label{fig: slice-along-minor}
 \end{figure*}
 % ------------------------------------------------
@@ -15,12 +15,12 @@ To study the structure of IRS 63, intensity profiles were extracted along the mi
 
 
 
-The slices in \SI and polarized intensity for each wavelength are presented in Figure \ref{fig: slices_grid}. The synthesized beam for each wavelength is overplotted for a comparison. The beam is plotted as a one-dimensional Gaussian with a standard deviation calculated from the beam full width at half maximum (FWHM) along the minor axis using the equation:
+The slices in \SI and polarized intensity for each wavelength are presented in Figure \ref{fig: slices_grid}. The synthesized beam for each wavelength is overplotted for comparison. The beam is plotted as a one-dimensional Gaussian, with a standard deviation calculated from the beam full width at half maximum (FWHM) along the minor axis using:
 \begin{equation}
     \sigma = \frac{\text{FWHM}}{2\sqrt{2 \ln{2}}}.
     \label{eq: FWHM_to_sigma}
 \end{equation}
-\noindent The Gaussian was normalized to 1m and scaled by the peak intensity of each slice. 
+\noindent The Gaussian was normalized to 1 and scaled by the peak intensity of each slice. 
 % \noindent The standard deviations are used to calculate the Gaussian shape at each offset using:
 % \begin{equation}
 %     \text{Beam(offset)} = \exp{\left(-\frac{\text{offset}^2}{2\sigma^2}\right)},
@@ -30,10 +30,10 @@ The slices in \SI and polarized intensity for each wavelength are presented in F
 
 
 
-The \SI profiles (top row of Figure \ref{fig: slices_grid}) show a single peak centred on the centre of the disk at all four wavelengths. This is as expected since the protostar at the centre of the disk should be giving off the most emission. However, in the debiased polarized intensity profiles (bottom row of Figure \ref{fig: slices_grid}), we do not see the same trend. The profiles are consistently offset to the right of the centre position at all four wavelengths. The offset is larger than the synthesized mean, meaning that it is spatially resolved.
+The \SI profiles (top row of Figure \ref{fig: slices_grid}) show a single peak at the centre of the disk at all four wavelengths. This is as expected, as the protostar at the centre of the disk should be producing the most emission. However, in the debiased polarized intensity profiles (bottom row of Figure \ref{fig: slices_grid}), we do not see the same trend. The profiles are consistently offset from the centre position at all four wavelengths. The offset is larger than the synthesized beam size, indicating that it is spatially resolved.
 
 
-A similar signature of polarized intensity being brighter on the near-side of the disk was shown in \cite{Yang}. This indicates that the disk is optically thick and flared, meaning that the disk scale height increases with radius (Figure \ref{fig: dust-grain-growth-schematic}). The angular resolution of the data is not high enough to explore this signature and resolve smaller structure in the disk.
+A similar signature, where the polarized intensity is brighter on the near side of the disk, was shown in \cite{Yang}. This indicates that the disk is optically thick and flared, meaning that the disk scale height increases with radius (Figure \ref{fig: dust-grain-growth-schematic}). The angular resolution of the data is not high enough to further explore this signature or resolve smaller structures in the disk.
 
 
 
@@ -44,7 +44,7 @@ A similar signature of polarized intensity being brighter on the near-side of th
 \begin{figure*}[h]
   \centering
   \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Slices/MW_slices_GRID.pdf}
-  \caption{Plot of (top) \SI versus and (bottom) polarized intensity offset (both in units of mJy beam$^{-1}$) from the centre position of the disk. The centre position values can be found in Figure \ref{tab: source_info} and plotted as a solid black line, and the slices these values are taken from are shown in Figure \ref{fig: slice-along-minor}. }
+  \caption{Plot of (top) \SI and (bottom) polarized intensity offset as a function of the offset from the centre position of the disk, both in units of mJy beam$^{-1}$. The centre position is shown as a solid black line, with the corresponding values found in Table \ref{tab: source_info}. The slices used for these profiles are shown in Figure \ref{fig: slice-along-minor}. }
   \label{fig: slices_grid}
 \end{figure*}
 
@@ -56,14 +56,14 @@ A similar signature of polarized intensity being brighter on the near-side of th
 % -------------------------------------------------
 % \begin{figure*}[h]
 %   \centering
-%   \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Slices/MW_slices_StokesI_with_beam.pdf}
+%   \includegraphics[width=1.1\textwidth]{../IMAGES/WRITEUP/Slices/MW_slices_StokesI_with_beam.pdf}
 %   \caption{Plot of \SI versus offset from the centre position of the disk. The centre position values can be found in Figure \ref{tab: source_info}, and the slices are shown in Figure \ref{fig: slice-along-minor}. A solid black line is shown at an offset of 0. \add{Comment about beam}. Units are mJy per beam. }
 %   \label{fig: slices_StokesI}
 % \end{figure*}
 % -------------------------------------------------
 % \begin{figure*}[h]
 %   \centering
-%   \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Slices/MW_slices_StokesI.pdf}
+%   \includegraphics[width=1.1\textwidth]{W../IMAGES/WRITEUP/Slices/MW_slices_StokesI.pdf}
 %   \caption{Plot of Stokes I in mJy versus offset from the centre position of the disk. The centre position values can be found in Figure \ref{tab: source_info}, and the slices are shown in Figure \ref{fig: slice-along-minor}. A solid black line is shown at an offset of 0. }
 %   \label{fig: slices_StokesI}
 % \end{figure*}
@@ -71,14 +71,14 @@ A similar signature of polarized intensity being brighter on the near-side of th
 
 % \begin{figure*}[h]
 %   \centering
-%   \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Slices/MW_slices_POLI.pdf}
+%   \includegraphics[width=1.1\textwidth]IMAGES/WRITEUP{WRITEUP_AND_IMAGES//Slices/MW_slices_POLI.pdf}
 %   \caption{Same as Figure \ref{fig: slices_StokesI}, but for POLI.}
 %   \label{fig: slices_POLI}
 % \end{figure*}
 % -------------------------------------------------
 % \begin{figure*}[h]
 %   \centering
-%   \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Slices/MW_slices_POLI_with_beam.pdf}
+%   \includegraphics[width=1.1\textwidth]{../IMAGES/WRITEUP/Slices/MW_slices_POLI_with_beam.pdf}
 %   \caption{Same as Figure \ref{fig: slices_StokesI}, but for polarized intensity.}
 %   \label{fig: slices_POLI}
 % \end{figure*}

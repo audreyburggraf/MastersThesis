@@ -1,23 +1,22 @@
 
 % ----------------------------------------------
-The results of the spherical dust models are reported in Table \ref{tab: dust_model_fits_spherical}. For each fitting case, at each porosity value, three values are reported: the best-fit scale factor from Equation \ref{eq: sf}, the $\chi^2$ value as a test of goodness-of-fit (Equation \ref{eq: chi_squared_dust_model}) and the best-fit grain size (the \amax that corresponds to the best SF). The best-fit for each fitting case is has bolded text. 
+The results of the spherical dust models are reported in Table \ref{tab: dust_model_fits_spherical}. For each fitting case, the best-fit scale factor from Equation \ref{eq: sf}, the corresponding $\chi_\mathcal{P}^2$ value (Equation \ref{eq: chi_squared_dust_model}), and the best-fit grain size (\amax corresponding to the best SF) are reported. The best fit for each fitting case is shown in bold. 
 
 
-Additionally, the results of the fits are shown in Figure \ref{fig: Spherical_BEST} for the best fit overall, which is the scenario with no \bfiveNS. The equivalent plots for the other fits can be found in Appendix \ref{chap: Appendix_DustModels}. In this figure, the \POLFobs value for each wavelength is plotted as a colour-matching marker, the values of these are listed in Table \ref{tab: polf_comparison}, in the POLF$_{\text{max \SI}}$ column. 
+The results of the fits are shown in Figure \ref{fig: Spherical_BEST} for the best overall fitting case, which excludes \bfiveNS. Equivalent plots for the other fitting cases are provided in Appendix \ref{chap: Appendix_DustModels}. The observed polarization fraction, \POLFobsNS, is shown as a colour-matched marker for each wavelength (values are listed in Table \ref{tab: polf_comparison}, in the POLF$_{\text{max \SI}}$ column). 
 
 
-These results revel that for all four cases, the best-fit (lowest chi-squared) offers when the porosity of the grains is set to have $f = 0.5$. The case of $f = 1.0$ is by far the worst fit for each fitting case, with a $\chi^2$ value significantly higher than at higher porosity (lower $f$), indicating that the dust grains are unlikely to be completely solid, and are likely slightly porous. 
-
+These results show that for all four cases, the lowest $\chi_\mathcal{P}^2$ occurs for a filling factor of $f = 0.5$. The compact-grain case of ($f = 1.0$) produces a higher $\chi_\mathcal{P}^2$ value in all fitting cases, while the more porous models ($f=0.3$ and $f=0.1$) provide worse fits than $f = 0.5$. This suggests that a slightly porous grain model is the best agreement with the observed polarization fraction.
 
 
 
 
 \begin{table}[h!]
 \centering
-\caption{Results of the four fitting cases for the spherical dust grain modelling. Scale factor calculated using Equation \ref{eq: sf}, $\chi^2$ from Equation \ref{eq: chi_squared_dust_model} and best dust grain size. The best fit for each fit case is highlighted as bold text.}
+\caption{Results of the four fitting cases for the spherical dust grain modelling. Scale factor calculated using Equation \ref{eq: sf}, $\chi_\mathcal{P}^2$ from Equation \ref{eq: chi_squared_dust_model} and best dust grain size. The best fit for each fit case is highlighted in bold text.}
 \begin{tabular}{lcccc}
 \toprule
-\textbf{Fit Case} & \textbf{Porosity ($\boldsymbol{f}$)} & \textbf{Scale Factor (SF)} & $\boldsymbol{\chi^2}$ & \textbf{$\boldsymbol{\amaxEQ}$ ($\boldsymbol{\mu}$m)} \\
+\textbf{Fit Case} & \textbf{Porosity ($\boldsymbol{f}$)} & \textbf{Scale Factor (SF)} & $\boldsymbol{\chi_\mathcal{P}^2}$ & \textbf{$\boldsymbol{\amaxEQ}$ ($\boldsymbol{\mu}$m)} \\
 \midrule
 
 All wavelengths
@@ -63,7 +62,7 @@ Just \bfour and \bseven
 \begin{figure*}[h]
   \centering
   \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/DustModelPlot_Without5_ZhangMethod.pdf}
-  \caption{Curves of \Pw multiplied by best-fit SF (Equation \ref{eq: sf}) to compare to \POLFobsNS. Markers are \POLFobsNS, listed in Table \ref{tab: polf_comparison}. The best-fit (lowest $\chi^2$, Equation \ref{eq: chi_squared_dust_model}) is represented with a gold star. The specific results of the fit can be found in Table \ref{tab: dust_model_fits_spherical}. Wavelengths that are not included in the fit for the SF have a dashed line. \question{Q1: Make markers just the outline if not in the fit? or just dashed line is okay? Q2: Should I make the x-axes different? As in at lower f values should I start at a higher xmin and go to a higher xmax so you can see the entire curve better?}}
+  \caption{Curves of \Pw multiplied by best-fit SF (Equation \ref{eq: sf}) to compare to \POLFobsNS. Markers are \POLFobsNS, listed in Table \ref{tab: polf_comparison}. The best-fit (lowest $\chi^2$, Equation \ref{eq: chi_squared_dust_model}) is represented with a gold star. The specific results of the fit can be found in Table \ref{tab: dust_model_fits_spherical}. Wavelengths that are not included in the fit for the SF have a dashed line. \question{Q1: Make markers just the outline if not in the fit? Or just a dashed line, okay? Q2: Should I make the x-axes different? As in, at lower f values, should I start at a higher xmin and go to a higher xmax so you can see the entire curve better?}}
   \label{fig: Spherical_BEST}
 \end{figure*}
 
@@ -79,4 +78,4 @@ Just \bfour and \bseven
 
 
 % \subsubsection{Trouble Value}
-% In the spherical model only considering Bands 4 and 7 at a porosity value of $f = 0.75$ I got a weird result where the best value was at a grain size that did not make sense. This was a fluke that the best value was at that grain size. It found the best \amax was at 613 \micron with a scale factor of 7.36, and the second best \amax value was at 209.78 \micron with a scale factor of 1.60 so I chose overrided it and chose the second best value.
+% In the spherical model only considering Bands 4 and 7 at a porosity value of $f = 0.75$ I got a weird result where the best value was at a grain size that did not make sense. This was a fluke that the best value was at that grain size. It found the best \amax was at 613 \micron with a scale factor of 7.36, and the second-best \amax value was at 209.78 \micron with a scale factor of 1.60, so I chose to override it and chose the second-best value.

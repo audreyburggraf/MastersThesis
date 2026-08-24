@@ -1,21 +1,22 @@
 \subsubsection{Geometry \& Mie Theory}
 % \label{sec: ch5_mie_achar}
 
-Spherical dust grains were studied first as they require less computation power. The size of the dust grains are defined by a radius ($a$), with a resulting size parameter ($x$) defined by:
+Spherical dust grains were studied first because their scattering properties are less computationally expensive to calculate. The size of a spherical dust grain is defined by its radius ($a$), with a corresponding size parameter ($x$) given by:
 \begin{equation}
-    x = \frac{2\pi a}{\lambda},
+ x = \frac{2\pi a}{\lambda},
+ \label{eq: size_parameter}
 \end{equation}
-\noindent where $\lambda$ is the observing wavelength \citep{Zhang2023}. When the size parameter is roughly equal to 1, the linear polarization fraction is at a maximum of about 1\% \add{cite, is this true}. The grain size that causes $x=1$ is called the characteristic grain size, and is therefore equal to $\lambda/2\pi$. 
+\noindent where $\lambda$ is the observing wavelength \citep{Zhang2023}. When the size parameter is equal to 1, this is defined as the characteristic grain size ($a_{\text{char}}$), equal to $\lambda/2\pi$. 
 
 
-The size parameter controls the way the light interacts with the dust grains, specifically, the regime change (Mie theory) is defined by:
+The size parameter controls the way the light interacts with the dust grains by determining the scattering regime of the dust grains (Mie theory):
 \begin{enumerate}
-    \item $x << 1$: small particle, Rayleigh regime,
+    \item $x \ll 1$: Rayleigh regime,
     \item $x \sim 1$: Mie regime,
-    \item $x >> 1$: geometric regime,
+    \item $x \gg 1$: geometric regime,
 \end{enumerate}
 \noindent \citep{Zhang2023}. 
-To calculate the dust models using Mie theory, we used the DSHARP Mie-Opacity Library (\texttt{DSHARP}) from \cite{dsharp_code}. 
+The dust models were calculated using the DSHARP Mie-Opacity Library (\texttt{DSHARP}) from \cite{dsharp_code}. 
 % ----------------------------------------------
 
 
@@ -26,20 +27,21 @@ To calculate the dust models using Mie theory, we used the DSHARP Mie-Opacity Li
 
 
 \subsubsection{Porosity/Filling Factor and Density}
-Porosity ($\mathcal{P}$) refers to the fraction of a dust grain's volume that is empty space. A dust grain with a low porosity is compact (like a rock), and a grain with a high porosity has much more empty space (like a sponge).
+Porosity ($\mathcal{P}$) is the fraction of a dust grain's volume that is empty space. A low porosity corresponds to a more compact grain (like a rock), while a high porosity corresponds to a grain with more empty space (like a sponge).
 
-Rather than specifying the porosity value, an alternate value called the filling factor ($f$) is used, which is defined as:
+Instead of specifying the porosity directly, the filling factor ($f$) is used, defined as:
 \begin{equation}
-    f = 1 - \mathcal{P},
+ f = 1 - \mathcal{P},
     \label{eq: filling factor}
 \end{equation}
-\noindent where $f=1$ corresponds to a compact grain ($\mathcal{P} = 0$), and an $f$ value less than 1 corresponds to a more porous grain \citep{Zhang2023}. Many different filling factors ranging between 0 and 1 were tested to sample a wide range of dust grain porosities, and four are presented in Chapter \add{ref} ($f = 1, 0.5, 0.3, 0.1$). 
+\noindent where $f=1$ corresponds to a compact grain ($\mathcal{P} = 0$), and an $f$ value less than 1 corresponds to a more porous grain \citep{Zhang2023}. A range of filling factors was tested to sample different dust grain porosities, and four values are presented in Chapter \ref{sec: chapter5_spherical_dust_model_results}: $f = 1, 0.5, 0.3, 0.1$. 
 %Four different filling factors were considered ($f = 1, 0.75, 0.5, 0.25$) to sample a wide range of dust grain porosities. 
 
-For each porosity ($\mathcal{P} = 1 - f$), the \texttt{DSHARP} code was used to calculate the corresponding density and optical constants of the dust mixture. These density values are shown in Table \ref{tab:dsharp_density}. As expected, the density decreases as the filling factor decreases (as the porosity increases).  
+For each filling factor, the \texttt{DSHARP} code was used to calculate the corresponding density and optical constants of the dust mixture. The resulting density values are shown in Table \ref{tab:dsharp_density}. As expected, the density decreases as the filling factor decreases and the porosity increases.  
 
+\question{Add more detail on how the \texttt{DSHARP} code incorperates different filling factors?}
 
-\add{Question from disks on the exe: different function? how does the code integrate the different porosities}
+%\add{Question from disks on the exe: different function? How does the code integrate the different porosities}
 
 \begin{table}[h!]
 \centering
@@ -74,12 +76,11 @@ For each porosity ($\mathcal{P} = 1 - f$), the \texttt{DSHARP} code was used to 
 
 % ----------------------------------------------
 \subsubsection{Complex Refractive Index}
-The optical properties of the dust are determined by the complex refractive index ($m$) given by:
+The complex refractive index ($m$) describes the optical properties of the dust and is given by:
 \begin{equation}
-    m(\lambda) = n(\lambda) + ik(\lambda),
+ m(\lambda) = n(\lambda) + ik(\lambda),
 \end{equation}
-\noindent where $n$ and $k$ are the real and imaginary parts of the refractive index that account for the scattering and absorption, respectively \citep{Zhang2023}. \note{Make sure I define scattering vs absorption somewhere.}
-
+\noindent where $n$ and $k$ are the real and imaginary parts of the refractive index, respectively \citep{Zhang2023}. 
 
 
 % ----------------------------------------------
@@ -92,23 +93,23 @@ The optical properties of the dust are determined by the complex refractive inde
 
 % ----------------------------------------------
 \subsubsection{Computing Optical Properties}
-For each filling factor and grain size in the distribution, \texttt{DSHARP} computes a variety of parameter s. These parameters include the mass absorption and scattering coefficients, \kabs and \kscaNS, respectively. These parameters describe how efficient a material absorbs versus scatters light. They are averaged over the size distribution and are used to calculate additional parameters detailed below. 
+For each filling factor and grain size in the distribution, \texttt{DSHARP} calculates several optical properties. These include the mass absorption and scattering coefficients, \kabs and \kscaNS, respectively. These coefficients describe how efficiently a material absorbs and scatters light. The resulting quantities are averaged over the grain-size distribution and are used to calculate additional parameters described below. 
 
 
-Some scattered light has a forward-bias since \add{add}. To adjust for this bias, an effective scattering opacity is calculated by:
+Scattering can have a bias towards the forward direction, which is accounted for using $g$, the forward-scattering parameter defined by the expectation value of $\cos\Theta$ \citep{dsharp_code}. The scattering angle ($\Theta$) is the angle between the original direction and the new direction after it becomes polarized \citep{Zhang2023}. The parameter $g$ is used to calculate an effective scattering opacity, which is calculated by:
 \begin{equation}
-    \kscaeffEQ = (1-g)\kscaEQ,
+    \kscaeffEQ = (1-g)\kscaEQ.
 \end{equation}
-\noindent where $g$ is the forward-scattering parameter defined by the expectation value of $\cos\Theta$ \citep{dsharp_code}. The scattering angle ($\Theta$) is the angle between the original direction and the new direction after it becomes polarized \citep{Zhang2023}.
+ 
 
 
-An additional term that can be calculated is the single scattering albedo, the fraction of the original light that is removed from scattering. The (effective) albedo is defined by the fraction of (effective) scattered light to the total radiation:
+An additional quantity is the single scattering albedo, which describes the fraction of the original light that is removed by scattering rather than absorption. The standard and effective albedo are defined as:
 \begin{equation}
     \omega = \frac{\kscaEQ}{\kabsEQ + \kscaEQ}, \quad 
     \weffEQ = \frac{\kscaeffEQ}{\kabsEQ + \kscaeffEQ},
     \label{eq: omega}
 \end{equation}
-\noindent \citep{Zhang2023}. \question{Only show eff?}
+\noindent \citep{Zhang2023}. 
 
 
 
@@ -126,7 +127,7 @@ An additional term that can be calculated is the single scattering albedo, the f
 \subsubsection{Mueller Matrix \& Computing Polarization, $\mathbf{P}$ }
 
 
-The Mueller matrix (or scattering matrix) describes the scattering properties of dust grains \citep{Kataoka_2015}, and is calculated using \texttt{DSHARP}. Two relevant matrix elements are \Zoo and \ZootNS, which represent linear polarized scattering and total scattering respectively \citep{Zhang2023}. The ratio between the two results, averaged with the size distribution ($-Z_{12, \text{eff}}/Z_{11, \text{eff}}$) is the degree of polarization \citep{Kataoka_2015}.  The polarization degree depends on the scattering angle \citep{Kataoka_2015}, which is explored in Figure \ref{fig: Kataoka2015Figure2Recreation}. In this figure its shown that there is a peak at a scattering angle of 90\degg (for smaller grain sizes), and the degree of polarization at 90\degg is referred to as polarization, denoted by $P$. 
+The Mueller matrix, or scattering matrix, describes the polarization properties of light scattered by the dust grains \citep{Kataoka_2015} and is calculated using \texttt{DSHARP}. Two relevant matrix elements are \Zoo and \ZootNS, which represent linear polarized scattering and total scattering, respectively \citep{Zhang2023}. The degree of polarization is given by the ratio $-Z_{12, \text{eff}}/Z_{11, \text{eff}}$ averaged over the grain size distribution \citep{Kataoka_2015}.  The polarization degree depends on the scattering angle, as shown in Figure \ref{fig: Kataoka2015Figure2Recreation}. For smaller grain sizes, the polarization degree peaks near a scattering angle of  90\deggNS. The polarization degree at  90\degg is denoted by $P$. 
 
 % \begin{equation}
 %     N_{11} = -\frac{Z_{12}}{Z_{11}}
@@ -142,10 +143,9 @@ The Mueller matrix (or scattering matrix) describes the scattering properties of
 % ----------------------------------------------
 \subsubsection{$\mathbf{P\omega}$ distribution} 
 % ----------------------------------------------
-The product of the polarization and albedo (\Pw) provides a measurement of of the contribution of each grain size to the scattered polarized light at a specific observing wavelength. For single scattering, \Pweff can be used to determine the grain sizes that can be detected with with polarization observations \citep{Kataoka_2015}. This \Pweff factor versus grain size is explored in Figure \ref{fig: Pw_vs_grainsize}. It should be noted that the notation of \Pw is used, but this is really $P_{eff} \times \omega_{eff}$. 
+The product of the polarization degree and single-scattering albedo, \PwNS, provides a measurement of the contribution of each grain size to the polarized scattered light at a specific observing wavelength. For single scattering, \Pweff can be used to determine the grain sizes that contribute the most to the observed polarization \citep{Kataoka_2015}. The \Pweff factor as a function of grain size is shown in Figure \ref{fig: Pw_vs_grainsize}. In spherical modelling,  \Pw denotes $P_{eff} \times \omega_{eff}$. 
 
 
-% \quoted{The product of the polarization and the albedo, Pw, gives the grain size that contributes most to the polarization at any observing wavelength because the actual observed quantities are Stokes parameters Q and U, which is proportional Pw in the case of single scattering. In other words, Pw represents a window function for the grain size detectable with polarization observations.}.
 
 
 
