@@ -5,6 +5,7 @@
 \usepackage{booktabs}
 
 \usepackage{aas_macros}
+% \usepackage{subcaption}
 
 % styling and graphics-based
 \usepackage{threeparttable}
@@ -142,10 +143,14 @@
 \newcommand{\Zoo}{$Z_{11}$ }
 \newcommand{\Zot}{$Z_{12}$ }
 \newcommand{\ZooNS}{$Z_{11}$}
-\newcommand{\ZotNS}{$Z_{12}$}
+\newcommand{\ZootNS}{$Z_{12}$}
 %===============================
 \newcommand{\Pw}{$P\omega$ }
 \newcommand{\PwNS}{$P\omega$}
+
+\newcommand{\PweffNS}{$P\omega_{eff}$}
+
+\newcommand{\Pweff}{$P\omega_{eff}$ }
 
 \newcommand{\Pwmodel}{$P\omega_\text{{model}}$ }
 \newcommand{\PwmodelEQ}{P\omega_\text{{model}}}
@@ -239,7 +244,7 @@
 \newcommand{\uni}{\text{Uni}}
 \newcommand{\azi}{\text{Azi}}
 %===============================
-\newcommand{\clean}{\texttt{clean}}
+\newcommand{\clean}{\texttt{clean} }
 %===============================
 \newcommand{\ra}{\rightarrow}
 %===============================
@@ -282,6 +287,9 @@
 
 % Comment to yourself
 \newcommand{\note}[1]{\textcolor{teal}{\textit{[NOTE: #1]}}}
+
+
+\newcommand{\status}[1]{\textcolor{magenta}{(\textbf{Status:}\textit{#1})}}
 
 
 % Direct quote with quotation marks added automatically
@@ -366,7 +374,7 @@
 %\frontmatter
 \pagenumbering{roman}
 
-\input{WRITEUP_AND_IMAGES/TEXT_FILES/titlepage}
+\input{TEXT_FILES/titlepage}
 
 
 % \chapter*{}\
@@ -382,7 +390,7 @@ Dedication goes here...
 
 \question{Here is how I add text where I have a question}
 
-\SC{This is what text looks like where I add text in for Sarah's comments from pdf's}
+% \SC{This is what text looks like where I add text in for Sarah's comments from pdf's}
 
 \note{Here is how I add text on a note I have}
 
@@ -390,10 +398,11 @@ Dedication goes here...
 
 ------------------------------------------------------------------------------------------------------------
 
+
 *Make sure when (ref1, ref2) its in chronological order?
 
-\SC{Simon Coud ́e, Pierre Bastien,: If there is a way to abridge the author list, I suggest doing that!}
-
+\SC{Simon Coude, Pierre Bastien,: If there is a way to abridge the author list, I suggest doing that!}
+\note{I still need to address this comment}
 
 
 
@@ -403,12 +412,18 @@ Dedication goes here...
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
 
-\input{WRITEUP_AND_IMAGES/TEXT_FILES/Abstract}
+\input{TEXT_FILES/Abstract}
 % ----------------------------------------
 
 \chapter*{Acknowledgements}
 
 Acknowledgments if any...
+
+% \input{WRITEUP_AND_IMAGES/TEXT_FILES/Acknowledgments}
+
+
+
+
 
 % ``How rare and beautiful it is to even exist.''
 
@@ -456,12 +471,13 @@ Acknowledgments if any...
 
 
 \bibliographystyle{plainnat}
-\bibliography{WRITEUP_AND_IMAGES/MastersThesis}
+\bibliography{MastersThesis}
 
 
 \appendix
 
 \include{WRITEUP_AND_IMAGES/TEXT_FILES/Appendix}
+
 
 
 

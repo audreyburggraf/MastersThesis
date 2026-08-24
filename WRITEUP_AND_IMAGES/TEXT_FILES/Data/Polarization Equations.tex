@@ -1,74 +1,10 @@
-The following equations used in this section are from \cite{CoudeEquations}, with variables summarized in Table \ref{tab: stokes_polar_variables}. 
-
-
-
-\begin{table}[h!]
-\centering
-\caption{Summary of Stokes and polarization symbols, associated error symbols, and units. \question{should this be higher up, before I report errors in Table \ref{tab: source_info}?}}
-\begin{tabular}{llll}
-\toprule
-\textbf{Parameter} & \textbf{Symbol} & \textbf{Error Symbol} & \textbf{Units}  \\
-\midrule
-
-
-\SI
-& I
-& \SIerr
-& \mjybeam\\
-
-\SQ
-& Q
-& \SQerr
-& \mjybeam \\
-
-\SU
-& U
-& \SUerr
-& \mjybeam \\
-
-
-
-Unbiased Polarized Intensity
-& \POLIobs
-& N/A
-& \mjybeam\\
-
-
-Biased Polarized Intensity
-& \POLI
-& \POLIerr
-& \mjybeam\\
-
-Polarization Fraction (debiased)
-& \POLF
-& \POLFerr
-& unitless\\
-
-
-Polarization Angle (debiased)
-& $\theta$
-& \PAerr
-& $^\circ$ \\
-
-
-
-
-
-\bottomrule
-\end{tabular}
-\label{tab: stokes_polar_variables}
-\end{table}
-
-
-
-
 
 
 % ---------------------------------------------
 \subsection{Errors for Stokes Parameters}
 \label{sec: stokes_errors}
 
-For the data that was calibrated in this project (\bfourNS, \bfiveNS, \bsevenNS), the errors for \SIns, \SQ and \SU were estimated by averaging the maximum standard deviation in four different regions far from the bright source at the centre. This value is applied as a constant error at every pixel in the respective error maps, and values are presented Table \ref{tab: source_info}. 
+For the data calibrated in this project (\bfourNS, \bfiveNS, \bsevenNS), the errors for \SIns, \SQ and \SU were estimated by averaging the maximum standard deviation in four different regions far from the bright source at the centre. This average value was applied as a constant error at every pixel in the respective error maps. The values are calculated in mJy but are presented in Table \ref{tab: source_info} in units of $\mu$Jy. 
 
 % ---------------------------------------------
 \subsection{Polarization Fraction}
@@ -77,7 +13,7 @@ Using the debiased polarized intensity, the (debiased) polarization fraction can
     \POLFeq = \POLIeq/I,
     \label{eq: POLF}
 \end{equation}
-\noindent where $I$ is \SIns. The uncertainty on polarization fraction is:
+\noindent where $I$ is \SI intensity. The uncertainty on polarization fraction is:
 
 \begin{equation}
     \POLFerrEQ = \POLFeq \left[\left(\frac{\POLIerrEQ}{\POLIeq}\right)^2 + \left(\frac{\SIerrEQ}{I}\right)^2\right]^{1/2}.

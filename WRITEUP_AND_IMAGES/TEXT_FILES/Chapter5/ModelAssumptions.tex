@@ -2,8 +2,7 @@
 \subsubsection{Dust Composition}
 % \label{sec: measured_POLF}
 % ----------------------------------------------
-The dust grains are assumed to follow the Disk Substructures at High Angular Resolution Project (DSHARP) dust composition, a mixture of water ice, astronomical silicates, troilite and refractory
-organic material \citep{dsharp_code}. The corresponding volume fractions, mass fractions, and sources for the refractive indices are listed in Table \ref{tab:dsharp_composition}. 
+The dust grains are assumed to follow the Disk Substructures at High Angular Resolution Project (DSHARP) dust composition, consisting of water ice, astronomical silicates, troilite and refractory organic material \citep{dsharp_code}. The corresponding volume fractions, mass fractions, bulk densities, and sources for the refractive indices are listed in Table \ref{tab: dsharp_composition}. 
 
 
 
@@ -11,7 +10,6 @@ organic material \citep{dsharp_code}. The corresponding volume fractions, mass f
 \begin{table}[h!]
 \centering
 \caption{DSHARP dust composition used in this project \cite{dsharp_code}.}
-\label{tab:dsharp_composition}
 
 \begin{tabular}{lllll}
 \toprule
@@ -47,7 +45,7 @@ Organics
 
 \bottomrule
 \end{tabular}
-\label{tab:dsharp_composition}
+\label{tab: dsharp_composition}
 \end{table}
 
 
@@ -56,16 +54,11 @@ Organics
 \subsubsection{Dust Size Distribution}
 % ----------------------------------------------
 
-The dust grains were assumed to have a size distribution of $n(a)\propto a^{3.5}$, chosen to match \cite{Kataoka_2015} and \cite{Zhang2023}. The minimum grain size is 0.1 \micronNS, and the maximum grain size is varied in logarithmic space up to a value of 5000 \micron, with 2000 values total. 
-
-These values ranging up to 5000 \micron are denoted by \amaxNS. 
+The dust grains were assumed to have a size distribution of $n(a)\propto a^{3.5}$, chosen to match the distributions used by \cite{Kataoka_2015} and \cite{Zhang2023}. The minimum grain size is 0.1 \micronNS, while the maximum grain size is varied in logarithmic space up to 5000 \micronNS, with 2000 values sampled in total. The maximum grain size in each distribution is denoted by \amaxNS. For the irregular grain models, \texttt{glitterin} produced Nan values at the lower limit of 0.1 \micronNS, so a lower bound of 2 \micron was used. 
 
 
-\add{Some note about averaging over the size distribution}
+%\add{Some note about averaging over the size distribution}
 
-\note{Make glitterin the same, update plots}
-
-Note that \texttt{glitterin} had nan issues at the lower limit of 0.1 \micronNS, so a lower bound of 2 \micron was used. 
 % ----------------------------------------------
 
 % ----------------------------------------------

@@ -4,38 +4,40 @@
 % \draft{In the last chapter, we summarized how the visibilities were calibrated by ALMA before we recieved the data. Beause IRS 63 is a bright and nearby source the observations have a high SNR, sllowing us to do self-calibration. Self-calibration is useful to get rid of the `stuff' that pops up but is not really there, called an artifact \citep{Marvil2}. First, there could be artifacts from the srouce duue to calibration errors such as differences in the astmosphere over each dish \citep{Marvil2}. Secondly, there could be artifacts from a backgrournd source due to direction-independent calibration errors, such as antenna based gain changes \citep{Marvil2}.}
 
 
-In this section, the self-calibration details for this project are summarized. The data at \bfourNS, \bfive and \bseven were calibrated as part of this project, and the \bsix data were provided from \cite{sadavoy_dust_2019}.
+In this section, the self-calibration details for this project are summarized. The data at \bfourNS, \bfive and \bseven were calibrated as part of this project, and the \bsix data were taken from \cite{sadavoy_dust_2019}.
 
 
-To clean the data,  \texttt{tclean} was used in Common Astronomy Software Applications (CASA) version 5.6.1-8 \citep{CASA}. The images were cleaned using the multi-scale multi-frequency deconvolution algorithm (MS-MFS, \texttt{deconvolver = `mtmfs'}). Different values of nterms were explored and no significant change between \texttt{nterms = 1} and nterms = 2 were found. The images presented in this thesis have \texttt{nterms = 2} for \bfour and \bsevenNS, \texttt{nterms = 1} for \bfive and \bsixNS. The Briggs weighting scheme was used with \texttt{robust = 0.5} for all wavleengths except the \bfive data where \texttt{robust = -1} was used to better match the resolution of the other datasets (see Chapter \ref{sec: discussion_band5_data_issues} for more details). 
+To clean the data,  \texttt{tclean} was used in Common Astronomy Software Applications (CASA) version 5.6.1-8 \citep{CASA}. The images were cleaned using the multi-scale multi-frequency deconvolution algorithm (MS-MFS, \texttt{deconvolver = `mtmfs'}). Different values of \texttt{nterms} were explored, and no significant change between \texttt{nterms = 1} and \texttt{nterms = 2} was found. The images presented in this thesis use \texttt{nterms = 2} for \bfour and \bsevenNS, \texttt{nterms = 1} for \bfive and \bsixNS. The Briggs weighting scheme was used with \texttt{robust = 0.5} for all wavelengths except the \bfive data, where \texttt{robust = -1} was used to better match the resolution of the other datasets (see Chapter \ref{sec: discussion_band5_data_issues} for more details). 
 
 
 
-The \SI images at each band had an interactive clean at both phase and amplitude calibration. We began with a shallow phase calibration, and progressively cleaned deeper each time for a total of three rounds. Then, two rounds of amplitude and phase self calibration. \SC{Add more info.} Additionally, the \SQ and \SU data were also cleaned using a non-interactive phase calibration using the final mask from the amplitude calibration at its respective wavelength.  \SC{Add more info}
+The \SI images at each wavelength were interactively cleaned during the self-calibration process. We began with a shallow phase-only self-calibration, and progressively cleaned deeper each time for a total of three rounds. The solution intervals were infinity, 30.3 seconds (15 integrations) and 20.2 seconds (10 integrations). Then, two rounds of phase and amplitude self-calibration were performed. The solution intervals were infinity and 100 seconds (50 integrations). After each round of self-calibration, the phase and amplitude gain solutions were examined to ensure the solutions were reasonable before being applied to the data. 
 
 
-Below, in Figure \ref{fig: BeforeAndAfterClean}, is an example of IRS 63 at \bfour before and after self calibration. We can see how cleaning the image removed background noise. The \SNR values also improved, going from 660 to 2655. \question{Report the S/N change for the other bands?}. 
+
+Additionally, the \SQ and \SU data were cleaned using a non-interactive phase calibration using the final mask from the amplitude calibration at its respective wavelength. The same Briggs \texttt{robust} value used for \SI was used for \SQ and $U$, with \texttt{nterms = 1}.  \note{Checked this for Band 4 and 7. Can check 5 and 7 when I can access my data again.}
 
 
-\SC{It may be worth here or in the previous section to explain how self-calibration can improve the S/N.}
+Figure \ref{fig: BeforeAndAfterClean} shows an example of IRS 63 at \bfour before and after self-calibration. The background noise is reduced after self-calibration, and the \SNR improves from 660 to 2655. Similar improvements were seen for the other wavelengths. 
+
 
 
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=1.25\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/BeforeAndAfterClean.png}
-  \caption{Images before (left) and after (right) self-calibration at \bfour. Images shown to demonstrate how background noise is reduced the self-calibration process, and improved the peak \SNRns.}
+  \caption{Images before (left) and after (right) self-calibration at \bfourNS. The images demonstrate how background noise is reduced during the self-calibration process, improving the peak \SNRns.}
   \label{fig: BeforeAndAfterClean}
 \end{figure}
 
 
 
-Table \ref{tab: source_info} lists the resulting image resolution after self-calibration, including the synthesized beam parameters and clean details. The table also includes the disk centre position in Right Ascension (RA) and Declination (Dec), as well as the disk position angle found by fitting a Gaussian to the disk using \texttt{imfit} on CASA. The image sensitivities are also provided, and were determined using the method described in Chapter \ref{sec: stokes_errors}. 
+Table \ref{tab: source_info} lists the resulting image resolution after self-calibration, including the synthesized beam parameters and clean details. The table also includes the disk centre position in Right Ascension (RA) and Declination (Dec), as well as the disk position angle found by fitting a Gaussian to the disk using \texttt{imfit} in CASA. The image sensitivities are also provided and were determined using the method described in Chapter \ref{sec: stokes_errors}. 
 
 
 \begin{table}[h!]
 \centering
-\caption{Summary of properties of the cleaned images of IRS 63. \question{Can I give + 83 as - 97?}  Units for Stokes errors can be found in Table \ref{tab: stokes_polar_variables}. }
+\caption{Summary of the properties of the cleaned images of IRS 63 at each wavelength. \question{Can I give + 83 as - 97?}  }
 \begin{tabular}{lcccc}
 \toprule
 \textbf{Property} & \textbf{\bandfourmm} & \textbf{\bandfivemm } & \textbf{\bandsixmm } & \textbf{\bandsevenmm} \\
@@ -114,7 +116,7 @@ Disk PA ($^\circ$)
 \end{tabular}
 \begin{tablenotes}
 \footnotesize
-\item \textbf{Note:} \SIerrNS, \SQerrNS, \SUerr are constant values for \bfourNS, \bfiveNS, and \bsevenNS, and are reported at maximum \SI value for \bsixNS. These errors are reported in units of \ujybeamNS. 
+\item \textbf{Note:} \SIerrNS, \SQerrNS, \SUerr are constant values for \bfourNS, \bfiveNS, and \bsevenNS, and are reported at maximum \SI value for \bsixNS. These errors are reported in units of \ujybeamNS.  
 \end{tablenotes}
 \label{tab: source_info}
 \end{table}
