@@ -1,0 +1,73 @@
+Modelling the polarization from scattering across the multi-wavelength data allows us to constrain the dust grain size using a method adapted from \cite{Zhang2023}, which is detailed below. Two grain geometries were explored: spherical grains and irregular grains. Both use the same dust composition and grain-size distribution (Chapter \ref{sec: model_assumptions}), but have different optical properties due to their different shapes. Spherical dust grains are more commonly used because their scattering and absorption properties are less computationally expensive. Irregular dust grains are more realistic \citep{Lin2024}, but require more computational power. 
+
+
+The geometric modelling of the observations in Chapter \ref{sec: methods/modelling polarization pattern} was used to identify the region of the disk at each wavelength where the observed polarization morphology aligned with the minor axis, consistent with dust self-scattering. This region provides a constraint for the dust grain size. The goal of the modelling is to model the dust properties in this region using spherical and irregular grains and compare the amount of polarized light to the observed polarization fraction of IRS 63 to constrain the dust grain size. Several parameters are used throughout the dust model calculations. Table \ref{tab:dust_parameters} summarizes these parameters for reference. 
+% ----------------------------------------------
+\begin{table}[ht]
+\centering
+\caption{Summary of parameters used throughout the dust scattering model calculations. \ question {Take any out or add some?}}
+\label{tab:dust_parameters}
+
+\begin{tabular}{lll}
+\toprule
+\textbf{Symbol} & \textbf{Description} & \textbf{Units} \\
+\midrule
+$a_{\max}$ & Maximum dust grain size in distribution grid & $\mu$m \\
+$a$ & Radius of spherical grain & mm \\
+$x$ & Size parameter of spherical grain & --\\
+$\lambda$ & Observing wavelength & mm \\
+$\mathcal{P}$ & Dust grain porosity  & -- \\
+$f$ & Dust grain porosity (filling factor) & -- \\
+%$m$ & -- & -- \\
+$n$ & Real part of the refractive index & -- \\
+$k$ & Imaginary part of the refractive index & -- \\
+%\kabs & -- & -- \\
+%%\ksca & -- & -- \\
+%$g$ & -- & -- \\
+$\omega$, \weff & (effective) Single scattering albedo & -- \\
+%$P$ & -- & -- \\
+%Z11, Z12 & -- & -- \\
+%N11 & -- & -- \\
+$\Theta$ & Scattering Angle & \degg \\
+%$\rho$ & Dust grain material density & g cm$^{-3}$ \\
+%$m$ & Dust grain mass & g \\
+%$Z_{11}$ & Mueller matrix element describing scattered intensity & -- \\
+%$Z_{12}$ & Mueller matrix element describing linear polarization & -- \\
+%$\kappa_{\mathrm{abs}}$ & Absorption opacity & cm$^2$ g$^{-1}$ \\
+%$\kappa_{\mathrm{sca}}$ & Scattering opacity & cm$^2$ g$^{-1}$ \\
+%$\omega$ & Single-scattering albedo & -- \\
+$P$ & Polarization degree & -- \\
+\Pwmodel \note{change??}& Model polarization fraction & -- \\
+\POLFobs & Observed polarization fraction & -- \\
+SF & Scale factor & -- \\
+$\chi^2_{\mathrm{P}}$ & Chi-squared statistic for the polarization fraction fit & -- \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item \textbf{Note:} $\lambda$ and $a$ are reported in mm, while \amax is reported in \micronNS. All three are converted to cm for the calculations.  
+\end{tablenotes}
+\end{table}
+% ----------------------------------------------
+
+
+\subsection{Model Assumptions}
+\label{sec: model_assumptions}
+\input{TEXT_FILES/Chapter5/ModelAssumptions}
+% ----------------------------------------------
+
+
+
+
+\subsection{Spherical Dust Grains }
+\input{TEXT_FILES/SphericalDustModels/Methods}
+
+
+
+\subsection{Irregular Dust Grains }
+\input{TEXT_FILES/glitterinDustModels/Methods}
+
+
+
+
+

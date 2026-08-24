@@ -1,0 +1,101 @@
+
+
+
+\subsection{Polarization Vector Sampling}
+The \SI maps produced using \texttt{tclean} have a pixel scale that oversamples the synthesized beam to improve image reconstruction \citep{Brogan}. Because of this, plotting a polarization vector at each pixel would oversample the polarization morphology. Instead, vectors are plotted with a spacing of approximately half of the synthesized beam size, following the Nyquist-Shannon sampling theorem \citep{Shannon}. 
+
+The effective beam size was calculated using:
+\begin{equation}
+    \text{Beam Size =} \sqrt{BMIN \cdot BMAJ},
+    \label{eq: beam_size}
+\end{equation}
+\noindent where $BMIN$ and $BMAJ$ are the synthesized beam minor and major axes, respectively, listed in Table \ref{tab: source_info} in units of arcseconds. The beam dimensions were converted from arcseconds to pixels using the image pixel size of $0.018''\,\mathrm{pixel}^{-1}$. The polarization vector spacing was then set to be half the beam size (Equation \ref{eq: beam_size}), and rounded to the nearest integer number of pixels.
+
+
+
+
+
+
+
+%The pixel step sizes for each wavelength are summarized in Table \ref{tab: vector_info}. 
+
+
+
+\subsection{Reliability Criteria}
+\label{sec: methods_vector_criteria}
+In addition to the sampling spacing described above, a polarization vector was only plotted if it satisfied the following criteria:
+\begin{enumerate}
+    \item $I/\SIerrEQ > 3$, 
+    \item $\POLIeq/\POLIerrEQ >$ 4 (\bfourNS, \bsevenNS) or $\POLIeq/\POLIerrEQ >$ 3 (\bfiveNS, \bsixNS),
+    \item $\PAerrEQ < 10^\circ$.
+\end{enumerate}
+\noindent These criteria were adapted from the selection criteria in \cite{sadavoy_dust_2019}. The threshold of $\POLIeq/\POLIerrEQ >3$ was used for \bfive and \bsix because of their sensitivities: threshold of 4 excluded many additional polarization vectors.
+
+
+% , without the additional condition of $I/\sigma_I>3$. This could be excluded for our analysis as IRS 63 is bright and well-resolved, meaning it has a high S/N ratio in the area around the disk, meaning this condition is already met.
+
+
+% \subsubsection{\sent{Vector Direction \& Length} \SC{cut this section}}
+% At each sampled pixel that satisfied the selection criteria, a polarization vector was calculated. The polarization vectors were plotted at a constant length ($\mathcal{L}$) at each wavelength. Only the direction of the vectors was required to examine the polarization morphology, so the vectors were not scaled by any value such as \SI or polarized intensity. The vector lengths were chosen to improve visualization and avoid overlapping vectors and were found using trial and error. The vector lengths for each wavelength are summarized in Table \ref{tab: vector_info}. 
+
+% Both the length and the orientation of each vector were required for plotting. The orientation of the vector is its polarization angle $\theta$ at the selected pixel. The horizontal and vertical components of the vector were calculated using:
+
+% \begin{equation}
+% \begin{aligned}
+%     \Delta x &= \mathcal{L} \cos\left(\theta + 90 \deggEQ\right), \\
+%     \Delta y &= \mathcal{L} \sin\left(\theta + 90\deggEQ \right).
+% \end{aligned}
+% % \label{eq: vectors}
+% \end{equation}
+
+% \noindent The vector is centred on the selected pixel, with half of its length on each side of the pixel. The polarization vector was plotted using the Cartesian coordinate system, but the polarization angles were measured using the astronomical coordinate system. In both coordinate systems, angles increase as you go counterclockwise from the 0\degg point, but the 0\degg direction is east in Cartesian and north in astronomical. Therefore, a $90 \deggEQ$ offset was added to account for this difference. 
+
+
+
+
+
+
+% \begin{table}[h!]
+% \centering
+% \caption{Summary of conditions used to create polarization vector maps. \note{Last updated June 26th.} \SC{cut this table}}
+% \begin{tabular}{lcccc}
+% \toprule
+% \textbf{Property} &
+% \textbf{\bandfourmm} &
+% \textbf{\bandfivemm} &
+% \textbf{\bandsixmm} &
+% \textbf{\bandsevenmm} \\
+% \midrule
+
+% Step (pix)
+% & 4
+% & 8
+% & 6
+% & 6 \\
+
+% Vector Length (pix)
+% & 2
+% & 6
+% & 4
+% & 4 \\
+
+% \POLI Cutoff
+% & 4
+% & 4
+% & 3
+% & 4 \\
+
+% \bottomrule
+% \end{tabular}
+% \label{tab: vector_info}
+% \end{table}
+
+
+
+
+
+
+
+
+
+

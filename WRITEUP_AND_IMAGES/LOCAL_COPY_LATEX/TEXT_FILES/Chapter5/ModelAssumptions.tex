@@ -1,0 +1,67 @@
+% ----------------------------------------------
+\subsubsection{Dust Composition}
+% \label{sec: measured_POLF}
+% ----------------------------------------------
+The dust grains are assumed to follow the Disk Substructures at High Angular Resolution Project (DSHARP) dust composition, consisting of water ice, astronomical silicates, troilite and refractory organic material \citep{dsharp_code}. The corresponding volume fractions, mass fractions, bulk densities, and sources for the refractive indices are listed in Table \ref{tab: dsharp_composition}. 
+
+
+
+
+\begin{table}[h!]
+\centering
+\caption{DSHARP dust composition used in this project \cite{dsharp_code}.}
+
+\begin{tabular}{lllll}
+\toprule
+\textbf{Material} &
+\shortstack[l]{\textbf{Bulk Density}\\\textbf{(g cm$^{-3}$)}} &
+\shortstack[l]{\textbf{Volume}\\\textbf{Fraction}} &
+\shortstack[l]{\textbf{Mass}\\\textbf{Fraction}} &
+\shortstack[l]{\textbf{Refractive Index}\\\textbf{Source}} \\
+\midrule
+Water Ice
+& 0.92
+& 0.3642
+& 0.2000
+& \cite{Warren_and_Brandt} \\
+
+Astronomical Silicates
+& 3.30
+& 0.1670
+& 0.3290
+& \cite{Draine} \\
+
+Troilite
+& 4.83
+& 0.02578
+& 0.07434
+& \cite{Henning_and_Stog} \\
+
+Organics
+& 1.50
+& 0.4430
+& 0.3966
+& \cite{Henning_and_Stog} \\
+
+\bottomrule
+\end{tabular}
+\label{tab: dsharp_composition}
+\end{table}
+
+
+
+% ----------------------------------------------
+\subsubsection{Dust Size Distribution}
+% ----------------------------------------------
+
+The dust grains were assumed to have a size distribution of $n(a)\propto a^{3.5}$, chosen to match the distributions used by \cite{Kataoka_2015} and \cite{Zhang2023}. The minimum grain size is 0.1 \micronNS, while the maximum grain size is varied in logarithmic space up to 5000 \micronNS, with 2000 values sampled in total. The maximum grain size in each distribution is denoted by \amaxNS. For the irregular grain models, \texttt{glitterin} produced Nan values at the lower limit of 0.1 \micronNS, so a lower bound of 2 \micron was used. 
+
+
+%\add{Some note about averaging over the size distribution}
+
+% ----------------------------------------------
+
+% ----------------------------------------------
+% \subsubsection{}
+% ----------------------------------------------
+% ----------------------------------------------

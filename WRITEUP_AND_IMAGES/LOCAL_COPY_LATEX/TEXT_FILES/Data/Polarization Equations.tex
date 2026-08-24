@@ -1,0 +1,48 @@
+
+
+% ---------------------------------------------
+\subsection{Errors for Stokes Parameters}
+\label{sec: stokes_errors}
+
+For the data calibrated in this project (\bfourNS, \bfiveNS, \bsevenNS), the errors for \SIns, \SQ and \SU were estimated by averaging the maximum standard deviation in four different regions far from the bright source at the centre. This average value was applied as a constant error at every pixel in the respective error maps. The values are calculated in mJy but are presented in Table \ref{tab: source_info} in units of $\mu$Jy. 
+
+% ---------------------------------------------
+\subsection{Polarization Fraction}
+Using the debiased polarized intensity, the (debiased) polarization fraction can be calculated by:
+\begin{equation}
+    \POLFeq = \POLIeq/I,
+    \label{eq: POLF}
+\end{equation}
+\noindent where $I$ is \SI intensity. The uncertainty on polarization fraction is:
+
+\begin{equation}
+    \POLFerrEQ = \POLFeq \left[\left(\frac{\POLIerrEQ}{\POLIeq}\right)^2 + \left(\frac{\SIerrEQ}{I}\right)^2\right]^{1/2}.
+     \label{eq: POLF_error}
+\end{equation}
+   
+
+% ---------------------------------------------
+
+\subsection{Polarization Angle}
+
+The polarization position angle, $\theta$ is calculated by: 
+\begin{equation}
+\theta = \half \tan ^{-1} \frac{U}{Q},
+    \label{eq: PA}
+\end{equation}
+\noindent with an uncertainty calculated by:
+
+\begin{equation}
+    \PAerrEQ = \frac{1}{2} 
+    \frac{\sqrt{(U\SQerrEQ)^2 + (Q\SUerrEQ)^2}}{Q^2 + U^2}.
+    \label{eq: PA_error}
+\end{equation}
+
+% ---------------------------------------------
+
+
+
+
+
+
+
