@@ -1,0 +1,75 @@
+\chapter{Interferometry}
+\label{ch_interferometry}
+
+% In this chapter, I introduce the basic principles of radio interferometry that are relevant to this project. The basic principles include \add{}. I also describe the calibration and imaging steps that are used to process the data. These steps provide the outline for the ALMA data methods described in in Chapter \ref{ch_data}. 
+
+
+
+\input{TEXT_FILES/Interferometry/WhatAndWhy}
+
+
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \section{Aperature Synthesis}
+% % ------------------------------------------------
+% \note{one baseline measures one fourier component, many baselines, earth rotation, large synthesized aperature}
+
+
+% The technique that is used is call \emph{aperature synthesis}, the technique of synthesizing a larger effective aperatuyre though a combination of separated pairs of antenna \citep{Perley2026}.
+
+
+% Sample th4e spatial Fourier transform of the sky brightness \citep{Rau2026}. 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The Basics of Interferometry}
+% ------------------------------------------------
+
+The simplest interferometer consists of two telescopes that observe the same astronomical object. When the signals from the two antennas arrive at the same location to be combined, they either have constructive or destructive interference, producing a larger or smaller wave, respectively \citep{Monnier}. Because the antennas are separated by some distance, radio waves from the astronomical source reach the antennas at different times, producing a geometric delay between the signals, as shown in Figure \ref{fig: path-delay}. The signals collected by the two antennas are combined to create an interference pattern, known as a fringe. Longer baselines make finer fringes and provide higher angular resolution, making the interferometer sensitive to smaller-scale structures. Alternatively, shorter baselines make larger fringes, causing lower angular resolution but are sensitive to larger-scale structure \citep {Perley2026}. 
+.
+\begin{figure*}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../IMAGES/WRITEUP/Inter & Data/Interferometer.png}
+    \caption{Schematic of a two-antenna ratio interferometer highlighting the geometric and instrumental delays between signals received at the two antennas. Image taken from \cite{Thompson} \note{Have to ask for permission, just a screenshot, can get better quality}}
+    \label{fig: path-delay}
+  \end{figure*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% If the time between the light getting there at each telescope is too long, an additial time delay is introduced or the gringe ampliwide will decrease or dissapear \citep{Monnier}. \quoted{The location on the sky where the adjusted time delay is matched perfectly is called the phae centre} \citep{Monnier}.  
+
+ % \quoted{Instead of making a direct image of the sky at the focal plane of the camera, the individual fringe visibilities for each pair of telescopes are obtained} \citep{Monnier}. 
+
+
+ % \quoted{Each measured complex visibility is a single Fourier component of a portion of the sky} \citep{Monnier}. \quoted{} \citep{Monnier}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\input{TEXT_FILES/Interferometry/UVPlane}
+
+
+
+\input{TEXT_FILES/Interferometry/Calibration}
+
+
+
+
+
+\input{TEXT_FILES/Interferometry/Imaging}
+
+
+
+
+
+
+

@@ -1,0 +1,99 @@
+
+The observed polarized intensity, \POLIobsNS, is calculated from \SQ ($Q$) and \SU ($U$) using the equation: 
+\begin{equation}
+    \POLIobsEQ = \sqrt{Q^2 + U^2}.
+    \label{eq: POLI}
+\end{equation}
+\noindent Since \SQ and $U$ are squared, the equation always yields a positive value. This introduces a positive bias when either \SQ or $U$ are dominated by noise, since noise can cause non-zero values even when there is no polarized emission. To account for this bias, a debiased polarized intensity is calculated. 
+% noise gives us Q and U not equal to 0 even when it should be 0, more noise -> higher POLI value
+
+
+
+The polarized intensity was debiased using the method explained in \cite{sadavoy_dust_2019}, originally from \cite{HullDebias}. Variables used in these equations and further into this section are summarized in Table \ref{tab: stokes_polar_variables}. The following equations in this Chapter are from \cite{CoudeEquations}, unless specified otherwise. 
+
+
+
+\begin{table}[h!]
+\centering
+\caption{Summary of Stokes and polarization parameters, their associated error symbols, and units.}
+\begin{tabular}{llll}
+\toprule
+\textbf{Parameter} & \textbf{Symbol} & \textbf{Error Symbol} & \textbf{Units}  \\
+\midrule
+
+
+\SI
+& I
+& \SIerr
+& \mjybeam\\
+
+\SQ
+& Q
+& \SQerr
+& \mjybeam \\
+
+\SU
+& U
+& \SUerr
+& \mjybeam \\
+
+
+
+Observed (Biased) Polarized Intensity
+& \POLIobs
+& N/A
+& \mjybeam\\
+
+
+Debiased Polarized Intensity
+& \POLI
+& \POLIerr
+& \mjybeam\\
+
+Polarization Fraction (debiased)
+& \POLF
+& \POLFerr
+& unitless\\
+
+
+Polarization Angle (debiased)
+& $\theta$
+& \PAerr
+& $^\circ$ \\
+
+
+
+
+
+\bottomrule
+\end{tabular}
+\label{tab: stokes_polar_variables}
+\end{table}
+
+
+
+
+
+
+This method calculates the debiased polarized intensity, \POLIns, with a corresponding error of \POLIerr, with the equation:
+
+\begin{equation}
+    \text{PDF}(\POLIeq|\POLIobsEQ, \POLIerrEQ)=\frac{\POLIobsEQ}{\POLIerrEQ^2} I_0(x)\exp\left[-\frac{(\POLIobsEQ^2 + \POLIeq^2)}{2\POLIerrEQ^2}{}\right],
+    \label{eq: debias}
+\end{equation}
+\noindent where PDF is the probability density function. Here, $I_0(x)$ is the Bessel function for the Bessel parameter $x = \POLIobsEQ \POLIeq/\POLIerrEQ^2$. The most likely \POLI corresponds to the peak of the PDF in Equation \ref{eq: debias}. The debiased value is calculated by minimizing the negative value of the PDF in Equation \ref{eq: debias} using \texttt{scipy.optimize.minimize\_scalar}. 
+
+Only the pixels with a low to moderate S/N ($<9$) were debiased with the method described above. The pixels with S/N$>9$ do not need to be treated the same way because their emission is much stronger than the noise. These pixels are debiased using the standard maximum likelihood calculation method from \cite{VaillancourtDebias}:
+\begin{equation}
+   \POLIbrightEQ = \sqrt{Q^2 + U^2 -\POLIerrEQ^2}.
+\end{equation}
+
+
+\noindent The corresponding error of the debiased polarized intensity is calculated by:
+
+\begin{equation}
+    \POLIerrEQ = 
+    \left[ 
+    \frac{(Q\SQerrEQ)^2 + (U\SUerrEQ)^2}{Q^2 + U^2} \right]^{1/2}.
+    \label{eq: POLI_error}
+\end{equation}

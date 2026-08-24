@@ -1,0 +1,295 @@
+\subsubsection{Ratio Model}
+The results of the tested ratio models are presented in Table \ref{tab:ratio_model_chi2}, with the best fit at each wavelength shown in bold. The best fit at each wavelength is shown in Figure \ref{fig: RatioBestGrid}, with the observed vectors in black and the model vectors in red.  
+
+Taking \bfive as an outlier (see Chapter \ref{sec: discussion_azimuthal_polarization}), the best-fit ratio models show that, as wavelength decreases, the observations are better matched with a higher uniform contribution. This result is consistent with the observations discussed in Chapter \ref{sec: c4_polarization_maps}, which show a greater uniform contribution with decreasing wavelength. 
+
+
+
+
+
+
+% This was updated to Band 5 robust = -1 on July 18th
+% These numbers might need to be changed if we change how we calculate chi^2
+% This is Band 4 nterms2, Band 7 nterms 2.
+\begin{table}[h!]
+\centering
+\caption{Results of ratio model testing for each wavelength, with the goodness-of-fit quantified using the reduced $\chi^2$ value calculated using Equation \ref{eq: chi_sq_reduced}. The best fit at each wavelength is in bold.}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Ratio Model} & \textbf{\bfour} & \textbf{\bfive} & \textbf{\bsix} & \textbf{\bseven} \\
+\midrule
+100Uni + 0Azi
+& 181.67 % Band 4 
+& \textbf{22.58} % Band 5 
+& 37.39 % Band 6  
+& \textbf{79.12} \\
+
+
+90Uni + 10Azi
+& 171.40 % Band 4
+& 24.22 % Band 5  
+& 33.93 % Band 6  
+& 88.59 \\
+
+80Uni + 20Azi
+& 158.01 % Band 4 
+& 27.77 % Band 5  
+& \textbf{33.36} % Band 6  
+& 108.65 \\
+
+70Uni + 30Azi
+& 140.74 % Band 4 
+& 34.28 % Band 5  
+& 37.99 % Band 6 
+& 144.84 \\
+
+60Uni + 40Azi
+& 116.11 % Band 4 
+& 45.10 % Band 5
+& 51.96 % Band 6 
+& 206.76 \\
+
+50Uni + 50 Azi
+& \textbf{88.21} % Band 4 
+& 63.81 % Band 5  
+& 84.48 % Band 6  
+& 322.01 \\
+
+40Uni + 60Azi
+& 124.99 % Band 4 
+& 91.17 % Band 5  
+& 140.41 % Band 6  
+& 498.43 \\
+
+30Uni + 70 Azi
+& 131.03 % Band 4 
+& 116.35 % Band 5
+& 191.20 
+& 647.50 \\
+
+20Uni + 80Azi
+& 133.70 % Band 4 
+& 138.36 % Band 5  
+& 233.90 % Band 6  
+& 776.00 \\
+
+10Uni + 90Azi
+& 136.42 % Band 4
+& 157.27 % Band 5  
+& 270.41 % Band 6 
+& 886.40 \\
+
+0Uni + 100Azi
+& 139.41
+& 173.26
+& 302.34 
+& 979.97 \\
+\bottomrule
+\end{tabular}
+% \begin{tablenotes}
+% \footnotesize
+% \item \textbf{Note:} Values of . 
+% \end{tablenotes}
+\label{tab:ratio_model_chi2}
+\end{table}
+
+
+
+
+
+% PLOTS
+% ----------------------------------------
+% ----------------------------------------
+% \begin{figure*}[h]
+%   \centering
+
+%   % Row 1
+%   \begin{minipage}{0.48\textwidth}
+%     \centering
+%     \includegraphics[width=\linewidth]{IMAGES/WRITEUP/Ratio/IRS63_best_ratio_BAND4.pdf}
+%     \textbf{(a) Band 4}
+%   \end{minipage}
+%   \hfill
+%   \begin{minipage}{0.48\textwidth}
+%     \centering
+%     \includegraphics[width=\linewidth]{IMAGES/WRITEUP/Ratio/IRS63_best_ratio_BAND5_robust_minus1.pdf}
+%     \textbf{(b) Band 5}
+%   \end{minipage}
+
+%   \vspace{0.5cm}
+
+%   % Row 2
+%   \begin{minipage}{0.48\textwidth}
+%     \centering
+%     \includegraphics[width=\linewidth]{WRITEUP_AND_IMAGES/
+%   \end{minipage}
+%   \hfill
+%   \begin{minipage}{0.48\textwidth}
+%     \centering
+%     \includegraphics[width=\linewidth]{IMAGES/WRITEUP/Ratio/IRS63_best_ratio_BAND7.pdf}
+%     \textbf{(d) Band 7}
+%   \end{minipage}
+
+%   \caption{
+%   \add{caption, make this a grid} \note{Change to $\Delta\alpha$ and $\Delta \delta$ if we chose to do that for other plots.} \note{Update to band 5 robust -1}
+%   }
+
+%   \label{fig:best-ratio-models}
+% \end{figure*}
+% ----------------------------------------
+% ----------------------------------------
+
+
+
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=1.1\textwidth]{../IMAGES/WRITEUP/Ratio/Best_grid_Delta.pdf}
+  \caption{Figure \ref{fig: StokesI_POLI_grid}, overplotted with the polarization vectors in red from the best-fit ratio model at each wavelength. The corresponding best-fit ratio models are listed in Table \ref{tab:ratio_model_chi2}.}
+  \label{fig: RatioBestGrid}
+\end{figure}
+
+
+
+
+
+\subsubsection{Gaussian Model}
+The five best-fitting Gaussian models (out of 150 tested) are presented in Table \ref{tab:gaussian_top5}. The best fit at each wavelength is highlighted in Figure \ref{fig: GaussianBestGrid}, with the observed vectors in black and the model vectors in red. Additionally, the Gaussian ($W_{\text{Uniform}}$, Equation \ref{eq: gaussian_eq}) for each best-fit are shown in Figure \ref{fig: gaussian_best_map_w_uniform}.  
+
+
+From the results in Table \ref{tab:gaussian_top5}, BMAJ and BMIN remain the same among the top five models at each wavelength, indicating that these values provide a good fit among the tested values. The parameter that varies is the $\Phi$ parameter, which controls how flat the Gaussian is. A higher $\Phi$ value produces a flatter Gaussian and a faster transition from uniform to azimuthal polarization (see Figure \ref{fig: Methods/GaussianExamples}). In the best-fit model at each wavelength, $\Phi$ is greater than 2, producing a flat-topped Gaussian rather than a standard Gaussian. This can also be seen in Figure \ref{fig: gaussian_best_map_w_uniform}, which shows that the area of uniform alignment increases as wavelength decreases. This indicates that uniform alignment, which is consistent with dust self-scattering, contributes more at shorter wavelengths, which is what we expect from Chapter \ref{sec: c4_polarization_maps} and the results from the ratio model. 
+
+
+
+% This was updated to Band 5 robust = -1 on July 18th
+% Needs updating if we change how we calculate chi-squared
+% Band 4 and Band 7 nterms 2
+
+\begin{table}[h!]
+\centering
+\caption{Results of the top 5 best fits (in descending order) at each wavelength from the Gaussian model. $\chi^2$ values were calculated using Equation \ref{eq: chi_sq_reduced}. The best fit at each wavelength is in bold.}
+\begin{tabular}{c ccc c}
+\toprule
+\textbf{Wavelength} & $\boldsymbol{\phi}$ & \textbf{BMAJ} & \textbf{BMIN} & $\boldsymbol{\chi^2}$ \\
+\midrule
+
+\textbf{\bfour} 
+& \textbf{7} & \textbf{20} & \textbf{10} & \textbf{26.70} \\
+ & 6 & 20 & 10 & 26.79 \\
+ & 5 & 20 & 10 & 26.95 \\
+ & 4 & 20 & 10 & 27.30 \\
+ & 3 & 20 & 10 & 28.04 \\
+
+\midrule
+
+\textbf{\bfive} 
+& \textbf{4} & \textbf{30} & \textbf{20} & \textbf{13.88} \\
+ & 5 & 30 & 20 & 13.92 \\
+ & 6 & 30 & 20 & 14.09 \\
+ & 3 & 30 & 20 & 14.16 \\
+ & 7 & 30 & 20 & 14.30 \\
+
+\midrule
+
+\textbf{\bsix} 
+& \textbf{4} & \textbf{30} & \textbf{30} & \textbf{8.08} \\
+ & 5 & 30 & 30 & 8.09 \\
+ & 6 & 30 & 30 & 8.19 \\
+ & 7 & 30 & 30 & 8.33 \\
+ & 3 & 30 & 30 & 8.41 \\
+
+\midrule
+
+\textbf{\bseven} 
+& \textbf{6} & \textbf{40} & \textbf{30} & \textbf{38.56} \\
+ & 5 & 40 & 30 & 38.59 \\
+ & 7 & 40 & 30 & 38.69 \\
+ & 6 & 30 & 30 & 38.86 \\
+ & 7 & 30 & 30 & 38.88 \\
+
+\bottomrule
+\end{tabular}
+\label{tab:gaussian_top5}
+\end{table}
+
+
+
+
+
+
+
+
+
+
+% PLOTS
+% ----------------------------------------
+% ----------------------------------------
+% \begin{figure*}[h]
+%   \centering
+
+%   % Row 1
+%   \begin{minipage}{0.48\textwidth}
+%     \centering
+%     \includegraphics[width=\linewidth]{IMAGES/WRITEUP/Gaussian/IRS63_best_gaussian_BAND4.pdf}
+%     \textbf{(a) Band 4}
+%   \end{minipage}
+%   \hfill
+%   \begin{minipage}{0.48\textwidth}
+%     \centering
+%     \includegraphics[width=\linewidth]{IMAGES/WRITEUP/Gaussian/IRS63_best_gaussian_BAND5_robust_minus1}
+%     \textbf{(b) Band 5}
+%   \end{minipage}
+
+%   \vspace{0.5cm}
+
+%   % Row 2
+%   \begin{minipage}{0.48\textwidth}
+%     \centering
+%     \includegraphics[width=\linewidth]{IMAGES/WRITEUP/Gaussian/IRS63_best_gaussian_BAND6.pdf}
+%     \textbf{(c) Band 6}
+%   \end{minipage}
+%   \hfill
+%   \begin{minipage}{0.48\textwidth}
+%     \centering
+%     \includegraphics[width=\linewidth]{IMAGES/WRITEUP/Gaussian/IRS63_best_gaussian_BAND7.pdf}
+%     \textbf{(d) Band 7}
+%   \end{minipage}
+
+%   \caption{
+%   \add{caption, make this a grid} \note{Change to $\Delta\alpha$ and $\Delta \delta$ if we chose to do that for other plots.} \note{Update to band 5 robust -1}
+%   }
+
+%   \label{fig:best-gaussian-models}
+% \end{figure*}
+% ----------------------------------------
+% ----------------------------------------
+
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=1.1\textwidth]{../IMAGES/WRITEUP/Gaussian/Best_grid_Delta.pdf}
+  \caption{Same as Figure \ref{fig: RatioBestGrid}, but for the best-fit Gaussian models. The corresponding best-fit Gaussian models are listed Table \ref{tab:gaussian_top5}.}
+  \label{fig: GaussianBestGrid}
+\end{figure}
+
+
+\begin{figure*}[h]
+  \centering
+  \includegraphics[width=1.1\textwidth]{../IMAGES/WRITEUP/Gaussian/Best_grid_Delta_map.pdf}
+  \caption{Maps of the Gaussian uniform weights $W_{\text{uniform}}$ (Equation \ref{eq: gaussian_eq}) for the best-fit Gaussian model for each wavelength, corresponding vector pattern shown in Figure \ref{fig: GaussianBestGrid}.}
+  \label{fig: gaussian_best_map_w_uniform}
+\end{figure*}
+
+
+
+\subsubsection{Ratio vs Gaussian Models}
+
+The reduced $\chi^2$ values and visual comparisons of the ratio and Gaussian models show that the Gaussian model provides a better overall fit. 
+
+
+Figure \ref{fig: RatioBestGrid} show that, while the ratio model matches many of the observed vectors at each wavelength, it is a poor match for others. This is a limitation of applying the same polarization pattern across the whole disk. As discussed above, the polarization pattern changes with distance from the centre of the disk. Therefore, while the ratio model provides a good first test, it is an oversimplification to accurately model the pattern throughout the entire disk. 
+
+
+Figure \ref{fig: GaussianBestGrid} shows that, although not all vectors match perfectly, many are accurately reproduced by the Gaussian model. At \bsix and \bsevenNS, the model does not match the vectors along the lobes, which could be related to depolarization. \question{go into more detail about this?} Overall, the Gaussian model is the better model but still has limitations, as it is only geometric. 

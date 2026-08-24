@@ -1,0 +1,89 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{UV Plane}
+% ------------------------------------------------
+
+
+
+The projected baseline between two antennas is decomposed into two coordinates $ (u, v) $ with units of the observing wavelength along the east and north directions, respectively, as projected in the direction of the target. The geometric relationship between the source direction and projected baseline coordinates is illustrated in Figure \ref{fig: UV-plane}. For ground-based observing (like ALMA), the object moves across the sky as the Earth rotates, so the $(u, v)$ coverage changes with time. This is beneficial since Earth's rotation increases the $(u,v)$ coverage without requiring additional telescopes \citep{Monnier}. An example of the resulting $(u, v)$ coverage is shown in Figure \ref{fig: UV-coverage} 
+
+
+\begin{figure*}[h]
+    \centering
+
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../IMAGES/WRITEUP/Inter & Data/ThompsonUV.png}
+        \captionof{figure}{Schematic showing the geometric relationship between a source with sky coordinates $(l, m)$ and the baseline vector of an interferometer, denoted by $D_\lambda$. The baseline is described by its components $(u, v, w)$. Image taken from \cite{Thompson} \note{Have to ask for permission, just a screnshot, can get better quality}}
+        \label{fig: UV-plane}
+    \end{minipage}
+    \hfill 
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../IMAGES/WRITEUP/Inter & Data/UV_coverage.png}
+        \captionof{figure}{Schematic showing the \uv coverage.  Image taken from \cite{Monnier} \note{Have to ask for permission, just a screnshot, can get better quality}}
+        \label{fig: UV-coverage}
+    \end{minipage}
+
+\end{figure*}
+
+
+
+
+
+
+
+
+
+Each antenna pair measures one complex visibility, which describes the amplitude and phase of the interference pattern as a function of time and frequency \citep{Ricci2017}.  Each complex visibility is a single Fourier component of the sky brightness distribution, and together they sample its Fourier transform. The visibility function  $V(u, v) $ is given by:
+\begin{equation}
+    V(u, v) = \int_{-\infty}^{\infty} I(l, m) e^{-2\pi i(ul + vm)} dl dm
+    \label{eq: V(u,v)}
+\end{equation}
+\noindent where $I(l, m)$ is the intensity function, and $(l, m)$ are the angular sky coordinates  \citep{Marvil2026}. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% The $u,v$ coverage depends on the projected baseline separations in the direction of the target (not the physical baselines) \citep{Monnier}. 
+
+
+
+% \quoted{Here $l$ and $m$ have units of radians} \citep{Monnier}. 
+
+% A major difference bweteen a single-telescope observation and observations from an interderometer is the (u,v) coverage \citep{Monnier}.
+
+
+% A visibility is a measurement of one Fourier component of the sky brightness distribution, made in the uv space \citep{Marvil2026}. 
+
+% \quoted{The vector $\vec{sigma} = (l,m)$ can be represented in rectilinear coorinates on the celestial sphere, where $l$ points along local east and $m$ points north$^2$}\citep{Monnier}.
+
+% The $(u, v)$ axes lie in a plane paralle to the Earth's equator \citep{Thompson}. 
+
+
+
+% Gridding combines all the measured visibilities onto a UV grid \citep{Marvil2026}. 
+
+% A baseline and its conjugate trace out elliptical arcs through the uv plane over time beacuse of earths rotation \citep{Marvil2026}. 
+
+
+ 
+
+
+% The easy-west antenna spacings contain components in this plane only, and as the Earth rotates, the specing vectors sweep out circles with the $(u,v)$ origin \citep{Thompson}. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

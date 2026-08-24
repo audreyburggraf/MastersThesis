@@ -1,0 +1,186 @@
+\chapter{Data}
+\label{ch_data}
+
+
+
+
+
+
+\section{ALMA Observations}
+\question{What is the project ID?}
+IRS 63 was observed in full polarization by ALMA at \bfour (Band 4), \bfive (Band 5), \bsix (Band 6), and \bseven (Band 7) between 2017 and 2022 \add{project ID}. The \bandfivemm polarization observations were originally presented in \cite{sadavoy_dust_2019}, and the remaining datasets were presented in \cite{tobin} as continuum only. Information about the observations is outlined in Table \ref{tab: alma_observations}.
+
+
+
+% Calibrator info was taken from shamus' thesis 
+\begin{table}[h!]
+\centering
+\caption{ALMA observation and self-calibration information for IRS 63 at each wavelength. \note{\cite{Tobin2024} also has 2017-05-13 and 2017-05-15 for observing dates for Band 6.} \note{\cite{Tobin2024} has number of antenna as 46, 45, 57, 42. also time of source as 8.06 for Band 6} \note{\cite{Tobin2024} has time of source as 8.06 for Band 6 and Sarah commented maybe 7.3 min}}
+\begin{tabular}{lllll}
+\toprule
+\textbf{Property} & \textbf{\bandfourmm} & \textbf{\bandfivemm } & \textbf{\bandsixmm } & \textbf{\bandsevenmm} \\
+\midrule
+
+% Observed from
+Observation Date
+& 2019-09-01 % Band 4
+& 2022-08-10 % Band 5
+& 2017-05-20 % Band 6
+& 2022-08-21 % Band 7
+\\
+
+
+
+& 2019-09-02 % Band 4
+& ... % Band 5
+& 2017-07-11 % Band 6
+& ... % Band 7
+\\
+
+
+& ... % Band 4
+& ... % Band 5
+& 2017-07-14 % Band 6
+& ... % Band 7
+\\
+
+
+
+
+$\nu$ (GHz) 
+& 145 % Band 4
+& 203 % Band 5
+& 233 % Band 6
+& 344 % Band 7
+\\
+
+
+Phase Calibrator
+& J1633-2557 % Band 4
+& J1617-2537 % Band 5
+& J1625-2527 % Band 6
+& J1626-2951 % Band 7
+\\
+
+
+Flux/Bandpass Calibrator
+& J1517-2422 % Band 4
+& J1517-2422 % Band 5
+& J1517-2422  % Band 6
+& J1517-2422 % Band 7
+\\
+
+
+Polarization Calibrator
+& J1751+0939 % Band 4
+& J1751+0939 % Band 5
+& J1549+0237 % Band 6
+& J1751+0939 % Band 7
+\\
+
+
+
+Time on Source (min)
+& 37.7 % Band 4
+& 35.62 % Band 5
+& $\approx$ 7 % Band 6
+& 30.81 % Band 7
+\\
+
+
+
+Min. Baseline (m)
+& 38 % Band 4
+& 15 % Band 5
+& 15 % Band 6
+& 15 % Band 7
+\\
+
+
+Max. Baseline (m)
+& 3638 % Band 4 (3637.743277)
+& 1302 % Band 5 (1301.611)
+& 2647.3 % Band 6
+& 1302 % Band 7 (1301.611)
+\\
+
+
+
+% Antennas:
+\# Antenna
+& 47 % Band 4
+& 45 % Band 5
+& 42-46 % Band 6
+& 45 % Band 7
+\\
+
+
+
+
+
+
+% Pixel ($''$) 
+% & 0.018 
+% & 0.018 
+% & 0.018 
+% & 0.018 \\
+
+
+\bottomrule
+\end{tabular}
+\label{tab: alma_observations}
+\end{table}
+
+
+
+
+
+
+
+
+% \begin{table}[h!]
+% \centering
+% \caption{\add{Caption}}
+% \begin{tabular}{cccccc}
+% \toprule
+% \multirow{2}{*}{} & \multicolumn{2}{c}{\textbf{Center position (J2000)}}  & \textbf{Disk PA}  \\
+% & R.A. (h, m, s) & Decl. ($^\circ$,$'$,$''$)  & ($^\circ$)  \\
+% \midrule 
+% \textbf{Band 4} & 16:31:35.656 & -24:01:29.992 & 145.9  \\
+% \textbf{Band 5} & 16:31:35.656 & -24:01:30.086   & 140.25 (check)   \\
+% \textbf{Band 6} & 16:31:35.657 & -24:01:29.935  & 148.0   \\
+% \textbf{Band 7} & 16:31:35.656 & -24:01:30.089  & 139.65  \\
+% \bottomrule
+% \end{tabular}
+% \label{tab: source_info}
+% \end{table}
+
+
+
+
+
+
+
+
+
+\section{Self-Calibration}
+\input{TEXT_FILES/Data/Clean}
+
+
+
+\section{Debias Correction}
+\label{sec: debias_correction}
+\input{TEXT_FILES/Data/Debias}
+
+
+
+
+
+
+
+
+\section{Additional Polarization Quantities \& Errors}
+
+\input{TEXT_FILES/Data/Polarization Equations}
+
+
