@@ -1,84 +1,126 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Polarization}
+\subsection{Polarization and Stokes Parameters \status{ready for tweaking, add image}}
+
+
+Polarized light is light where the electric field has a preferred direction. For linearly polarized light, the electric field oscillates along a fixed direction perpendicular to the direction in which the light propagates \citep{RybickiLightman} (see Figure \ref{fig: LinearPol}). Polarization information from interferometers (such as ALMA) is represented by the Stokes visibilities from cross-correlations between antennas in the array \citep{HullDebias}. The Stokes parameters $I$, $Q$, and $U$ describe the total intensity and linear polarization \citep{Trippe}. Using $Q$ and $U$ together reveals information about the strength and orientation of the polarization (polarized intensity Equation \ref{eq: POLI}; polarization angle Equation \ref{eq: PA}).
+
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Screenshot 2026-06-29 at 6.58.53 PM.png}
+  \caption{\add{caption and figure}}
+  \label{fig: LinearPol}
+\end{figure}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Polarization Mechanisms}
+\subsection{Polarization Mechanisms \status{ready for tweaking}}
 \label{sec: intro_polarization_mechanisms}
-
-\quoted{In disks, polarized dust emission can arise from many different mechanisms }\citep{Stephens_2019}. 
-
-\quoted{Each mechanism is useful for constraining physical properties in the disk  }\citep{Stephens_2019}. 
-
-\quoted{For example, they allow us to constrain disk grain size distributions and grain/disk geometries, independent from current methods of measuring these parameters} \citep{Stephens_2019}
-
-\quoted{Polarized emission at mid-infared wavelengths can occur due to absorption, emission and sometimes scattering, causing difficulty in interpreting the polarization morphology }\citep{Stephens_2017}
+% \note{In Chapter \ref{sec: c4_polarization_maps} I refer to this section for a reasoning on why a circular pattern can be from radiative alignment, or some other unknown reason} "This is consistent with the pattern expected from radiative alignment (or some other mechanism, Chapter \ref{sec: intro_polarization_mechanisms}), shown in Figure \ref{fig: kataoka_polarization_morphologies}(b). "
 
 
 
-\quoted{Observations have shown the existence of a wide range of disk polarization morphologies \citep{Stephens_2019}}. 
 
 
-\quoted{The mechanism for producing polarized emission from protostellar disks at (sub)millimeter wavelengths is currently uncertain\citep{Stephens_2017}}.
+The polarized emission from disks, specifically their polarization angle to make vectors (Chapter \ref{sec: chap4_polarization_vectors}), reveals the polarization morphology, or pattern. The emission can be polarized from many different mechanisms in the disk, each leaving behind a different pattern, and each can help constrain different physical properties of the disk \citep{Stephens_2019}. Since the polarized emission at these wavelengths can be caused by different mechanisms, it is a challenge to disentangle them and determine what is causing it/interpret the polarization morphology \citep{Stephens_2017}, and as a result the mechanisms are unknown \citep{Kataoka_2017}. The following subsections explore a few of the potential patterns and mechanisms that cause them, but this is not a complete list. A visual example can be seen in Figure \ref{fig: kataoka_polarization_morphologies}. 
 
 
-\quoted{The mechanisms causing millimeter-wave polarization in protoplanetary disks are under debate} \citep{Kataoka_2017}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Magnetic Alignment}
+
+Polarization observations of polarized emission from dust grains in disks at (sub)millimetre wavelengths provide insight into dust grain growth in protostellar disks \citep{Harrison2024}. 
 
 
-\quoted{Polarized dust emission outside of disks reveal magnetic field morphology of molecular clouds} \citep{Stephens_2019}
+
+% ------------------------------------------------
+\begin{figure*}[h]
+  \centering
+  \includegraphics[width=1.0\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/FromPapers/Kataoka2017Figure3.pdf}
+  \caption{\add{caption} \note{ask permission to use} \note{I will take off the top part and make it larger, better quality, etc} \note{change (a), (b), (c) labels}}
+  \label{fig: kataoka_polarization_morphologies}
+\end{figure*}
+% ------------------------------------------------
 
 
-\quoted{Classically, polarization is expected from non-spherical grains aligned with the magnetic field} \citep{Stephens_2017}
 
-
-\quoted{Spinning dust grains in the interstellar medium are expected to align with their short axes perpendicular to the magnetic field of radiative torques}  \citep{Stephens_2017}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Dust Self-Scattering}
+\subsubsection{Magnetic Grain Alignment \status{ready to tweak}}
+
+
+
+Magnetic grain alignment is produced when non-spherical dust grains align to a magnetic field morphology, causing the short axis of the dust grains to align parallel to the magnetic field direction via radiative torques  \citep{Stephens_2019, Harrison2024}. Typically in a disk, it would be toroidal alignment \citep{Stephens_2017}, which can be seen in Figure \ref{fig: kataoka_polarization_morphologies}(a). Polarized dust emission is known to trace the direction of the magnetic fields in the interstellar medium (ISM) and the molecular clouds in the outer part of the disks \citep{Stephens_2019}. Even though this pattern is what is expected, this is not the pattern that is seen in most disks; instead, it is better explained by other mechanisms (producing other patterns) \cite{Harrison2024}. 
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Radiative Grain Alignment \status{ready to tweak}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Another polarization mechanism is caused by the long axis of the grains aligning perpendicular to the radiation field (k-RAT alignment) \citep{Stephens_2017}. This produces a polarization morphology that is azimuthal, or in a circular pattern about the centre of the disk, as seen in Figure \ref{fig: kataoka_polarization_morphologies}(b). However, there are other polarization mechanisms that can produce an azimuthal polarization morphology other than radiative alignment. This includes mechanical alignment where grains align with their long axis in the streaming direction \citep{Stephens_2019}, `aerodynamic alignment' where gas and dust orbit the central star at different speeds, or other mechanisms. It is unknown exactly what causes this azimuthal morphology, and determining this is beyond the scope of this project. For this project, we just need to know that a common morphological pattern that is seen is this azimuthal one, and by default it may be written that it's caused by aligning with the radiation field, but it could be from other methods. 
+
+
+% \quoted{Multiple mechanisms could
+% theoretically produce this polarized emission, including radiation anisotropy (Tazaki et al. 2017), aerodynamic alignment due to gas–dust interactions (Gold 1952; Yang et al. 2019), . }\cite{Harrison2024}
+
+
+
+% \quoted{Several mechanisms have been proposed for grain alignment, including alignment to the magnetic field or radiation anisotropy through radiative alignment torques (RATs; Tazaki et al. 2017) }\cite{Harrison2024}
+
+
+% \quoted{Several mechanisms have been proposed for grain alignment, including mechanical alignment (Gold 1952; Kataoka et al. 2019; Yang et al. 2019).}\cite{Harrison2024}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Dust Self-Scattering \status{ ready for tweak}}
 \label{sec: dust_self_scattering}
 
 
 
-\quopted{If the dust grains have roughly the same size of the light you are observing, the dust grains are expected to have a large scattering opacity, therefore the continuum emission is expected to be polarized due to self-scattering \citep{Kataoka_2015}. }
-
-\quoted{If the grains are large sufficiently large, they have a large scattering opacity, and there is a significant amount of scattered light component in the dust continuum emission \cite{Kataoka_2015}.} 
-
- \quoted{One polarization mechanism is caused by self-scattering from dust grains of sizes comparable with the wavelength }\citep{Stephens_2017}
-% ------------------------------------------------
-\begin{figure*}[h]
-  \centering
-  \includegraphics[width=0.8\textwidth]{WRITEUP_AND_IMAGES/IMAGES/SLIDESHOW_SCREENSHOT/dust_self_scattering_schematic.png}
-  \caption{\add{caption}}
-  \label{fig: dust-self-scattering-schematic}
-\end{figure*}
-% ------------------------------------------------
-
-
-\begin{equation}
-    a_{max} = \lambda / 2 \pi
-    \label{eq: scattering_efficiency}
-\end{equation}
+Dust self-scattering is when thermal emission from dust grains is scattered by other dust grains in the disk, producing polarized light. This polarization mechanism is expected to produce a polarization morphology that is parallel to the disk minor axis \citep{Kataoka_2017}, as shown in Figure \ref{fig: kataoka_polarization_morphologies}(c). The efficiency of dust self-scattering polarization is highly dependent on the maximum grain size (see Chapter \ref{sec: c5_P_and_w_vs_a}), making it the ideal mechanism to focus on in this project, as it is a good constraint for the maximum dust grain size \citep{Harrison2024}. 
 
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Radiative Alignment}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Why polarization is useful}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \quoted{In addition to the
+% dust grain size, the disk inclination, optical depth, and dust
+% scale height can all affect the level of polarization from
+% scattering (e.g., Yang et al. 2017; Ohashi and Kataoka 2019;
+% Brunngräber and Wolf 2020).}\cite{Harrison2024}
+
+
+%  % ------------------------------------------------
+% \begin{figure*}[h]
+%   \centering
+%   \includegraphics[width=0.8\textwidth]{WRITEUP_AND_IMAGES/IMAGES/SLIDESHOW_SCREENSHOT/dust_self_scattering_schematic.png}
+%   \caption{\add{caption}}
+%   \label{fig: dust-self-scattering-schematic}
+% \end{figure*}
+% % ------------------------------------------------
 
 
 
@@ -97,14 +139,10 @@
 
 
 
-% ------------------------------------------------
-\begin{figure*}[h]
-  \centering
-  \includegraphics[width=0.8\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/FromPapers/Kataoka2017Figure3.pdf}
-  \caption{\add{caption} \note{ask permission to use} \note{I will take off the top part and make it larger, better quality, etc}}
-  \label{fig: kataoka_polarization_morphologies}
-\end{figure*}
-% ------------------------------------------------
+
+
+
+
 
 
 

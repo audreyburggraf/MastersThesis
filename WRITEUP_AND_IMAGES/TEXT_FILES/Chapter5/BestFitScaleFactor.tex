@@ -1,7 +1,7 @@
 
 % ----------------------------------------------
 % ----------------------------------------------
-The observed polarization fraction (\POLFobsNS) and the \Pw models from both spherical and irregular grains values cannot be directly compared since they are not the exact same values. The observed polarization fraction is a dimensionless ratio between polarized intensity and total intensity, where \Pw is the polarization produced by single scattering. A scale factor (SF) is introduced to enable direct comparison between models and observations. 
+The observed polarization fraction (\POLFobsNS) and the \Pw model values from spherical and irregular grains cannot be directly compared because they represent different quantities. The observed polarization fraction is a dimensionless ratio of polarized intensity to total intensity, while \Pw is the polarization scattering efficiency of the dust. A scale factor (SF) is therefore introduced to relate the model values to observations. 
 
 
 The scale factor is calculated at each \amax in the sample, given by:
@@ -9,7 +9,7 @@ The scale factor is calculated at each \amax in the sample, given by:
 \sfeq_i(\amaxEQ) = \frac{\POLFobsiEQ(\amaxEQ)}{\PwmodeliEQ(\amaxEQ)},
     \label{eq: sf}
 \end{equation}
-\noindent where $i$ denotes each wavelength that is included in the fit. This provides the scale factor for each fitted wavelength at every value of \amaxNS. If the dust model correctly reproduced the observations, each fitted wavelength should find a similar scale factor. For every value of \amaxNS, the standard deviation of the scale factor values is taken to determine the spread between the scale factors at each wavelength:
+\noindent where $i$ denotes each wavelength included in the fit. This provides a scale factor for each fitted wavelength at every value of \amaxNS. If a given grain size provides a good reproduction of the observations across all fitted wavelengths, the resulting scale factors should be similar between the wavelengths. For each value of \amaxNS, the standard deviation of the scale factors is calculated to determine the spread of the scale factors between wavelengths:
 \begin{equation}
     \text{SF}_{\text{STDEV}} = \texttt{numpy.std}(\text{SF}_i(\amaxEQ)).
     \label{eq: sf_std}
@@ -19,7 +19,7 @@ The scale factor is calculated at each \amax in the sample, given by:
 %     \label{eq: sf_median}
 % \end{equation}
 
-The best-fit grain size (\amaxbestNS) is defined as the value of \amax where the standard deviation of the scale factors was the lowest. The corresponding scale factor is called the best-fit scale factor (\sfbestNS). The values of \Pwmodel are scaled by the best scale factor, allowing the model and observations to be directly compared.
+The best-fit grain size (\amaxbestNS) is defined as the value of \amax where the standard deviation of the scale factors is minimized. The corresponding scale factor is the best-fit scale factor (\sfbestNS). The model \Pw values are multiplied by the \sfbestNS, allowing the model and observations to be directly compared.
  
 % ----------------------------------------------
 %
@@ -30,12 +30,12 @@ The best-fit grain size (\amaxbestNS) is defined as the value of \amax where the
 % ----------------------------------------------
 % \label{sec: measured_POLF}
 % ----------------------------------------------
-Multiple fits were tested to determine the effect of each wavelength of data on the success of the fit. The fits were (1) all wavelengths, (2) no \bfiveNS, (3) no \bsixNS, and (4) just \bfour and \bsevenNS. A chi-squared value was calculated at each fitting combination and porosity to determine the agreement between the model and observations, given by: 
+Multiple wavelength combinations were tested to determine the effect of each wavelength of data on the success of the fit. The fits were (1) all wavelengths, (2) no \bfiveNS, (3) no \bsixNS, and (4) just \bfour and \bsevenNS. A chi-squared value was calculated at each fitting combination and porosity to determine the agreement between the model and observations, given by: 
 \begin{equation}
 \chi_\mathcal{P}^2 = \sum_{all\text{ }wavelengths} \left(\frac{\POLFobsEQ- [P\omega (\amaxbestEQ) \times \sfbestEQ]}{\POLFerrEQ}\right)^2.
     \label{eq: chi_squared_dust_model}
 \end{equation}
-\noindent The calculation is summed over \emph{all wavelengths} as each wavelength was included in the $\chi_\mathcal{P}^2$ calculation, despite if it was included in the fit for the scale factor value or not. The fitting combination and porosity that produced the lowest chi-squared value was chosen to be the best-fit model.
+\noindent The calculation is summed over \emph{all wavelengths} as each wavelength was included in the $\chi_\mathcal{P}^2$ calculation, regardless of whether it was included in the fit for the scale factor value or not. The fitting combination and porosity that produced the lowest $\chi_\mathcal{P}$ value were chosen to be the best-fit model.
 
 % The standard Briggs weighted \bfive data is excluded from every fit. The reasoning behind this is discussed in Chapter \ref{sec: discussion_band5_data_issues}. 
 
@@ -79,7 +79,7 @@ Multiple fits were tested to determine the effect of each wavelength of data on 
 
 
 
-% To determine which fitting combination agrees best with the model, a chi-squared value ($\chi_\mathcal{P}^2$) is calculated for each fitting combination and porosity. The chi-squared value is calculated by summing the difference between the observed polarization fraction value and the \Pwmodel at the best-fit \amax value multiplied by the best-fit scale factor. It is summed over all bands, where ``all wavelengths'' refers to \bfourNS, \bfive with \texttt{robust = -1}, \bsix and \bsevenNS. The standard Briggs weighted \bfive data is also excluded from all chi-squared calculations. 
+% To determine which fitting combination agrees best with the model, a chi-squared value ($\chi_\mathcal{P}^2$) is calculated for each fitting combination and porosity. The chi-squared value is calculated by summing the difference between the observed polarization fraction value and the \Pwmodel at the best-fit \amax value, multiplied by the best-fit scale factor. It is summed over all bands, where ``all wavelengths'' refers to \bfourNS, \bfive with \texttt{robust = -1}, \bsix and \bsevenNS. The standard Briggs-weighted \bfive data is also excluded from all chi-squared calculations. 
 
 % ----------------------------------------------
 %
