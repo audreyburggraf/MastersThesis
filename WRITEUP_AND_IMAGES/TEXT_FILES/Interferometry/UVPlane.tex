@@ -2,17 +2,40 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{UV Plane}
 % ------------------------------------------------
-\SC{Add cartoon}
 
 
 
-The projected baseline between two antennas is decomposed into two coordinates $ (u, v) $ with units of observing wavelength along the east and north directions (respectively) as projected in the direction of the target \citep{Monnier}. For ground based observing (like ALMA), the object moves across the sky along a line of constant declination, so the $(u, v)$ coverage changes with time \citep{Monnier}. This is actually a benefit since Earth's rotation dramatically increases the $(u,v)$ coverage without requiring additional telescopes \citep{Monnier}. 
-
-% The $u,v$ coverage depends on the projected baseline separations in the direction of the target (not the physical baselines) \citep{Monnier}. 
+The projected baseline between two antennas is decomposed into two coordinates $ (u, v) $ with units of the observing wavelength along the east and north directions, respectively, as projected in the direction of the target. The geometric relationship between the source direction and projected baseline coordinates is illustrated in Figure \ref{fig: UV-plane}. For ground-based observing (like ALMA), the object moves across the sky as the Earth rotates, so the $(u, v)$ coverage changes with time. This is beneficial since Earth's rotation increases the $(u,v)$ coverage without requiring additional telescopes \citep{Monnier}. An example of the resulting $(u, v)$ coverage is shown in Figure \ref{fig: UV-coverage} 
 
 
+\begin{figure*}[h]
+    \centering
 
-Each pair of telescopes measures one complex visibility, which describes the amplitude and phase of the interference pattern, as a function of time and frequency \citep{Ricci2017}.  Each complex visibility is a single Fourier component of the sky brightness distribution, and together they sample its Fourier transform \citep{Marvil2026, Monnier}. The visibility function  $V(u, v) $ is given by:
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Inter & Data/ThompsonUV.png}
+        \captionof{figure}{Schematic showing the geometric relationship between a source with sky coordinates $(l, m)$ and the baseline vector of an interferometer, denoted by $D_\lambda$. The baseline is described by its components $(u, v, w)$. Image taken from \cite{Thompson} \note{Have to ask for permission, just a screnshot, can get better quality}}
+        \label{fig: UV-plane}
+    \end{minipage}
+    \hfill 
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Inter & Data/UV_coverage.png}
+        \captionof{figure}{Schematic showing the \uv coverage.  Image taken from \cite{Monnier} \note{Have to ask for permission, just a screnshot, can get better quality}}
+        \label{fig: UV-coverage}
+    \end{minipage}
+
+\end{figure*}
+
+
+
+
+
+
+
+
+
+Each antenna pair measures one complex visibility, which describes the amplitude and phase of the interference pattern as a function of time and frequency \citep{Ricci2017}.  Each complex visibility is a single Fourier component of the sky brightness distribution, and together they sample its Fourier transform. The visibility function  $V(u, v) $ is given by:
 \begin{equation}
     V(u, v) = \int_{-\infty}^{\infty} I(l, m) e^{-2\pi i(ul + vm)} dl dm
     \label{eq: V(u,v)}
@@ -30,7 +53,15 @@ Each pair of telescopes measures one complex visibility, which describes the amp
 
 
 
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% The $u,v$ coverage depends on the projected baseline separations in the direction of the target (not the physical baselines) \citep{Monnier}. 
+
+
+
 % \quoted{Here $l$ and $m$ have units of radians} \citep{Monnier}. 
 
 % A major difference bweteen a single-telescope observation and observations from an interderometer is the (u,v) coverage \citep{Monnier}.

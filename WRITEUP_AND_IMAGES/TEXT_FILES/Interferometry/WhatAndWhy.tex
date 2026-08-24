@@ -1,15 +1,26 @@
-\SC{You don't need to keep referencing the same reference after every sentence.  You can leave it to the last relevant sentence in a paragraph or the last sentence before a new reference is needed.}
+% Uncomment:
+% \SC{You don't need to keep referencing the same reference after every sentence.  You can leave it to the last relevant sentence in a paragraph or the last sentence before a new reference is needed.}
 
 
-\SC{Try to avoid referencing presentations.  Conference proceedings or published notes are fine, but Laura's presentation is not published.  If you can look back on the slides, she probably referenced published works like Tools for Radio Astronomy by Tom Wilson, et al.}
+% \SC{Try to avoid referencing presentations.  Conference proceedings or published notes are fine, but Laura's presentation is not published.  If you can look back on the slides, she probably referenced published works like Tools for Radio Astronomy by Tom Wilson, et al.}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction to Interferometers}
 % ------------------------------------------------
 
-Studying protostellar disks at millimetre wavelengths requires high-angular-resolution observations to resolve their structure. This is a very difficult process as these objects are far away, so they appear very small in the sky, and the angular resolution is limited by diffraction \citep{Monnier}. The angular resolution ($\theta_{\text{res}}$) of a single-dish radio telescope observing at wavelength $\lambda$ is given by $\theta_{\text{res}}\sim \lambda/D$, where $D$ is the diameter of the dish \citep{Monnier}. Achieving the angular resolution required to \SC{study a disk} with a single-dish telescope would require a dish kilometres in diameter, which is expensive and impractical, and it could not be steered to observe other objects. 
+Studying protostellar disks at millimetre wavelengths requires high-angular-resolution observations to probe their structure through the surrounding protostellar envelope. Because protostellar disks are typically located hundreds of parsecs away, they appear very small in the sky, and the angular resolution is limited by diffraction. The angular resolution, $\theta_{\text{res}}$, of a single-dish radio telescope observing at wavelength $\lambda$ is approximately:
+\begin{equation}
+    \theta_{\text{res}}\sim \lambda/D,
+\end{equation}
+\noindent where $D$ is the diameter of the dish \citep{Monnier}. Achieving the angular resolution required to study a protostellar disk with a single-dish telescope would therefore require an impractically large dish. For example, IRS 63 is located $\sim$ 144 parsecs away, and to resolve its structure on scales $< 50$ AU requires an angular resolution of $<$ 0.5 arcsec. At millimetre wavelengths, achieving this resolution would require a telescope around a kilometre in diameter. 
 
 
-To overcome this limitation, radio astronomers use interferometers, where multiple widely separated dishes synthesize a large dish, improving angular resolution  \citep{Ludovici2026}. The equation above now becomes $\theta_{\text{res}}\sim \lambda/B$, where $B$ is the maximum distance between two telescopes, called the baseline \citep{Monnier}. 
+To overcome this limitation, radio astronomers use interferometers, which combine observations from multiple widely separated dishes to synthesize a large dish, improving angular resolution  \citep{Ludovici2026}. The angular resolution of an interferometer is:
+\begin{equation}
+    \theta_{\text{res}}\sim \lambda/B, 
+\end{equation}
+\noindent where $B$ is the maximum distance between two telescopes, known as the baseline \citep{Monnier}. 
 
 
 

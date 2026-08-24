@@ -1,14 +1,11 @@
-Modelling the polarization from scattering for the multi-wavelength data allows us to place a constraint on the dust grain size using a method adapted from \cite{Zhang2023}, which is detailed later. To begin, two grain geometries were explored in these models: spherical grains and irregular grains. Both use the same dust composition and grain-size distribution (Chapter \ref{sec: model_assumptions}), but have different optical properties due to their shapes. Spherical dust grains are more commonly used since their scattering and absorption properties are much less computationally expensive. Alternatively, irregular dust grains are the more likely shape \citep{Lin2024}, but require more computation power. 
+Modelling the polarization from scattering across the multi-wavelength data allows us to constrain the dust grain size using a method adapted from \cite{Zhang2023}, which is detailed below. Two grain geometries were explored: spherical grains and irregular grains. Both use the same dust composition and grain-size distribution (Chapter \ref{sec: model_assumptions}), but have different optical properties due to their different shapes. Spherical dust grains are more commonly used because their scattering and absorption properties are less computationally expensive. Irregular dust grains are more realistic \citep{Lin2024}, but require more computational power. 
 
 
-The geometric modelling of the observations in Chapter \ref{sec: methods/modelling polarization pattern} were used to identify the region of the disk at each wavelength where the observed polarization morphology is uniform along the minor axis, which is consistent with dust-self scattering. This region provides a constrains for the dust grain size (Chapter \add{reference}). The goal of the modelling is to model the dust properties in this region with spherical and irregular grains, and to compare the amount of polarized light to the observed polarization fraction from IRS 63 to constrain the dust grain size. 
-
-
-Many parameters are used throughout the dust model calculations. For ease, Table \ref{tab:dust_parameters} summarizes these parameters.
+The geometric modelling of the observations in Chapter \ref{sec: methods/modelling polarization pattern} was used to identify the region of the disk at each wavelength where the observed polarization morphology aligned with the minor axis, consistent with dust self-scattering. This region provides a constraint for the dust grain size. The goal of the modelling is to model the dust properties in this region using spherical and irregular grains and compare the amount of polarized light to the observed polarization fraction of IRS 63 to constrain the dust grain size. Several parameters are used throughout the dust model calculations. Table \ref{tab:dust_parameters} summarizes these parameters for reference. 
 % ----------------------------------------------
 \begin{table}[ht]
 \centering
-\caption{Summary of parameters used throughout the dust scattering model calculations. \question{do i not need to define any of these?}}
+\caption{Summary of parameters used throughout the dust scattering model calculations. \ question {Take any out or add some?}}
 \label{tab:dust_parameters}
 
 \begin{tabular}{lll}
@@ -21,16 +18,16 @@ $x$ & Size parameter of spherical grain & --\\
 $\lambda$ & Observing wavelength & mm \\
 $\mathcal{P}$ & Dust grain porosity  & -- \\
 $f$ & Dust grain porosity (filling factor) & -- \\
-$m$ & -- & -- \\
+%$m$ & -- & -- \\
 $n$ & Real part of the refractive index & -- \\
 $k$ & Imaginary part of the refractive index & -- \\
-\kabs & -- & -- \\
-\ksca & -- & -- \\
-$g$ & -- & -- \\
-$\omega$, \weff & -- & -- \\
-$P$ & -- & -- \\
-Z11, Z12 & -- & -- \\
-N11 & -- & -- \\
+%\kabs & -- & -- \\
+%%\ksca & -- & -- \\
+%$g$ & -- & -- \\
+$\omega$, \weff & (effective) Single scattering albedo & -- \\
+%$P$ & -- & -- \\
+%Z11, Z12 & -- & -- \\
+%N11 & -- & -- \\
 $\Theta$ & Scattering Angle & \degg \\
 %$\rho$ & Dust grain material density & g cm$^{-3}$ \\
 %$m$ & Dust grain mass & g \\
@@ -48,7 +45,7 @@ $\chi^2_{\mathrm{P}}$ & Chi-squared statistic for the polarization fraction fit 
 \end{tabular}
 \begin{tablenotes}
 \footnotesize
-\item \textbf{Note:} $\lambda$ and $a$ is reported in mm, \amax is reported in \micronNS, but all three are in units of cm during the calculations.  
+\item \textbf{Note:} $\lambda$ and $a$ are reported in mm, while \amax is reported in \micronNS. All three are converted to cm for the calculations.  
 \end{tablenotes}
 \end{table}
 % ----------------------------------------------
@@ -56,19 +53,19 @@ $\chi^2_{\mathrm{P}}$ & Chi-squared statistic for the polarization fraction fit 
 
 \subsection{Model Assumptions}
 \label{sec: model_assumptions}
-\input{WRITEUP_AND_IMAGES/TEXT_FILES/Chapter5/ModelAssumptions}
+\input{TEXT_FILES/Chapter5/ModelAssumptions}
 % ----------------------------------------------
 
 
 
 
 \subsection{Spherical Dust Grains }
-\input{WRITEUP_AND_IMAGES/TEXT_FILES/SphericalDustModels/Methods}
+\input{TEXT_FILES/SphericalDustModels/Methods}
 
 
 
 \subsection{Irregular Dust Grains }
-\input{WRITEUP_AND_IMAGES/TEXT_FILES/glitterinDustModels/Methods}
+\input{TEXT_FILES/glitterinDustModels/Methods}
 
 
 
