@@ -9,7 +9,7 @@ The dust grains are assumed to follow the Disk Substructures at High Angular Res
 
 \begin{table}[h!]
 \centering
-\caption{DSHARP dust composition used in this project \cite{dsharp_code}.}
+\caption{DSHARP dust composition used in this project \cite{dsharp_code}. \SC{layout, see comment}}
 
 \begin{tabular}{lllll}
 \toprule
@@ -54,7 +54,7 @@ Organics
 \subsubsection{Dust Size Distribution}
 % ----------------------------------------------
 
-The dust grains were assumed to have a size distribution of $n(a)\propto a^{3.5}$, chosen to match the distributions used by \cite{Kataoka_2015} and \cite{Zhang2023}. The minimum grain size is 0.1 \micronNS, while the maximum grain size is varied in logarithmic space up to 5000 \micronNS, with 2000 values sampled in total. The maximum grain size in each distribution is denoted by \amaxNS. For the irregular grain models, \texttt{glitterin} produced Nan values at the lower limit of 0.1 \micronNS, so a lower bound of 2 \micron was used. 
+The dust grains were assumed to have a size distribution of $n(a)\propto a^{3.5}$, chosen to match the distributions used by \cite{Kataoka_2015} and \cite{Zhang2023}. The minimum grain size is 0.1 \micronNS, while the maximum grain size is varied in logarithmic space up to 5000 \micronNS, with 2000 values sampled in total. The maximum grain size in each distribution is denoted by \amaxNS. For the irregular grain models, \texttt{glitterin} produced Nan values at the lower limit of 0.1 \micronNS, so a lower bound of 2 \micron was used. \SC{has a lower limit of dust grains of 2 um.}
 
 
 %\add{Some note about averaging over the size distribution}

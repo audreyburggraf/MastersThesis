@@ -30,7 +30,7 @@
 % ----------------------------
 
 
-
+\SC{Show the picture after the paragraph describing it in the text.}
 \begin{figure*}[h]
     \centering
 
@@ -39,7 +39,7 @@
     \vspace{0.5cm}
 
     \includegraphics[width=\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/StokesI_POLI/POLI_grid_robust_minus1_Delta.pdf}
-    \caption{Grid of images at each wavelength showing (top) \SI emission and (bottom) debiased polarized intensity. Polarization vectors are overlaid as black lines of equal length, showing the change in morphology with wavelength. Vectors are shown only for pixels that satisfy the criteria described in Chapter \ref{sec: methods_vector_criteria}. The beam is shown in the lower left corner, and a reference scale of 100 AU is shown in the top right corner.  \question{scale vectors by POLF?}}
+    \caption{Grid of images at each wavelength showing (top) \SI emission and (bottom) debiased polarized intensity. Polarization vectors are overlaid as black lines of equal length, showing the change in morphology with wavelength. Vectors are shown only for pixels that satisfy the criteria described in Chapter \ref{sec: methods_vector_criteria}. The beam is shown in the lower left corner, and a reference scale of 100 AU is shown in the top right corner.  \question{scale vectors by POLF?} \SC{A: If you do that, then I would make a separate 2 X 2 panel plot so that the polarization segment lengths are easier to see.}}
     \label{fig: StokesI_POLI_grid}
 \end{figure*}
 
@@ -52,19 +52,21 @@
 
 
 
-In Figure \ref{fig: StokesI_POLI_grid}, we present the cleaned \SI and debiased polarized intensity images of IRS 63 at \bfourNS, \bfiveNS, \bsixNS, and \bsevenNS, overlaid with the polarization vectors that make up the observed polarization morphology. As the observing wavelength decreases, there is a clear transition in polarization morphology. 
+In Figure \ref{fig: StokesI_POLI_grid}, we present the cleaned \SI and debiased polarized intensity images of IRS 63 at \bfourNS, \bfiveNS, \bsixNS, and \bsevenNS, overlaid with the polarization vectors that make up the observed polarization morphology. As the observing wavelength decreases, there is a clear transition in polarization morphology. \SC{Mention that the polarization vectors are normalized to focus on showing angle only.}
 
 
-At \bfourNS, the polarization vectors are mostly azimuthal, forming a circular pattern around the centre of the disk. This is consistent with the pattern expected from radiative alignment (or some other mechanism, Chapter \ref{sec: intro_polarization_mechanisms}), shown in Figure \ref{fig: kataoka_polarization_morphologies}(b). However, near the centre of the disk, there is a small region where the vectors are aligned with the minor axis of the disk. This pattern is consistent with dust self-scattering, as shown in Figure \ref{fig: kataoka_polarization_morphologies}(c). 
+At \bfourNS, the polarization vectors are mostly azimuthal, forming a circular pattern around the centre of the disk. This is consistent with the pattern expected from radiative alignment (or some other mechanism, Chapter \ref{sec: intro_polarization_mechanisms}), shown in Figure \ref{fig: kataoka_polarization_morphologies}(b). \SC{aligned dust grains (e.g., via radiative alignment or aerodynamic alignment, see Chapter 1.4.2). NO refernece to the figure} However, near the centre of the disk, there is a small region where the vectors are aligned with the minor axis of the disk. This pattern is consistent with dust self-scattering, as shown in Figure \ref{fig: kataoka_polarization_morphologies}(c). 
 
 
 As the wavelength decreases from \bfour to \bsevenNS, the centre region where vectors are aligned with the minor axis becomes larger, while the azimuthal pattern resides only on the outer part of the disk. The patterns at \bfive and \bsix are more of a transition, but at \bseven the uniform alignment consistent with dust self-scattering is clearly dominating. 
 
 
-A similar wavelength-dependent change in polarization morphology has been presented for HL Tau by \cite{Li2024}, shown in Figure \ref{fig: HLTauLin2024} for the same observing wavelengths as this project. For both objects, the polarization morphology transitions from being mainly azimuthal at longer wavelengths to becoming more uniformly aligned with the minor axis at shorter wavelengths. However, there are some noticeable differences. In HL Tau, at longer wavelengths, the vectors close to the centre of the disk still have an azimuthal pattern and do not have the uniform alignment seen in the centre of IRS 63. Additionally, at longer wavelengths, the vectors show a more uniform pattern across the entire disk, whereas IRS 63 has an apparent azimuthal contribution in the outer part of the disk at the same wavelength. These similarities and differences suggest that both disks have the same transition in the dominant polarization mechanism, but their morphologies are not identical at each wavelength. 
+\SC{Connect the wavelengths to optical depth}
+\SC{HL Tau (Stephens et al. 2017; Li et al. 2024).  Figure 1.4 shows HL Tau for the same observing wavelengths as this project.}
+A similar wavelength-dependent change in polarization morphology has been presented for HL Tau by \cite{Li2024}, shown in Figure \ref{fig: HLTauLin2024} for the same observing wavelengths as this project. \SC{For both objects}, the polarization morphology transitions from being mainly azimuthal at longer wavelengths to becoming more uniformly aligned with the minor axis at shorter wavelengths. However, there are some noticeable differences. In HL Tau, at longer wavelengths, the vectors close to the centre of the disk still have an azimuthal pattern and do not have the uniform alignment seen in the centre of IRS 63. \SC{Additionally, at longer wavelengths}, the vectors show a more uniform pattern across the entire disk, whereas IRS 63 has an apparent azimuthal contribution in the outer part of the disk at the same wavelength. These similarities and differences suggest that both disks have the same transition in the dominant polarization mechanism, but their morphologies are not identical at each wavelength. 
 
 
-
+\SC{Could mention that IRS 63 is a younger disk.  It would be good to also tease a discussion section where you will compare these two disks in more detail later on.}
 
 
 

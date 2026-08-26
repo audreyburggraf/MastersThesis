@@ -2,6 +2,9 @@
 
 
 \subsection{Polarization Vector Sampling}
+
+\SC{I'm not sure section 4.1.1 is needed.  It's fine to include, but you are welcome to cut it.}
+
 The \SI maps produced using \texttt{tclean} have a pixel scale that oversamples the synthesized beam to improve image reconstruction \citep{Brogan}. Because of this, plotting a polarization vector at each pixel would oversample the polarization morphology. Instead, vectors are plotted with a spacing of approximately half of the synthesized beam size, following the Nyquist-Shannon sampling theorem \citep{Shannon}. 
 
 The effective beam size was calculated using:
@@ -30,7 +33,7 @@ In addition to the sampling spacing described above, a polarization vector was o
     \item $\PAerrEQ < 10^\circ$.
 \end{enumerate}
 \noindent These criteria were adapted from the selection criteria in \cite{sadavoy_dust_2019}. The threshold of $\POLIeq/\POLIerrEQ >3$ was used for \bfive and \bsix because of their sensitivities: threshold of 4 excluded many additional polarization vectors.
-
+\SC{they had less sensitivity and going to a threshold of 4 would limit the coverage of polarization vectors.}
 
 % , without the additional condition of $I/\sigma_I>3$. This could be excluded for our analysis as IRS 63 is bright and well-resolved, meaning it has a high S/N ratio in the area around the disk, meaning this condition is already met.
 
