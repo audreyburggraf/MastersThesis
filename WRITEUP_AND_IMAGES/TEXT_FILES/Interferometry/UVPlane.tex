@@ -5,23 +5,25 @@
 
 
 
-The projected baseline between two antennas is decomposed into two coordinates $ (u, v) $ with units of the observing wavelength along the east and north directions, respectively, as projected in the direction of the target. The geometric relationship between the source direction and projected baseline coordinates is illustrated in Figure \ref{fig: UV-plane}. For ground-based observing (like ALMA), the object moves across the sky as the Earth rotates, so the $(u, v)$ coverage changes with time. This is beneficial since Earth's rotation increases the $(u,v)$ coverage without requiring additional telescopes \citep{Monnier}. An example of the resulting $(u, v)$ coverage is shown in Figure \ref{fig: UV-coverage} 
+The projected baseline between two antennas is decomposed into two coordinates $ (u, v) $ with units of the observing wavelength along the east and north directions, respectively, as projected in the direction of the target. \SCC{The geometric relationship between the source direction and projected baseline coordinates is illustrated in Figure \ref{fig: UV-plane}}. For ground-based observing (like ALMA), the object moves across the sky as the Earth rotates, so the $(u, v)$ coverage changes with time. This is beneficial since Earth's rotation increases the $(u,v)$ coverage without requiring additional telescopes \citep{Monnier}. \SCC{An example of the resulting $(u, v)$ coverage is shown in Figure \ref{fig: UV-coverage}.}
 
 
+
+\SC{These figures don't need to be side-by-side and should be presented closer to when they are mentioned in the text.}
 \begin{figure*}[h]
     \centering
 
     \begin{minipage}[t]{0.48\textwidth}
         \centering
         \includegraphics[width=\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Inter & Data/ThompsonUV.png}
-        \captionof{figure}{Schematic showing the geometric relationship between a source with sky coordinates $(l, m)$ and the baseline vector of an interferometer, denoted by $D_\lambda$. The baseline is described by its components $(u, v, w)$. Image taken from \cite{Thompson} \note{Have to ask for permission, just a screnshot, can get better quality}}
+        \captionof{figure}{Schematic showing the geometric relationship between a source with sky coordinates $(l, m)$ and the baseline vector of an interferometer, denoted by $D_\lambda$. The baseline is described by its components $(u, v, w)$. Image taken from \cite{Thompson} \note{Have to ask for permission, just a screnshot, can get better quality} \SC{Should define w too. There may be a better image out there.}}
         \label{fig: UV-plane}
     \end{minipage}
     \hfill 
     \begin{minipage}[t]{0.48\textwidth}
         \centering
         \includegraphics[width=\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Inter & Data/UV_coverage.png}
-        \captionof{figure}{Schematic showing the \uv coverage.  Image taken from \cite{Monnier} \note{Have to ask for permission, just a screnshot, can get better quality}}
+        \captionof{figure}{Schematic showing the \uv coverage.  Image taken from \cite{Monnier} \note{Have to ask for permission, just a screnshot, can get better quality} \SC{the (u,v) coverage of what?  Something is missing here.  Perhaps mention that the tracks show the sky rotation from individual antenna pairs.}}
         \label{fig: UV-coverage}
     \end{minipage}
 
@@ -35,7 +37,7 @@ The projected baseline between two antennas is decomposed into two coordinates $
 
 
 
-Each antenna pair measures one complex visibility, which describes the amplitude and phase of the interference pattern as a function of time and frequency \citep{Ricci2017}.  Each complex visibility is a single Fourier component of the sky brightness distribution, and together they sample its Fourier transform. The visibility function  $V(u, v) $ is given by:
+Each antenna pair measures one complex visibility, which describes the amplitude and phase of the interference pattern as a function of time and frequency \citep{Ricci2017}.  Each complex visibility is a single Fourier component of the sky brightness distribution, and \SCC{together} they sample its Fourier transform. The visibility function  $V(u, v) $ is given by:
 \begin{equation}
     V(u, v) = \int_{-\infty}^{\infty} I(l, m) e^{-2\pi i(ul + vm)} dl dm
     \label{eq: V(u,v)}

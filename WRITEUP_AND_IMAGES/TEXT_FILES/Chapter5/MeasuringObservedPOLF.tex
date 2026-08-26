@@ -1,19 +1,19 @@
-A single polarization fraction value was selected at each wavelength for comparison with the dust scattering models. The polarization fraction was selected from the region showing evidence of self-scattering (uniform minor axis alignment). Three methods were tested to determine the most appropriate polarization fraction for this region:
+The polarization fraction was selected from the region showing evidence of self-scattering (uniform minor axis alignment). Three methods were tested to determine the most appropriate polarization fraction for this region:
 \begin{enumerate}
-    \item $\mathcal{P}_{\mathrm{F, max\text{ }I}}$: The polarization fraction at the pixel with maximum \SI.
+    \item $\mathcal{P}_{\mathrm{F, max\text{ }I}}$: The polarization fraction at the pixel with maximum \SIns.
     \item $\mathcal{P}_{\mathrm{F, max\,\POLIeq}}$: The polarization fraction at the pixel with maximum polarized intensity.
-    \item  $\mathcal{P}_{\mathrm{F, Gaussian}}$: The mean polarization fraction within the uniform area from the Gaussian model ($W_{\text{uniform}}$= 1 $\pm$ 0.001, Equation \ref{eq: gaussian_eq}). 
+    \item  $\mathcal{P}_{\mathrm{F, Gaussian}}$: The mean polarization fraction within the uniform area from the Gaussian model ($W_{\text{uniform}}$= 1 $\pm$ 0.001, Equation \ref{eq: gaussian_eq}). \SC{You can't have +0.001.  It would probably be good to put this as within 1% of peak or put it in terms of the standard deviation of the Gaussian.}
 \end{enumerate}
 \noindent 
 
-\noindent The values from these three methods at each wavelength are summarized in Table \ref{tab: polf_comparison}. The best representation of the observations was method 1, where the polarization fraction was taken at the pixel with the maximum \SI value. This selected value is referred to as the observed polarization fraction and is denoted by \POLFobsNS. 
+\noindent The values from these three methods at each wavelength are summarized in Table \ref{tab: polf_comparison}. The best representation \SC{You need to justify this} of the observations was Method 1, where the polarization fraction was taken at the pixel with the maximum \SI value. This selected value is referred to as the observed polarization fraction and is denoted by \POLFobsNS \SC{ These are still debiased, right?}. 
 
 
 % ----------------------------------------------
 % ----------------------------------------------
 \begin{table}[h!]
 \centering
-\caption{Results of the three methods tested to find a polarization fraction value in the region where dust self-scattering was observed.}
+\caption{Results of the three methods tested to find a polarization fraction value in the region where dust self-scattering was observed. \SC{Too long}}
 \label{tab:polf_comparison}
 \begin{tabular}{lllll}
 \toprule
