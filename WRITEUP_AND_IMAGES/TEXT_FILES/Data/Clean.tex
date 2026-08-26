@@ -15,7 +15,7 @@ The \SI images at each wavelength were interactively cleaned during the self-cal
 
 
 
-Additionally, the \SQ and \SU data were cleaned using a non-interactive phase calibration using the final mask from the amplitude calibration at its respective wavelength. The same Briggs \texttt{robust} value used for \SI was used for \SQ and $U$, with \texttt{nterms = 1}.  \note{Checked this for Band 4 and 7. Can check 5 and 7 when I can access my data again.}
+Additionally, the \SQ and \SU data were cleaned using a non-interactive \SCC{phase calibration} \SC{tclean} using the final mask from the amplitude calibration at its respective wavelength. The same Briggs \texttt{robust} value used for \SI was used for \SQ and $U$, with \texttt{nterms = 1}.  \note{Checked this for Band 4 and 7. Can check 5 and 7 when I can access my data again. } \SC{Please do}
 
 
 Figure \ref{fig: BeforeAndAfterClean} shows an example of IRS 63 at \bfour before and after self-calibration. The background noise is reduced after self-calibration, and the \SNR improves from 660 to 2655. Similar improvements were seen for the other wavelengths. 
@@ -37,7 +37,7 @@ Table \ref{tab: source_info} lists the resulting image resolution after self-cal
 
 \begin{table}[h!]
 \centering
-\caption{Summary of the properties of the cleaned images of IRS 63 at each wavelength. \question{Can I give + 83 as - 97?}  }
+\caption{Summary of the properties of the cleaned images of IRS 63 at each wavelength. \question{Can I give + 83 as - 97?}  \SC{A: yes}. \SC{d, am, as} \SC{sigma_I, sigma_Q, and sigma_U need units} \SC{42.14: Are the Band 5 data that much worse in terms of senstivity to Band 7?  It could be possible, but please check.}\SC{Too much precision in the sensitivities.  Give 2 significant figures.}}
 \begin{tabular}{lcccc}
 \toprule
 \textbf{Property} & \textbf{\bandfourmm} & \textbf{\bandfivemm } & \textbf{\bandsixmm } & \textbf{\bandsevenmm} \\
@@ -116,7 +116,7 @@ Disk PA ($^\circ$)
 \end{tabular}
 \begin{tablenotes}
 \footnotesize
-\item \textbf{Note:} \SIerrNS, \SQerrNS, \SUerr are constant values for \bfourNS, \bfiveNS, and \bsevenNS, and are reported at maximum \SI value for \bsixNS. These errors are reported in units of \ujybeamNS.  
+\item \textbf{Note:} \SIerrNS, \SQerrNS, \SUerr are constant values for \bfourNS, \bfiveNS, and \bsevenNS, \SCC{and are reported at maximum \SI value for \bsixNS.} \SC{I don't understand this} These errors are reported in units of \ujybeamNS. 
 \end{tablenotes}
 \label{tab: source_info}
 \end{table}
