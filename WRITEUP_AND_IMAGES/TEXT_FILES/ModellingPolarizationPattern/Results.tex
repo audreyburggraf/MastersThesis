@@ -1,3 +1,6 @@
+\SC{comment 1, comment 2, comment 3, comment 4, comment 5}
+
+
 \subsubsection{Ratio Model}
 The results of the tested ratio models are presented in Table \ref{tab:ratio_model_chi2}, with the best fit at each wavelength shown in bold. The best fit at each wavelength is shown in Figure \ref{fig: RatioBestGrid}, with the observed vectors in black and the model vectors in red.  
 
@@ -13,7 +16,7 @@ Taking \bfive as an outlier (see Chapter \ref{sec: discussion_azimuthal_polariza
 % This is Band 4 nterms2, Band 7 nterms 2.
 \begin{table}[h!]
 \centering
-\caption{Results of ratio model testing for each wavelength, with the goodness-of-fit quantified using the reduced $\chi^2$ value calculated using Equation \ref{eq: chi_sq_reduced}. The best fit at each wavelength is in bold.}
+\caption{Results of ratio model testing for each wavelength, with the goodness-of-fit quantified using the reduced $\chi^2$ value calculated using Equation \ref{eq: chi_sq_reduced}. The best fit at each wavelength is in bold. \SC{Caption too long, Table titles should be short.  You can have notes if you need to give more details.}}
 \begin{tabular}{lcccc}
 \toprule
 \textbf{Ratio Model} & \textbf{\bfour} & \textbf{\bfive} & \textbf{\bsix} & \textbf{\bseven} \\
@@ -158,7 +161,7 @@ Taking \bfive as an outlier (see Chapter \ref{sec: discussion_azimuthal_polariza
 The five best-fitting Gaussian models (out of 150 tested) are presented in Table \ref{tab:gaussian_top5}. The best fit at each wavelength is highlighted in Figure \ref{fig: GaussianBestGrid}, with the observed vectors in black and the model vectors in red. Additionally, the Gaussian ($W_{\text{Uniform}}$, Equation \ref{eq: gaussian_eq}) for each best-fit are shown in Figure \ref{fig: gaussian_best_map_w_uniform}.  
 
 
-From the results in Table \ref{tab:gaussian_top5}, BMAJ and BMIN remain the same among the top five models at each wavelength, indicating that these values provide a good fit among the tested values. The parameter that varies is the $\Phi$ parameter, which controls how flat the Gaussian is. A higher $\Phi$ value produces a flatter Gaussian and a faster transition from uniform to azimuthal polarization (see Figure \ref{fig: Methods/GaussianExamples}). In the best-fit model at each wavelength, $\Phi$ is greater than 2, producing a flat-topped Gaussian rather than a standard Gaussian. This can also be seen in Figure \ref{fig: gaussian_best_map_w_uniform}, which shows that the area of uniform alignment increases as wavelength decreases. This indicates that uniform alignment, which is consistent with dust self-scattering, contributes more at shorter wavelengths, which is what we expect from Chapter \ref{sec: c4_polarization_maps} and the results from the ratio model. 
+From the results in Table \ref{tab:gaussian_top5}, BMAJ and BMIN remain the same among the top five models at each wavelength, indicating that these values provide a good fit among the tested values. The parameter that varies is the $\Phi$ parameter, which controls how flat the Gaussian is \SC{It isn't just phi.  Please be clearer here.}. A higher $\Phi$ value produces a flatter Gaussian and a faster transition from uniform to azimuthal polarization (see Figure \ref{fig: Methods/GaussianExamples}). In the best-fit model at each wavelength, $\Phi$ is greater than 2, producing a flat-topped Gaussian rather than a standard Gaussian. This can also be seen in Figure \ref{fig: gaussian_best_map_w_uniform}, which shows that the area of uniform alignment increases as wavelength decreases. This indicates that uniform alignment, which is consistent with dust self-scattering, contributes more at shorter wavelengths, which is what we expect from Chapter \ref{sec: c4_polarization_maps} and the results from the ratio model. 
 
 
 
@@ -168,7 +171,7 @@ From the results in Table \ref{tab:gaussian_top5}, BMAJ and BMIN remain the same
 
 \begin{table}[h!]
 \centering
-\caption{Results of the top 5 best fits (in descending order) at each wavelength from the Gaussian model. $\chi^2$ values were calculated using Equation \ref{eq: chi_sq_reduced}. The best fit at each wavelength is in bold.}
+\caption{Results of the top 5 best fits (in descending order) at each wavelength from the Gaussian model. $\chi^2$ values were calculated using Equation \ref{eq: chi_sq_reduced}. The best fit at each wavelength is in bold. \SC{Long caption again.}}
 \begin{tabular}{c ccc c}
 \toprule
 \textbf{Wavelength} & $\boldsymbol{\phi}$ & \textbf{BMAJ} & \textbf{BMIN} & $\boldsymbol{\chi^2}$ \\
@@ -286,10 +289,10 @@ From the results in Table \ref{tab:gaussian_top5}, BMAJ and BMIN remain the same
 
 \subsubsection{Ratio vs Gaussian Models}
 
-The reduced $\chi^2$ values and visual comparisons of the ratio and Gaussian models show that the Gaussian model provides a better overall fit. 
+The reduced $\chi^2$ values and visual comparisons of the ratio and Gaussian models show that the Gaussian model provides a better overall fit. \SC{order, see pdf}
 
 
-Figure \ref{fig: RatioBestGrid} show that, while the ratio model matches many of the observed vectors at each wavelength, it is a poor match for others. This is a limitation of applying the same polarization pattern across the whole disk. As discussed above, the polarization pattern changes with distance from the centre of the disk. Therefore, while the ratio model provides a good first test, it is an oversimplification to accurately model the pattern throughout the entire disk. 
+Figure \ref{fig: RatioBestGrid} shows that, while the ratio model matches many of the observed vectors at each wavelength, it is a poor match for others. This is a limitation of applying the same polarization pattern across the whole disk. As discussed above, the polarization pattern changes with distance from the centre of the disk. Therefore, while the ratio model provides a good first test, it is an oversimplification to accurately model the pattern throughout the entire disk. 
 
 
-Figure \ref{fig: GaussianBestGrid} shows that, although not all vectors match perfectly, many are accurately reproduced by the Gaussian model. At \bsix and \bsevenNS, the model does not match the vectors along the lobes, which could be related to depolarization. \question{go into more detail about this?} Overall, the Gaussian model is the better model but still has limitations, as it is only geometric. 
+Figure \ref{fig: GaussianBestGrid} shows that, although not all vectors match perfectly, many are accurately reproduced by the Gaussian model. At \bsix and \bsevenNS, the model does not match the vectors along the lobes, which could be related to depolarization. \question{go into more detail about this?} \SC{It may be good to remind the reader of the assumed 2\% polarization fraction, which could be underestimating the azimuthal pattern relative to the uniform pattern.} Overall, the Gaussian model is the better model but still has limitations, as it is only geometric. 

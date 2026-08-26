@@ -8,20 +8,21 @@ The inverse Fourier transform of the complex visibilities in the $(u,v)$ plane (
     I(l,m) = \int_{-\infty}^\infty V(u,v) e^{2\pi i(ul+vm)}dudv,
     \label{eq: I(l, m)}
 \end{equation}
-\noindent converts the visibilities into the image domain \citep{Thompson}. Since the \uv coverage is incomplete, this produces a `dirty image', rather than a perfect reconstruction. The incomplete $(u,v)$ coverage results in the dirty image being the true sky brightness distribution convolved with the point spread function of the interferometer, called the `dirty beam' \citep{Marvil2026}.
+\noindent converts the visibilities into the image domain \citep{Thompson}. Since the \uv coverage is incomplete, this produces a `dirty image', rather than a perfect reconstruction. The dirty image is the true sky brightness distribution convolved with the point spread function of the interferometer, called the `dirty beam' \citep{Marvil2026}.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Weighting Schemes}
+\subsection{Weighting Schemes}
 % ------------------------------------------------
-Before the inverse Fourier transform is taken, each visibility in the \uv plane is assigned a weight, which influences the properties of the dirty beam and the resulting image \citep{Marvil2026}. When each visibility is weighted equally, this is called \emph{natural weighting}, which gives the highest sensitivity and therefore best signal-to-noise ratio (\SNRns) for detecting faint objects \citep{Monnier, Thompson}. 
+\SC{Switch the order between weighting schemes and Deconvolution (clean).  Or fold this into the Deconvolution (clean) section.}
+\SCC{Before the inverse Fourier transform is taken}, each visibility in the \uv plane is assigned a weight, which influences the properties of the dirty beam and the resulting image \citep{Marvil2026}. When each visibility is weighted equally, this is called \emph{natural weighting}, which gives the highest sensitivity and therefore best signal-to-noise ratio (\SNRns) for detecting \SCC{faint objects} \citep{Monnier, Thompson}. 
 
-
+\SC{order, see notebook}
 When visibilities are weighted by visibility density in the \uv plane, such that well-sampled regions are given less weight than less-sampled regions, this is called \emph{uniform weighting}. Since the \uv plane is generally more densely sampled at shorter \uv distances, uniform weighting weighs the longer \uv distances higher. This produces a smaller synthesized beam and therefore higher angular resolution, but with lower sensitivity as a trade-off \citep{Monnier}.
 
 
-A `robust' parameter was introduced in \cite{briggs} for a weighting scheme called Briggs weighting. The robust parameter controls a balance between natural and uniform weighting to find an ideal trade-off between sensitivity and angular resolution \citep{Marvil2026, Monnier}. The robust parameter ranges from -2 to 2, where more negative values have weighting closer to uniform weighting, and more positive values produce weighting closer to natural weighting \citep{Thompson}.
+A `robust' parameter was introduced in \cite{briggs} for a weighting scheme called Briggs weighting. The robust parameter controls a balance between natural and uniform weighting to find an ideal trade-off between sensitivity and angular resolution \citep{Marvil2026, Monnier}. \SC{In general, papers are cited chronologically (so oldest first).} The robust parameter ranges from -2 to 2, where more negative values have weighting closer to uniform weighting, and more positive values produce weighting closer to natural weighting \citep{Thompson}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -29,6 +30,11 @@ A `robust' parameter was introduced in \cite{briggs} for a weighting scheme call
 
 \subsection{Deconvolution (\texttt{clean})}
 % ------------------------------------------------
+
+\SC{It may help to show an example dirty image and clean image.  To illustrate the differences.} 
+
+\SC{You could mention that self calibration requires bright targets (S/N > 100 or so).}
+
 Deconvolution is the process of reducing the effects of the dirty beam in the dirty image, typically using the algorithm \clean \citep{Marvil2026, Thompson}. The \clean algorithm iteratively builds a model of the image from delta functions or small Gaussian components. At each iteration, the brightest point of the dirty image is located, a scaled copy of the dirty beam centred on this point is subtracted, and the position and brightness are recorded as \clean components \citep{Monnier}. This process is repeated iteratively until only the residual noise is left. The \clean model is then convolved with the final \clean beam, called the synthesized beam, which is a smooth Gaussian with the same full width at half maximum (FWHM) as the dirty beam. The residual image is added to the restored image, producing the final \clean image \citep{Thompson}. 
 
 
