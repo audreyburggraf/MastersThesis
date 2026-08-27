@@ -289,7 +289,7 @@
 \newcommand{\note}[1]{\textcolor{teal}{\textit{[NOTE: #1]}}}
 
 
-\newcommand{\status}[1]{\textcolor{magenta}{(\textbf{Status:}\textit{#1})}}
+\newcommand{\status}[1]{\textcolor{magenta}{(\textbf{Status:} \textit{#1})}}
 
 
 % Direct quote with quotation marks added automatically
@@ -300,7 +300,7 @@
 \newcommand{\highlight}[1]{\textcolor{magenta}{\textbf{#1}}}
 
 % This is for when i use quoted but they cite a source
-\newcommand{\theircite}{\textcolor{gray}{\emph{[see cite]}} }
+\newcommand{\permission}[1]{\textcolor{gray}{\emph{[#1]}} }
 %===============================
 
 
@@ -396,10 +396,14 @@ Dedication goes here...
 
 \quoted{Text in this format is when I directly copy text from a source, and it should be followed by the source it was from. This text is yet to be put into my own words. }
 
+\status{Here is how i will keep track of the status of a section}
+
+\permission{here is how i will keep track of image permission}
+
 ------------------------------------------------------------------------------------------------------------
 
 
-*Make sure when (ref1, ref2) its in chronological order?
+*Make sure when (ref1, ref2) its in chronological order?:  \SC{In general, papers are cited chronologically (so oldest first).}
 
 \SC{Simon Coude, Pierre Bastien,: If there is a way to abridge the author list, I suggest doing that!}
 \note{I still need to address this comment}
@@ -417,7 +421,6 @@ Dedication goes here...
 
 \SC{You want to use [] to give a short description to the figures for the table of contents. \caption[short description]{full caption}}
 
-\SC{au. Units that are capitalized are for proper names (like Jansky or Gauss), whereas units that are not named for someone are lower case (like meter and second).}
 
 ------------------------------------------------------------------------------------------------------------
 
@@ -437,6 +440,10 @@ Make sure only used references show up
 
 
 Disc vs Disk
+
+
+layout of tables and figures: not all at the end: tables are h! and figures are htbp (especially try for stokes I and POLI maps figure 4.1)
+
 
 ------------------------------------------------------------------------------------------------------------
 

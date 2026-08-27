@@ -15,7 +15,7 @@ The \SI images at each wavelength were interactively cleaned during the self-cal
 
 
 
-Additionally, the \SQ and \SU data were cleaned using a non-interactive \SCC{phase calibration} \SC{tclean} using the final mask from the amplitude calibration at its respective wavelength. The same Briggs \texttt{robust} value used for \SI was used for \SQ and $U$, with \texttt{nterms = 1}.  \note{Checked this for Band 4 and 7. Can check 5 and 7 when I can access my data again. } \SC{Please do}
+Additionally, the \SQ and \SU data were cleaned using \texttt{tclean}, using the final mask from the amplitude calibration at its respective wavelength. The same Briggs \texttt{robust} value used for \SI was used for \SQ and $U$, with \texttt{nterms = 1}.  \note{Checked this for Band 4 and 7. Can check 5 and 7 when I can access my data again. \SC{Please do}} 
 
 
 Figure \ref{fig: BeforeAndAfterClean} shows an example of IRS 63 at \bfour before and after self-calibration. The background noise is reduced after self-calibration, and the \SNR improves from 660 to 2655. Similar improvements were seen for the other wavelengths. 
@@ -23,9 +23,9 @@ Figure \ref{fig: BeforeAndAfterClean} shows an example of IRS 63 at \bfour befor
 
 
 
-\begin{figure}[h]
+\begin{figure}[htbp]
   \centering
-  \includegraphics[width=1.25\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/BeforeAndAfterClean.png}
+  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/BeforeAndAfterClean.png}
   \caption{Images before (left) and after (right) self-calibration at \bfourNS. The images demonstrate how background noise is reduced during the self-calibration process, improving the peak \SNRns.}
   \label{fig: BeforeAndAfterClean}
 \end{figure}
@@ -37,7 +37,7 @@ Table \ref{tab: source_info} lists the resulting image resolution after self-cal
 
 \begin{table}[h!]
 \centering
-\caption{Summary of the properties of the cleaned images of IRS 63 at each wavelength. \question{Can I give + 83 as - 97?}  \SC{A: yes}. \SC{d, am, as} \SC{sigma_I, sigma_Q, and sigma_U need units} \SC{42.14: Are the Band 5 data that much worse in terms of senstivity to Band 7?  It could be possible, but please check.}\SC{Too much precision in the sensitivities.  Give 2 significant figures.}}
+\caption{Summary of the properties of the cleaned images of IRS 63 at each wavelength.}
 \begin{tabular}{lcccc}
 \toprule
 \textbf{Property} & \textbf{\bandfourmm} & \textbf{\bandfivemm } & \textbf{\bandsixmm } & \textbf{\bandsevenmm} \\
@@ -50,7 +50,7 @@ R.A. (h, m, s)
 & 16:31:35.657  
 & 16:31:35.656 \\
 
-Decl. (J2000) 
+Decl. ($^\circ$, $'$, $''$) 
 & -24:01:29.992 
 & -24:01:30.086 % Updated July 22
 & -24:01:29.935 
@@ -67,7 +67,7 @@ Beam ($''\times''$)
 
 Beam PA ($^\circ$) 
 & -81.0 
-& +83.0 
+& -97
 & -68.6
 & -81.2 \\
 
@@ -92,19 +92,19 @@ Disk PA ($^\circ$)
 
 
 
-\SIerr 
+\SIerr  (\ujybeamNS)
 & 13.75
 & 42.12
 & 71.01
 & 35.17 \\
 
-\SQerr
+\SQerr (\ujybeamNS)
 & 9.65
 & 40.50
 & 27.00
 & 26.25 \\
 
-\SUerr 
+\SUerr (\ujybeamNS)
 & 10.12
 & 40.80
 & 27.00
@@ -112,11 +112,12 @@ Disk PA ($^\circ$)
 
 
 
+
 \bottomrule
 \end{tabular}
 \begin{tablenotes}
 \footnotesize
-\item \textbf{Note:} \SIerrNS, \SQerrNS, \SUerr are constant values for \bfourNS, \bfiveNS, and \bsevenNS, \SCC{and are reported at maximum \SI value for \bsixNS.} \SC{I don't understand this} These errors are reported in units of \ujybeamNS. 
+\item \textbf{Note:} \SIerrNS, \SQerrNS, \SUerr are constant values for \bfourNS, \bfiveNS, and \bsevenNS. For \bsixNS, the uncertainties were provided as maps; the values reported in this table correspond to the pixel with the maximum \SI value. \SC{Make errors 2 sig figs} \SC{Are the Band 5 data that much worse in terms of senstivity to Band 7?  It could be possible, but please check.}
 \end{tablenotes}
 \label{tab: source_info}
 \end{table}
