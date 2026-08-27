@@ -65,7 +65,7 @@ U_{N}
 
 
 
-\begin{figure}[h]
+\begin{figure}[htbp]
   \centering
   \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Ratio/RatioExamplesTest_Band4_NoAxes.pdf}
   \caption{Example of the $N = 100, N=50$ and $N = 0$ cases of the ratio model for \bfourNS.}
@@ -93,7 +93,7 @@ U_{N}
 The second geometric model tested is the \emph{Gaussian model}. The aim of this model was to reproduce a polarization morphology that transitions from being aligned with the minor axis of the disk at the centre to becoming more azimuthal towards the outer parts of the disk. This is based on the expectation that the emission from the inner region is optically thick \citep{Kataoka_2015}, with optical thickness decreasing towards the outer edge of the disk. 
 
 
-To achieve this, we used a rotated 2-dimensional flat-topped Gaussian model with three free parameters: $\phi$, BMIN and BMAJ, summarized in Table \ref{tab: gaussian_model_info}. The tested values of BMIN and BMAJ control the widths of the Gaussian model, with each treated as the FWHM and converted to standard deviations using Equation \ref{eq: FWHM_to_sigma}. Additionally, a condition of BMIN $\leqq $ BMAJ was required to ensure the minor axis was smaller than the major axis. 
+To achieve this, we used a rotated 2-dimensional flat-topped Gaussian model with three free parameters: $\phi$, $b$ and $a$, summarized in Table \ref{tab: gaussian_model_info}. The tested values of $b$ and $a$ control the widths of the Gaussian model, with each treated as the FWHM and converted to standard deviations using Equation \ref{eq: FWHM_to_sigma}. Additionally, a condition of $b$ $\leqq $ $a$ was required to ensure the minor axis was smaller than the major axis. 
 
 
 % \begin{equation}
@@ -117,11 +117,11 @@ $\phi$
 & super-Gaussian exponent
 & 2, 3, 4, 5, 6, 7\\
 
-BMIN (pixels)
+$b$ (pixels)
 & minor axis of Gaussian
 & 10, 20, 30, 40, 50\\
 
-BMAJ (pixels)
+$a$ (pixels)
 & major axis of Gaussian
 & 10, 20, 30, 40, 50\\
 \bottomrule
@@ -181,15 +181,15 @@ U_{\text{Gaussian}}
 
 
 
-Two examples of the Gaussian weight map, with polarization vectors overlaid, are shown in Figure \ref{fig: Methods/GaussianExamples} for selected values of $\phi$, BMIN, and BMAJ. \SC{wording}
+Two examples of the Gaussian weight map, with polarization vectors overlaid, are shown in Figure \ref{fig: Methods/GaussianExamples} for selected values of $\phi$, $b$, and $a$. \SC{wording}
 
 
-\begin{figure*}[h]
+\begin{figure}[htbp]
   \centering
   \includegraphics[width=0.8\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/CustomExamples_B4.pdf}
-  \caption{Two examples of the Gaussian weights for selected values of $\phi$, BMAJ and BMIN.}
+  \caption{Two examples of the Gaussian weights for selected values of $\phi$, $b$ and $a$. \note{in figure, change to $a$ and $b$}}
   \label{fig: Methods/GaussianExamples}
-\end{figure*}
+\end{figure}
 
 
 
@@ -225,7 +225,7 @@ The value of $\chi^2$ was then converted to reduced chi-squared by:
     \chi^2_{reduced} = \frac{1}{n-k} \times \chi^2,
     \label{eq: chi_sq_reduced}
 \end{equation}
-\noindent where $n$ is the number of sampled polarization vectors and $k$ is the degrees of freedom. For the ratio model, there is one degree of freedom, and for the Gaussian method, there are three ($\phi$, BMIN, and BMAJ). 
+\noindent where $n$ is the number of sampled polarization vectors and $k$ is the degrees of freedom. For the ratio model, there is one degree of freedom, and for the Gaussian method, there are three ($\phi$, $b$, and $a$). 
 
 
 % ----------------------------------------------------------
