@@ -195,7 +195,7 @@ def add_band_label(ax, band, label,  constants, fontcolor = 'black', x_pos = 0.0
 # Used ChatGpt to help make this function to save time
 # Note I already have a function but this is upated 
 def add_StokesI_cbar(im, ax, normalized_ticks, unstretched_ticks,
-                    cbar_fs, axis_num_fs, shrink=1):
+                    cbar_fs, axis_num_fs, shrink=1, location = 'top', label = True):
     """
     Add a horizontal Stokes I colorbar to a given axis.
 
@@ -217,9 +217,12 @@ def add_StokesI_cbar(im, ax, normalized_ticks, unstretched_ticks,
         Shrink factor for colorbar length
     """
 
-    cbar = plt.colorbar(im, ax=ax, orientation='horizontal', shrink=shrink)
+    cbar = plt.colorbar(im, ax=ax, orientation='horizontal', shrink=shrink, location = location)
 
-    cbar.set_label(r'Stokes I (mJy/beam)', fontsize=cbar_fs)
+    if label:
+        cbar.set_label(r'Stokes I (mJy/beam)', fontsize=cbar_fs)
+    else:
+        cbar.set_label(r' ', fontsize = 0)
 
     cbar.ax.tick_params(labelsize=axis_num_fs, which='major',
                         length=7, direction="in")
@@ -502,7 +505,7 @@ def create_stokes_i_base_plot(band,
         
   
     # Add the label of the band to the top left (if label does not equal none)
-    add_band_label(ax, band, label, text_fs, fontcolor, constants)
+    add_band_label(ax, band, label, constants, label_fs = text_fs, fontcolor = fontcolor)
 
     
     # Make all four spines thicker

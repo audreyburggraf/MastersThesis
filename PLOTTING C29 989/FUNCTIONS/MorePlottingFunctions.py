@@ -599,6 +599,8 @@ def MakeAllBandGridDelta(bands,
                 ha='center',
                 va='bottom'
             )
+            
+        print(rf'AU 100 text location: x_axes = {x_axes} and y_axes + 0.015 = {y_axes + 0.015}')
         
         add_band_label(ax, bands_idx[i], label, constants, x_pos = x_pos, y_pos = y_pos, 
                        label_fs = 25, va = 'bottom')

@@ -74,7 +74,6 @@ StokesU_err_mJy = np.full((ny, nx), constants.StokesU_err_mJy_band5)
 
 
 
-
 # Polarization Intensity
 # -------------------------------------------------------------------------------------------------------
 # POLI_calc = calculate_polarized_intensity(StokesQ_mJy, StokesU_mJy)
@@ -135,6 +134,11 @@ POLF_err = calculate_polarized_fraction_err(StokesQ_mJy, StokesU_mJy, StokesI_mJ
 
 BMAJ_deg, BMIN_deg, BMAJ_pix, BMIN_pix, BPA_deg_cartesian, reference_length_pix, RA_centre_pix, Dec_centre_pix, xmin, xmax, ymin, ymax = get_plotting_parameters(StokesI_header, StokesI_wcs, 'Band 5')
 
+delta = 100
+xmin = xmin + delta
+xmax = xmax - delta
+ymin = ymin + delta
+ymax = ymax - delta
 
 
 # Remove stream
@@ -157,7 +161,7 @@ results = generate_polarization_vectors(ny, nx,
                                         xmin, xmax, ymin, ymax, # This is for the nterms test
                                         RA_centre_pix, Dec_centre_pix,
                                         constants.minor_angle_rad_sky_band5_v0,
-                                        StokesI_mJy, 
+                                        StokesI_mJy, StokesI_err_mJy, 
                                         POLI_mJy_nostream, POLI_err_mJy,
                                         PA_rad, PA_err_deg,
                                         'Band 5')
@@ -198,7 +202,7 @@ results_stream = generate_polarization_vectors(ny, nx,
                                                xmin, xmax, ymin, ymax, # This is for the nterms test
                                                RA_centre_pix, Dec_centre_pix,
                                                constants.minor_angle_rad_sky_band5,
-                                               StokesI_mJy, 
+                                               StokesI_mJy, StokesI_err_mJy,
                                                POLI_mJy_stream, POLI_err_mJy,
                                                PA_rad + np.pi/2, PA_err_deg,
                                                'Band 5')
