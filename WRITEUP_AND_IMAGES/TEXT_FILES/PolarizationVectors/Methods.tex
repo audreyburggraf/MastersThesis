@@ -9,10 +9,10 @@ The \SI maps produced using \texttt{tclean} have a pixel scale that oversamples 
 
 The effective beam size was calculated using:
 \begin{equation}
-    \text{Beam Size =} \sqrt{BMIN \cdot BMAJ},
+    \text{Beam Size =} \sqrt{\text{BMIN} \cdot \text{BMAJ}},
     \label{eq: beam_size}
 \end{equation}
-\noindent where $BMIN$ and $BMAJ$ are the synthesized beam minor and major axes, respectively, listed in Table \ref{tab: source_info} in units of arcseconds. The beam dimensions were converted from arcseconds to pixels using the image pixel size of $0.018''\,\mathrm{pixel}^{-1}$. The polarization vector spacing was then set to be half the beam size (Equation \ref{eq: beam_size}), and rounded to the nearest integer number of pixels.
+\noindent where BMIN and BMAJ are the synthesized beam minor and major axes, respectively, listed in Table \ref{tab: source_info} in units of arcseconds. The beam dimensions were converted from arcseconds to pixels using the image pixel size of $0.018''\,\mathrm{pixel}^{-1}$. The polarization vector spacing was then set to be half the beam size (Equation \ref{eq: beam_size}), and rounded to the nearest integer number of pixels.
 
 
 
@@ -32,8 +32,8 @@ In addition to the sampling spacing described above, a polarization vector was o
     \item $\POLIeq/\POLIerrEQ >$ 4 (\bfourNS, \bsevenNS) or $\POLIeq/\POLIerrEQ >$ 3 (\bfiveNS, \bsixNS),
     \item $\PAerrEQ < 10^\circ$.
 \end{enumerate}
-\noindent These criteria were adapted from the selection criteria in \cite{sadavoy_dust_2019}. The threshold of $\POLIeq/\POLIerrEQ >3$ was used for \bfive and \bsix because of their sensitivities: threshold of 4 excluded many additional polarization vectors.
-\SC{they had less sensitivity and going to a threshold of 4 would limit the coverage of polarization vectors.}
+\noindent These criteria were adapted from the selection criteria in \cite{sadavoy_dust_2019}. The threshold of $\POLIeq/\POLIerrEQ >3$ was used for \bfive and \bsix because they had less sensitivity and going to a threshold of 4 would limit the coverage of polarization vectors.
+
 
 % , without the additional condition of $I/\sigma_I>3$. This could be excluded for our analysis as IRS 63 is bright and well-resolved, meaning it has a high S/N ratio in the area around the disk, meaning this condition is already met.
 
