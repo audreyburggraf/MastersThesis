@@ -9,15 +9,19 @@ The observed polarized intensity, \POLIobsNS, is calculated from \SQ ($Q$) and \
 
 
 
-The polarized intensity was debiased using the method explained in \cite{sadavoy_dust_2019}, originally from \cite{HullDebias}. Variables used in these equations and further into this section are summarized in Table \ref{tab: stokes_polar_variables}. \SC{The following equations in this Chapter are from \cite{CoudeEquations}, unless specified otherwise. } \SCC{Move this to later.  It is otherwise confusing.}
+The polarized intensity was debiased using the method explained in \cite{sadavoy_dust_2019}, originally from \cite{HullDebias}. Variables used in these equations and further into this section are summarized in Table \ref{tab: stokes_polar_variables}. This method calculates the debiased polarized intensity, \POLIns, with a corresponding error of \POLIerrNS, with the equation:
 
-\SC{order, see pdf}
+\begin{equation}
+    \text{PDF}(\POLIeq|\POLIobsEQ, \POLIerrEQ)=\frac{\POLIobsEQ}{\POLIerrEQ^2} I_0(x)\exp\left[-\frac{(\POLIobsEQ^2 + \POLIeq^2)}{2\POLIerrEQ^2}{}\right],
+    \label{eq: debias}
+\end{equation}
+\noindent where PDF is the probability density function. Here, $I_0(x)$ is the Bessel function for the Bessel parameter $x = \POLIobsEQ \POLIeq/\POLIerrEQ^2$. The most likely \POLI corresponds to the peak of the PDF in Equation \ref{eq: debias}. The debiased value is calculated by minimizing the negative value of the PDF in Equation \ref{eq: debias} using \texttt{scipy.optimize.minimize\_scalar}. 
 
 
 
 \begin{table}[h!]
 \centering
-\caption{Summary of Stokes and polarization parameters, their associated error symbols, and units. \SC{Units in the above table are in uJy/beam.  If you want to have them in mJy/beam, then you need to report them as such.  Or change the unit in the able.} \SC{You can use sigma_Pi for the observed polarized intensity.  But for simplicity, you can also cut this entry.} \SC{write as "degree"}}
+\caption{Summary of Stokes and polarization parameters, their associated error symbols, and units. \SC{Units in the above table are in uJy/beam.  If you want to have them in mJy/beam, then you need to report them as such.  Or change the unit in the table.}  }
 \begin{tabular}{llll}
 \toprule
 \textbf{Parameter} & \textbf{Symbol} & \textbf{Error Symbol} & \textbf{Units}  \\
@@ -41,10 +45,10 @@ The polarized intensity was debiased using the method explained in \cite{sadavoy
 
 
 
-Observed (Biased) Polarized Intensity
-& \POLIobs
-& N/A
-& \mjybeam\\
+% Observed (Biased) Polarized Intensity
+% & \POLIobs
+% & N/A
+% & \mjybeam\\
 
 
 Debiased Polarized Intensity
@@ -61,7 +65,7 @@ Polarization Fraction (debiased)
 Polarization Angle (debiased)
 & $\theta$
 & \PAerr
-& $^\circ$ \\
+& degree \\
 
 
 
@@ -77,15 +81,9 @@ Polarization Angle (debiased)
 
 
 
-This method calculates the debiased polarized intensity, \POLIns, with a corresponding error of \POLIerrNS, with the equation:
 
-\begin{equation}
-    \text{PDF}(\POLIeq|\POLIobsEQ, \POLIerrEQ)=\frac{\POLIobsEQ}{\POLIerrEQ^2} I_0(x)\exp\left[-\frac{(\POLIobsEQ^2 + \POLIeq^2)}{2\POLIerrEQ^2}{}\right],
-    \label{eq: debias}
-\end{equation}
-\noindent where PDF is the probability density function. Here, $I_0(x)$ is the Bessel function for the Bessel parameter $x = \POLIobsEQ \POLIeq/\POLIerrEQ^2$. The most likely \POLI corresponds to the peak of the PDF in Equation \ref{eq: debias}. The debiased value is calculated by minimizing the negative value of the PDF in Equation \ref{eq: debias} using \texttt{scipy.optimize.minimize\_scalar}. 
 
-Only the pixels with a low to moderate S/N ($<9$) \SC{no brackets needed}were debiased with the method described above. The pixels with S/N$>9$ do not need to be treated the same way because their emission is much stronger than the noise. These pixels are debiased using the standard maximum likelihood calculation method from \cite{VaillancourtDebias}:
+Only the pixels with a low to moderate S/N, below 9, were debiased with the method described above. The pixels with S/N$>9$ do not need to be treated the same way because their emission is much stronger than the noise. These pixels are debiased using the standard maximum likelihood calculation method from \cite{VaillancourtDebias}:
 \begin{equation}
    \POLIbrightEQ = \sqrt{Q^2 + U^2 -\POLIerrEQ^2}.
 \end{equation}

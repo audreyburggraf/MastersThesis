@@ -146,7 +146,7 @@ Taking \bfive as an outlier (see Chapter \ref{sec: discussion_azimuthal_polariza
 
 
 
-\begin{figure}[h]
+\begin{figure}[htbp]
   \centering
   \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Ratio/Best_grid_Delta.pdf}
   \caption{Figure \ref{fig: StokesI_POLI_grid}, overplotted with the polarization vectors in red from the best-fit ratio model at each wavelength. The corresponding best-fit ratio models are listed in Table \ref{tab:ratio_model_chi2}.}
@@ -161,7 +161,7 @@ Taking \bfive as an outlier (see Chapter \ref{sec: discussion_azimuthal_polariza
 The five best-fitting Gaussian models (out of 150 tested) are presented in Table \ref{tab:gaussian_top5}. The best fit at each wavelength is highlighted in Figure \ref{fig: GaussianBestGrid}, with the observed vectors in black and the model vectors in red. Additionally, the Gaussian ($W_{\text{Uniform}}$, Equation \ref{eq: gaussian_eq}) for each best-fit are shown in Figure \ref{fig: gaussian_best_map_w_uniform}.  
 
 
-From the results in Table \ref{tab:gaussian_top5}, BMAJ and BMIN remain the same among the top five models at each wavelength, indicating that these values provide a good fit among the tested values. The parameter that varies is the $\Phi$ parameter, which controls how flat the Gaussian is \SC{It isn't just phi.  Please be clearer here.}. A higher $\Phi$ value produces a flatter Gaussian and a faster transition from uniform to azimuthal polarization (see Figure \ref{fig: Methods/GaussianExamples}). In the best-fit model at each wavelength, $\Phi$ is greater than 2, producing a flat-topped Gaussian rather than a standard Gaussian. This can also be seen in Figure \ref{fig: gaussian_best_map_w_uniform}, which shows that the area of uniform alignment increases as wavelength decreases. This indicates that uniform alignment, which is consistent with dust self-scattering, contributes more at shorter wavelengths, which is what we expect from Chapter \ref{sec: c4_polarization_maps} and the results from the ratio model. 
+From the results in Table \ref{tab:gaussian_top5}, $b$ and $a$ remain the same among the top five models at each wavelength, indicating that these values provide a good fit among the tested values. The parameter that varies is the $\Phi$ parameter, which controls how flat the Gaussian is \SC{It isn't just phi.  Please be clearer here.}. A higher $\Phi$ value produces a flatter Gaussian and a faster transition from uniform to azimuthal polarization (see Figure \ref{fig: Methods/GaussianExamples}). In the best-fit model at each wavelength, $\Phi$ is greater than 2, producing a flat-topped Gaussian rather than a standard Gaussian. This can also be seen in Figure \ref{fig: gaussian_best_map_w_uniform}, which shows that the area of uniform alignment increases as wavelength decreases. This indicates that uniform alignment, which is consistent with dust self-scattering, contributes more at shorter wavelengths, which is what we expect from Chapter \ref{sec: c4_polarization_maps} and the results from the ratio model. 
 
 
 
@@ -174,7 +174,7 @@ From the results in Table \ref{tab:gaussian_top5}, BMAJ and BMIN remain the same
 \caption{Results of the top 5 best fits (in descending order) at each wavelength from the Gaussian model. $\chi^2$ values were calculated using Equation \ref{eq: chi_sq_reduced}. The best fit at each wavelength is in bold. \SC{Long caption again.}}
 \begin{tabular}{c ccc c}
 \toprule
-\textbf{Wavelength} & $\boldsymbol{\phi}$ & \textbf{BMAJ} & \textbf{BMIN} & $\boldsymbol{\chi^2}$ \\
+\textbf{Wavelength} & $\boldsymbol{\phi}$ & \boldsymbol{$a$} & \boldsymbol{$a$} & $\boldsymbol{\chi^2}$ \\
 \midrule
 
 \textbf{\bfour} 
@@ -270,7 +270,7 @@ From the results in Table \ref{tab:gaussian_top5}, BMAJ and BMIN remain the same
 
 
 
-\begin{figure}[h]
+\begin{figure}[htbp]
   \centering
   \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/Best_grid_Delta.pdf}
   \caption{Same as Figure \ref{fig: RatioBestGrid}, but for the best-fit Gaussian models. The corresponding best-fit Gaussian models are listed Table \ref{tab:gaussian_top5}.}
@@ -278,12 +278,12 @@ From the results in Table \ref{tab:gaussian_top5}, BMAJ and BMIN remain the same
 \end{figure}
 
 
-\begin{figure*}[h]
+\begin{figure}[htbp]
   \centering
   \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/Best_grid_Delta_map.pdf}
-  \caption{Maps of the Gaussian uniform weights $W_{\text{uniform}}$ (Equation \ref{eq: gaussian_eq}) for the best-fit Gaussian model for each wavelength, corresponding vector pattern shown in Figure \ref{fig: GaussianBestGrid}.}
+  \caption{Maps of the Gaussian uniform weights $W_{\text{uniform}}$ (Equation \ref{eq: gaussian_eq}) for the best-fit Gaussian model for each wavelength, corresponding vector pattern shown in Figure \ref{fig: GaussianBestGrid}. \note{change to b, a}}
   \label{fig: gaussian_best_map_w_uniform}
-\end{figure*}
+\end{figure}
 
 
 
