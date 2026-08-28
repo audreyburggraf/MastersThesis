@@ -16,7 +16,7 @@ Taking \bfive as an outlier (see Chapter \ref{sec: discussion_azimuthal_polariza
 % This is Band 4 nterms2, Band 7 nterms 2.
 \begin{table}[h!]
 \centering
-\caption{Results of ratio model testing for each wavelength, with the goodness-of-fit quantified using the reduced $\chi^2$ value calculated using Equation \ref{eq: chi_sq_reduced}. The best fit at each wavelength is in bold. \SC{Caption too long, Table titles should be short.  You can have notes if you need to give more details.}}
+\caption{Ratio model fitting results for each wavelength, with goodness-of-fit quantified by $\chi^2_{reduced}$. Best fits are shown in bold. }
 \begin{tabular}{lcccc}
 \toprule
 \textbf{Ratio Model} & \textbf{\bfour} & \textbf{\bfive} & \textbf{\bsix} & \textbf{\bseven} \\
@@ -148,8 +148,8 @@ Taking \bfive as an outlier (see Chapter \ref{sec: discussion_azimuthal_polariza
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Ratio/Best_grid_Delta.pdf}
-  \caption{Figure \ref{fig: StokesI_POLI_grid}, overplotted with the polarization vectors in red from the best-fit ratio model at each wavelength. The corresponding best-fit ratio models are listed in Table \ref{tab:ratio_model_chi2}.}
+  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Ratio/Best_grid_Delta.pdf}
+  \caption{Figure \ref{fig: StokesI_POLI_grid}, overplotted with the polarization vectors in red from the best-fit ratio model at each wavelength. The corresponding best-fit ratio models are listed in Table \ref{tab:ratio_model_chi2}. \code{AU to au}}
   \label{fig: RatioBestGrid}
 \end{figure}
 
@@ -171,10 +171,10 @@ From the results in Table \ref{tab:gaussian_top5}, $b$ and $a$ remain the same a
 
 \begin{table}[h!]
 \centering
-\caption{Results of the top 5 best fits (in descending order) at each wavelength from the Gaussian model. $\chi^2$ values were calculated using Equation \ref{eq: chi_sq_reduced}. The best fit at each wavelength is in bold. \SC{Long caption again.}}
+\caption{Top give Gaussian model fits at each wavelength, sorted by $\chi^2_{reduced}$. The best fit at each wavelength is shown in bold.}
 \begin{tabular}{c ccc c}
 \toprule
-\textbf{Wavelength} & $\boldsymbol{\phi}$ & \boldsymbol{$a$} & \boldsymbol{$a$} & $\boldsymbol{\chi^2}$ \\
+\textbf{Wavelength} & $\boldsymbol{\phi}$ & $\boldsymbol{a}$ & $\boldsymbol{b}$ & $\boldsymbol{\chi^2}$ \\
 \midrule
 
 \textbf{\bfour} 
@@ -272,16 +272,16 @@ From the results in Table \ref{tab:gaussian_top5}, $b$ and $a$ remain the same a
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/Best_grid_Delta.pdf}
-  \caption{Same as Figure \ref{fig: RatioBestGrid}, but for the best-fit Gaussian models. The corresponding best-fit Gaussian models are listed Table \ref{tab:gaussian_top5}.}
+  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/Best_grid_Delta.pdf}
+  \caption{Same as Figure \ref{fig: RatioBestGrid}, but for the best-fit Gaussian models. The corresponding best-fit Gaussian models are listed Table \ref{tab:gaussian_top5}. \code{AU to au}}
   \label{fig: GaussianBestGrid}
 \end{figure}
 
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/Best_grid_Delta_map.pdf}
-  \caption{Maps of the Gaussian uniform weights $W_{\text{uniform}}$ (Equation \ref{eq: gaussian_eq}) for the best-fit Gaussian model for each wavelength, corresponding vector pattern shown in Figure \ref{fig: GaussianBestGrid}. \note{change to b, a}}
+  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/Best_grid_Delta_map.pdf}
+  \caption{Maps of the Gaussian uniform weights $W_{\text{uniform}}$ (Equation \ref{eq: gaussian_eq}) for the best-fit Gaussian model for each wavelength, corresponding vector pattern shown in Figure \ref{fig: GaussianBestGrid}. \code{change to b, a}}
   \label{fig: gaussian_best_map_w_uniform}
 \end{figure}
 
