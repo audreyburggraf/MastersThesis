@@ -204,6 +204,7 @@ results_stream = generate_polarization_vectors(ny, nx,
                                                constants.minor_angle_rad_sky_band5,
                                                StokesI_mJy, StokesI_err_mJy,
                                                POLI_mJy_stream, POLI_err_mJy,
+                                               #PA_rad, PA_err_deg,
                                                PA_rad + np.pi/2, PA_err_deg,
                                                'Band 5')
 
