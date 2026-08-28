@@ -217,7 +217,7 @@ def MakeAllBandGrid(bands,
         ax.text(
             x_axes,
             y_axes + 0.015,
-            f"{b['reference_length_AU']} AU",
+            f"{b['reference_length_AU']} au",
             transform=ax.transAxes,
             fontsize=AU100_fs,
             ha='center',
@@ -593,7 +593,7 @@ def MakeAllBandGridDelta(bands,
             ax.text(
                 x_axes,
                 y_axes + 0.015,
-                f"{b['reference_length_AU']} AU",
+                f"{b['reference_length_AU']} au",
                 transform=ax.transAxes,
                 fontsize=AU100_fs,
                 ha='center',
@@ -704,7 +704,7 @@ def scale_factor_plot_for_writeup(bands,                  # These are the bands 
                                         custom_lw = None,
                                         custom_text_x = None,
                                         chi_sq_precision = 2,
-                                        fig_x = 30, fig_y = 8,
+                                        fig_x = 30, fig_y = 10,
                                         f_fs = 45, 
                                         f_x = 0.05, f_y = 0.86,
                                         spine_width = 1,
@@ -1016,7 +1016,9 @@ def scale_factor_plot_for_writeup_glitterin(bands,                  # These are 
                                         marker_size = 600,
                                         plot_sf = False,
                                         plot_chi_sq = False,
-                                           legend_loc = 3):
+                                           legend_loc = 3,
+                                           titles = ['All wavelengths', 'No 1.5 mm', 'No 1.3 mm', 'Just 2.1 mm and 0.87 mm'],
+                                           x_axis_pad = 10):
     
     POLF_markers = dict(zip(df_POLF["Band"], df_POLF["POLF_maxStokesI"]))
     
@@ -1033,17 +1035,21 @@ def scale_factor_plot_for_writeup_glitterin(bands,                  # These are 
             ms.append(constants.alma_band_ms[b])
     
     
+    num_fits = len(results_array)
     
     # Make the figure
     # Later I will make this so you can customize how many figures you need
-    fig, ax = plt.subplots(1, 4, figsize=(fig_x, fig_y))
+    fig, ax = plt.subplots(1, num_fits, figsize=(fig_x, fig_y))
     
     
     
     
     # Loop over the f values you want to plot
-    titles = ['All wavelengths', 'No 1.5 mm', 'No 1.3 mm', 'Just 2.1 mm and 0.87 mm']
-    for i in range(4):
+#     titles = ['All wavelengths', 'No 1.5 mm', 'No 1.3 mm', 'Just 2.1 mm and 0.87 mm']
+    
+    
+    
+    for i in range(num_fits):
         
         bands_included_in_fit = bands_included_in_fit_arr[i]
         
@@ -1074,7 +1080,7 @@ def scale_factor_plot_for_writeup_glitterin(bands,                  # These are 
 
             
         fig.supxlabel('Maximum grain size [$\mu$m]', fontsize = xy_axis_fs)
-        ax[i].set_title(f'{titles[i]}', fontsize=40)
+        ax[i].set_title(f'{titles[i]}', fontsize=40, pad = 15)
 
             
     
@@ -1087,8 +1093,15 @@ def scale_factor_plot_for_writeup_glitterin(bands,                  # These are 
         # Control the font size of the numbers on the axes
         # ---------------------------------------------------------------------------------------
             
-        ax[i].tick_params(axis="x", which="major", direction="in", bottom=True, top=True, length=7, labelsize = num_fs, width=spine_width)
+        ax[i].tick_params(axis="x", which="major", direction="in", bottom=True, top=True, length=7, labelsize = num_fs, width=spine_width, pad = x_axis_pad)
         ax[i].tick_params(axis="y", which="major", direction="in", left=True, right=True, length=7, labelsize = num_fs, width=spine_width)
+        
+        
+        # Hide the 10^3 label on the left and middle panels
+#         if i in [0, 1]:
+#             for tick, label in zip(ax[i].get_xticks(), ax[i].get_xticklabels()):
+#                 if np.isclose(tick, 1e3):
+#                     label.set_visible(False)
         # ---------------------------------------------------------------------------------------
         
         
