@@ -4,37 +4,29 @@ A protostellar disk is composed mostly of gas (99\%), with the remaining 1\% bei
 
 
 
-\subsection{Dust Evolution and Grain Growth \status{ready for tweak}}
-Although dust only accounts for 1\% of the disk's initial mass, it plays a vital role in the evolution of the disk and the formation of planets \citep{Williams}. Dust grain growth, or dust coagulation, is an early stage of planet formation in which grain-grain collisions can cause dust particles to stick together and form larger particles. During this phase, the grains begin as (sub-?)micron-sized particles and can grow, eventually leading to the formation of planetesimals  \citep{Testi}. 
-
-
-During a grain-grain collision, the grains do not always stick together to become larger. The grains can also bounce off each other, leaving their sizes mostly unchanged, or fragment and produce smaller grains, either with or without mass transfer. The result of the collision depends on the velocity and relative sizes of the particles colliding \citep{Testi}.
+\subsection{Dust Evolution and Grain Growth}
+Although dust only accounts for 1\% of the disk's initial mass, it plays a vital role in the evolution of the disk and the formation of planets \citep{Williams}. Dust grain growth, or dust coagulation, is an early stage of planet formation in which grain-grain collisions can cause dust particles to stick together and form larger particles. During this phase, the grains begin as sub-micron-sized particles and can grow, eventually leading to the formation of planetesimals. During a grain-grain collision, the grains do not always stick together to become larger. The grains can also bounce off each other, leaving their sizes mostly unchanged, or fragment and produce smaller grains, either with or without mass transfer. The result of the collision depends on the velocity and relative sizes of the particles colliding \citep{Testi}.
 
 
 
-\subsection{Dust Distribution and Disk Structure \status{ready for tweak}}
-
-As grains change in size, their interactions with the surrounding gas also change, altering how they are transported both vertically and radially within the disk \cite{Andrews}. 
-
- 
+\subsection{Dust Distribution and Disk Structure}
 
 
-
-The solid-body dust grains orbit faster than the gas, as they do not feel gas pressure, and experience a drag force \citep{Krumholz}. The drag force decreases the angular momentum of the grain, causing it to drift radially inward toward the centre of the disk \citep{Krumholz}. 
-
-
-Additionally, dust grains tend to vertically settle onto the midplane of the disk. This result greatly depends on the grain size. As the grain size increases, its surface-to-mass ratio decreases, and the motion decouples from the gas, also creating a downward drag force \citep{Williams}. 
+As grains change in size, their interactions with the surrounding gas change, altering how they are transported both vertically and radially within the disk \citep{Andrews}. Because the dust grains do not respond to the gas pressure, they orbit faster than the gas and experience a drag force. Thus, the drag force decreases the angular momentum of the grains, causing them to drift radially inward toward the centre of the disk \citep{Krumholz}. 
 
 
 
-As these collisions, gravitational effects and turbulent mixing all work together, we are left with larger grains residing on the midplane, with smaller grains higher up. The disk is flared (larger scale height further from the centre) as a result of the fact that the farther from the star, the weaker its gravitational influence. The mechanisms described and the shape of the disk are illustrated in Figure \ref{fig: dust-grain-growth-schematic}.
+
+Dust grains also tend to settle onto the disk midplane, depending on grain size. As the grains grow, their surface-to-mass ratio decreases, and the motion decouples from the gas, also creating a downward drag force \citep{Williams}. At distances further from the central star, the gravitational influence of the star is weaker, allowing grains to move off of the midplane. As a result, the disk's scale height increases with distance from the centre, causing a flared disk.
+
+As these collisions, gravitational effects and turbulent mixing all work together, larger grains typically reside near the midplane, while smaller grains are higher up. These processes and the resulting dust distribution are illustrated in Figure \ref{fig: dust-grain-growth-schematic}.
 
 
 
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/NOTMINE/Testi.png}
+  \includegraphics[width=0.85\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/NOTMINE/Testi.png}
   \caption{Schematic of the structure and grain evolution process for a protostellar disk.  Image from \cite{Testi}. \permission{ask for permission} \question{take out the observing bands/telescopes on the right?}}
   \label{fig: dust-grain-growth-schematic}
 \end{figure}
@@ -48,28 +40,36 @@ As these collisions, gravitational effects and turbulent mixing all work togethe
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Effects of Grain Size on Observed Emission \status{ready for tweaking}}
+\subsection{Effects of Grain Size on Observed Emission}
 \label{sec: intro_dust_grainsize}
 
-Dust grains dominate the opacity in the disk, controlling how radiation is absorbed, scattered and emitted \citep{Williams}. The opacity depends on several properties of the dust, including its shape, composition and size \citep{Kataoka_2015}. 
 
-% Different grain sizes absorb radiation differently
-At millimetre wavelengths, the continuum emission from disks is dominated by thermal emission from the dust, which is controlled by the opacity of the dust \citep{Testi}. The efficiency with which the dust grains absorb and emit radiation depends on their size relative to the observing wavelength  \citep{Testi}. 
-
-% Different grain sizes scatter radiation differently 
-Grain size also affects the scattering properties of dust. Smaller grain sizes at millimetre wavelengths are less efficient at scattering light \citep{Kataoka_2015}. However, larger grain sizes that are close to the observing wavelength are much more efficient at scattering light \citep{Kataoka_2015}.
-
-Because the absorption and scattering properties of dust grains depend on their size relative to the observing wavelength, observations at millimetre wavelengths can be used to study dust grain growth in disks \citep{Testi}. 
+% Dust grains control how opaque or transparent (opacity) the disk is since gas doesn't as much. 
+Dust grains dominate the opacity in protostellar disks, controlling how radiation interacts with materials through absorption, scattering, and emission \citep{Williams}. 
+% The opacity is determined by composition, shape and size. 
+The opacity depends on several properties of the dust, including its composition, shape and size \citep{Kataoka_2015}. 
+% 
+At (sub)millimetre wavelengths, the continuum emission from disks is dominated by thermal emission from the dust \citep{Testi}. The efficiency with which the dust grains absorb and emit radiation depends on their size relative to the observing wavelength \citep{Testi}. 
 
 
-
-
-Additionally, dust self-scattering is most efficient when dust grain sizes are comparable with the wavelength:
+In particular, dust self-scattering is most efficient when the maximum grain size is comparable with the wavelength by:
 \begin{equation}
-  a_{max} = \lambda / 2 \pi
+  a_{\text{max}} \sim \lambda / 2 \pi,
   \label{eq: scattering_efficiency}
 \end{equation}
-\noindent \citep{Stephens_2017} (see size parameter, Equation \ref{eq: size_parameter}). Therefore, scattering depends on the observing wavelength, and each wavelength naturally probes a different dust grain size. Each wavelength probes a different grain size, so the more wavelengths of data you have, the more grain sizes you probe, and the better constraint you can place on the grain size. 
+\noindent where \amax is the maximum grain size and $\lambda$ is the observing wavelength \citep{Stephens_2017}. Therefore, observations at different wavelengths probe different grain sizes. Comparing observations across multiple wavelengths can provide a stronger constraint on the maximum grain size compared to observations at a single wavelength. Specifically, observations at (sub)millimetre wavelengths can be used to study dust grain growth in disks \citep{Testi}. 
+
+
+
+
+
+% Smaller grain sizes at (sub)millimetre wavelengths are less efficient at scattering light \citep{Kataoka_2015}. However, larger grain sizes that are close to the observing wavelength are much more efficient at scattering light \citep{Kataoka_2015}.
+
+
+
+
+
+ 
 
 
 

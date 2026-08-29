@@ -1,20 +1,56 @@
+\note{Each paragraph has a bold text header to help me keep track of everything. I can take them all out, make them subsections, or something else.}
 
-The intital analysis for \bfive was done with $\texttt{robust = 0.5}$ (\bfiverobNS), same as the other three observing wavelengths. However, this caused some issues. 
-
-
-Figure \ref{fig: Band5_robust05} shows the \SI and debiased polarized intensity maps, overplotted with the observed polarization vectors. Additionally, there are red vectors highlihgting the streamer, discussed in Chapter \ref{sec: streamer}. This is similar to Figure \ref{fig: StokesI_POLI_grid}. 
+\textbf{Initial Analysis.} The observations at \bfive was initially images with \texttt{robust = 0.5} (\RfNS), just as the other wavelengths were. However, during the dust-scattering modelling for spherical grains, the \POLFobs value did not follow the wavelength-dependent trend. Table \ref{tab: polf_comparison} shows that the values for \POLFobs (\POLFSIns) decrease with wavelength, and for comparison, the value of \POLFSI for \Rf is 0.97, which does not follow this trend. This indicates that different \rob parameters for image weighting should be tested. 
 
 
 
 
-\textbf{Polarization Morphology:} When comparing the polarization morphology at the different \texttt{robust} values, 
 
 
+\textbf{Imaging Differences.} The \rob parameter was decreased from 0.5 to -1 (\RoNS), making the weighting closer to uniform rather than natural weighting. This results in a higher angular resolution, with the beam size decreasing from $0.33'' \times 0.27''$ to $0.23'' \times 0.18''$. The higher angular resolution comes with the trade-off of lower sensitivity, with the \SIerr increasing from 13.88 to  42.12 $\mu$Jy. Because of this, there are fewer polarization vectors detected with \RoNS, and the streamer is no longer detected (Chapter \ref{sec: streamer}). The \SI and debiased polarization image with polarization vectors were presented for \Ro in Figure \ref{fig: StokesI_POLI_grid}, and the matching plot for \Rf is presented in Figure \ref{fig: Band5_robust05}. 
+
+\noindent \note{I want to check this error value for R-1 based on the previous comment left. I'll do this on Monday or Tuesday when we sudo reboot.}
 
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/StokesI_POLI/IRS63_StokesI_POLI_vectors_BAND5_delta.png}
-  \caption{Images of \SI (left) and debiased polarized intensity (right) for \bfive with \texttt{robust = 0.5}. The red vectors are for the streamer and are rotated by 90$^\circ$ to show magnetic field direction. Same plot as Figure \ref{fig: StokesI_POLI_grid}. \code{AU to au} }
+  \includegraphics[width=0.75\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/StokesI_POLI/IRS63_StokesI_POLI_vectors_BAND5_delta.png}
+  \caption{Same as Figure \ref{fig: StokesI_POLI_grid} but for \bfive with \texttt{robust = 0.5}. The red vectors are for the streamer and are rotated by 90$^\circ$ to show the magnetic field direction. }
   \label{fig: Band5_robust05}
 \end{figure}
+
+
+
+
+
+
+
+
+\textbf{Polarization Morphology.} Despite the change in beam size and number of polarization vectors, the overall polarization morphology remains very similar in the two different weighting schemes. The vectors have similar orientations, indicating that the morphology is not strongly dependent on the image weighting. The main difference is the number of vectors, but this is a result of the change in sensitivity. 
+
+
+
+
+
+
+
+\textbf{Polarization Fraction and Modelling.} Although the morphology remains similar, the \POLFobs value between the images changes. The \POLFobs value increased from 0.97 to 1.40, which now follows the wavelength-dependent trend seen at the other wavelength. This indicates that the \rob parameter can affect the polarization measurement despite the morphology remaining similar. Additionally, since the value follows the trend, this tells us the \Ro was a better choice for comparison with the dust-scattering models, and \Ro was therefore used for the majority of the analysis. 
+
+
+
+
+ 
+
+\textbf{Possible Explanation?}
+
+
+
+
+
+
+
+
+
+
+
+
