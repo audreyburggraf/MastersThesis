@@ -3,7 +3,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-Dust grains absorb radiation from their surroundings and emit thermal radiation depending on their temperature, which is controlled by the size and composition (opacity) of the dust grain \citep{Shirley}. Dust grains typically re-emit absorbed radiation at shorter wavelengths, with the longest wavelength depending on their temperature and opacity, allowing us to trace cooler regions in the disk \citep{Shirley}.  Most of a protostellar disk is cool enough ($<$100 K) such that its thermal continuum emission is strongest at (sub)millimetre wavelengths \citep{Andrews}. At these wavelengths, disks are normally optically thin, allowing the emission to probe the cool disk interior where most of the mass in the disk is \citep{Birnstiel2016}. This means using thermal continuum emission at (sub)millimetre wavelengths allows us to see past the envelope in younger disks, making it a useful tool. 
+
+Dust grains absorb radiation from their surroundings and re-emit energy as thermal radiation at longer wavelengths. This allows observations at longer wavelengths to trace cooler regions in the disk \citep{Shirley}.  Most of a protostellar disk is cool enough ($<$100 K) such that its thermal continuum emission is strongest at (sub)millimetre wavelengths \citep{Andrews}. At these wavelengths, the lower optical depth of the disk allows the emission to probe the cool interior where most of the mass in the disk is \citep{Birnstiel2016}. This makes (sub)millimetre continuum emission observations a useful tool for studying young disks, as observations are otherwise obscured by the surrounding envelope.
+
+
+% depending on their temperature, which is controlled by the size and opacity of the dust \citep{Shirley}. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -11,9 +15,9 @@ Dust grains absorb radiation from their surroundings and emit thermal radiation 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{ALMA \status{ready to tweak}}
+\subsection{ALMA}
 The Atacama Large Millimeter/submillimeter Array
-(ALMA) is an international radio telescope located in the Atacama Desert in northern Chile \citep{Wotten}. It has 66 antennas working together as an interferometer, with multiple array configurations and baselines ranging from 15 meters to approximately 15 km \citep{Wotten}. ALMA has an observing wavelength range of 0.3 to 10 mm \citep{Wotten}, allowing it to probe thermal emission from dust in protostellar disks. The long baselines between antennas provide high angular resolution and sensitivity, enabling the study of structure in disks and their polarization morphology to be spatially resolved \citep{Testi}. 
+(ALMA) is an international radio telescope located in the Atacama Desert in northern Chile . It has 66 antennas working together as an interferometer, with multiple array configurations and baselines ranging from 15 meters to approximately 15 km. ALMA has an observing wavelength range of 0.3 to 10 mm \citep{Wotten}, allowing it to probe thermal emission from dust in protostellar disks. The long baselines between antennas provide high angular resolution and sensitivity, enabling the study of structure in disks and their polarization morphology to be spatially resolved \citep{Testi}. 
 
  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -26,13 +30,12 @@ The Atacama Large Millimeter/submillimeter Array
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Multi-wavelength Observations \status{ready to tweak}}
+\subsection{Multi-wavelength Observations}
 \label{sec: intro_mw}
-\note{In the plot of Pw vs a max, I refer to this for the importance of MW observations for grain size. Need to move this?}
+%\note{In the plot of Pw vs a max, I refer to this for the importance of MW observations for grain size. Need to move this?}
 
 
-
-As mentioned in Chapter \ref{sec: intro_polarization_mechanisms}, the observed polarization morphology and inferred dominant polarization mechanism have been found to change with observing wavelength. However, the dominant polarization mechanism does not depend on wavelength alone. Different observing wavelengths are sensitive to different grain sizes and optical depths \citep{Testi}, which reveal different mechanisms. By comparing the polarization fraction and morphology at multiple wavelengths, it is possible to disentangle the polarization mechanisms and place stronger constraints on grain sizes compared to what could be achieved with observations at a single wavelength \citep{Kataoka_2015, Harrison2024}. 
+The observed polarization morphology and inferred dominant polarization mechanism can change with the observing wavelength. However, the dominant polarization mechanism does not depend on wavelength alone. Different observing wavelengths are sensitive to different grain sizes and optical depths \citep{Testi}, allowing different polarization mechanisms to be studied in a single disk. By comparing the polarization fraction and morphology across multiple wavelengths, it is easier to disentangle the polarization mechanisms and place stronger constraints on dust grain sizes compared to what could be achieved with observations at a single wavelength \citep{Kataoka_2015, Harrison2024}. 
 
 
 
@@ -42,13 +45,13 @@ As mentioned in Chapter \ref{sec: intro_polarization_mechanisms}, the observed p
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\subsection{Observational Example: HL Tau \status{ Ready for tweak}}
+\subsection{Observational Example: HL Tau}
 \label{sec: intro_HL_Tau}
 
-HL Tau is one of the brightest Class I/II disks at (sub)mm wavelengths \citep{Stephens_2017}. It has been the focus of many studies using ALMA polarization observations to study its morphology, including observations at 3.1 mm in \cite{Kataoka_2017}, \bsix in \cite{Stephens_2017}, \bseven originally presented in \cite{Stephens_2017} with higher-resolution data in \cite{Stephens2023}. More recently, in \cite{Lin2024}, data at \bfour and \bfive were presented, combining previous observations. We will look at \bfourNS, \bfiveNS, \bsixNS and \bseven, as those are the wavelengths used in this project. 
+HL Tau is one of the brightest Class I/II disks at (sub)millimetre wavelengths \citep{Stephens_2017}. It has been the focus of many studies using ALMA polarization observations to study its morphology, including observations at 3.1 mm in \cite{Kataoka_2017}, \bsix in \cite{Stephens_2017}, \bseven originally presented in \cite{Stephens_2017} with higher-resolution data in \cite{Stephens2023}. More recently, in \cite{Lin2024}, data at \bfour and \bfive were presented, combining previous observations. In this project, we consider the \bfourNS, \bfiveNS, \bsixNS and \bseven observations, corresponding to the wavelengths of IRS 63 data. 
 
+The polarization morphologies are presented for these wavelengths in Figure \ref{fig: HLTauLin2024}. The polarization morphology changes with wavelength, indicating that the dominant polarization mechanism changes with wavelength. At higher wavelengths, the morphology is azimuthal, and as wavelength decreases, the vectors become more aligned with the minor axis of the disk. This highlights the importance of multi-wavelength data, as observing HL Tau at one wavelength would only show one morphology, rather than showing the change with wavelength.
 
-With these wavelengths, the polarization morphologies are presented in Figure \ref{fig: HLTauLin2024}. This figure shows that the polarization morphology changes with wavelength, indicating that the dominant polarization mechanism changes with wavelength. At higher wavelengths, the morphology is azimuthal, and as wavelength decreases, the vectors become more aligned with the minor axis of the disk. This highlights the importance of multiwavelength data, as observing HL Tau at one wavelength would only show one morphology, rather than showing the change with wavelength.
 
 
 % \quoted{HL Tau's polarization spectrum is particularly interesting: the disk's polarization morphology transitions from a pattern consistent with scattering at $\sim$870 $\mu$m to an elliptical pattern at $\sim$3 mm, with an intermediate pattern at $\sim$1.3 mm (Stephens et al. 2017). Recently, Lin et al. (2022) and Lin et al. (2024) have demonstrated that HL Tau's polarization spectrum could be explained by polarization from thermal emission and the scattering of aligned grains, also demonstrating that the polarization seen at high resolution in HL Tau at 870 $\mu$m could be explained by the same mechanisms. At longer wavelengths, thermal polarization dominates because the low optical depth makes scattering inefficient. At shorter wavelengths, scattering polarization dominates because the high optical depth makes scattering events frequent and dichroic extinction decreases the contribution from thermal polarization (Lin et al. 2022).}  \citep{Harrison2024}
@@ -56,8 +59,8 @@ With these wavelengths, the polarization morphologies are presented in Figure \r
 % ------------------------------------------------
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/NOTMINE/Lin2024HLTauGrid.jpg}
-  \caption{Polarization images for HL Tau at four observing wavelenegths. Black vectorsshow the polarization morphology.  Image is from \cite{Lin2024}. \note{super low-res, i'll try to get a better one} \permission{ask for permission}\question{cover up (c), (d)... ?}}
+  \includegraphics[width=0.9\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/NOTMINE/Lin2024HLTauGrid.jpg}
+  \caption{Polarization images for HL Tau at four observing wavelenegths. Black vectors show the polarization morphology.  Image is from \cite{Lin2024}. \note{super low-res, i'll try to get a better one} \permission{ask for permission}\question{cover up (c), (d)... ?} \question{Should I take out the RA and Dec labels and numbers and cbar so you can see the vectors better?}}
   \label{fig: HLTauLin2024}
 \end{figure}
 % ------------------------------------------------
