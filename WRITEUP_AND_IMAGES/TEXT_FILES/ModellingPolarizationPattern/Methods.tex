@@ -7,194 +7,22 @@ A more physical model could include radiative transfer. The goal here is to iden
 
 \SC{comment}
 
+
+\subsection{Goodness of Fit}
+\input{WRITEUP_AND_IMAGES/TEXT_FILES/ModellingPolarizationPattern/ChiSquaredCalculation}
+
 % ----------------------------------------------------------
 \subsection{Ratio Model}
 % ----------------------------------------------------------
-The first geometric model tested is the \emph{ratio model}. The main idea behind this model is to reproduce the observed polarization morphologies, ranging from purely aligned with the minor axis of the disk to purely azimuthal, along with intermediate cases. This was achieved by creating a grid of models weighted between these two extreme cases. 
-
-The first extreme case is a 100\% uniform pattern, where every vector is aligned with the minor axis of the disk (90\degg from the disk position angle, Table \ref{tab: source_info}).  This is shown in the left panel of Figure \ref{fig: RatioExamples}. The second extreme case is a 100\% azimuthal pattern, where the polarization vectors follow a circular pattern around the centre of the disk. The centre point of the disk at each wavelength can be found in Table \ref{tab: source_info}. For each pixel $(x, y)$, the offset from the disk centre $(x_c, y_c)$ is calculated as:
-\begin{equation}
-\begin{aligned}
-    \delta x &= x - x_c, \\
-    \delta y &= y - y_c.
-\end{aligned}
-% \label{eq: vectors}
-\end{equation}
-
-
-\noindent These offsets are then used to calculate the azimuthal polarization angle using \texttt{numpy.arctan2}. This is shown in the right panel of Figure \ref{fig: RatioExamples}.
-
-
-
-To create the intermediate cases, models were generated in steps of 10\% and are denoted as $N \uni + (100 - N) \azi$, where $N = 0, 10 \ldots, 100$. Here, Uni and Azi represent the pure uniform and pure azimuthal cases, respectively, and $N$ gives the percentage contribution of the uniform case. 
-
-Since the polarization angles cannot be directly combined, the \SQ and \SU for the extreme cases ($100\uni+0\azi$ and $0\uni+100\azi$) were calculated from the polarization angle grids using:
-
-\begin{equation}
-\begin{aligned}
-Q_x
-    &= p I \cos(2\theta_x),
-     \\
-U_x
-    &=  p I \sin(2\theta_x) ,
-\end{aligned}
-% \label{eq:50U50A}
-\end{equation}
-\noindent following \cite{Montier}, where $x= 100$ corresponds to the pure uniform model and $x=0$ corresponds to the pure azimuthal model. The polarization fraction $p$ was fixed at 0.02 based on observations presented in \cite{sadavoy_dust_2019} \SC{You could base this on your own data instead if you prefer.}. This value is expected to be reasonable for the uniform polarization morphology, but the polarization fraction may differ for the azimuthal morphology, potentially biasing the azimuthal case low. \SC{comment connecting to earlier}
-
-%This is consistent with values of 0.02-0.03 from \cite{Kataoka_2017}, 
-
-
-
-The intermediate \SQ and $U$ maps were then obtained by combining the two extreme models using \SC{comment}:
-\begin{equation}
-\begin{aligned}
-Q_{N}
-    &= \frac{N}{100}\,Q_{100}
-     + \frac{100 -N}{100}\,Q_0, \\
-U_{N}
-    &= \frac{N}{100}\,U_{100}
-     + \frac{100 -N}{100}\,U_0.
-\end{aligned}
-% \label{eq:50U50A}
-\end{equation}
-
-\noindent The resulting $Q_N$ and $U_N$ model maps were used to calculate $\theta_N$ at each pixel using Equation \ref{eq: PA}. The polarization vectors were generated using the methods in Chapter \ref{sec: chap4_polarization_vectors}. This process was repeated for each ratio combination. For example, $N=50$ corresponds to the $50\uni+50\azi$ model, shown in the middle panel of Figure \ref{fig: RatioExamples}.
-
-
-
-
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Ratio/RatioExamplesTest_Band4_NoAxes.pdf}
-  \caption{Example of the $N = 100, N=50$ and $N = 0$ cases of the ratio model for \bfourNS.}
-  \label{fig: RatioExamples}
-\end{figure}
-
-
-
-
-% ----------------------------------------------------------
-
-
+\input{WRITEUP_AND_IMAGES/TEXT_FILES/ModellingPolarizationPattern/RatioModel}
 
 
 
 % ----------------------------------------------------------
 \subsection{Gaussian Model}
 % ----------------------------------------------------------
+\input{WRITEUP_AND_IMAGES/TEXT_FILES/ModellingPolarizationPattern/GaussianModel}
 
-\SC{Give the equation for the flat-topped Gaussian}
-
-\SC{Use a and b here.  That way, it's different from what you used for the beam (not BMAJ and BMIN)}
-
-\SC{Separate sentence. Table 5.1 lists the parameters and the ranges we tested.}
-The second geometric model tested is the \emph{Gaussian model}. The aim of this model was to reproduce a polarization morphology that transitions from being aligned with the minor axis of the disk at the centre to becoming more azimuthal towards the outer parts of the disk. This is based on the expectation that the emission from the inner region is optically thick \citep{Kataoka_2015}, with optical thickness decreasing towards the outer edge of the disk. 
-
-
-To achieve this, we used a rotated 2-dimensional flat-topped Gaussian model with three free parameters: $\phi$, $b$ and $a$, summarized in Table \ref{tab: gaussian_model_info}. The tested values of $b$ and $a$ control the widths of the Gaussian model (minor and major axes of the Gaussian, respectively), with each treated as the FWHM and converted to standard deviations using Equation \ref{eq: FWHM_to_sigma}. Additionally, a condition of $b$ $\leqq $ $a$ was required to ensure the minor axis was smaller than the major axis. 
-
-
-% \begin{equation}
-% f(x) = A \exp{\left(-\left(\frac{(x-x_0)^2}{2\signa_X^2}\right)^P\right)}
-%     \label{eq: super-Gaussian}
-% \end{equation}
-% \question{do I need to cite this? I got it from Wikipedia.}
-
-
-\begin{table}[h!]
-\centering
-\caption{Summary of parameters and tested values in the Gaussian model.  }
-\begin{tabular}{lll}
-\toprule
-\textbf{Property} &
-\textbf{Meaning} &
-\textbf{Tested Values}  \\
-\midrule
-
-$\phi$
-& super-Gaussian exponent
-& 2, 3, 4, 5, 6, 7\\
-
-$b$ (pixels)
-& minor axis of Gaussian
-& 10, 20, 30, 40, 50\\
-
-$a$ (pixels)
-& major axis of Gaussian
-& 10, 20, 30, 40, 50\\
-\bottomrule
-\end{tabular}
-\label{tab: gaussian_model_info}
-\end{table}
-
-
-The Gaussian was rotated to align with the major axis of the disk, using the position angle of the disk given in Table \ref{tab: source_info}. The coordinates ($x, y$) were shifted with respect to the centre of the disk ($x_c, y_c$) and then rotated \SC{Perhaps put PA here instead of theta}:
-\begin{equation}
-\begin{pmatrix}
-X_M \\
-Y_m
-\end{pmatrix}
-=
-\begin{pmatrix}
-\cos\theta & -\sin\theta \\
-\sin\theta & \cos\theta
-\end{pmatrix}
-\begin{pmatrix}
-x - x_c \\
-y - y_c
-\end{pmatrix}.
-\label{eq:rotated_coordinates}
-\end{equation}
-
-
-
-The Gaussian was calculated using the equation \SC{Give this equation and 5.6 earlier, when you first mention flat-topped Gaussian.  Also include the corresponding sentence that states that phi = 2 is a normal Gaussian.}:
-\begin{equation}
-W_{\text{Uniform}} =  I_0 
-\exp\left[-\half \left(\left|\frac{X_{M}}{\sigma_M}\right|^\phi + \left|\frac{Y_{m}}{ \sigma_m}\right|^\phi\right)\right],
-    \label{eq: gaussian_eq}
-\end{equation}
-\noindent where $I_0$, the peak value, was calculated using the equation:
-\begin{equation}
-    I_0 = \frac{1} {\sigma_m \sigma_M \sqrt{2\pi}}.
-    \label{eq: Gaussian_model_I0}
-\end{equation}
-
-\noindent In Equation \ref{eq: gaussian_eq}, $\phi=2$ corresponds to a standard 2D Gaussian, while $\phi>2$ produced a flat-topped Gaussian. 
-
-The Gaussian was normalized to a maximum of 1 so that it could be used as a pixel weight. \SCC{This produced} a map of weights ranging from 0 to 1, where \Wuni sets the weight for the uniform morphology, and 1 - \Wuni sets the weight for the azimuthal morphology. With this approach, values of \Wuni close to 1 favour uniform polarization and values close to 0 favour azimuthal polarization. These two maps act as our weights, rather than a constant like in the ratio model. The weighted \SQ and $U$ were calculated by \SC{Again, give Q\_Uni, Q\_Azi, U\_Uni, and U\_Azi}:
-\begin{equation}
-\begin{aligned}
-Q_{\text{Gaussian}}
-    &= \WuniEQ \,Q_{100}
-     + (1 - \WuniEQ)\,Q_0, \\
-U_{\text{Gaussian}}
-    &= \WuniEQ\,U_{100}
-     + (1 - \WuniEQ)\,U_0,
-\end{aligned}
-% \label{eq:50U50A}
-\end{equation}
-
-\noindent As in the ratio model, the maps of $Q_{\text{Gaussian}}$ and $U_{\text{Gaussian}}$ were used to calculate the position angle (Equation \ref{eq: PA}). 
-
-
-
-Two examples of the Gaussian weight map, with polarization vectors overlaid, are shown in Figure \ref{fig: Methods/GaussianExamples} for selected values of $\phi$, $b$, and $a$. \SC{wording}
-
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.8\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/CustomExamples_B4.pdf}
-  \caption{Two examples of the Gaussian weights for selected values of $\phi$, $b$ and $a$.}
-  \label{fig: Methods/GaussianExamples}
-\end{figure}
-
-
-
-
-\noindent \SCC{*Comment: Perhaps give the equation of the flat-topped Gaussian so that the reader knows what this is.  You can also mention that phi=2 is a standard Gaussian.} \note{Leaving this comment here in case I did not address it properly, but I have a sentence saying "In Equation \ref{eq: gaussian_eq}, when $\phi=2$ the equation returns a standard 2D Gaussian, and values of $\phi>2$ create a flat-topped Gaussian.", and Equation \ref{eq: gaussian_eq} shows the flat-topped Gaussian already. Maybe I should reorder things or provide a general flat-topped Gaussian equation?}
 
 
 % ----------------------------------------------------------
@@ -205,28 +33,6 @@ Two examples of the Gaussian weight map, with polarization vectors overlaid, are
 % ----------------------------------------------------------
 \subsection{Comparison of Geometric Models}
 % ----------------------------------------------------------
-For both the ratio model and the Gaussian model, many combinations were tested. To quantify the \emph{goodness-of-fit} of each model, a chi-squared value was calculated. 
-
-\SC{order, see pdf} First, the difference between the observed and model-predicted polarization angle needed to be calculated carefully. Polarization angles can range from 0--180\degg because polarization measures orientation, rather than direction, meaning that angles that are 180\degg apart have the same polarization vector orientation. As a result, two polarization angles that are physically very similar can have a large numerical difference. For example, polarization angles of 1\degg and 179\degg only differ by 2\deggNS, but directly taking their difference would give 178\deggNS. To account for this, the angular difference is defined by the minimum angular separation between the two angles:
-\begin{equation}
-    \Delta \theta = \text{min}(|\theta_{\text{obs}} - \theta_{\text{model}}|, 180\deggEQ - |\theta_{\text{obs}} - \theta_{\text{model}}|),
-    \label{eq: minimum_separation}
-\end{equation}
-
-\noindent where $\theta_{\text{obs}}$ is the observed polarization angle and $\theta_{\text{model}}$ is the polarization angle predicted by either the ratio or Gaussian model. The angular differences were then used to calculate the chi-squared value:
-\begin{equation}
-    \chi^2 = \sum \left(\frac{\Delta \theta_i}{\sigma_\theta}\right)^2,
-    \label{eq: chi_sq}
-\end{equation}
-\noindent where the angular distance is summed over all sampled polarization vectors. 
-
-The value of $\chi^2$ was then converted to reduced chi-squared by:
-\begin{equation}
-    \chi^2_{reduced} = \frac{1}{n-k} \times \chi^2,
-    \label{eq: chi_sq_reduced}
-\end{equation}
-\noindent where $n$ is the number of sampled polarization vectors and $k$ is the degrees of freedom. For the ratio model, there is one degree of freedom, and for the Gaussian method, there are three ($\phi$, $b$, and $a$). 
-
 
 % ----------------------------------------------------------
 
