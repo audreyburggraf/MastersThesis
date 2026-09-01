@@ -2,5 +2,34 @@
 \label{ch_conclusion}
 
 
+\textbf{Overall Motivation and goal.} We studied the Class I disk IRS 63. The main science question that remains unknown and that we are trying to answer is: when does planet formation begin? One of the earliest stages of planet formation is dust grain growth, when dust grains in disks collide, stick together, and progressively grow larger (from size to size?). To look for evidence of dust grain growth in a Class I disk, when this stage is theorized to potentially begin \citep{Dom2020}, we want to determine the size of the dust grains. If we find evidence that these dust grains are much larger than the ISM ($\sim$ 0.1 \micron add cite?) or the grains in the dense cloud core ($\sim$ 1 \micron add cite), this indicates that dust grain growth might be occurring. 
 
-\section{Future Work}
+\textbf{Data Used:} To answer this question, multi-wavelength polarization emission data from ALMA at \bfourNS, \bfiveNS, \bsixNS and \bseven were used. Multi-wavelength data is essential for this project as each wavelength naturally probes a different grain size, and combining their effect allows us to place a better constraint on the dust grain size. 
+
+
+
+\textbf{Main Observational Result, Polarization Morphology.} At each wavelength of data, a series of vectors passing a detection criterion come together to form the polarization morphology. Depending on the mechanism that polarizes the light, it leaves behind a different pattern. It was found that the dominant polarization morphology indicates that longer wavelengths show more azimuthal alignment, potentially from radiative alignment, and at shorter wavelengths the dominant pattern indicates dust self-scattering. The morphology changes spatially across the disk as well, with the azimuthal pattern dominating further from the disk. The answer for this might be due to optical depth, as polarization from dust self-scattering is less likely to occur in optically thin regions of the disk, such as the outer part of the disk. 
+
+
+
+\textbf{Polarization Fraction/Wavelength Dependence.} The polarization morphology at each wavelength was modelled geometrically using two models. They were used to determine where we see evidence of dust self-scattering. In the regions of dust self-scattering, the polarization fraction was determined as a measurement of the amount of polarized emission over total emission. This polarization fraction was found to have a wavelength dependence, with a higher value at longer wavelengths. This trend of an azimuthal pattern at longer wavelengths and uniform at shorter wavelengths was also observed in HL Tau in previous studies. IRS 63 exhibited more of a combination of polarization mechanisms, whereas HL Tau was more one or the other at the upper and lower bounds of wavelength. Additionally, since IRS 63 showed a combination of these mechanisms, it indicates that the dominant polarization mechanism depends on both the 3wavleength (optical depth) and position across the disk, rather than the signature coming from one or the other at a single, or all wavelengths. 
+
+
+\textbf{Dust-Scattering Modelling} The polarization fraction was then compared to dust self-scattering models to determine if we could find a match. The scattering models had a series of assumptions, including DSHARP dust composition, and two sizes: spherical and irregular. The spherical dust grain scattering equations were solved using \texttt{DSHARP}, and irregular grains were solved using \texttt{glitterin}. 
+
+
+\textbf{Models and Observations Together, and porosity. } The observations and models were compared using polarization fraction and polarization (\PwNS), which cannot be directly compared, so a scale factor parameter was introduced. The maximum grain size at each fitting case was determined by finding when the model best matches the observations, quantified by a chi-squared parameter. It was found that the maximum grain size from the spherical model was \sbest and \ibest from the irregular model. For the spherical dust grains, the porosity can change, and a wide range was tested, from being like a rock to a sponge. The models found that the observations were best matched with the models when the grains were porous. 
+
+
+
+\textbf{Secondary Findings. } The analysis also revealed a streamer and a potential background galaxy, neither affects the main conclusion of the project. 
+
+\textbf{Evidence for dust grain growth. } The expected dust grains in a disk before planet formation occurs are \ism in the ISM and \dcc in dense cloud cores. In comparison, the dust scattering models constrained the maximum grain sizes to be \sbest for spherical grains and \ibest for irregular grains. These grain sizes are much larger than the grain sizes expected in the ISM and dense cloud cores, providing evidence that dust grain growth has occurred in IRS 63 at the Class I stage. The constrained dust grain sizes are also relatively consistent with those from other polarization studies in other disks.
+\textbf{Uncertainties/Limitations.}
+
+
+\textbf{Future Work.}
+
+
+\textbf{Final statement:} IRS 63 shows wavelength- and spatially dependent polarization morphologies that indicate the polarized emission is caused by multiple mechanisms. Dust scattering models favour grain sizes much larger than expected in the ISM and dense cloud cores. Overall, this project provides evidence that dust grain growth can occur as early as the Class I stage.
+
