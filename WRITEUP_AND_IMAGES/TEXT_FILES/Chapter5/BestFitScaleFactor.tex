@@ -1,14 +1,16 @@
 
 % ----------------------------------------------
 % ----------------------------------------------
-The observed polarization fraction (\POLFobsNS) and the \Pw model values from spherical and irregular grains cannot be directly compared because they represent different quantities. The observed polarization fraction is a dimensionless ratio of polarized intensity to total intensity, while \Pw is the polarization scattering efficiency of the dust. A scale factor (SF) is therefore introduced to relate the model values to observations. 
+The polarization fraction (\POLFsiNS) and the \Pw model values from spherical and irregular grains cannot be directly compared because they represent different quantities. The observed polarization fraction is a dimensionless ratio of polarized intensity to total intensity, while \Pw is the polarization scattering efficiency of the dust. A scale factor (SF) is therefore introduced to relate the model values to observations. 
 
 
 The scale factor is calculated at each \amax in the sample, given by:
 \begin{equation}
-\sfeq_i(\amaxEQ) = \frac{\POLFobsiEQ(\amaxEQ)}{\PwmodeliEQ(\amaxEQ)},
+\sfeq_i(\amaxEQ) = \frac{\POLFsiEQ(\amaxEQ)}{\PwEQ(\amaxEQ)},
     \label{eq: sf}
 \end{equation}
+
+
 \noindent where $i$ denotes each wavelength included in the fit. This provides a scale factor for each fitted wavelength at every value of \amaxNS. If a given grain size provides a good reproduction of the observations across all fitted wavelengths, the resulting scale factors should be similar between the wavelengths. For each value of \amaxNS, the standard deviation of the scale factors is calculated to determine the spread of the scale factors between wavelengths:
 \begin{equation}
     \text{SF}_{\text{STDEV}} = \texttt{numpy.std}(\text{SF}_i(\amaxEQ)).
@@ -30,9 +32,9 @@ The best-fit grain size (\amaxbestNS) is defined as the value of \amax where the
 % ----------------------------------------------
 % \label{sec: measured_POLF}
 % ----------------------------------------------
-Multiple wavelength combinations were tested to determine the effect of each wavelength of data on the success of the fit. The fits were (1) all wavelengths, (2) no \bfiveNS, and (3) just \bfour and \bsevenNS. A chi-squared value was calculated at each fitting \SCC{combination and porosity} to determine the agreement between the model and observations, given by: 
+Multiple wavelength combinations were tested to determine the effect of each wavelength of data on the success of the fit. The fits were (1) all wavelengths, (2) no \bfiveNS, and (3) just \bfour and \bsevenNS. Case (2) was tested due to issues with the \bfive data, explored in Chapter \ref{sec: discussion_band5_data_issues}.  A chi-squared value was calculated at each fitting case to determine the agreement between the model and observations, given by: 
 \begin{equation}
-\chi_\mathcal{P}^2 = \sum_{all\text{ }wavelengths} \left(\frac{\POLFobsEQ- [P\omega (\amaxbestEQ) \times \sfbestEQ]}{\POLFerrEQ}\right)^2.
+\chi_\mathcal{P}^2 = \sum_{all\text{ }wavelengths} \left(\frac{\POLFobsEQ- [\Pweq (\amaxbestEQ) \times \sfbestEQ]}{\POLFerrEQ}\right)^2.
     \label{eq: chi_squared_dust_model}
 \end{equation}
 \noindent The calculation is summed over all wavelengths as each wavelength was included in the $\chi_\mathcal{P}^2$ calculation, regardless of whether it was included in the fit for the scale factor value or not. The fitting combination (e.g., each porosity or irregular dust model) that produced the lowest $\chi_\mathcal{P}$ value were chosen to be the best-fit model.
