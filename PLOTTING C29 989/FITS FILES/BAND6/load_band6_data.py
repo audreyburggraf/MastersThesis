@@ -52,6 +52,11 @@ StokesI_custom_vmax_band6 = 89.85
 StokesI_stretched_mJy, StokesI_unstretched_cbar_ticks = normalize_stokesI_for_cmap(StokesI_mJy,
                                                                                   custom_min = StokesI_custom_vmin_band6, 
                                                                                   custom_max = StokesI_custom_vmax_band6)
+
+StokesI_stretched_mJy_grid, StokesI_unstretched_cbar_ticks_grid = normalize_stokesI_for_cmap(StokesI_mJy, 
+                                                                                             custom_min = StokesI_custom_vmin_band6, 
+                                                                                             custom_max = StokesI_custom_vmax_band6,
+                                                                                             ticks = constants.normalized_cbar_ticks_grid)
 # -------------------------------------------------------------------------------------------------------
 
 

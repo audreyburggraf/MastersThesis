@@ -41,6 +41,8 @@ StokesI_mJy = convert_jy_to_mjy(StokesI_Jy)
 # Stretch the Stokes I data and get the cbar ticks
 StokesI_stretched_mJy, StokesI_unstretched_cbar_ticks = normalize_stokesI_for_cmap(StokesI_mJy)
 
+StokesI_stretched_mJy_grid, StokesI_unstretched_cbar_ticks_grid = normalize_stokesI_for_cmap(StokesI_mJy, ticks = constants.normalized_cbar_ticks_grid)
+
 nx, ny = StokesI_mJy.shape
 # -------------------------------------------------------------------------------------------------------
 # Stokes I error

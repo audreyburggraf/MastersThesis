@@ -3,17 +3,17 @@
 The results of the spherical dust models are reported in Table \ref{tab: dust_model_fits_spherical}. For each fitting case, the best-fit scale factor from Equation \ref{eq: sf}, the corresponding $\chi_\mathcal{P}^2$ value (Equation \ref{eq: chi_squared_dust_model}), and the best-fit grain size (\amax corresponding to the best SF) are reported. The best fit for each fitting case is shown in bold. 
 
 
-The results of the fits are shown in Figure \ref{fig: Spherical_BEST} for the best overall fitting case, which excludes \bfiveNS. \SC{You probably should explain why 1.5 mm was excluded or allude to the section where you do.} Equivalent plots for the other fitting cases are provided in Appendix \ref{chap: Appendix_DustModels}. The observed polarization fraction, \POLFobsNS, is shown as a colour-matched marker for each wavelength (values are listed in Table \ref{tab: polf_comparison}, in the POLF$_{\text{max \SI}}$ column \note{change this}). 
+The results of the fits are shown in Figure \ref{fig: Spherical_BEST} for the best overall fitting case, which excludes \bfiveNS. Equivalent plots for the other fitting cases are provided in Appendix \ref{chap: Appendix_DustModels}. The observed polarization fraction, \POLFsiNS, is shown as a colour-matched marker for each wavelength (values are listed in Table \ref{tab: polf_comparison}, in the \POLFsi column). 
 
 
-These results show that for all four cases, the lowest $\chi_\mathcal{P}^2$ occurs for a filling factor of $f = 0.5$. The compact-grain case of ($f = 1.0$) produces a higher $\chi_\mathcal{P}^2$ value in all fitting cases, while the more porous models ($f=0.3$ and $f=0.1$) provide worse fits than $f = 0.5$. This suggests that a slightly porous grain model is the best agreement with the observed polarization fraction.
+These results show that for all four cases, the lowest $\chi_\mathcal{P}^2$ occurs for a filling factor of $f = 0.5$. The compact-grain case of ($f = 1.0$) produces a higher $\chi_\mathcal{P}^2$ value in all fitting cases, while the more porous models ($f=0.3$ and $f=0.1$) provide worse fits than $f = 0.5$. *This suggests that a slightly porous grain model is the best agreement with the observed polarization fraction.
 
 
 
 
 \begin{table}[h!]
 \centering
-\caption{Spherical dust grain model fitting results, including the scale factor $\chi_\mathcal{P}^2$, and best-fit grain size. The best fit for each fit case is shown in bold text. \SC{comment 1}\note{Add other fitting cases}}
+\caption{Spherical dust grain model fitting results, including the scale factor $\chi_\mathcal{P}^2$, and best-fit grain size. The best fit for each fit case is shown in bold text. \code{Add other fitting cases}}
 \begin{tabular}{lcccc}
 \toprule
 \textbf{Fit Case} & \textbf{Porosity ($\boldsymbol{f}$)} & \textbf{Scale Factor (SF)} & $\boldsymbol{\chi_\mathcal{P}^2}$ & \textbf{$\boldsymbol{\amaxEQ}$ ($\boldsymbol{\mu}$m)} \\
@@ -49,9 +49,9 @@ No \bfive
 
 \midrule
 
-Just \bfour and \bseven
+Just \bfour 
 & 1.00 & 2.49 & 69.98 & 164 \\
-& 0.75 & ? & ? & ? \\
+and \bseven & 0.75 & ? & ? & ? \\
 & \textbf{0.50} & \textbf{2.15} & \textbf{1.44} & \textbf{245} \\
 & 0.30 & 2.26 & 2.32 & 289 \\
 & 0.25 & ? & ? & ? \\
@@ -71,7 +71,7 @@ Just \bfour and \bseven
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/DustModelPlot_Without5_ZhangMethod.pdf}
-  \caption{Curves of \Pw multiplied by best-fit SF (Equation \ref{eq: sf}) to compare to \POLFobsNS. Markers are \POLFobsNS, listed in Table \ref{tab: polf_comparison}. The best-fit (lowest $\chi^2$, Equation \ref{eq: chi_squared_dust_model}) is represented with a gold star. The specific results of the fit can be found in Table \ref{tab: dust_model_fits_spherical}. Wavelengths that are not included in the fit for the SF have a dashed line. \question{Should I make the x-axes different? As in, at lower f values, should I start at a higher xmin and go to a higher xmax so you can see the entire curve better?} \SC{This is fine.  Can you give some vertical space so the lines don't overlap?} \question{need more vertical space?}}
+  \caption{Curves of \Pw multiplied by best-fit SF (Equation \ref{eq: sf}) to compare to \POLFobsNS. Markers are \POLFobsNS, listed in Table \ref{tab: polf_comparison}. The best-fit (lowest $\chi^2$, Equation \ref{eq: chi_squared_dust_model}) is represented with a gold star. The specific results of the fit can be found in Table \ref{tab: dust_model_fits_spherical}. Wavelengths that are not included in the fit for the SF have a dashed line. \question{Should I make the x-axes different? As in, at lower f values, should I start at a higher xmin and go to a higher xmax so you can see the entire curve better?} \note{Added more vertical space so the lines do not overlap as much, can add more} \code{Change to $P$ not P}}
   \label{fig: Spherical_BEST}
 \end{figure}
 
