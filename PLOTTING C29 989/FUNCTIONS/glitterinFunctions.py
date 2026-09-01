@@ -738,9 +738,13 @@ def RunGlitterinPowerLawDistAveraged(indicies, data_w_cm, data_n, data_k, max_rv
         # Make empty arrays for this wavelength
         k_abs = np.zeros_like(max_rvol_grid_cm)
         k_sca = np.zeros_like(max_rvol_grid_cm)
+        k_sca_eff = np.zeros_like(max_rvol_grid_cm)
         omega = np.zeros_like(max_rvol_grid_cm) 
         P = np.zeros_like(max_rvol_grid_cm) 
         P_omega = np.zeros_like(max_rvol_grid_cm) 
+        P_omega_eff = np.zeros_like(max_rvol_grid_cm) 
+        g = np.zeros_like(max_rvol_grid_cm)
+        omega_eff = np.zeros_like(max_rvol_grid_cm)
 
         # Loop over each rvol_max value for 
         for i, rvol_max_cm in enumerate(tqdm(max_rvol_grid_cm)):
@@ -750,11 +754,27 @@ def RunGlitterinPowerLawDistAveraged(indicies, data_w_cm, data_n, data_k, max_rv
             k_sca[i] = mat_dist['k_sca']
 
             omega[i] = mat_dist['k_sca'] / (mat_dist['k_sca'] + mat_dist['k_abs'])
+            
+            Z11 = mat_dist['Z11']
+            
+            mu = np.cos(theta * np.pi / 180)
+            mu_c = 0.5 * (mu[1:] + mu[:-1])
+            d_mu = mu[1:] - mu[:-1]
+            Z11_c = 0.5 * (Z11[1:] + Z11[:-1])
+            
+            g[i] = np.sum(Z11_c * mu_c * d_mu) / np.sum(Z11_c * d_mu)
+            
+            k_sca_eff[i] = (1 - g[i]) * k_sca[i]
+            
+            omega_eff[i] = k_sca_eff[i] / (k_sca_eff[i] + mat_dist['k_abs'])
+
 
             idx_90 = np.argmin(np.abs(theta - 90))
             P[i] = - mat_dist['Z12'][idx_90] / mat_dist['Z11'][idx_90]
 
             P_omega[i] = P[i] * omega[i]
+            
+            P_omega_eff[i] = P[i] * omega_eff[i]
 
         # Save everything for this wavelength
         results[idx] = {
@@ -766,11 +786,14 @@ def RunGlitterinPowerLawDistAveraged(indicies, data_w_cm, data_n, data_k, max_rv
     #         'rvol_max_um': max_rvol_grid_cm * 1e4,
             'k_abs': k_abs,
             'k_sca': k_sca,
+            'k_sca_eff': k_sca_eff,
     #         'omega': omega,
     #         'g': g,
             'omega': omega, 
+            'omega_eff': omega_eff, 
             'P': P,
             'P_omega': P_omega,
+            'P_omega_eff': P_omega_eff,
         }
         
     return results
@@ -781,7 +804,9 @@ def RunGlitterinPowerLawDistAveraged(indicies, data_w_cm, data_n, data_k, max_rv
 #
 # 
 # I am updating this so we can say what POLF we want to use 
-def find_sf_glitterin(results, AllBands, BandsInFit, df_POLF, POLF_index, print_results = True,
+def find_sf_glitterin(results, AllBands, BandsInFit, df_POLF, POLF_index, 
+                      albedo = 'w', 
+                      print_results = True,
                       trouble=False,
                       trouble_index=0,
                       choose_trouble_index=False):
@@ -856,9 +881,19 @@ def find_sf_glitterin(results, AllBands, BandsInFit, df_POLF, POLF_index, print_
     N_bands = len(AllBands)
     
     Pw = np.zeros((N_rvol_max, N_bands))
+
     
     for j, band in enumerate(AllBands):
-        Pw[:, j] = results[band]['P_omega']
+        
+        if albedo == 'w_eff':
+            Pw[:, j] = results[band]['P_omega_eff']
+            name_save = 'Pw_eff'
+        elif albedo == 'w':
+            Pw[:, j] = results[band]['P_omega']
+            name_save = 'Pw'
+        else:
+            return("'albedo' bust equal 'w_eff' or 'w'")
+       
     # --------------------------------------------------------------------------   
     
 
@@ -960,7 +995,7 @@ def find_sf_glitterin(results, AllBands, BandsInFit, df_POLF, POLF_index, print_
     
     sf_results = {
         'rvol_max_cm': rvol_max_cm,
-        'Pw': Pw,
+        name_save: Pw,
         'best_rvol_max_cm': best_rvol_max_cm,
         'best_rvol_max_micron': cm_to_micron(best_rvol_max_cm),
         'POLF_obs': POLF_obs,

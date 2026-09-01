@@ -116,12 +116,23 @@ def add_min_major_ticks_wcs(ax, axis_num_fs = None, sf = 1):
         
         
     # Adjust ticks
-    ax.minorticks_on()
-    ax.tick_params(axis="x", which="major", direction="in", bottom=True, top=True, length=7, labelsize=axis_num_fs)
-    ax.tick_params(axis="y", which="major", direction="in", bottom=True, top=True, length=7, labelsize=axis_num_fs)
+    ax.tick_params(
+        axis="x", which="major",
+        direction="in", bottom=True, top=True,
+        length=7, labelsize=axis_num_fs
+    )
 
-    ax.tick_params(axis="x", which="minor", length=4)
-    ax.tick_params(axis="y", which="minor", length=4)
+    ax.tick_params(
+        axis="y", which="major",
+        direction="in", left=True, right=True,
+        length=7, labelsize=axis_num_fs
+    )
+
+    ax.tick_params(axis="x", which="minor", direction="in",
+                   bottom=True, top=True, length=4)
+
+    ax.tick_params(axis="y", which="minor", direction="in",
+                   left=True, right=True, length=4)
 # -----------------------------------------------------------------------------------------
     
     
@@ -358,7 +369,7 @@ def simple_plot(StokesI_wcs, plotting_data, cbar_label, cmap,
 
 # Function to make StokesI normalized colorbar ticks 
 # -----------------------------------------------------------------------------------------
-def normalize_stokesI_for_cmap(StokesI_data_2d_mJy, custom_min=None, custom_max=None, base=100):
+def normalize_stokesI_for_cmap(StokesI_data_2d_mJy, custom_min=None, custom_max=None, base=100, ticks = constants.normalized_cbar_ticks):
     """
     Normalize Stokes I data for visualization and generate colorbar tick values.
 
@@ -394,7 +405,7 @@ def normalize_stokesI_for_cmap(StokesI_data_2d_mJy, custom_min=None, custom_max=
     StokesI_stretched = stretch(StokesI_clipped, base=base, vmin=StokesI_min, vmax=StokesI_max)
 
     # Map normalized colorbar ticks back to original units
-    StokesI_unstretched_cbar_ticks = unstretch(normalized_cbar_ticks, StokesI_min, StokesI_max)
+    StokesI_unstretched_cbar_ticks = unstretch(ticks, StokesI_min, StokesI_max)
 
     return StokesI_stretched, StokesI_unstretched_cbar_ticks
 # -----------------------------------------------------------------------------------------

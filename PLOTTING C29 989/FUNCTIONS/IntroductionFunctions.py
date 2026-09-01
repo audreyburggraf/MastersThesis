@@ -568,7 +568,7 @@ def BuildBandDictionary(
     max_length_pix,
     reference_fraction,
     POLI_debiased_mJy,
-    StokesI_mJy,
+    StokesI_mJy, StokesI_stretched_mJy_grid, StokesI_unstretched_cbar_ticks_grid, 
     RA_centre_pix, Dec_centre_pix,
 ):
 
@@ -641,6 +641,8 @@ def BuildBandDictionary(
 
         'POLI_debiased_mJy': POLI_debiased_mJy,
         'StokesI_mJy': StokesI_mJy,
+        'StokesI_stretched_mJy_grid': StokesI_stretched_mJy_grid, 
+        'StokesI_unstretched_cbar_ticks_grid': StokesI_unstretched_cbar_ticks_grid,
         
         'minor_x': slice_points['minor_x'],
         'minor_y': slice_points['minor_y'], 

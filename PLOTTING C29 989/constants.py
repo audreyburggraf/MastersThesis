@@ -61,6 +61,10 @@ poster_refy = 12.15
 normalized_cbar_ticks = np.array([0, 0.2, 0.4, 0.6, 0.8, 1])
 
 
+
+normalized_cbar_ticks_grid = np.array([0.1, 0.5,  0.9])
+
+
 # ALMA Band wavelengths
 # ---------------------------------------------
 lambda_mm = {
