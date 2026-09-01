@@ -457,6 +457,14 @@ def MakeAllBandGridDelta(bands,
             cbar_label = r'Stokes I [mJy beam$^{-1}$]'
             
             im = ax.imshow(b['StokesI_mJy'], cmap = cmap)
+            #im = ax.imshow(b['StokesI_stretched_mJy'], cmap = cmap)
+        # ---------------------------------------------------------
+        elif plotting == 'Stokes I stretched':
+            cbar_label = r'Stokes I [mJy beam$^{-1}$]'
+            
+            # im = ax.imshow(b['StokesI_mJy'], cmap = cmap)
+            im = ax.imshow(b['StokesI_stretched_mJy_grid'], cmap = cmap)
+            
         # ---------------------------------------------------------
         elif plotting == 'POLI':
             cbar_label = r'Polarized Intensity [mJy beam$^{-1}$]'
@@ -488,6 +496,24 @@ def MakeAllBandGridDelta(bands,
 
         # Add colorbar
         cbar1 = plt.colorbar(im, cax=cax, orientation="horizontal")
+        
+        if plotting == 'Stokes I stretched':
+       
+            
+            cbar1.set_ticks(constants.normalized_cbar_ticks_grid)
+            cbar1.set_ticklabels([f"{val:.1f}" for val in b['StokesI_unstretched_cbar_ticks_grid']])
+            
+#             if i == 0:
+#                 cbar1.set_ticklabels(
+#                     [f"{val:.2f}" for val in b['StokesI_unstretched_cbar_ticks_grid']]
+#                 )
+#             else:
+#                 cbar1.set_ticklabels(
+#                     [f"{val:.1f}" for val in b['StokesI_unstretched_cbar_ticks_grid']])
+                
+                
+            cbar1.ax.get_xticklabels()[0].set_ha('left')
+            cbar1.ax.get_xticklabels()[-1].set_ha('right')
 
         # Put ticks on top
         cbar1.ax.xaxis.set_ticks_position("top")
@@ -500,6 +526,10 @@ def MakeAllBandGridDelta(bands,
             direction="in",
             width=spine_width
         )
+        
+#         if plotting == 'Stokes I stretched':
+#             if i != 0:
+#                 cbar1.ax.get_xticklabels()[0].set_visible(False)
         
         if plotting == 'POLI':
             if i == 2:
@@ -988,6 +1018,7 @@ def scale_factor_plot_for_writeup_glitterin(bands,                  # These are 
                                             results_array, 
                                         bands_included_in_fit_arr, # These are the values that were fit
                                         df_POLF,        # These are the values for each band we are plotting the marker
+                                        albedo = 'w',
                                         #chi_sq_by_f, 
                                         ymin = -0.1, 
                                         ymax = 2, 
@@ -1055,7 +1086,17 @@ def scale_factor_plot_for_writeup_glitterin(bands,                  # These are 
         
         res = results_array[i]
         a_max_dist_micron = cm_to_micron(res['rvol_max_cm'])
-        P_times_omega = res['Pw']
+        
+        if albedo == 'w_eff':
+            P_times_omega = res['Pw_eff']
+            y_label = '$P\omega_{\mathrm{eff}}$'
+        elif albedo == 'w':
+            P_times_omega = res['Pw']
+            y_label = '$P\omega$'
+        else:
+            return("albedo should equal w or w_eff")
+        
+        
         sf = res['best_sf']
         best_a_max = res['best_rvol_max_micron']
         best_idx = res['best_idx_arr']
@@ -1067,7 +1108,7 @@ def scale_factor_plot_for_writeup_glitterin(bands,                  # These are 
        
 
         if i == 0:
-            ax[i].set_ylabel('P $\omega$', fontsize = xy_axis_fs)
+            ax[i].set_ylabel(y_label, fontsize = xy_axis_fs)
         else:
             ax[i].set_yticklabels([])
             ax[i].set_ylabel('')
@@ -1181,6 +1222,7 @@ def scale_factor_plot_for_writeup_glitterin(bands,                  # These are 
                    linestyle='None'))
 
        # if b not in ["Band 5 robust -1", "Band 5 robust -2"]:
+            print(rf'i = {i} and P_times_omega[:, j] * sf max is {max(P_times_omega[:, j] * sf) }')
             ax[i].plot(a_max_dist_micron,
                            P_times_omega[:, j] * sf,
                            color=band_colors[j],
@@ -1294,6 +1336,121 @@ def scale_factor_plot_for_writeup_glitterin(bands,                  # These are 
 
     return fig, ax
 # -----------------------------------------------------------------------------------
+
+
+def plot_Pw_vs_grainsize(data, bands, lambda_bands_cm, bands_labels = ['B4', 'B5', 'B6', 'B7'],
+                         
+                         porosity='1', albedo='w',
+                        idx = 'wav'):
+    
+    # Choose which P*omega quantity to plot
+    if albedo == 'w':
+        Pw_key = 'P_omega'
+        ylabel = r'$P\omega$'
+        save_name = f'Pw_vs_grainsize_f{porosity}.pdf'
+        
+    elif albedo == 'w_eff':
+        Pw_key = 'P_omega_eff'
+        ylabel = r'$P\omega_{\mathrm{eff}}$'
+        save_name = f'Pw_eff_vs_grainsize_f{porosity}.pdf'
+        
+    else:
+        raise ValueError("albedo must be 'w' or 'w_eff'")
+    
+    
+    # Create figure
+    fig, ax = plt.subplots(figsize=(8, 6))
+
+    wavelengths = [lambda_mm[band] for band in bands]
+    nums = [4, 5, 6, 7]
+    for i, band in enumerate(bands):
+        
+        if idx == 'wav':
+            lam = wavelengths[i]
+        elif idx == 'num':
+            lam = nums[i]
+        
+        ax.plot(
+            cm_to_micron(data[lam][porosity]['a']),
+            data[lam][porosity][Pw_key],
+            color=alma_band_colors[band],
+            ls='-',
+            lw=2,
+            label=f'{cm_to_mm(lambda_bands_cm[i]):.1f} mm'
+                  if i != 3
+                  else f'{cm_to_mm(lambda_bands_cm[i]):.2f} mm'
+        )
+        
+        # Characteristic grain size
+        a_char_micron = cm_to_micron(lambda_bands_cm[i] / (2 * np.pi))
+        
+        ax.axvline(
+            a_char_micron,
+            color=alma_band_colors[band],
+            alpha=0.25,
+            lw=2,
+            ls='--'
+        )
+        
+        # Find maximum
+        max_idx = np.argmax(data[lam][porosity][Pw_key])
+        max_val = data[lam][porosity][Pw_key][max_idx]
+        amax_at_max = cm_to_micron(data[lam][porosity]['a'][max_idx])
+
+        print(f'At Band {bands_labels[i]}, the highest Pw value is {max_val}')
+        print(f'At this Pw value, the a_max value is {amax_at_max:.2f} micron')
+        print(f'a_char_micron = {a_char_micron:.2f} micron')
+        print()
+    
+    
+    # Axis labels
+    ax.set_xlabel('Maximum grain size [$\mu$m]', fontsize=axis_label_fs)
+    ax.set_ylabel(ylabel, fontsize=axis_label_fs)
+    
+    # Ticks
+    ax.minorticks_on()
+
+    ax.tick_params(axis="x", which="minor",
+                   direction="in", left=True, right=True, length=4)
+    ax.tick_params(axis="y", which="minor",
+                   direction="in", left=True, right=True, length=4)
+
+    ax.tick_params(axis="x", which="major",
+                   direction="in", bottom=True, top=True,
+                   length=7, labelsize=axis_num_fs)
+    ax.tick_params(axis="y", which="major",
+                   direction="in", left=True, right=True,
+                   length=7, labelsize=axis_num_fs)
+
+    # Log x-axis
+    ax.set_xscale('log')
+
+    # Remove scientific notation
+    ax.xaxis.set_major_formatter(ScalarFormatter(useMathText=False))
+    ax.ticklabel_format(style='plain', axis='x')
+
+    # Characteristic grain size legend entry
+    ax.axvline(
+        -100,
+        color='black',
+        alpha=0.25,
+        lw=2,
+        ls='--',
+        label=r'$a_{\mathrm{char}} = \lambda / 2\pi$'
+    )
+
+    ax.set_xlim(10, 1000)
+
+    ax.legend(fontsize=legend_text_fs, frameon=False)
+
+#     plt.savefig(
+#         writeup_image_folder_path + '/DustModels/' + save_name,
+#         dpi=300,
+#         facecolor='white',
+#         bbox_inches='tight'
+#     )
+
+    return fig, ax
 # -----------------------------------------------------------------------------------
 # -----------------------------------------------------------------------------------
 # -----------------------------------------------------------------------------------
