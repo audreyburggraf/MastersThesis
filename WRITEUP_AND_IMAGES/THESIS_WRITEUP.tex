@@ -107,6 +107,9 @@
 \newcommand{\amaxbestEQ}{a_{\text{max, best}}}
 \newcommand{\amaxbest}{$\amaxbestEQ$ }
 \newcommand{\amaxbestNS}{$\amaxbestEQ$}
+
+\newcommand{\acharNS}{$a_{\text{char}}$}
+\newcommand{\achar}{$a_{\text{char}}$ }
 %===============================
 \newcommand{\kscaEQ}{\kappa_{\text{sca}}}
 \newcommand{\ksca}{$\kscaEQ$ } 
@@ -154,9 +157,9 @@
 \newcommand{\Pw}{$P\omega$ }
 \newcommand{\PwNS}{$P\omega$}
 
-\newcommand{\PweffNS}{$P\omega_{eff}$}
+\newcommand{\PweffNS}{$P\omega_\text{eff}$}
 
-\newcommand{\Pweff}{$P\omega_{eff}$ }
+\newcommand{\Pweff}{$P\omega_\text{eff}$ }
 
 \newcommand{\Pwmodel}{$P\omega_\text{{model}}$ }
 \newcommand{\PwmodelEQ}{P\omega_\text{{model}}}
@@ -170,9 +173,14 @@
 \newcommand{\POLF}{$\POLFeq$ }
 
 
-\newcommand{\POLFobsEQ}{\mathcal{P}_{F, \text{obs}}}
-\newcommand{\POLFobs}{$\POLFobsEQ$ }
-\newcommand{\POLFobsNS}{$\POLFobsEQ$}
+% \newcommand{\POLFobsEQ}{\mathcal{P}_{F, \text{obs}}}
+% \newcommand{\POLFobs}{$\POLFobsEQ$ }
+% \newcommand{\POLFobsNS}{$\POLFobsEQ$}
+
+
+\newcommand{\POLFsiEQ}{\mathcal{P}_{F, \text{ I}_\text{max}}}
+\newcommand{\POLFsi}{$\POLFsiEQ$ }
+\newcommand{\POLFsiNS}{$\POLFsiEQ$}
 
 \newcommand{\POLFobsiEQ}{\mathcal{P}_{F, \text{obs, i}}}
 \newcommand{\POLFobsi}{$\POLFobsiEQ$ }
@@ -270,7 +278,19 @@
 \newcommand{\robNS}{\texttt{robust}}
 %===============================
 \newcommand{\POLFSIns}{$\mathcal{P}_{\mathrm{F, max\,I}}$}
-\newcommand{\POLFSI}{\POLFSIns }
+\newcommand{\POLFSI}{$\mathcal{P}_{\mathrm{F, max\,I}}$ }
+%===============================
+\newcommand{\sbest}{245 \micron}
+\newcommand{\sbestNS}{245 \micronNS}
+
+\newcommand{\ibest}{209 \micron}
+\newcommand{\ibestNS}{209 \micronNS}
+
+\newcommand{\ism}{$\sim$ 0.1 \micron}
+\newcommand{\ismNS}{$\sim$ 0.1 \micronNS}
+
+\newcommand{\dcc}{$\sim$ 1 \micron}
+\newcommand{\dccNS}{$\sim$ 1 \micronNS}
 %===============================
 %  EDITING / ANNOTATION COMMANDS
 %===============================
@@ -322,6 +342,11 @@
 
 
 \newcommand{\code}[1]{\textcolor{orange}{\emph{[#1]}} }
+
+
+\newcommand{\albedo}[1]{\textcolor{cyan}{\emph{[#1]}} }
+
+\newcommand{\refintext}[1]{\textcolor{magenta}{\emph{[#1]}} }
 %===============================
 
 
@@ -460,13 +485,17 @@ Dedication goes here...
 ------------------------------------------------------------------------------------------------------------
 Make sure all figs and tables and ewuations are referenced
 
+Things to check: figures introduced in order
+
 Make sure only used references show up
 
 
-Disc vs Disk
 
 
 layout of tables and figures: not all at the end: tables are h! and figures are htbp (especially try for stokes I and POLI maps figure 4.1)
+
+
+
 
 
 ------------------------------------------------------------------------------------------------------------
@@ -483,9 +512,9 @@ layout of tables and figures: not all at the end: tables are h! and figures are 
 
 \chapter*{Acknowledgements}
 
-Acknowledgments if any...
 
-% \input{WRITEUP_AND_IMAGES/TEXT_FILES/Acknowledgments}
+
+\input{WRITEUP_AND_IMAGES/TEXT_FILES/Acknowledgments}
 
 
 
