@@ -485,14 +485,22 @@ def find_sf_v5(bands,
     # End of looping over all f values
         
 
-    if print_results:
-        print("Best idx:", best_idx_by_f)
-        print("Best a_max:", a_max_best_by_f)
-        print("Best SF:", best_sf_by_f)
-        print("Best chi^2:", chi_sq_by_f)
+    df_best = pd.DataFrame({
+        'f': list(best_idx_by_f.keys()),
+        'Best idx': list(best_idx_by_f.values()),
+        'Best a_max': list(a_max_best_by_f.values()),
+        'Best SF': list(best_sf_by_f.values()),
+        'Best chi^2': list(chi_sq_by_f.values())
+    })
+
+    df_best['Best a_max'] = df_best['Best a_max'].round(0)
+    df_best['Best SF'] = df_best['Best SF'].round(2)
+    df_best['Best chi^2'] = df_best['Best chi^2'].round(2)
+
+#         df_best
 
     # return values
-    return a_max_dist_micron_by_f, P_times_omega_by_f, a_max_best_by_f, POLF_obs_by_f, best_sf_by_f, best_idx_by_f, chi_sq_by_f
+    return a_max_dist_micron_by_f, P_times_omega_by_f, a_max_best_by_f, POLF_obs_by_f, best_sf_by_f, best_idx_by_f, chi_sq_by_f, df_best
 # --------------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------------
 

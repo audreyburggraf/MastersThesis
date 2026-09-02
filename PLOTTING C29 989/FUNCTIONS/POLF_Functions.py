@@ -187,7 +187,7 @@ def find_POLF_at_max_StokesI(StokesI_mJy, POLI_mJy, POLF, POLF_err, print_statem
 
 
 # --------------------------------------------------------------------------------------
-def get_all_POLF_and_save(StokesI_mJy, POLI_mJy, POLF, POLF_err, UniformRatios, band, gaussian_tolerance = 0.001, sigma_cutoff = 5, print_statements = False):
+def get_all_POLF_and_save(StokesI_mJy, POLI_mJy, POLF, POLF_err, UniformRatios, band, gaussian_tolerance = 0.001, sigma_cutoff = 5, print_statements = False, bias = 'debiased'):
 
     band_paths = {
     'Band 4': (constants.band4_data_folder_path, "constants_BAND4.csv"),
@@ -220,6 +220,11 @@ def get_all_POLF_and_save(StokesI_mJy, POLI_mJy, POLF, POLF_err, UniformRatios, 
         )
 
     folder, filename = band_paths[band]
+    
+    name, ext = filename.rsplit('.', 1)
+    filename = f"{name}_{bias}.{ext}"
+
+
     path = folder + filename
     
     POLF_Gaussian = find_gaussian_POLF(band, UniformRatios, POLF, gaussian_tolerance)
@@ -260,7 +265,7 @@ def get_all_POLF_and_save(StokesI_mJy, POLI_mJy, POLF, POLF_err, UniformRatios, 
 
 # Load POLF
 # --------------------------------------------------------------------------------------
-def load_POLF(bands, print_things = False):
+def load_POLF(bands, print_things = False, bias = 'old'):
     # Initialize storage
     results = {
         'Band': [],
@@ -307,6 +312,11 @@ def load_POLF(bands, print_things = False):
             raise ValueError(f"Unsupported band: {band}")
 
         folder_var, filename = band_config[band]
+        
+        if band != 'Band 6':
+            if bias != 'old':
+                name, ext = filename.rsplit('.', 1)
+                filename = f"{name}_{bias}.{ext}"
 
         path = Path(getattr(constants, folder_var)) / filename
 

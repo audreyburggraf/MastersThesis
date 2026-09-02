@@ -120,6 +120,10 @@ def calculate_polarized_fraction(StokesQ, StokesU, StokesI):
     
     return polarized_intensity / StokesI
 # ------------------------------------------------------------------------------------
+def calculate_polarized_fraction_debiased(POLI_debiased_mJy, StokesI):
+    
+    return POLI_debiased_mJy / StokesI
+# ------------------------------------------------------------------------------------
 # Error
 # ------------------------------------------------------------------------------------
 def calculate_polarized_fraction_err(StokesQ, StokesU, StokesI, StokesQ_err, StokesU_err, StokesI_err):
@@ -131,6 +135,13 @@ def calculate_polarized_fraction_err(StokesQ, StokesU, StokesI, StokesQ_err, Sto
     
     # Find error of POLI/StokesI
     POLF_err = error_prop_division(POLI, POLI_err, StokesI, StokesI_err)
+
+    return POLF_err
+# ------------------------------------------------------------------------------------
+def calculate_polarized_fraction_err_debiased(POLI_debiased, POLI_err, StokesI, StokesI_err):
+    
+    # Find error of POLI/StokesI
+    POLF_err = error_prop_division(POLI_debiased, POLI_err, StokesI, StokesI_err)
 
     return POLF_err
 # ------------------------------------------------------------------------------------
