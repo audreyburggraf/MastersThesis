@@ -121,14 +121,19 @@ PA_err_deg = np.degrees(PA_err_rad)
 
 # Polarized Fraction
 # -------------------------------------------------------------------------------------------------------
-POLF = calculate_polarized_fraction(StokesQ_mJy, StokesU_mJy, StokesI_mJy)
+POLF_biased = calculate_polarized_fraction(StokesQ_mJy, StokesU_mJy, StokesI_mJy)
+
+POLF_debiased = calculate_polarized_fraction_debiased(POLI_debiased_mJy, StokesI_mJy)
+
 
 # find_POLF_avg("Band 5 v0", POLF, StokesI_mJy, band5_v0_data_folder_path)
 # -------------------------------------------------------------------------------------------------------
 # Polarized Fraction Error
 # -------------------------------------------------------------------------------------------------------
-POLF_err = calculate_polarized_fraction_err(StokesQ_mJy, StokesU_mJy, StokesI_mJy, 
+POLF_err_biased = calculate_polarized_fraction_err(StokesQ_mJy, StokesU_mJy, StokesI_mJy, 
                                             StokesQ_err_mJy, StokesU_err_mJy, StokesI_err_mJy)
+
+POLF_err_debiased = calculate_polarized_fraction_err_debiased(POLI_debiased_mJy, POLI_err_mJy,  StokesI_mJy, StokesI_err_mJy)
 # -------------------------------------------------------------------------------------------------------
 
 

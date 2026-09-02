@@ -787,7 +787,7 @@ def scale_factor_plot_for_writeup(bands,                  # These are the bands 
        
 
         if i == 0:
-            ax[i].set_ylabel('P $\omega$', fontsize = xy_axis_fs)
+            ax[i].set_ylabel(r'$P\omega_{\mathrm{eff}}$', fontsize = xy_axis_fs)
         else:
             ax[i].set_yticklabels([])
             ax[i].set_ylabel('')

@@ -149,7 +149,7 @@ def reccomended_step_count(StokesI_header):
     print(f"Recommended sampling step: every {sampling_step} pixels")
     
 # -------------------------------------------------------------------------------------------- 
-def print_errors(band, StokesI_mJy, StokesI_err_mJy, StokesQ_err_mJy, StokesU_err_mJy, POLI_err_mJy, POLF_err, PA_err_deg):
+def print_errors(band, StokesI_mJy, StokesI_err_mJy, StokesQ_err_mJy, StokesU_err_mJy, POLI_err_mJy, POLF_err_biased, POLF_err_debiased, PA_err_deg):
     
     # Find max Stokes I 
     ymax, xmax = np.unravel_index(np.nanargmax(StokesI_mJy), StokesI_mJy.shape)
@@ -170,8 +170,11 @@ def print_errors(band, StokesI_mJy, StokesI_err_mJy, StokesQ_err_mJy, StokesU_er
         
     
     # Polarization fraction error is NOT the same 
-    POLF_err_percent = POLF_err * 100
-    print(rf'POLF error: mean: {np.nanmean(POLF_err_percent):.4f}, maximum: {np.nanmax(POLF_err_percent):.4f}, at Stokes I maximum: {POLF_err_percent[ymax, xmax]:.4f}, ALL MULTIPLIED BY 100')
+    POLF_err_percent_biased = POLF_err_biased * 100
+    POLF_err_percent_debiased = POLF_err_debiased * 100
+    print(rf'POLF error biased: mean: {np.nanmean(POLF_err_percent_biased):.4f}, maximum: {np.nanmax(POLF_err_percent_biased):.4f}, at Stokes I maximum: {POLF_err_percent_biased[ymax, xmax]:.4f}, ALL MULTIPLIED BY 100')
+    
+    print(rf'POLF error biased: mean: {np.nanmean(POLF_err_percent_debiased):.4f}, maximum: {np.nanmax(POLF_err_percent_debiased):.4f}, at Stokes I maximum: {POLF_err_percent_debiased[ymax, xmax]:.4f}, ALL MULTIPLIED BY 100')
     
     
     # Polarization fraction error is NOT the same 
@@ -570,6 +573,7 @@ def BuildBandDictionary(
     POLI_debiased_mJy,
     StokesI_mJy, StokesI_stretched_mJy_grid, StokesI_unstretched_cbar_ticks_grid, 
     RA_centre_pix, Dec_centre_pix,
+    POLF_debiased
 ):
 
     # --------------------------------------------------------
@@ -643,6 +647,8 @@ def BuildBandDictionary(
         'StokesI_mJy': StokesI_mJy,
         'StokesI_stretched_mJy_grid': StokesI_stretched_mJy_grid, 
         'StokesI_unstretched_cbar_ticks_grid': StokesI_unstretched_cbar_ticks_grid,
+        
+        'POLF_debiased': POLF_debiased, 
         
         'minor_x': slice_points['minor_x'],
         'minor_y': slice_points['minor_y'], 
