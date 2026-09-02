@@ -4,7 +4,9 @@
 \subsection{Polarization and Stokes Parameters}
 
 
-Polarized light is light in which the electric field has a preferred orientation. For linearly polarized light, the electric field oscillates along a fixed direction perpendicular to the direction in which the light propagates \citep{RybickiLightman} (see Figure \ref{fig: LinearPol}). Polarization information from interferometers (such as ALMA) is represented by the Stokes visibilities from cross-correlations between antennas in the array \citep{HullDebias}. The Stokes parameter $I$ is the total intensity of the emission. \SQ measures the difference in intensity between the North-South and East-West components. \SU measures the difference between the components at 45$^\circ$ and 135$^\circ$ relative to the North-South axis. This coordinate system is shown in Figure \ref{fig: LinearPol}. The \SQ and $U$ parameters together provide information about the strength and orientation of the linear polarization. Circular polarization adds another Stokes parameter ($V$), however, ALMA is not well calibrated to observe circular polarization. \question{cite something for this?}
+Polarized light is light in which the electric field has a preferred orientation. For linearly polarized light, the electric field oscillates along a fixed direction perpendicular to the direction in which the light propagates \citep{RybickiLightman} (see Figure \ref{fig: LinearPol}). Polarization information from interferometers (such as ALMA) is represented by the Stokes visibilities from cross-correlations between antennas in the array \citep{HullDebias}. The Stokes parameter $I$ is the total intensity of the emission. \SQ measures the difference in intensity between the North-South and East-West components. \SU measures the difference between the components at 45$^\circ$ and 135$^\circ$ relative to the North-South axis. This coordinate system is shown in Figure \ref{fig: LinearPol}. The \SQ and $U$ parameters together provide information about the strength and orientation of the linear polarization. 
+
+%Circular polarization adds another Stokes parameter ($V$), however, ALMA is not well calibrated to observe circular polarization. \question{cite something for this?}
 
 
 
@@ -46,26 +48,27 @@ The polarization angle from the emission is used to construct polarization vecto
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+ 
 
-\question{Is this a good way to differentiate the three paragraphs?} 
+%\textbf{Magnetic Grain Alignment.} 
+Magnetic grain alignment is produced when the short axis of non-spherical dust grains aligns parallel to the magnetic field direction via radiative torques  \citep{Stephens_2019, Harrison2024}. The polarization morphology produced by magnetic grain alignment is expected to be toroidal \citep{Stephens_2017}, which can be seen in Figure \ref{fig: kataoka_polarization_morphologies}(a). Polarized dust emission is known to trace the magnetic field direction in the ISM, molecular clouds and potentially in the outer regions of disks \citep{Stephens_2019}. Despite magnetic grain alignment being the expected mechanism for producing polarization in disks, it is often not observed. Instead, the pattern observed in most disks is generally better explained by other mechanisms  \citep{Harrison2024}. 
 
-\textbf{Magnetic Grain Alignment.} Magnetic grain alignment is produced when the short axis of non-spherical dust grains aligns parallel to the magnetic field direction via radiative torques  \citep{Stephens_2019, Harrison2024}. The polarization morphology produced by magnetic grain alignment is expected to be toroidal \citep{Stephens_2017}, which can be seen in Figure \ref{fig: kataoka_polarization_morphologies}(a). Polarized dust emission is known to trace the magnetic field direction in the ISM, molecular clouds and potentially in the outer regions of disks \citep{Stephens_2019}. Despite magnetic grain alignment being the expected mechanism for producing polarization in disks, it is often not observed. Instead, the pattern observed in most disks is generally better explained by other mechanisms  \citep{Harrison2024}. 
-
-
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\textbf{Radiative Grain Alignment.} Radiative alignment occurs when non-spherical grains align with the radiation field, with the long axis of the grains being perpendicular to the radiation field (k-RAT alignment) \citep{Stephens_2017}. This produces a polarization morphology that is azimuthal, meaning the polarization vectors follow a circular pattern about the centre of the disk, as shown in Figure \ref{fig: kataoka_polarization_morphologies}(b). However, an azimuthal polarization morphology can also be produced by other mechanisms. For example, mechanical alignment can occur when grains align with their long axis in the streaming direction \citep{Stephens_2019}, or aerodynamic alignment can occur when gas and dust orbit the central star at different speeds. Therefore, the exact mechanism responsible for this morphology cannot be determined based only on the morphology, and is not a main goal of the project. In this thesis, the azimuthal morphology is a description of the pattern rather than evidence for a single specific polarization mechanism. 
+%\textbf{Radiative Grain Alignment.} 
+Radiative alignment occurs when non-spherical grains align with the radiation field, with the long axis of the grains being perpendicular to the radiation field (k-RAT alignment) \citep{Stephens_2017}. This produces a polarization morphology that is azimuthal, meaning the polarization vectors follow a circular pattern about the centre of the disk, as shown in Figure \ref{fig: kataoka_polarization_morphologies}(b). However, an azimuthal polarization morphology can also be produced by other mechanisms. For example, mechanical alignment can occur when grains align with their long axis in the streaming direction \citep{Stephens_2019}, or aerodynamic alignment can occur when gas and dust orbit the central star at different speeds. Therefore, the exact mechanism responsible for this morphology cannot be determined based only on the morphology, and is not a main goal of the project. In this thesis, the azimuthal morphology is a description of the pattern rather than evidence for a single specific polarization mechanism. 
 
 
 % \quoted{Multiple mechanisms could
@@ -91,7 +94,8 @@ The polarization angle from the emission is used to construct polarization vecto
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\textbf{Dust Self-Scattering.} Dust self-scattering occurs when thermal emission from dust grains is scattered by other dust grains in the disk, producing polarized emission. This mechanism is expected to produce a polarization morphology that is roughly parallel to the disk minor axis \citep{Kataoka_2017}, as shown in Figure \ref{fig: kataoka_polarization_morphologies}(c). The efficiency of dust self-scattering polarization is highly dependent on the maximum grain size (see Chapter \ref{sec: c5_P_and_w_vs_a}), so it is useful for constraining the maximum dust grain size \citep{Harrison2024}. This sensitivity to grain size makes dust self-scattering a useful mechanism to focus on in this project. 
+%\textbf{Dust Self-Scattering.} 
+Dust self-scattering occurs when thermal emission from dust grains is scattered by other dust grains in the disk, producing polarized emission. This mechanism is expected to produce a polarization morphology that is roughly parallel to the disk minor axis \citep{Kataoka_2017}, as shown in Figure \ref{fig: kataoka_polarization_morphologies}(c). The efficiency of dust self-scattering polarization is highly dependent on the maximum grain size (see Chapter \ref{sec: c5_P_and_w_vs_a}), so it is useful for constraining the maximum dust grain size \citep{Harrison2024}. This sensitivity to grain size makes dust self-scattering a useful mechanism to focus on in this project. 
 
 
 

@@ -4,7 +4,7 @@
 \subsection{Errors for Stokes Parameters}
 \label{sec: stokes_errors}
 
-For the data calibrated in this project (\bfourNS, \bfiveNS, \bsevenNS), the errors for \SIns, \SQ and \SU were estimated by averaging the maximum standard deviation in four different regions far from the bright source at the centre. This average value was applied as a constant error at every pixel in the respective error maps. Table \ref{tab: source_info} gives the errors at each wavelength. \SC{Mention the 1.3 mm data as well.} 
+For the data calibrated in this project (\bfourNS, \bfiveNS, \bsevenNS), the errors for \SIns, \SQ and \SU were estimated by averaging the maximum standard deviation in four different regions far from the bright source at the centre. This average value was applied as a constant error at every pixel in the respective error maps. Table \ref{tab: source_info} gives the errors at each wavelength. The errors for the \bsix data were estimated using the same method. 
 
 % ---------------------------------------------
 \subsection{Polarization Fraction and Angle}
@@ -25,22 +25,23 @@ Using the debiased polarized intensity, the (debiased) polarization fraction can
    
 
 
-\SC{It could be worth mentioning that these are half-vectors.  That is, you have a 180 degree ambiguity with polarization angles (e.g., you can't tell 0 deg from 180 deg).  True vectors have magnitude and direction, but with polarization vectors, we don't have full direction. Somewhere it would be good to say that these are plane-of-sky polarization vectors.}
-
-
-\SC{Specify that these angles are measured in radians.  Also note that zero degree is defined as up with angle increasing counter clockwise (north to east).}
-The polarization position angle, $\theta$ is calculated by: 
+The polarization position angle, $\theta$ is calculated as: 
 \begin{equation}
 \theta = \half \tan ^{-1} \frac{U}{Q},
     \label{eq: PA}
 \end{equation}
-\noindent with an uncertainty calculated by:
+\noindent where $\theta$ has units of radians, and an uncertainty calculated by:
 
 \begin{equation}
     \PAerrEQ = \frac{1}{2} 
     \frac{\sqrt{(U\SQerrEQ)^2 + (Q\SUerrEQ)^2}}{Q^2 + U^2}.
     \label{eq: PA_error}
 \end{equation}
+ 
+
+\noindent When measuring the angles, the zero-degree position is defined as North, with the polarization angle increasing counterclockwise from North to East. The coordinate system was previously shown in see Figure \ref{fig: LinearPol}. 
+
+
 
 % ---------------------------------------------
 

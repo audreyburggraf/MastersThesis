@@ -29,18 +29,15 @@ Figure \ref{fig: Kataoka2015Figure1Recreation} shows a replication of Figure 1 f
 % ----------------------------------------------
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.6\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/Kataoka2015Fig1_grid.pdf}
-  \caption{Absorption and scattering mass opacities as a function of observing wavelength for grain sizes of 1\micron and 100 \micron for compact (left) and porous (right) grains. Recreation of Figure 1 from \cite{Kataoka_2015}. \code{add plot, f = 1 left, f = 0.5 right} \intextref{update after plot change}  \code{change this to smoothed data?}}
+  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/Kataoka2015Fig1_grid.pdf}
+  \caption{Absorption and scattering mass opacities as a function of observing wavelength for grain sizes of 1\micron and 100 \micron for compact (left) and porous (right) grains. Recreation of Figure 1 from \cite{Kataoka_2015}. \intextref{update after plot change}  \asked{I think I should be showing effective scattering since that's what we use to calculate \weffNS, this is shown in Figure \ref{fig: Kataoka2015Figure1Recreation_eff}}}
   \label{fig: Kataoka2015Figure1Recreation}
 \end{figure}
 % ----------------------------------------------
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.6\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/Kataoka2015Fig1_grid_eff.pdf}
-  \caption{\add{caption}}
-  \label{fig: Kataoka2015Figure1Recreation_eff}
-\end{figure}
-% ----------------------------------------------
+
+
+
+
 
 
 
@@ -48,7 +45,7 @@ Figure \ref{fig: Kataoka2015Figure1Recreation} shows a replication of Figure 1 f
 
 
 
-An additional quantity is the single scattering albedo, which describes the fraction of the original light that is removed by scattering rather than absorption. The standard and effective albedo are defined as \citep{Zhang2023}:
+An additional quantity is the single scattering albedo, which describes the fraction of the original light that is removed by scattering rather than absorption. The standard and effective albedo are defined as \citep{Zhang2023} \asked{Do I even need to show the standard albedo equation?}:
 \begin{equation}
     \omega = \frac{\kscaEQ}{\kabsEQ + \kscaEQ}, \quad 
     \weffEQ = \frac{\kscaeffEQ}{\kabsEQ + \kscaeffEQ}.
