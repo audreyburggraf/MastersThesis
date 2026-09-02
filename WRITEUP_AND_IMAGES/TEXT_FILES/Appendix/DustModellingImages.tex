@@ -10,7 +10,7 @@ You do want to have an introductory paragraph that explains what this appendix i
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/DustModelPlot_AllBands_ZhangMethod.pdf}
-  \caption{Same as Figure \ref{fig: Spherical_BEST}, but for the all wavelengths fit case. \code{Change to $P$ not P}  }
+  \caption{Same as Figure \ref{fig: Spherical_BEST}, but for the all wavelengths fit case. \coded{y-axis to eff}}
   \label{fig: appendix_all_band}
 \end{figure}
 
@@ -27,7 +27,7 @@ You do want to have an introductory paragraph that explains what this appendix i
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/DustModelPlot_Just47_ZhangMethod.pdf}
-  \caption{Same as Figure \ref{fig: Spherical_BEST}, but for the just \bfour and \bseven fit case. \code{extend y-axis}  \code{Change to $P$ not P} }
+  \caption{Same as Figure \ref{fig: Spherical_BEST}, but for the just \bfour and \bseven fit case. \coded{extend y-axis}  \code{Change to $P$ not P} }
   \label{fig: appendix_just_47}
 \end{figure}
 
@@ -36,56 +36,9 @@ You do want to have an introductory paragraph that explains what this appendix i
 
 
 
-% ------------------------------------------------------
-\begin{table}[h!]
-\centering
-\caption{Same as Table \ref{tab: dust_model_fits_irregular} but for fits using $\omega$ and not \weffNS. \refintext{add}}
-\begin{tabular}{lccc}
-\toprule
-\textbf{Fit Case} &  \textbf{Scale Factor (SF)} & $\boldsymbol{\chi_\mathcal{P}^2}$ & \textbf{$\boldsymbol{\amaxEQ}$ ($\boldsymbol{\mu}$m)} \\
-\midrule
-
-All wavelengths  & \textbf{1.77} & \textbf{4.58} & \textbf{212} \\
-No \bfive               & 1.81 & 6.16 & 214 \\
-Just \bfour and \bseven & 1.83 & 8.41 & 215 \\
-\bottomrule
-\end{tabular}
-\label{tab: dust_model_fits_irregular_no_eff}
-\end{table}
-% ------------------------------------------------------
 
 
 
-% ----------------------------------------------------------------
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/glitterin/DustModelPlot_GlitterinGrid_only3.pdf}
-  \caption{Same as Figure \ref{fig: irregular_fits} but for \Pw and not \PweffNS. \code{Change to $P$ not P, wrong panel has star} \refintext{add}} 
-  \label{fig: irregular_fits_w}
-\end{figure}
-% ----------------------------------------------------------------
-
-
-
-\subsection{\Pw and compact}
-% ----------------------------------------------
-\begin{figure}[htbp]
-  \centering
-
-  \begin{minipage}[t]{0.48\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/Pw_vs_grainsize_smooth.pdf}
-  \end{minipage}
-  \hfill
-  \begin{minipage}[t]{0.48\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/glitterin/Pw_vs_grainsize.pdf}
-  \end{minipage}
-
-  \caption{Same as Figure \ref{fig: Pweff_vs_grainsize} but for \Pw and not \PweffNS.}
-  \label{fig: Pw_vs_grainsize_appendix}
-\end{figure}
-% ----------------------------------------------
 
 
 \subsection{Porous}
@@ -109,25 +62,12 @@ Just \bfour and \bseven & 1.83 & 8.41 & 215 \\
 % ----------------------------------------------
 
 
-
-
-\subsection{Porous \Pw and \Pweff}
 % ----------------------------------------------
 \begin{figure}[htbp]
   \centering
-
-  \begin{minipage}[t]{0.48\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/Pw_vs_grainsize_porous.pdf}
-  \end{minipage}
-  \hfill
-  \begin{minipage}[t]{0.48\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/glitterin/Pw_vs_grainsize_notexist.pdf}
-  \end{minipage}
-
-  \caption{\add{caption} \intextref{add in text ref} \code{check smooth one?}}
-  %\label{fig: Pw_vs_grainsize_appendix}
+  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/Kataoka2015Fig1_grid_eff.pdf}
+  \caption{Same as Figure \ref{fig: Kataoka2015Figure1Recreation} but also including $\kappa_{sca, eff}$ \code{font colour and style}}
+  \label{fig: Kataoka2015Figure1Recreation_eff}
 \end{figure}
 % ----------------------------------------------
 
@@ -135,54 +75,26 @@ Just \bfour and \bseven & 1.83 & 8.41 & 215 \\
 
 
 
-% ------------------------------------------------------
-\begin{table}[h!]
-\centering
-\caption{Same as Table \ref{tab: amax_peak_values} but for \Pw and not \PweffNS. \add{references to plots} \intextref{add}}
-%\label{tab:amax_peak_values}
-\begin{tabular}{lcccc}
-\toprule
-\textbf{Grain Size ($\boldsymbol{\mu}$m)} & \textbf{\bfour} & \textbf{\bfive} & \textbf{\bsix} & \textbf{\bseven} \\
-\midrule
-
-$a_{\text{char}}$
-& 334.23
-& 238.73
-& 206.90
-& 138.46 \\
-
-$a_{\max}$ (spherical)
-& 266.02
-& 196.46
-& 173.46
-& 120.70 \\
-
-
-$a_{\max}$ (irregular)
-& 333.19 
-& 240.77 
-& 213.26 
-& 147.62 \\
-
-
-
-\bottomrule
-\end{tabular}
-%\label{tab: amax_peak_values_Pw}
-\end{table}
-% ------------------------------------------------------
-
-
-
-
-
-% ----------------------------------------------
+% ----------------------------------------------------------------
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/P_vs_w_vs_grainsize_grid_smooth_porosities.pdf}
-  \caption{Same as Figure \ref{fig: Kataoka2015Figure3Recreation} but for \Pw not \PweffNS.}
-  \label{fig: Kataoka2015Figure3Recreation_Pw}
+  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/glitterin/Pw_eff_vs_grainsize_porous_smooth.pdf}
+  \caption{Same as Figure \ref{fig: Pw_eff_vs_grainsize} (left, spherical) but for a porous grain. \coded{*Added Spherical label} \refintext{add}} 
+  \label{fig: Pweff_vs_amax_porous}
 \end{figure}
+% ----------------------------------------------------------------
 
-% ----------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
 
