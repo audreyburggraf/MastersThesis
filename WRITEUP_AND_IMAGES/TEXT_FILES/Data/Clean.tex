@@ -14,12 +14,7 @@ To clean the data,  \texttt{tclean} was used in Common Astronomy Software Applic
 The \SI images at each wavelength were interactively cleaned during the self-calibration process. We began with a shallow phase-only self-calibration, and progressively cleaned deeper each time for a total of three rounds. The solution intervals were infinity, 30.3 seconds (15 integrations) and 20.2 seconds (10 integrations). Then, two rounds of phase and amplitude self-calibration were performed. The solution intervals were infinity and 100 seconds (50 integrations). After each round of self-calibration, the phase and amplitude gain solutions were examined to ensure the solutions were reasonable before being applied to the data. 
 
 
-
-Additionally, the \SQ and \SU data were cleaned using \texttt{tclean}, using the final mask from the amplitude calibration at its respective wavelength. The same Briggs \texttt{robust} value used for \SI was used for \SQ and $U$, with \texttt{nterms = 1}.  \note{Checked this for Band 4 and 7. Can check 5 and 7 when I can access my data again. \SC{Please do}} 
-
-
 Figure \ref{fig: BeforeAndAfterClean} shows an example of IRS 63 at \bfour before and after self-calibration. The background noise is reduced after self-calibration, and the \SNR improves from 660 to 2655. Similar improvements were seen for the other wavelengths. 
-
 
 
 
@@ -32,12 +27,23 @@ Figure \ref{fig: BeforeAndAfterClean} shows an example of IRS 63 at \bfour befor
 
 
 
+Additionally, the \SQ and \SU data were cleaned using \texttt{tclean}, using the final mask from the amplitude calibration at its respective wavelength. The same Briggs \texttt{robust} value used for \SI was used for \SQ and $U$, with \texttt{nterms = 1}.  \sudo{Checked this for Band 4 and 7. Can check 5 and 7 when I can access my data again. "Please do" - Sarah}
+
+
+
+
+
+
+
+
+
+
 Table \ref{tab: source_info} lists the resulting image resolution after self-calibration, including the synthesized beam parameters and clean details. The table also includes the disk centre position in Right Ascension (RA) and Declination (Dec), as well as the disk position angle found by fitting a Gaussian to the disk using \texttt{imfit} in CASA. The image sensitivities are also provided and were determined using the method described in Chapter \ref{sec: stokes_errors}. 
 
 
 \begin{table}[h!]
 \centering
-\caption{Summary of the properties of the cleaned images of IRS 63 at each wavelength.}
+\caption{Summary of the properties of the cleaned images of IRS 63 at each wavelength. }
 \begin{tabular}{lcccc}
 \toprule
 \textbf{Property} & \textbf{\bandfourmm} & \textbf{\bandfivemm } & \textbf{\bandsixmm } & \textbf{\bandsevenmm} \\
@@ -117,7 +123,7 @@ Disk PA ($^\circ$)
 \end{tabular}
 \begin{tablenotes}
 \footnotesize
-\item \textbf{Note:} \SIerrNS, \SQerrNS, \SUerr are constant values for \bfourNS, \bfiveNS, and \bsevenNS. For \bsixNS, the uncertainties were provided as maps; the values reported in this table correspond to the pixel with the maximum \SI value. \SC{Are the Band 5 data that much worse in terms of senstivity to Band 7?  It could be possible, but please check.}
+\item \textbf{Note:} \SIerrNS, \SQerrNS, \SUerr are constant values for \bfourNS, \bfiveNS, and \bsevenNS. For \bsixNS, the uncertainties were provided as maps; the values reported in this table correspond to the pixel with the maximum \SI value. \sudo{"Are the Band 5 data that much worse in terms of sensitivity to Band 7?  It could be possible, but please check." - Sarah, note: I will check this when we sudo reboot}
 \end{tablenotes}
 \label{tab: source_info}
 \end{table}

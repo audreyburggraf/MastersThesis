@@ -1,7 +1,7 @@
 % The scattering models for spherical and irregular dust grains are presented, with various plots reproduced from the literature to ensure correct implementation. The results of the scale factor plots are used to constrain the maximum dust grain size. 
 
-\note{keep this?}
-In Chapters \ref{sec: ch5_DustScatteringModels} - \ref{sec: ch5_DustModelResults}, we describe modeling the polarization using scattering models for spherical and irregular dust grains.  These models are used to constrain the maximum dust grain size in the disk.
+% \note{keep this?}
+% In Chapters \ref{sec: ch5_DustScatteringModels} - \ref{sec: ch5_DustModelResults}, we describe modeling the polarization using scattering models for spherical and irregular dust grains.  These models are used to constrain the maximum dust grain size in the disk.
 
  % First, in Chapter \ref{sec: methods/modelling polarization pattern}, we perform simple geometric modeling to compare the uniform and azimuthal contributions. 
 % -----------------------------
@@ -16,7 +16,7 @@ The geometric modelling of the observations in Chapter \ref{sec: methods/modelli
 % ----------------------------------------------
 \begin{table}[ht]
 \centering
-\caption{Summary of parameters repeatedly used throughout the dust scattering model calculations.   \note{check order of how they appear in text}} 
+\caption{Summary of parameters repeatedly used throughout the dust scattering model calculations. } 
 \label{tab:dust_parameters}
 
 \begin{tabular}{lll}
@@ -24,21 +24,29 @@ The geometric modelling of the observations in Chapter \ref{sec: methods/modelli
 \textbf{Symbol} & \textbf{Parameter} & \textbf{Units} \\
 \midrule
 $a_{\max}$  & Maximum dust grain size in distribution grid & $\mu$m \\
-% $a$ & Radius of spherical grain & mm \\
-\achar & Characteristic grain size  & $\mu$m \\
-% $x$ & Size parameter of spherical grain & unitless \\
 $\lambda$   & Observing wavelength & mm \\
-% P  \SC{*} & Dust grain porosity  & -- \\
+\achar & Characteristic grain size  & $\mu$m \\
+$\kappa_{\text{abs}}$, $\kappa_{\text{sca, eff*}}$ & Mass absorption and (effective*) scattering coefficients & cm$^2$/g\\
+$\Theta$ & Scattering Angle & degrees \\
+\weff & Effective single scattering albedo & -- \\
+$P$  & Polarization fraction predicted from model at $\Theta$ = 90\degg & \% \\
+\Pweff & Polarization from model & \% \\
 $f$  & Filling factor & -- \\
+\POLFsi & Polarization fraction at the pixel with maximum Stokes $I$ & \% \\
+SF  & Scale factor & -- \\
+$\chi^2_{\mathrm{P}}$ & Chi-squared statistic for the polarization fraction fit & -- \\
+%
+%
+%
+% $a$ & Radius of spherical grain & mm \\
+% $x$ & Size parameter of spherical grain & unitless \\
+% P  \SC{*} & Dust grain porosity  & -- \\
 %$m$ & -- & -- \\
 % $n$ \SC{*}& Real part of the refractive index & -- \\
 % $k$ \SC{*} & Imaginary part of the refractive index & -- \\
 %\kabs & -- & -- \\
 %%\ksca & -- & -- \\
 %$g$ & -- & -- \\
-$\Theta$ & Scattering Angle & degrees \\
-$\kappa$ & \add{name} Angle & \add{units} \\
-$\omega$, \weff & (effective) Single scattering albedo & \add{units} \\
 %$P$ & -- & -- \\
 %Z11, Z12 & -- & -- \\
 %N11 & -- & -- \\
@@ -49,16 +57,11 @@ $\omega$, \weff & (effective) Single scattering albedo & \add{units} \\
 %$\kappa_{\mathrm{abs}}$ & Absorption opacity & cm$^2$ g$^{-1}$ \\
 %$\kappa_{\mathrm{sca}}$ & Scattering opacity & cm$^2$ g$^{-1}$ \\
 %$\omega$ & Single-scattering albedo & -- \\
-$P$  & Polarization fraction predicted from model at $\Theta$ = 90\degg & \% \\
-\Pw & Polarization from model & \% \\
-\POLFsi & Polarization fraction at the pixel with maximum Stokes $I$ & \% \\
-SF  & Scale factor & -- \\
-$\chi^2_{\mathrm{P}}$ & Chi-squared statistic for the polarization fraction fit & -- \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}
 \footnotesize
-\item \textbf{Note:} $\lambda$ is reported in mm, while \achar and \amax are reported in \micronNS. For calculations involving $\lambda$ and \amaxNS, they are converted to cm for the calculations.  
+\item \textbf{Note:} $\lambda$ is reported in mm, while \achar and \amax are reported in \micronNS. For calculations involving $\lambda$ and \amaxNS, they are converted to cm for the calculations.  \asked{* Depending on what I show in Figure \ref{fig: Kataoka2015Figure1Recreation} I will on-effective or effective}
 \end{tablenotes}
 \end{table}
 % ----------------------------------------------
