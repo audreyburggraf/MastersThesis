@@ -292,6 +292,11 @@
 \newcommand{\dcc}{$\sim$ 1 \micron}
 \newcommand{\dccNS}{$\sim$ 1 \micronNS}
 %===============================
+\newcommand{\PA}{PA }
+\newcommand{\PAns}{PA}
+\newcommand{\PAeq}{\text{PA}}
+%===============================
+
 %  EDITING / ANNOTATION COMMANDS
 %===============================
 % Note: I asked ChatGPT to draft these up for me and I will change them as I go to how I like them
@@ -316,6 +321,8 @@
 
 % Fix or revise something
 \newcommand{\question}[1]{\textcolor{purple}{\textbf{Q:} #1\textbf{}}}
+
+\newcommand{\asked}[1]{\textcolor{gray}{\textbf{Q:} #1\textbf{}}}
 
 % Sarah's comments
 \definecolor{sc}{HTML}{F23AE4}
@@ -342,11 +349,26 @@
 
 
 \newcommand{\code}[1]{\textcolor{orange}{\emph{[#1]}} }
+\newcommand{\coded}[1]{\textcolor{olive}{\emph{[#1]}} }
+
+
+\newcommand{\sudo}[1]{\textcolor{violet}{\emph{[#1]}} }
 
 
 \newcommand{\albedo}[1]{\textcolor{cyan}{\emph{[#1]}} }
 
 \newcommand{\refintext}[1]{\textcolor{magenta}{\emph{[#1]}} }
+\newcommand{\intextref}[1]{\textcolor{magenta}{\emph{[#1]}} }
+
+
+\newcommand{\later}[1]{\textcolor{brown}{\emph{[#1]}} }
+
+
+\newcommand{\lyric}[2]{%
+    \begin{center}
+        \textcolor{black}{\textit{``#1'' -- #2}}
+    \end{center}
+}
 %===============================
 
 
@@ -428,7 +450,14 @@
 % \emph{The shadows cast were only light and dust.}
 
 \chapter*{Dedication}\
-Dedication goes here... 
+(1) To those I am so lucky to call my family in all definitions of the word -- past, present, future, and chosen. 
+
+(2) To my Mom, Dad, and brother, for giving me the childhood and influences that shaped me into who I am today. I love you so mcuh. 
+
+
+\lyric{Always remember there was nothing worth sharing. Like the love that let us share our name}{Avett Brothers}
+
+
 
 ------------------------------------------------------------------------------------------------------------
 
@@ -448,6 +477,16 @@ Dedication goes here...
 
 
 \code{here is how i will add things that I need to code differently, mostly changing images}
+
+
+\coded{here is how i write a thing i coded, and want to check when i push and pull from github}
+
+\sudo{here is how i add text thats a note in reference to the sudo reboot}
+
+
+\draft{Here is where I add comments that cen be addressed after i submit my draft}
+
+
 
 ------------------------------------------------------------------------------------------------------------
 

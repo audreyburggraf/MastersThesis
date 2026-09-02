@@ -1,5 +1,8 @@
 
-To determine how well a geometric model reproduced the polarization observations, a chi-squared value was calculated. First, the difference between the observed and model-predicted polarization angle needed to be calculated carefully. Polarization angles can range from 0--180\degg because polarization measures orientation, rather than direction, meaning that angles that are 180\degg apart have the same polarization vector orientation. As a result, two polarization angles that are physically very similar can have a large numerical difference. For example, polarization angles of 1\degg and 179\degg only differ by 2\deggNS, but directly taking their difference would give 178\deggNS. To account for this, the angular difference is defined by the minimum angular separation between the two angles:
+
+
+
+To determine how well a geometric model reproduced the polarization observations, a chi-squared value was calculated. First, the difference between the observed and model-predicted polarization angle needed to be calculated carefully. Polarization angles can range from 0--180\degg because polarization measures orientation, rather than direction. The polarization vectors have a 180 \degg ambiguity such that a vector with a polarization angle of 0\degg looks the exact same at a polarization angle of 180\deggNS. As a result, two polarization angles that are physically very similar can have a large numerical difference. For example, polarization angles of 1\degg and 179\degg only differ by 2\deggNS, but directly taking their difference would give 178\deggNS. To account for this, the angular difference is defined by the minimum angular separation between the two angles:
 \begin{equation}
     \Delta \theta = \text{min}(|\theta_{\text{obs}} - \theta_{\text{model}}|, 180\deggEQ - |\theta_{\text{obs}} - \theta_{\text{model}}|),
     \label{eq: minimum_separation}

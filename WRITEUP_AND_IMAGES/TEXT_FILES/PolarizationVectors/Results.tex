@@ -13,7 +13,7 @@
 % \begin{figure*}[h]
 %   \centering
 % \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/StokesI_POLI/StokesI_grid_robust_minus1.pdf}
-%   \caption{Grid of \SI emission for each wavelength of data for IRS 63 with log colour scaling. Polarization vectors are overlaid with black lines of equal length. Vectors are shown only for pixels that satisfy the criteria described in Chapter \ref{sec: methods_vector_criteria}. The beam is shown in the lower left corner, and a reference scale of 100 AU in the top right corner. }
+%   \caption{Grid of \SI emission for each wavelength of data for IRS 63 with log colour scaling. Polarization vectors are overlaid with black lines of equal length. Vectors are shown only for pixels that satisfy the criteria described in Chapter \ref{sec: methods_vector_criteria}. The beam is shown in the lower left corner, and a reference scale of 100 AU is shown in the top right corner. }
 %   \label{fig: StokesI_grid}
 % \end{figure*}
 
@@ -38,7 +38,7 @@
     \vspace{0.5cm}
 
     \includegraphics[width=\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/StokesI_POLI/POLI_grid_robust_minus1_Delta.pdf}
-    \caption{Grid of images at each wavelength showing (top) \SI emission and (bottom) debiased polarized intensity. Polarization vectors are overlaid as black lines of equal length, showing the change in morphology with wavelength. Vectors are shown only for pixels that satisfy the criteria described in Chapter \ref{sec: methods_vector_criteria}. The beam is shown in the lower left corner, and a reference scale of 100 au is shown in the top right corner.  \question{scale vectors by POLF?} \SC{A: If you do that, then I would make a separate 2 X 2 panel plot so that the polarization segment lengths are easier to see.}  \code{stretch cbar?}}
+    \caption{Grid of images at each wavelength showing (top) \SI emission and (bottom) debiased polarized intensity. Polarization vectors are overlaid as black lines of equal length, showing the change in morphology with wavelength. Vectors are shown only for pixels that satisfy the criteria described in Chapter \ref{sec: methods_vector_criteria}. The beam is shown in the lower left corner, and a reference scale of 100 au is shown in the top right corner.  \later{scale vectors by POLF. make a separate 2 X 2 panel plot so that the polarization segment lengths are easier to see.}}
     \label{fig: StokesI_POLI_grid}
 \end{figure}
 
@@ -47,20 +47,13 @@
 % The streamer at \bfive is highlighted in red vectors, and is explained further in Chapter \ref{chap: discussion_streamer}
 % ----------------------------
 
-\note{Make sure this makes sense after changing stuff from the discussion}
+
+
+In Figure \ref{fig: StokesI_POLI_grid}, we present the cleaned \SI and debiased polarized intensity images of IRS 63 at \bfourNS, \bfiveNS, \bsixNS, and \bsevenNS, overlaid with the polarization vectors that show the observed polarization morphology. At each wavelength, all vectors are normalized to the same length to focus on the polarization angle rather than magnitude. 
 
 
 
-In Figure \ref{fig: StokesI_POLI_grid}, we present the cleaned \SI and debiased polarized intensity images of IRS 63 at \bfourNS, \bfiveNS, \bsixNS, and \bsevenNS, overlaid with the polarization vectors that make up the observed polarization morphology. As the observing wavelength decreases, there is a clear transition in polarization morphology. \SC{Mention that the polarization vectors are normalized to focus on showing angle only.}
-
-
-At \bfourNS, the polarization vectors are mostly azimuthal, forming a circular pattern around the centre of the disk. However, near the centre of the disk, there is a small region where the vectors are aligned with the minor axis of the disk. As the wavelength decreases from \bfour to \bsevenNS, the centre region where vectors are aligned with the minor axis becomes larger, while the azimuthal pattern resides only on the outer part of the disk. 
-
-The patterns at \bfive and \bsix are more of a transition, but at \bseven the uniform alignment consistent with dust self-scattering is clearly dominating. \note{fix this sentence}
-
-
-\note{I took out the part where I say (roughly) azimuthal is radiative alignment, uniform is dust self-scattering and when I compare this to HL Tau. It is now in the discussion}
-
+As the observing wavelength decreases, there is a clear transition in polarization morphology. At \bfourNS, the polarization vectors are mostly azimuthal, following a circular pattern around the centre of the disk. However, near the centre of the disk, there is a small region where the vectors are aligned with the minor axis of the disk. As the wavelength decreases from \bfour to \bsevenNS, the central region where vectors are aligned with the minor axis becomes larger, while the azimuthal pattern resides only on the outer part of the disk. The patterns at \bfive and \bsix are intermediate between the two patterns, but at \bseven the vectors are mainly aligned with the disk minor axis. 
 
 
 
