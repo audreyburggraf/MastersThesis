@@ -296,6 +296,18 @@
 \newcommand{\PAns}{PA}
 \newcommand{\PAeq}{\text{PA}}
 %===============================
+\newcommand{\xvolNS}{$x_\text{vol}$}
+\newcommand{\xvol}{$x_\text{vol}$ }
+%===============================
+\newcommand{\rvolNS}{$r_\text{vol}$}
+\newcommand{\rvol}{$r_\text{vol}$ }
+%===============================
+\newcommand{\rencNS}{$r_\text{enc}$}
+\newcommand{\renc}{$r_\text{enc}$ }
+%===============================
+\newcommand{\rpjaNS}{$r_\text{pja}$}
+\newcommand{\rpja}{$r_\text{pja}$ }
+%===============================
 
 %  EDITING / ANNOTATION COMMANDS
 %===============================
@@ -313,10 +325,10 @@
 \definecolor{colour3}{HTML}{263339}
 \definecolor{colour4}{HTML}{3a621b}
 %===============================
-\newcommand{\draft}[1]{\textcolor{colour1}{#1}}
-\newcommand{\ReadyToSend}[1]{\textcolor{colour2}{ #1}}
-\newcommand{\sent}[1]{\textcolor{colour3}{ #1}}
-\newcommand{\revone}[1]{\textcolor{colour4}{ #1}}
+% \newcommand{\draft}[1]{\textcolor{colour1}{#1}}
+% \newcommand{\ReadyToSend}[1]{\textcolor{colour2}{ #1}}
+% \newcommand{\sent}[1]{\textcolor{colour3}{ #1}}
+% \newcommand{\revone}[1]{\textcolor{colour4}{ #1}}
 %===============================
 
 % Fix or revise something
@@ -352,7 +364,7 @@
 \newcommand{\coded}[1]{\textcolor{olive}{\emph{[#1]}} }
 
 
-\newcommand{\sudo}[1]{\textcolor{violet}{\emph{[#1]}} }
+\newcommand{\sudo}[1]{\textcolor{violet}{\emph{[Note: #1]}} }
 
 
 \newcommand{\albedo}[1]{\textcolor{cyan}{\emph{[#1]}} }
@@ -361,7 +373,7 @@
 \newcommand{\intextref}[1]{\textcolor{magenta}{\emph{[#1]}} }
 
 
-\newcommand{\later}[1]{\textcolor{brown}{\emph{[#1]}} }
+\newcommand{\later}[1]{\textcolor{brown}{\emph{[Note: #1]}} }
 
 
 \newcommand{\lyric}[2]{%
@@ -450,12 +462,12 @@
 % \emph{The shadows cast were only light and dust.}
 
 \chapter*{Dedication}\
-(1) To those I am so lucky to call my family in all definitions of the word -- past, present, future, and chosen. 
+% (1) To those I am so lucky to call my family in all definitions of the word -- past, present, future, and chosen. 
 
-(2) To my Mom, Dad, and brother, for giving me the childhood and influences that shaped me into who I am today. I love you so mcuh. 
+% (2) To my Mom, Dad, and brother, for giving me the childhood and influences that shaped me into who I am today. I love you so mcuh. 
 
 
-\lyric{Always remember there was nothing worth sharing. Like the love that let us share our name}{Avett Brothers}
+% \lyric{Always remember there was nothing worth sharing. Like the love that let us share our name}{Avett Brothers}
 
 
 
@@ -469,9 +481,9 @@
 
 \note{Here is how I add text on a note I have}
 
-\quoted{Text in this format is when I directly copy text from a source, and it should be followed by the source it was from. This text is yet to be put into my own words. }
+% \quoted{Text in this format is when I directly copy text from a source, and it should be followed by the source it was from. This text is yet to be put into my own words. }
 
-\status{Here is how i will keep track of the status of a section}
+% \status{Here is how i will keep track of the status of a section}
 
 \permission{here is how i will keep track of image permission}
 
@@ -484,54 +496,40 @@
 \sudo{here is how i add text thats a note in reference to the sudo reboot}
 
 
-\draft{Here is where I add comments that cen be addressed after i submit my draft}
+\later{Here is where I add comments that cen be addressed after i submit my draft}
+
+
+
+% ------------------------------------------------------------------------------------------------------------
+
+
+% \SC{Simon Coude, Pierre Bastien,: If there is a way to abridge the author list, I suggest doing that!}
+% \note{I still need to address this comment}
+% \SC{You are the sole author of your thesis.  You can acknowledge them if you wish in the Acknowledgments.  But you do not need to have an abridged author list.  For the paper, yes.  But not the thesis.}
 
 
 
 ------------------------------------------------------------------------------------------------------------
 
 
-*Make sure when (ref1, ref2) its in chronological order?:  \SC{In general, papers are cited chronologically (so oldest first).}
-
-\SC{Simon Coude, Pierre Bastien,: If there is a way to abridge the author list, I suggest doing that!}
-\note{I still need to address this comment}
-\SC{You are the sole author of your thesis.  You can acknowledge them if you wish in the Acknowledgments.  But you do not need to have an abridged author list.  For the paper, yes.  But not the thesis.}
-
-
-
-------------------------------------------------------------------------------------------------------------
-
-\SC{f = 0.5 now, right?  I wouldn't call that slightly porous.  You can just say porous grains.}
-
-
-\SC{some table captions too long}
-
-
-\SC{You want to use [] to give a short description to the figures for the table of contents. \caption[short description]{full caption}}
-
-
-------------------------------------------------------------------------------------------------------------
-
-
-
-\SC{Fill out when2meet, Shamus on Friday, next Thursday Ottawa trip, individual meetings moved to Wednesday or Tuesday}
 
 
 \SC{You seem to be citing the same few papers.  You should show a more extensive literature review.  You don't need to cite everything under the Sun, but it would be good to show that you have looked at more than 5 papers.} 
 
-\note{Move this somwehere else: The minor axis of the disk is 90\degg from the disk polarization angle (same as major axis direction).}
-
-------------------------------------------------------------------------------------------------------------
-Make sure all figs and tables and ewuations are referenced
-
-Things to check: figures introduced in order
-
-Make sure only used references show up
+% ------------------------------------------------------------------------------------------------------------
 
 
+Note that the above case is known as "active voice" where the object is the main subject of the sentence (Y shows X).  As written, the sentence is in passive voice (X is shown by Y).  Too much passive voice can get difficult to read.  
+
+It also helps the reader to see "Figure X" at the start of a sentence.  The start of paragraphs and sentences often stand out more and that makes it easier to know when to look at a figure.
 
 
-layout of tables and figures: not all at the end: tables are h! and figures are htbp (especially try for stokes I and POLI maps figure 4.1)
+% ------------------------------------------------------------------------------------------------------------
+
+
+
+
+% layout of tables and figures: not all at the end: tables are h! and figures are htbp (especially try for stokes I and POLI maps figure 4.1)
 
 
 
@@ -553,7 +551,7 @@ layout of tables and figures: not all at the end: tables are h! and figures are 
 
 
 
-\input{WRITEUP_AND_IMAGES/TEXT_FILES/Acknowledgments}
+% \input{WRITEUP_AND_IMAGES/TEXT_FILES/Acknowledgments}
 
 
 
@@ -566,8 +564,13 @@ layout of tables and figures: not all at the end: tables are h! and figures are 
 \tableofcontents{}
 
 \listoftables{}
+\later{I will give a shorter description for these in this list }
+%\caption[short description]{full caption}}
 
 \listoffigures{}
+\later{I will give a shorter description for these in this list}
+
+%\caption[short description]{full caption}}
 
 
 \include{Acronyms}

@@ -1,14 +1,36 @@
 % ----------------------------------------------
-Spherical dust grain modelling is a more common approach in the field because the calculations are less computationally expensive. However, as mentioned previously, non-spherical dust grains are thought to be a realistic representation of dust grains in disks. The change in grain shape affects the scattering properties, making the calculations more difficult. Non-spherical (irregular) dust grain modelling has become more accessible with \texttt{glitterin} from \cite{glitterin}, a neural network trained to predict the light-scattering properties of irregular dust grains. An example of six irregular grain shapes is shown in Figure \ref{fig: glitterin_dust_grains}. For the irregular dust grain models, the porosity cannot be varied, so four models were tested, compared to 16 total for the spherical models.
 
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.3\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/NOTMINE/glitterinFigure1.png}
-  \caption{Example of six irregular particles from \texttt{glitterin}. Figure from \cite{glitterin}. \permission{ask for permission} }
-  \label{fig: glitterin_dust_grains}
-\end{figure}
+Rather than using Mie theory, which is for spherical grains, \texttt{glitterin} uses a neural network trained to predict light scattering from irregularly shaped dust grains. Predictions are made based on input parameters such as size parameter. 
 
 
 
-\noindent \question{How much detail do I go into about glitterin?} \SC{A: You should mention what it does and how you used it broadly.  Basically, what did Daniel do with the neural network, and how did you tap into that?  You want to give your committee enough information so they have a sense of what the algorithm does and how you used it.}
+Since irregular grains do not have a clear radius like spherical grains do, the \texttt{glitterin} code allows the user to choose between three options to define the size of the grain. First, \renc is the radius of the smallest sphere that can contain the irregular grain. Secondly, \rvol is the radius of a sphere with the same volume as the irregular grain. Third, \rpja is the radius of the sphere with the same projected geometric area as the irregular grain. In this project, we use \rvol. In this project, we chose to use \rvol for our radius, or maximum grain size. Using this \rvolNS, the size parameter for the irregular grain can be calculated using Equation \ref{eq: size_parameter} such that:
+\begin{equation}
+    x_\text{vol} = \frac{2 \pi r_\text{vol}}{\lambda}.
+\end{equation}
+\noindent 
+
+
+
+
+
+
+
+
+
+
+% These cross sections can be normalized by the \text{geometric cross-section area} of the grain to get the dimensionless efficiencies:
+% \begin{equation}
+%    Q_i^\text{vol} = \frac{C_i}{\pi r_\text{vol}^2},
+% \end{equation}
+% \noindent where $i$ can be abs or sca.
+
+
+
+
+
+
+
+
+
+% \noindent \question{How much detail do I go into about glitterin?} \SC{A: You should mention what it does and how you used it broadly.  Basically, what did Daniel do with the neural network, and how did you tap into that?  You want to give your committee enough information so they have a sense of what the algorithm does and how you used it.}

@@ -9,13 +9,13 @@
 
 \textbf{Imaging Differences.} The \rob parameter was decreased from 0.5 to -1 (\RoNS), making the weighting closer to uniform rather than natural weighting. This results in a higher angular resolution, with the beam size decreasing from $0.33'' \times 0.27''$ to $0.23'' \times 0.18''$. The higher angular resolution comes with the trade-off of lower sensitivity, with the \SIerr increasing from 13.88 to  42.12 $\mu$Jy. Because of this, there are fewer polarization vectors detected with \RoNS, and the streamer is no longer detected (Chapter \ref{sec: streamer}). The \SI and debiased polarization image with polarization vectors were presented for \Ro in Figure \ref{fig: StokesI_POLI_grid}, and the matching plot for \Rf is presented in Figure \ref{fig: Band5_robust05}. 
 
-\noindent \note{I want to check this error value for R-1 based on the previous comment left. I'll do this on Monday or Tuesday when we sudo reboot.}
+\noindent \sudo{I want to check this error value for R-1 based on the previous comment left. I'll do this on Monday or Tuesday when we sudo reboot.}
 
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.75\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/StokesI_POLI/IRS63_StokesI_POLI_vectors_BAND5_delta.png}
-  \caption{Same as Figure \ref{fig: StokesI_POLI_grid} but for \bfive with \texttt{robust = 0.5}. The red vectors are for the streamer and are rotated by 90$^\circ$ to show the magnetic field direction. }
+  \caption{Same as Figure \ref{fig: StokesI_POLI_grid} but for \bfive with \texttt{robust = 0.5}. The red vectors are for the streamer and are rotated by 90$^\circ$ to show the magnetic field direction. \coded{() units to []}}
   \label{fig: Band5_robust05}
 \end{figure}
 

@@ -23,15 +23,15 @@ Since the polarization angles cannot be directly combined, the \SQ and \SU for t
 
 \begin{equation}
 \begin{aligned}
-Q_{\text{Uni}} &= p I \cos(2\theta_{\text{Uni}}) \text{ and }
-Q_\text{Azi} = p I \cos(2\theta_\text{Azi}),
+Q_{\text{Uni}} &= \rho I \cos(2\theta_{\text{Uni}}) \text{ and }
+Q_\text{Azi} = \rho I \cos(2\theta_\text{Azi}),
      \\
-U_{\text{Uni}} &=  p I \sin(2\theta_{\text{Uni}}) , \text{ and }
-U_\text{Azi} =  p I \sin(2\theta_\text{Azi}) 
+U_{\text{Uni}} &=  \rho I \sin(2\theta_{\text{Uni}}) , \text{ and }
+U_\text{Azi} =  \rho I \sin(2\theta_\text{Azi}) 
 \end{aligned}
 % \label{eq:50U50A}
 \end{equation}
-\noindent following \cite{Montier}. The polarization fraction $p$ was fixed at 0.02 based on observations presented in \cite{sadavoy_dust_2019} \SC{You could base this on your own data instead if you prefer.}. This value is expected to be reasonable for the uniform polarization morphology, but the polarization fraction may differ for the azimuthal morphology, potentially biasing the azimuthal case low.
+\noindent following \cite{Montier}, where $\rho$ is the average polarization fraction over the centre and edges, which fixed at 2\%. This value is expected to be reasonable for the uniform polarization morphology, but the polarization fraction may differ for the azimuthal morphology, potentially biasing the azimuthal case low.
 
 %This is consistent with values of 0.02-0.03 from \cite{Kataoka_2017}, 
 
@@ -70,7 +70,7 @@ U_{N}
 For the ratio models, Table \ref{tab:ratio_model_chi2} presents the \chired values calculated for each test with the best-fit value shown in bold.  Figure \ref{fig: RatioBestGrid} shows the best-fit model with the observed vectors in black and the model vectors in red.
 
 
-Taking \bfive as an outlier (see Chapter \ref{sec: discussion_azimuthal_polarization}), the best-fit ratio models show that, as wavelength decreases, the observations are better matched with a higher uniform contribution. This result is consistent with the observations discussed in Chapter \ref{sec: c4_polarization_maps}, which show a greater uniform contribution with decreasing wavelength. 
+Taking \bfive as an outlier (see Chapter \ref{sec: discussion_band5_data_issues}), the best-fit ratio models show that, as wavelength decreases, the observations are better matched with a higher uniform contribution. This result is consistent with the observations discussed in Chapter \ref{sec: c4_polarization_maps}, which show a greater uniform contribution with decreasing wavelength. 
 
 
 
@@ -215,7 +215,7 @@ Taking \bfive as an outlier (see Chapter \ref{sec: discussion_azimuthal_polariza
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Ratio/Best_grid_Delta.pdf}
-  \caption{Figure \ref{fig: StokesI_POLI_grid}, overplotted with the polarization vectors in red from the best-fit ratio model at each wavelength. The corresponding best-fit ratio models are listed in Table \ref{tab:ratio_model_chi2}. }
+  \caption{Figure \ref{fig: StokesI_POLI_grid}, overplotted with the polarization vectors in red from the best-fit ratio model at each wavelength. The corresponding best-fit ratio models are listed in Table \ref{tab:ratio_model_chi2}. \coded{() units to []} }
   \label{fig: RatioBestGrid}
 \end{figure}
 
