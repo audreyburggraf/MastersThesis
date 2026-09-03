@@ -1,22 +1,20 @@
 
 
 
-The Mueller matrix, or scattering matrix, describes the polarization properties of light scattered by the dust grains \citep{Kataoka_2015} and is calculated using \texttt{DSHARP}. Two relevant matrix elements are \Zoo and \ZootNS, which represent linear polarized scattering and total scattering, respectively \citep{Zhang2023}. The polarization fraction is given by the ratio $-Z_{12, \text{eff}}/Z_{11, \text{eff}}$ averaged over the grain size distribution \citep{Kataoka_2015}.  The polarization fraction depends on the scattering angle, as shown in Figure \ref{fig: Kataoka2015Figure2Recreation}. For smaller grain sizes, the polarization fraction peaks near a scattering angle of  90\deggNS. The polarization fraction from the model at  90\degg is denoted by $P$. 
+The Mueller matrix, or scattering matrix, describes the polarization properties of light scattered by the dust grains \citep{Kataoka_2015} and is calculated using \texttt{DSHARP}. Two relevant matrix elements are \Zoo and \ZootNS, which represent linear polarized scattering and total scattering, respectively \citep{Zhang2023}. The polarization fraction is given by the ratio $-Z_{12, \text{eff}}/Z_{11, \text{eff}}$ averaged over the grain size distribution \citep{Kataoka_2015}. Figure \ref{fig: Kataoka2015Figure2Recreation} shows the dependence of polarization fraction on scattering angle for different maximum grain sizes. For smaller dust grains (10 \micron and 100 \micronNS), the polarization fraction peaks near a scattering angle of 90\deggNS. For larger dust grains (1 mm and 1 cm), the polarization fraction remains much closer to zero, indicating that polarization from scattering is not efficient at larger grains. In the analysis, the polarization fraction at 90\degg is denoted by $P$, and will be referred to as the polarization fraction. 
 
 
-% \begin{equation}
-%     N_{11} = -\frac{Z_{12}}{Z_{11}}
-%     \label{eq: N11}
-% \end{equation}
 
-Figure \ref{fig: Kataoka2015Figure2Recreation} shows the dependence of polarization fraction on scattering angle for different maximum grain sizes. For smaller dust grains (10 \micron and 100 \micronNS), the polarization fraction peaks near a scattering angle of 90\deggNS. For larger dust grains (1 mm and 1 cm), the polarization fraction remains much closer to zero, indicating that polarization from scattering is not efficient at larger grains. 
+
+
+
 
 
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/Kataoka2015Fig2_grid.pdf}
-  \caption{Polarization fraction as a function of scattering angle for maximum grain sizes of 10 \micronNS, 100 \micronNS, 1 mm and 1 cm for compact dust grains. This is a replication of Figure 2 from \cite{Kataoka_2015}. \coded{new colours} }
+  \caption{Polarization fraction as a function of scattering angle for maximum grain sizes of 10 \micronNS, 100 \micronNS, 1 mm and 1 cm for compact dust grains. This is a replication of Figure 2 from \cite{Kataoka_2015}. \note{Used matplotlib colourblind palette, weird colours but you can see the difference.}}
   \label{fig: Kataoka2015Figure2Recreation}
 \end{figure}
 
@@ -29,17 +27,28 @@ Figure \ref{fig: Kataoka2015Figure2Recreation} shows the dependence of polarizat
 % \subsubsection{Polarization and Albedo as a Function of Grain Size}
 % \label{sec: c5_P_and_w_vs_a}
 
-\note{Need to update this for both \weff and different porosities. Make sure there are references to Figure \ref{fig: Kataoka2015Figure3Recreation}, Figure \ref{fig: Pweff_vs_grainsize}, Table \ref{tab: amax_peak_values} and Figure \ref{fig: Pweff_vs_amax_porous}}
+
+
+
+
+
+
 
 
 % ----------------------------------------------
-Figure \ref{fig: Kataoka2015Figure3Recreation} shows the polarization fraction and effective albedo as a function of grain size. The polarization fraction is larger for smaller grains, and quickly drops off as the dust grains increase. Alternatively, the effective albedo increases with dust grain size, as there is more surface area for the light to reflect off of. The characteristic grain size for each wavelength is shown as a grey line (values listed in Table \ref{tab: amax_peak_values}). The characteristic grain size should approximately correlate to where the polarization and albedo curves are at their maximum, highlighting the wavelength dependence of polarization scattering. 
+Figure \ref{fig: Kataoka2015Figure3Recreation} shows the polarization fraction and effective albedo as a function of maximum grain size for both compact and spherical grains. For compact grains, it can be seen that the polarization fraction is larger for smaller grains and quickly decreases as the grain size increases. Conversely, the effective albedo increases with grain size, as larger grains have a larger surface area for the light to scatter off of. These curves (red and blue) have a distinctive peak, showing where the balance between polarization and scattering is most efficient. This peak is highlighted by plotting the product of the polarization fraction and the effective single-scattering albedo, \PweffNS, as a black dashed line. 
+
+The \Pweff product provides a measure of the contribution of each grain size to the polarized scattered light at a specific observing wavelength, and can therefore be used to determine the grain sizes that contribute most strongly to the observed polarization \citep{Kataoka_2015, Tazaki}. As mentioned earlier, \achar is the grain size at which dust self-scattering is most efficient, so \Pweff is expected to peak near the characteristic grain size. This is shown as a grey line in each plot. For compact grains, the \Pweff peak occurs near \acharNS, as expected, highlighting the dependence of the polarization scattering efficiency on observing wavelength.
+
+For porous grains, the overall wavelength-dependent behaviour of the polarization and effective albedo remains similar, but their dependence on grain size is wider. The grain size at which the polarization fraction decreases and effective albedo increases is shifted toward larger grain sizes, causing the \Pweff curve to peak at a larger grain size than \acharNS. Additionally, the \Pweff peak is wider than the sharp peaks for compact grains. Together, these differences indicate that porous grains can efficiently contribute to polarized scattering at larger grain sizes and over a wider range of grain sizes compared to compact grains. This behaviour is assumed to be related to different scattering properties of porous grains due to their lower density and more empty space within the grains. 
+
+
 
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/P_vs_w_eff_vs_grainsize_grid_smooth_porosities.pdf}
-  \caption{Plot of polarization fraction $P$ in red and effective albedo in blue as a function of grain size for compact dust grains. The characteristic grain size for each wavelength is overplotted in grey, highlighting that it roughly corresponds to the local maxima of both curves. This is a recreation of Figure 3 from \cite{Kataoka_2015}. }
+  \caption{Plot of polarization fraction $P$ in red and effective albedo in blue as a function of grain size for compact (left) and porous (right) dust grains. The characteristic grain size for each wavelength is over-plotted in grey, highlighting that it roughly corresponds to the local maxima of both curves. \question{Make this plot for irregular grains as well? If so, make it a separate plot or 3 columns?}}
   \label{fig: Kataoka2015Figure3Recreation}
 \end{figure}
 
@@ -49,17 +58,7 @@ Figure \ref{fig: Kataoka2015Figure3Recreation} shows the polarization fraction a
 
 
 
-
-
-% ----------------------------------------------
-
-% ----------------------------------------------
-% ----------------------------------------------
-
-
-The product of the polarization fraction and the effective single-scattering albedo, \PweffNS, provides a measurement of the contribution of each grain size to the polarized scattered light at a specific observing wavelength. It can be used to determine the grain sizes that contribute the most to the observed polarization \citep{Kataoka_2015}. Figure \ref{fig: Pw_eff_vs_grainsize} shows the \Pweff curves for compact spherical and irregular grains as a function of maximum grain size, with the characteristic grain size plotted as well for comparison. 
-
-compares the \Pweff curves and characteristic dust grain sizes for the observing wavelengths considered in this project assuming compact dust grains. The polarized scattering efficiency at each wavelength peaks at a grain size close to the characteristic grain size, shown plotted with a dashed line in the respective colour. The peaks occur at grain sizes of approximately hundreds of microns, indicating that polarization observations at these wavelengths are most sensitive to grains in this range. As discussed in Chapter \ref{sec: intro_mw}, using multi-wavelength observations allows the different wavelengths to be fit simultaneously, providing a better constraint on the grain size. How this is done is explained in Chapter \ref{sec: ch5_determining_abest}. 
+Figure \ref{fig:Pweff_vs_grainsize} shows the \Pweff curves for compact spherical and irregular grains as a function of maximum grain size, with the characteristic grain size plotted as well for comparison. An additional plot for porous spherical grains can be seen in Figure \ref{fig: Pweff_vs_amax_porous}. While the behaviour of $P$ and \weff and their contributions to \Pweff are shown in Figure \ref{fig: Kataoka2015Figure3Recreation}, these plots highlight the importance of multi-wavelength data. The \Pweff curves generally peak near \acharNS, although as shown previously, the exact peak depends on porosity as well. More importantly, the peak \Pweff depends on grain size and observing wavelength, meaning that each wavelength is most sensitive to a different grain size. For the wavelengths considered in this project, the peaks occur at grain sizes of approximately hundreds of microns (Table \ref{tab: amax_peak_values}), indicating that polarization observations are most sensitive to grains in this range. By combining observations at multiple wavelengths, the grain size dependence can be utilized to provide a stronger constraint on the maximum grain size. The goal of this chapter is therefore to utilize the wavelength and grain size dependence of polarized scattering to determine the maximum grain size, shape, and porosity that best reproduces the observations. How the models are compared with the multi-wavelength observations is described in Chapter \ref{sec: ch5_determining_abest}.
 
 
 
@@ -78,7 +77,7 @@ compares the \Pweff curves and characteristic dust grain sizes for the observing
 % ------------------------------------------------------
 \begin{table}[h!]
 \centering
-\caption{Maximum grain size corresponding to the peak \Pweff value for compact grains, and characteristic grain size as a dashed line for each wavelength in Figure \ref{fig: Pw_eff_vs_grainsize}. }
+\caption{Maximum grain size corresponding to the peak \Pweff values and characteristic grain size as a dashed line for each wavelength. }
 \label{tab: amax_peak_values}
 \begin{tabular}{lcccc}
 \toprule
@@ -115,6 +114,10 @@ $a_{\max}$ (irregular)
 
 \bottomrule
 \end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item \textbf{Note:} Corresponding figures for \Pweff curves are Figure \ref{fig:Pweff_vs_grainsize} for compact spherical and irregular, and Figure \ref{fig: Pweff_vs_amax_porous} for porous spherical. \achar can be seen in all three figures. 
+\end{tablenotes}
 \label{tab: amax_peak_values}
 \end{table}
 % ------------------------------------------------------
@@ -136,8 +139,8 @@ $a_{\max}$ (irregular)
     \centering
     \includegraphics[width=\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/glitterin/Pw_eff_vs_grainsize.pdf}
   \end{minipage}
-  \caption{Polarization curves (\PweffNS) versus grain size for each wavelength for spherical grains (left) and irregular grains (right), for compact dust grains. Overplotted as a dashed line with matching colour is the characteristic grain size. Locations of maximum \Pweff and characteristic grain size are listed in Table \ref{tab: amax_peak_values}.  \coded{*Added spherical label, *Added irregular label}}
-  \label{fig: Pweff_vs_grainsize}
+  \caption{Polarization curves (\PweffNS) versus maximum grain size for each wavelength for compact spherical grains (left) and irregular grains (right). Overplotted as a dashed line with matching colour is the characteristic grain size. }
+  \label{fig:Pweff_vs_grainsize}
 \end{figure}
 % ----------------------------------------------
 

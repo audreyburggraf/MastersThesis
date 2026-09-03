@@ -9,7 +9,7 @@ The observed polarized intensity, \POLIobsNS, is calculated from \SQ ($Q$) and \
 
 
 
-The polarized intensity was debiased using the method explained in \cite{sadavoy_dust_2019}, originally from \cite{HullDebias}. Variables used in these equations and further into this section are summarized in Table \ref{tab: stokes_polar_variables}. This method calculates the debiased polarized intensity, \POLIns, with a corresponding error of \POLIerrNS, with the equation:
+The polarized intensity was debiased using the method explained in \cite{sadavoy_dust_2019}, originally from \cite{HullDebias}. Table \ref{tab: stokes_polar_variables} summarizes the variables used in these equations and throughout the remainder of this section. This method calculates the debiased polarized intensity, \POLIns, with a corresponding error of \POLIerrNS, with the equation:
 
 \begin{equation}
     \text{PDF}(\POLIeq|\POLIobsEQ, \POLIerrEQ)=\frac{\POLIobsEQ}{\POLIerrEQ^2} I_0(x)\exp\left[-\frac{(\POLIobsEQ^2 + \POLIeq^2)}{2\POLIerrEQ^2}{}\right],
@@ -56,13 +56,13 @@ Debiased Polarized Intensity
 & \POLIerr
 & \mjybeam\\
 
-Polarization Fraction (debiased)
+Debiased Polarization Fraction 
 & \POLF
 & \POLFerr
 & unitless\\
 
 
-Polarization Angle (debiased)
+Polarization Angle 
 & $\theta$
 & \PAerr
 & radians \\
