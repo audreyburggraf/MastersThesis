@@ -1,5 +1,15 @@
 
-The model assumptions described in this chapter apply to both the spherical and irregular grain models. If there is a slight difference it will be specific. 
+
+
+% ----------------------------------------------
+\subsection{Grain Shape}
+\input{WRITEUP_AND_IMAGES/TEXT_FILES/Chapter5/GrainSizeandCode}
+% ----------------------------------------------
+
+% ----------------------------------------------
+
+
+
 % ----------------------------------------------
 \subsection{Dust Composition}
 % \label{sec: measured_POLF}
@@ -58,9 +68,15 @@ Organics
 
 % ----------------------------------------------
 \subsection{Dust Size Distribution}
+\label{sec: ch5_amax_distribution}
 % ----------------------------------------------
 
 The dust grains were assumed to have a size distribution of $n(a)\propto a^{3.5}$, chosen to match the distributions used by \cite{Kataoka_2015} and \cite{Zhang2023}. The minimum grain size is 0.1 \micronNS, while the maximum grain size is varied in logarithmic space up to 5000 \micronNS, with 2000 values sampled in total. The maximum grain size in each distribution is denoted by \amaxNS. For the irregular grain models, a lower limit of dust grain size of 2 \micron was used to avoid Nan values being produced in \texttt{glitterin}.
+
+
+
+\subsection{Porosity/Filling Factor and Density}
+\input{WRITEUP_AND_IMAGES/TEXT_FILES/SphericalDustModels/Porosity}
 
 
 %\add{Some note about averaging over the size distribution}
@@ -76,15 +92,19 @@ The dust grains were assumed to have a size distribution of $n(a)\propto a^{3.5}
 
 
 
-\subsection{Geometry \& Mie Theory}
+\subsection{Spherical Grain Geometry \& Mie Theory}
 % \label{sec: ch5_mie_achar}
 
-Spherical dust grains were studied first because their scattering properties are less computationally expensive to calculate. The size of a spherical dust grain is defined by its radius ($a$), with a corresponding size parameter ($x$) given by:
+
+
+
+ 
+The size of a spherical dust grain is defined by its radius ($a$), with a corresponding size parameter ($x$) given by:
 \begin{equation}
  x = \frac{2\pi a}{\lambda},
  \label{eq: size_parameter}
 \end{equation}
-\noindent where $\lambda$ is the observing wavelength \citep{Zhang2023}. When the size parameter is equal to 1, the corresponding grain size is defined as the characteristic grain size ($a_{\text{char}}$), given by $\lambda/2\pi$. As discussed in Chapter \ref{sec: intro_dust_grainsize},this is the grain size at which dust self-scattering is most efficient. 
+\noindent where $\lambda$ is the observing wavelength \citep{Zhang2023}. When the size parameter is equal to 1, the corresponding grain size is defined as the characteristic grain size ($a_{\text{char}}$), given by $\lambda/2\pi$. As discussed in Chapter \ref{sec: intro_dust_grainsize}, this is the grain size at which dust self-scattering is most efficient. 
 
 
 The size parameter controls the way the light interacts with the dust grains by determining the scattering regime of the dust grains (Mie theory) \citep{Zhang2023}:
@@ -93,11 +113,15 @@ The size parameter controls the way the light interacts with the dust grains by 
     \item $x \sim 1$: Mie regime,
     \item $x \gg 1$: geometric regime.
 \end{enumerate}
-\noindent The dust models were calculated using the DSHARP Mie-Opacity Library (\texttt{DSHARP}) from \cite{dsharp_code}. 
+
 % ----------------------------------------------
 
 
 
+
+\subsection{Irregular Dust Grains \& \texttt{glitterin}}
+\label{sec: ch5_glitterin}
+\input{TEXT_FILES/glitterinDustModels/Methods}
 
 
 % ----------------------------------------------
@@ -116,6 +140,10 @@ The size parameter controls the way the light interacts with the dust grains by 
 
 
 
+
+
+
+
 \subsection{Computing Polarization}
 % ----------------------------------------------
 \input{WRITEUP_AND_IMAGES/TEXT_FILES/Chapter5/ComputingPolarization}
@@ -123,8 +151,7 @@ The size parameter controls the way the light interacts with the dust grains by 
 
 
 
-\subsection{Porosity/Filling Factor and Density}
-\input{WRITEUP_AND_IMAGES/TEXT_FILES/SphericalDustModels/Porosity}
+
 
 
 %

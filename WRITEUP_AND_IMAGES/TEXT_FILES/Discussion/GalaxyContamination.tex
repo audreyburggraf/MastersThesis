@@ -38,7 +38,7 @@ While analyzing the polarization images, we identified a faint background source
 \begin{figure*}[htbp]
   \centering
   \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/GalaxyContamination/StokesI_BothBands.png}
-  \caption{\SI images at (left) \bfive (\texttt{robust = 0.5}) and (right) \bsevenNS, showing the detected background source. }
+  \caption{\SI images at (left) \bfive (\texttt{robust = 0.5}) and (right) \bsevenNS, showing the detected background source. \coded{() to [] } \later{Stretch cbar to see the emission from the backgorund galaxy better}}
   \label{fig: GalaxyContamination_Both_Bands}
 \end{figure*}
 
@@ -53,7 +53,7 @@ The galaxy number counts are described using the  Schechter function, which calc
 \label{eq: GC_Schecter}
 \end{equation}
 
-\noindent where $N_0$ is the normalization factor, $S_0$ is the flux density at the turnover in mJy, $S$ is the intensity of the source, and $\alpha$ is the slope of the distribution \citep{Schechter}. The \bseven galaxy number counts used in the analysis were based on \cite{GC_Number_Counts}, and the background source has an intensity of $\sim$ 0.40 mJy. Substituting these values into Equation \ref{eq: GC_Schecter} gives:
+\noindent where $N_0$ is the normalization factor, $S_0$ is the flux density at the turnover in mJy, $S$ is the intensity of the source, and $\alpha$ is the slope of the distribution \citep{Schechter}. The \bseven galaxy number counts used in the analysis were based on \cite{GC_Number_Counts}, and the background source has an intensity of $\sim$0.40 mJy. Substituting these values into Equation \ref{eq: GC_Schecter} gives:
 \begin{equation}
 \left.\frac{dN}{dS}\right|_{0.87 \text{ mm}}
 = 923\left(\frac{0.40}{3.9}\right)^{-1.7}
@@ -88,7 +88,7 @@ The probability of detecting a background galaxy was calculated at concentric an
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/GalaxyContamination/Probabilities_Band7.pdf}
-  \caption{Probability of detecting a background galaxy within an annulus (left) and cumulative probability within a given radius (right) at \bsevenNS, for detection thresholds of 5$\sigma$, 9$\sigma$ and 20$\sigma$}
+  \caption{Probability of detecting a background galaxy within an annulus (left) and cumulative probability within a given radius (right) at \bsevenNS, for detection thresholds of 5$\sigma$, 9$\sigma$ and 20$\sigma$. \coded{() to [] }}
   \label{fig: GalaxyContamination_Prob_B7}
 \end{figure}
 
@@ -98,7 +98,7 @@ The probability of detecting a background galaxy was calculated at concentric an
 
 
 
-The background source is located $\sim$ 4.75 arcsec from the centre of the disk. At this radius, the cumulative probabilities for sources with thresholds of $5\sigma(r)$, $9\sigma(r)$, and $20\sigma(r)$ are 58.49\%, 39.89\%, and 19.55\%,  respectively. The source has a \SNR of approximately 9.44. Therefore, the $9\sigma(r)$ result is the best estimate of the probability. The probability of 19.55\% suggests that it is likely that the detected source is a background galaxy. Although the probability is non-negligible, the background source does not affect the main science goals of the project, as it is not a part of IRS 63, and it was not detected in the \bfive (\texttt{robust = -1}) data used for the majority of the analysis.
+The background source is located $\sim$ 4.75 arcsec from the centre of the disk. At this radius, the cumulative probabilities for sources with thresholds of $5\sigma(r)$, $9\sigma(r)$, and $20\sigma(r)$ are 58.49\%, 39.89\%, and 19.55\%,  respectively \note{check order of values}. The source has a \SNR of approximately 9.44. Therefore, the $9\sigma(r)$ result is the best estimate of the probability. The probability of 19.55\% suggests that it is likely that the detected source is a background galaxy. Although the probability is non-negligible, the background source does not affect the main science goals of the project, as it is not a part of IRS 63, and it was not detected in the \bfive (\texttt{robust = -1}) data used for the majority of the analysis.
 
 
 

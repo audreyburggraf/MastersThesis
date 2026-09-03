@@ -4,35 +4,56 @@ The complex refractive index ($m$) describes the optical properties of the dust 
 \begin{equation}
  m(\lambda) = n(\lambda) + ik(\lambda),
 \end{equation}
-\noindent where $n$ and $k$ are the real and imaginary parts of the refractive index, respectively \citep{Zhang2023}. 
+\noindent where $n$ and $k$ are the real and imaginary parts of the refractive index, respectively \citep{Zhang2023}. These values are calculated for each observing wavelength using \texttt{DSHARP}, and does not vary with porosity or grain shape. 
+
+
+For spherical grains, at each filling factor and grain size in the distribution, \texttt{DSHARP} calculates several additional optical properties. \texttt{DSHARP} requires the user to specify the grain size, observing wavelength, and porosity. These additional optical properties calculated by the respective computational tools include the mass absorption and scattering coefficients, \kabs and \kscaNS, respectively. These coefficients describe how efficiently a material absorbs and scatters light. The resulting quantities are averaged over the grain-size distribution and are used to calculate additional parameters described below. 
+
+
+The \texttt{glitterin} functions do not directly calculate \kabs and \ksca directly, but is calculates the absorption and scattering cross sections, $C_\text{abs}$ and $C_\text{sca}$. These can be used to calculate \kabs and \ksca given by:
+\begin{equation}
+    \kappa_i = \frac{C_i}{\frac{4\pi}{3}\rho_s r_\text{vol}^3},
+\end{equation}
+\noindent where $i$ can be abs or sca and $\rho_s$ is the density from a compact grain with DSHARP dust composition. To calculate the $C_i$ values with \texttt{glitterin}, it requires the user to specify \xvolNS, $n$ and $k$ which were calculated using \texttt{DSHARP}, the observing wavelength, and scattering angle (defined below). 
 
 
 
-For each filling factor and grain size in the distribution, \texttt{DSHARP} calculates several optical properties. These include the mass absorption and scattering coefficients, \kabs and \kscaNS, respectively. These coefficients describe how efficiently a material absorbs and scatters light. The resulting quantities are averaged over the grain-size distribution and are used to calculate additional parameters described below. 
 
 
-Scattering can have a bias towards the forward direction, which is accounted for using $g$, the forward-scattering parameter defined by the expectation value of $\cos\Theta$ \citep{dsharp_code}. The scattering angle ($\Theta$) is the angle between the original direction and the new direction after it becomes polarized \citep{Zhang2023}. The parameter $g$ is used to calculate an effective scattering opacity, which is calculated by:
+
+% Single scattering tells us of all the interactions between radiation and dust, what fraction are scattering or absorbing?
+
+% A grain can be scattered but its direction barely changes, but it still increases k_sca and then omega, despite not being re-directed anywhere
+
+% g is a parameter of how strongly scattering prefers the forward direction: g = 0 (isotropic, equally liklely to scatter in any direction), g > 0 (prefers forward), etc 
+
+
+
+Scattering can have a bias towards the forward direction, such that a significant amount of scattering does not noticeably change the direction of the incident light. Since \ksca accounts for all scattering events, this bias can lead to \ksca overestimating the contribution of scattering. This bias is corrected by using the asymmetry parameter, $g$, defined as the expectation value of $\cos\Theta$, where $\Theta$ is the angle between the incident and scattered directions (the scattering angle). The parameter $g$ is used to calculate an effective scattering opacity, given by \citep{dsharp_code, Tazaki, Zhang2023}:
 \begin{equation}
     \kscaeffEQ = (1-g)\kscaEQ.
+\end{equation}
+\nopindent An additional quantity that can be calculated for spherical and irregular grains is the effective single scattering albedo, which describes the fraction of the original light that is removed by scattering rather than absorption. This is given by the equation \citep{Zhang2023}: 
+\begin{equation}
+    \weffEQ = \frac{\kscaeffEQ}{\kabsEQ + \kscaeffEQ}.
+    \label{eq: omega}
 \end{equation}
  
 
 
 
-
-Figure \ref{fig: Kataoka2015Figure1Recreation} shows a replication of Figure 1 from \cite{Kataoka_2015}. This figure shows the absorption and scattering mass capacities, in units of \cmsq per gram, as a function of observing wavelength for maximum grain sizes of \amax = 1 \micron and 100 \micronNS. For the smaller dust grains (red lines, \amax = 1 \micronNS), the absorption opacity is much greater than the scattering opacity. For the larger dust grain (blue lines, \amax = 100 \micronNS), the scattering opacity is greater than the absorption opacity over approximately 0.1-2 mm. Therefore, at the observing wavelengths in this project, larger grains are more efficient at scattering than smaller grains. At the shorter and longer wavelength bounds, however, the scattering and absorption opacities are relatively similar.
-
-\add{how the figure changes for different porosities}
+Figure \ref{fig: Kataoka2015Figure1Recreation} shows the absorption and effective scattering mass opacities as a function of observing wavelength for maximum grain sizes of \amax = 1 \micron and 100 \micronNS for compact and porous grains. For small compact grains, the absorption opacity is much greater than the effective scattering opacity at wavelengths beyond $\sim$0.003 mm. For larger compact grains, the effective scattering opacity is greater than the absorption opacity between $\sim$0.25--2.5 mm. The results for porous grains remain relatively similar, with the range in which scattering dominates for larger grains extending to $\sim$0.15-2.5 mm. This indicates that porosity does not greatly affect the overall mass opacities. The blue shaded region highlights the range of observing wavelengths considered in this project (\bseven to \bfourNS), and within these boxes the effective scattering opacity is greater than the absorption opacity for both compact and porous grains. However, for the larger grains, the absorption and scattering opacities begin to converge at longer wavelengths. Overall, this indicates that within the considered observing wavelengths, scattering is more efficient at shorter wavelengths, and the contribution from absorption becomes more important toward longer wavelengths.
 
 
 
 % ----------------------------------------------
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/Kataoka2015Fig1_grid.pdf}
-  \caption{Absorption and scattering mass opacities as a function of observing wavelength for grain sizes of 1\micron and 100 \micron for compact (left) and porous (right) grains. Recreation of Figure 1 from \cite{Kataoka_2015}. \intextref{update after plot change}  \asked{I think I should be showing effective scattering since that's what we use to calculate \weffNS, this is shown in Figure \ref{fig: Kataoka2015Figure1Recreation_eff}}}
+  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/Kataoka2015Fig1_grid_eff.pdf}
+  \caption{Absorption and effective scattering mass opacities as a function of observing wavelength for grain sizes of 1\micron and 100 \micron for compact (left) and porous (right) grains. Blue box corresponds to lower limit of \bseven and upper limit of \bfourNS. \coded{Only effective and x-axis to mm} \question{Still have to say "Recreation of Figure 1 from Kataoka et al. (2015)." if i changed it to effective scattering and added 2 porosities? }}
   \label{fig: Kataoka2015Figure1Recreation}
 \end{figure}
+% Recreation of Figure 1 from \cite{Kataoka_2015}. 
 % ----------------------------------------------
 
 
@@ -45,13 +66,16 @@ Figure \ref{fig: Kataoka2015Figure1Recreation} shows a replication of Figure 1 f
 
 
 
-An additional quantity is the single scattering albedo, which describes the fraction of the original light that is removed by scattering rather than absorption. The standard and effective albedo are defined as \citep{Zhang2023} \asked{Do I even need to show the standard albedo equation?}:
-\begin{equation}
-    \omega = \frac{\kscaEQ}{\kabsEQ + \kscaEQ}, \quad 
-    \weffEQ = \frac{\kscaeffEQ}{\kabsEQ + \kscaeffEQ}.
-    \label{eq: omega}
-\end{equation}
 
 
-\add{something about which one we are using and why, refer to paper Daniel sent}
+
+% The standard and effective albedo are defined as \citep{Zhang2023} \asked{Do I even need to show the standard albedo equation?}:
+% \begin{equation}
+%     \omega = \frac{\kscaEQ}{\kabsEQ + \kscaEQ}, \quad 
+%     \weffEQ = \frac{\kscaeffEQ}{\kabsEQ + \kscaeffEQ}.
+%     \label{eq: omega}
+% \end{equation}
+
+
+
 % \question{As far as I know, glitterin is using $\omega$ and not $\omega_{eff}$, meaning when I present the results for spherical vs irregular, I'm comparing $P\omega_{eff}$ vs $P\omega$. I am not entirely sure how to get the $g$ factor I need to calculate $\omega_{eff}$ with gitterin. I only switched to $\omega_{eff}$ because of \cite{Zhang2023}. Should I switch the spherical back to just $\omega$ so they are comparing the same thing?} \SC{A: I would contact Daniel and ask if this is important.  How much of a difference is omega versus omega\_eff?}
