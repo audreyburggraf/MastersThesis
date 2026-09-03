@@ -330,13 +330,13 @@ def format_writeup_grid(
     )
 
     fig.supxlabel(
-        r"$\Delta$ RA (arcsec)",
+        r"$\Delta$ RA [arcsec]",
         fontsize=constants.writeup_grid_axis_label_fs,
         y=ra_y
     )
 
     fig.supylabel(
-        r"$\Delta$ Dec (arcsec)",
+        r"$\Delta$ Dec [arcsec]",
         fontsize=constants.writeup_grid_axis_label_fs,
         x=dec_x
     )
@@ -472,7 +472,7 @@ def MakeAllBandGridDelta(bands,
             im = ax.imshow(b['POLI_debiased_mJy'], cmap = cmap)
         # ---------------------------------------------------------
         elif plotting == 'Gaussian Map':
-            cbar_label = r"$\mathrm{Gaussian\ Uniform\ Weights}\ (W_{\mathrm{Uniform}})$"
+            cbar_label = r"$\mathrm{Gaussian\ Uniform\ Weights}\ [W_{\mathrm{Uniform}}]$"
             
             im = ax.imshow(b['ratios'], cmap = soft_colormap_no_red)
         # ---------------------------------------------------------

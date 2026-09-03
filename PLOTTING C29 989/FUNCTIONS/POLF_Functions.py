@@ -77,7 +77,7 @@ def find_POLF_avg(band, POLF, StokesI_mJy, sigma_cutoff = 5):
 
 # Function to find 
 # --------------------------------------------------------------------------------------
-def find_gaussian_POLF(band, UniformRatios, POLF, tolerance=0.001):
+def find_gaussian_POLF(band, UniformRatios, POLF, POLF_err, tolerance=0.001):
     # Convert inputs to numpy arrays in case they aren't already
     UniformRatios = np.array(UniformRatios)
     POLF = np.array(POLF)
@@ -87,12 +87,14 @@ def find_gaussian_POLF(band, UniformRatios, POLF, tolerance=0.001):
     
     # Use the mask to filter POLF_mJy values
     matching_POLF = POLF[mask]
+    matching_POLF_err = POLF_err[mask]
     
     if matching_POLF.size == 0:
         return np.nan, mask  # or raise an exception if preferred
     
     # Compute and return the average
     POLF_average = np.mean(matching_POLF)
+    POLF_err_average = np.mean(matching_POLF_err)
     
     count = 0
 
@@ -133,7 +135,7 @@ def find_gaussian_POLF(band, UniformRatios, POLF, tolerance=0.001):
     
 
     
-    return POLF_average
+    return POLF_average, POLF_err_average
 # --------------------------------------------------------------------------------------
 
 
@@ -227,7 +229,7 @@ def get_all_POLF_and_save(StokesI_mJy, POLI_mJy, POLF, POLF_err, UniformRatios, 
 
     path = folder + filename
     
-    POLF_Gaussian = find_gaussian_POLF(band, UniformRatios, POLF, gaussian_tolerance)
+    POLF_Gaussian, POLF_err_Gaussian = find_gaussian_POLF(band, UniformRatios, POLF, POLF_err, gaussian_tolerance)
     
     
     POLF_maxPOLI, POLF_err_maxPOLI = find_POLF_at_max_POLI(StokesI_mJy, POLI_mJy, POLF, POLF_err, print_statements)
@@ -243,6 +245,7 @@ def get_all_POLF_and_save(StokesI_mJy, POLI_mJy, POLF, POLF_err, UniformRatios, 
     
     data_dict = {
         "POLF_Gaussian": [POLF_Gaussian],
+        "POLF_err_Gaussian": [POLF_err_Gaussian],
         "POLF_maxPOLI": [POLF_maxPOLI],
         "POLF_err_maxPOLI": [POLF_err_maxPOLI],
         "POLF_maxStokesI": [POLF_maxStokesI],
@@ -270,6 +273,7 @@ def load_POLF(bands, print_things = False, bias = 'old'):
     results = {
         'Band': [],
         'POLF_Gaussian': [],
+        'POLF_err_Gaussian': [],
         'POLF_maxPOLI': [],
         'POLF_err_maxPOLI': [],
         'POLF_maxStokesI': [],
@@ -307,23 +311,29 @@ def load_POLF(bands, print_things = False, bias = 'old'):
 
         if print_things:
             print(f"Band = {band}")
+            
+         
 
         if band not in band_config:
             raise ValueError(f"Unsupported band: {band}")
 
         folder_var, filename = band_config[band]
         
-        if band != 'Band 6':
-            if bias != 'old':
-                name, ext = filename.rsplit('.', 1)
-                filename = f"{name}_{bias}.{ext}"
+#         if band != 'Band 6':
+        if bias != 'old':
+            name, ext = filename.rsplit('.', 1)
+            filename = f"{name}_{bias}.{ext}"
 
         path = Path(getattr(constants, folder_var)) / filename
 
         df = pd.read_csv(path)
+        
+        print(rf'filename = {filename}')
+        print(df.columns.tolist())
 
         results['Band'].append(band)
         results['POLF_Gaussian'].append(df.at[0, "POLF_Gaussian"] * 100)
+        results['POLF_err_Gaussian'].append(df.at[0, "POLF_err_Gaussian"] * 100)
         results['POLF_maxPOLI'].append(df.at[0, "POLF_maxPOLI"] * 100)
         results['POLF_err_maxPOLI'].append(df.at[0, "POLF_err_maxPOLI"] * 100)
         results['POLF_maxStokesI'].append(df.at[0, "POLF_maxStokesI"] * 100)
@@ -335,7 +345,7 @@ def load_POLF(bands, print_things = False, bias = 'old'):
     # Convert to DataFrame
     df_POLF = pd.DataFrame(results)
 
-    df_POLF["POLF_mean"] = df_POLF[["POLF_Gaussian", "POLF_maxPOLI", "POLF_err_maxPOLI", "POLF_maxStokesI", "POLF_err_maxStokesI"]].mean(axis=1)
+    df_POLF["POLF_mean"] = df_POLF[["POLF_Gaussian", "POLF_err_Gaussian", "POLF_maxPOLI", "POLF_err_maxPOLI", "POLF_maxStokesI", "POLF_err_maxStokesI"]].mean(axis=1)
 
     
     return df_POLF

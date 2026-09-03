@@ -422,7 +422,7 @@ def recreate_figs_11_12_sadavoy2019(dfs, sn_array,
     for i in range(2):
     
         # Add axis labels
-        ax[i].set_xlabel(r'Radius (arcsec)', fontsize=axis_label_fs)
+        ax[i].set_xlabel(r'Radius [arcsec]', fontsize=axis_label_fs)
 
 
         # Adjust ticks
