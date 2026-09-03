@@ -7,24 +7,18 @@
 
 
 
-Porosity ($p$) is the fraction of a dust grain's volume that is empty space. A low porosity corresponds to a more compact grain (like a rock), while a high porosity corresponds to a grain with more empty space (like a sponge).
-
-Instead of specifying the porosity directly, the filling factor ($f$) is used, defined as:
+Porosity ($p$) is the fraction of a dust grain's volume that is empty space. A low porosity corresponds to a more compact grain (like a rock), while a high porosity corresponds to a grain with more empty space (like a sponge). Instead of specifying the porosity directly, the filling factor ($f$) is used, defined as:
 \begin{equation}
  f = 1 - p,
     \label{eq: filling factor}
 \end{equation}
-\noindent where $f=1$ corresponds to a compact grain ($p$ = 0), and an $f$ value less than 1 corresponds to a more porous grain \citep{Zhang2023}. A range of filling factors was tested ($f = 1, 0.75, 0.60, 0.5, 0.3, 0.25, 0.1, 0.01$) to sample different dust grain porosities. The results for $f = 1, 0.5, 0.3, 0.1$ are discussed in more detail, and some results for $f = 0.75, 0.25, 0.01$ are included.
+\noindent where $f=1$ corresponds to a compact grain ($p$ = 0), and an $f$ value less than 1 corresponds to a more porous grain \citep{Zhang2023}. 
 
-% and the main four values are presented in Chapter \ref{sec: chapter5_spherical_dust_model_results}: $f = 1, 0.5, 0.3, 0.1$. 
-%Four different filling factors were considered ($f = 1, 0.75, 0.5, 0.25$) to sample a wide range of dust grain porosities. 
-
-For each filling factor, the \texttt{DSHARP} code was used to calculate the corresponding density and optical constants of the dust mixture. The resulting density values are shown in Table \ref{tab:dsharp_density}. As expected, the density decreases as the filling factor decreases and the porosity increases.  
-
-\question{Add more detail on how the \texttt{DSHARP} code incorperates different filling factors?} \SC{A: You haven't defined opacity yet.  You may want to wait until you get to equations that use the porosity.}
+The porosity cannot be varied for irregular dust grains, so only compact grains were tested. However, for spherical grains, a range of filling factors was tested ($f = 1, 0.75, 0.60, 0.5, 0.3, 0.25, 0.1, 0.01$) to sample different dust grain porosities. The results for $f = 1, 0.5, 0.3, 0.1$ are discussed in more detail, and some results for $f = 0.75, 0.25, 0.01$ are included. For each filling factor, the \texttt{DSHARP} code was used to calculate the corresponding density and optical constants of the dust mixture. Table \ref{tab:dsharp_density} lists  the resulting density values. As expected, the density decreases as the filling factor decreases and the porosity increases.  
 
 
-\note{specify that irregular is compact}
+% \noindent \question{Add more detail on how the \texttt{DSHARP} code incorperates different filling factors?} \SC{A: You haven't defined opacity yet.  You may want to wait until you get to equations that use the porosity.}
+
 %\add{Question from disks on the exe: different function? How does the code integrate the different porosities}
 
 \begin{table}[h!]

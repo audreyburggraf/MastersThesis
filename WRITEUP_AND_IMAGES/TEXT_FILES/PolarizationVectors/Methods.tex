@@ -3,7 +3,7 @@
 
 \subsection{Polarization Vector Sampling}
 
-\SC{I'm not sure section 4.1.1 is needed.  It's fine to include, but you are welcome to cut it.}
+\later{Might not be needed but okay to include. Will decide later.}
 
 The \SI maps produced using \texttt{tclean} have a pixel scale that oversamples the synthesized beam to improve image reconstruction \citep{Brogan}. Because of this, plotting a polarization vector at each pixel would oversample the polarization morphology. Instead, vectors are plotted with a spacing of approximately half of the synthesized beam size, following the Nyquist-Shannon sampling theorem \citep{Shannon}. 
 
@@ -12,7 +12,7 @@ The effective beam size was calculated using:
     \text{Beam Size =} \sqrt{\text{BMIN} \cdot \text{BMAJ}},
     \label{eq: beam_size}
 \end{equation}
-\noindent where BMIN and BMAJ are the synthesized beam minor and major axes, respectively, listed in Table \ref{tab: source_info} in units of arcseconds. The beam dimensions were converted from arcseconds to pixels using the image pixel size of $0.018''\,\mathrm{pixel}^{-1}$. The polarization vector spacing was then set to be half the beam size (Equation \ref{eq: beam_size}), and rounded to the nearest integer number of pixels.
+\noindent where BMIN and BMAJ are the synthesized beam minor and major axes, respectively. Table \ref{tab: source_info} lists these values in units of arcseconds. The beam dimensions were converted from arcseconds to pixels using the image pixel size of $0.018''\,\mathrm{pixel}^{-1}$. The polarization vector spacing was then set to be half the beam size (Equation \ref{eq: beam_size}), and rounded to the nearest integer number of pixels.
 
 
 
