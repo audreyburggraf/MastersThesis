@@ -348,7 +348,7 @@ def find_sf_v5(bands,
     }
     
     polf_err_columns = {
-    #'gaussian': 'POLF_err_Gaussian',
+    'gaussian': 'POLF_err_maxStokesI',
     'max Stokes I': 'POLF_err_maxStokesI',
     'POLI': 'POLF_err_maxPOLI',
     #'mean': 'POLF_err_mean'   # if you have this column
