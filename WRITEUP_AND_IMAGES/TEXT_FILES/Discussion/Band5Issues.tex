@@ -1,21 +1,23 @@
-\note{Each paragraph has a bold text header to help me keep track of everything. I can take them all out, make them subsections, or something else.}
-
-\textbf{Initial Analysis.} The observations at \bfive was initially images with \texttt{robust = 0.5} (\RfNS), just as the other wavelengths were. However, during the dust-scattering modelling for spherical grains, the \POLFobs value did not follow the wavelength-dependent trend. Table \ref{tab: polf_comparison} shows that the values for \POLFobs (\POLFSIns) decrease with wavelength, and for comparison, the value of \POLFSI for \Rf is 0.97, which does not follow this trend. This indicates that different \rob parameters for image weighting should be tested. 
 
 
-
+% \textbf{Initial Analysis.} 
+The observations at \bfive were initially imaged with \texttt{robust = 0.5}, the same as the imaging parameters for the other wavelengths. However, during the dust-scattering modelling for spherical grains, the \POLFSI value of 0.99 was found to be lower than expected based on the polarization fractions at the other wavelengths, and negatively affected the success of the models. This motivated us to determine if different \rob parameters could affect the polarization fraction at \bfiveNS.
 
 
 
-\textbf{Imaging Differences.} The \rob parameter was decreased from 0.5 to -1 (\RoNS), making the weighting closer to uniform rather than natural weighting. This results in a higher angular resolution, with the beam size decreasing from $0.33'' \times 0.27''$ to $0.23'' \times 0.18''$. The higher angular resolution comes with the trade-off of lower sensitivity, with the \SIerr increasing from 13.88 to  42.12 $\mu$Jy. Because of this, there are fewer polarization vectors detected with \RoNS, and the streamer is no longer detected (Chapter \ref{sec: streamer}). The \SI and debiased polarization image with polarization vectors were presented for \Ro in Figure \ref{fig: StokesI_POLI_grid}, and the matching plot for \Rf is presented in Figure \ref{fig: Band5_robust05}. 
 
-\noindent \sudo{I want to check this error value for R-1 based on the previous comment left. I'll do this on Monday or Tuesday when we sudo reboot.}
+
+
+% \textbf{Imaging Differences.} 
+The \rob parameter was decreased from 0.5 (\RfNS) to -1 (\RoNS), shifting the Briggs weighting closer to uniform weighting. This increased angular resolution, with the beam size decreasing from $0.33'' \times 0.27''$ to $0.23'' \times 0.18''$. The higher angular resolution comes with the trade-off of lower sensitivity, with the \SIerr increasing from 13.88 to  42.12 $\mu$Jy. Due to the lower sensitivity, fewer polarization vectors are detected, and the streamer is no longer detected (Chapter \ref{sec: streamer}). Figure \ref{fig: Band5_robust05} presents the \SI and debiased polarized intensity maps overlaid with the polarization vectors for \RfNS. This is the equivalent of Figure \ref{fig: StokesI_POLI_grid} for \RoNS. 
+
+
 
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.75\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/StokesI_POLI/IRS63_StokesI_POLI_vectors_BAND5_delta.png}
-  \caption{Same as Figure \ref{fig: StokesI_POLI_grid} but for \bfive with \texttt{robust = 0.5}. The red vectors are for the streamer and are rotated by 90$^\circ$ to show the magnetic field direction. \coded{() units to []}}
+  \caption[Same as Figure \ref{fig: StokesI_POLI_grid} but for \bfive with \texttt{robust = 0.5}.]{Same as Figure \ref{fig: StokesI_POLI_grid} but for \bfive with \texttt{robust = 0.5}. The red vectors are for the streamer and are rotated by 90$^\circ$ to show the magnetic field direction. }
   \label{fig: Band5_robust05}
 \end{figure}
 
@@ -26,7 +28,8 @@
 
 
 
-\textbf{Polarization Morphology.} Despite the change in beam size and number of polarization vectors, the overall polarization morphology remains very similar in the two different weighting schemes. The vectors have similar orientations, indicating that the morphology is not strongly dependent on the image weighting. The main difference is the number of vectors, but this is a result of the change in sensitivity. 
+% \textbf{Polarization Morphology.} 
+Despite the change in beam size and number of detected polarization vectors, the overall polarization morphology remains similar between the two weighting schemes. The polarization vectors have similar orientations, indicating that the observed morphology is not strongly dependent on the image weighting. The main difference is the number of detected vectors, which is expected to be the result of the change in sensitivity. 
 
 
 
@@ -34,14 +37,8 @@
 
 
 
-\textbf{Polarization Fraction and Modelling.} Although the morphology remains similar, the \POLFobs value between the images changes. The \POLFobs value increased from 0.97 to 1.40, which now follows the wavelength-dependent trend seen at the other wavelength. This indicates that the \rob parameter can affect the polarization measurement despite the morphology remaining similar. Additionally, since the value follows the trend, this tells us the \Ro was a better choice for comparison with the dust-scattering models, and \Ro was therefore used for the majority of the analysis. 
-
-
-
-
- 
-
-\textbf{Possible Explanation?}
+% \textbf{Polarization Fraction and Modelling.} 
+Although the polarization morphology remains similar, the \POLFsi value between the images changes. The \POLFsi value increased from 0.99 to 1.40, which agrees more with the polarization fractions measured at the other wavelengths. This shows that the choice of the \rob parameter can affect the measured polarization fraction even when the overall polarization morphology remains similar. The \Ro image and its associated polarization fraction value were therefore used for the analysis of the dust-scattering models, as its value is more consistent with the other wavelengths.
 
 
 
@@ -68,7 +65,7 @@
 % band 5 limitations (robust -1),  show how wrong Band 5 is, depolarization from another mechanism 
 
 
-% show plot, show Band 5 beam large, streamer dicussed in next section, beam bigger than scattering, beam average 
+% show plot, show Band 5 beam large, streamer discussed in next section, beam bigger than scattering, beam average 
 
 
 % This figure highlights how the Band 5 marker (yellow triangle) is significantly lower than the model predicts. However, the robust = -1 Band 5 marker (green plus sign)is a much better match. 

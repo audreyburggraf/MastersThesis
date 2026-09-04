@@ -1,23 +1,73 @@
-\subsection{Wavelength-Dependence}
-
-\textbf{Re-state the overall trend.} The polarization morphology of IRS 63 was presented in Chapter \ref{sec: c4_polarization_maps}, and showed that it has a clear wavelength dependence. The morphology transitioned from mostly azimuthal alignment at \bfour to mostly aligned with the disk minor axis at \bsevenNS. Between the upper and lower bounds of observing wavelength, the morphology was intermediate, or a combination of the two. These morphologies, especially the intermediate cases, indicate that the morphology, caused by polarization mechanisms,s cannot be described by a single mechanism, and there must be multiple mechanisms contributing to the observed emission. 
+The dominant azimuthal polarization morphology observed at \bfour suggests that the polarization from aligned dust grains has a greater contribution at longer wavelengths. However, the small minor-axis-aligned region at the centre of the disk indicates that dust self-scattering may also contribute to the polarized emission. A combination of azimuthal and uniform morphologies was observed at \bfiveNS, \bsixNS, and \bseven as well. This suggests that the polarization morphology at each wavelength may be caused by a combination of multiple polarization mechanisms, rather than from a single mechanism.
 
 
-\textbf{Morphology to Mechanism with Wavelength.} The azimuthal pattern observed mostly at longer wavelengths is consistent with the pattern expected from aligned dust grains (e.g., via radiative alignment or aerodynamic alignment, see Chapter \ref{sec: intro_polarization_mechanisms}), as shown in Figure \ref{fig: kataoka_polarization_morphologies}(b). The minor-axis aligned morphology is consistent with dust self-scattering, as shown in Figure \ref{fig: kataoka_polarization_morphologies}(c). This indicates that dust self-scattering contributes more to the polarization emission at shorter wavelengths. 
-
-% Compare to HL Tau
-
-\subsection{Spatial-Dependence}
-% Possible connecton to optical depth: inner thick outer thin
-% But could be other factors 
-\textbf{Central vs Outer Disk.} Even at \bfourNS, where the azimuthal pattern dominates the morphology, the vectors are still aligned with the disk minor axis at the very centre. Alternatively, at the lowest wavelength of \bsevenNS, where we see the most uniform alignment, there is still an azimuthal pattern at the outer edge of the disk. This trend is also seen at the intermediate wavelengths. This indicates that not only is the dominant mechanism changing with wavelength, but at a single observing wavelength, the dominant polarization mechanism varies across the disk as well. \note{at all wavelengths, centre and outer look different}
+The relative size of the azimuthal and minor-axis-aligned morphologies changes with wavelength. The azimuthal morphology is more confined to the outer disk as wavelength decreases, and the minor-axis-aligned morphology becomes larger in the centre. This suggests that the relative contribution of each mechanism changes with wavelength, such that dust self-scattering contributes more at shorter wavelengths. A potential explanation for this wavelength dependence is the relationship between grain size and polarization scattering efficiency. The efficiency is largest when the grain size is comparable to the characteristic grain size, which is proportional to the observing wavelength. Therefore, if IRS 63 contains dust grains within the characteristic grain sizes at each wavelength, the shorter wavelengths are probing the smaller dust grain population that is more efficiently scattered. 
 
 
-\textbf{Spatial changes w.r.t beam size.} \add{Area in AU based on beam, band 4 small but smallest beam}
+The spatial dependence of the two morphologies also suggests that the contribution from each mechanism varies across the disk. At each wavelength, the minor-axis-aligned region is most prominent at the centre, while the azimuthal morphology is most prominent towards the outer regions of the disk. One possible explanation for this could be the change in optical depth across the disk. The optical depth of the emission increases at shorter wavelengths, and dust self-scattering can dominate at higher optical depths \citep{Williams, Lin2022}. The central region of the disk is expected to have a higher optical depth compared to the outer disk \citep{Williams}, which could favour a higher contribution from dust self-scattering. The outer region of the disk is expected to have lower optical depth, where dust self-scattering is less favoured, allowing the polarization from aligned grains to have a larger contribution.
+
+
+Additionally, the reliability of the observed change in the central region size is considered relative to the angular resolution at each wavelength. The observations at \bfour have the smallest central minor-axis-aligned region, but also have the smallest beam and therefore the highest angular resolution. Therefore, this small region at \bfour is likely a real feature of the observations, rather than being a result of poor resolution. 
 
 
 
+% --------------------------------------------------------------------
+\subsection{Comparison with HL Tau}
+% --------------------------------------------------------------------
+\input{WRITEUP_AND_IMAGES/TEXT_FILES/Discussion/HLTauMorphology}
+% --------------------------------------------------------------------
 
-\textbf{Optical depth.} The measurement of optical depth refers to how easily photons can pass through a medium \citep{Kuruwita}. When something is optically thin, it has a lower optical depth, and light passes through easily \citep{Lin2022, Kuruwita}. At optically thick, high optical depths, grains encounter other grains more often and are absorbed, re-emitted and scattered \citep{Lin2022, Kuruwita}. The optical depth of the continuum emission increases as wavelength decreases \citep{Williams}, and dust self-scattering tends to dominate at higher optical depths \citep{Lin2022}. This is consistent with the observations, as we see more signatures of dust self-scattering at higher optical depth (lower wavelength). As the disk's density in dust decreases radially outward, so does the optical depth \citep{Williams}. This also makes sense as we see less dust self-scattering in the optically thin outer regions of the disk.
 
-Overall, this transition in polarization morphology both with wavelength and position across the disk suggests that the dominant polarization mechanism changes not only with wavelength but also spatially across the disk. \add{connect to models for next section?}
+
+
+
+
+
+
+% Overall, this transition in polarization morphology both with wavelength and position across the disk suggests that the dominant polarization mechanism changes with wavelength and spati
+
+
+% This is consistent with the observations, as we see more signatures of dust self-scattering at higher optical depth (lower wavelength). As the disk's density in dust decreases radially outward, so does the optical depth \citep{Williams}. This also makes sense, as we see less dust self-scattering in the optically thin outer regions of the disk.
+
+
+
+
+
+
+% \textbf{Optical depth.} The measurement of optical depth refers to how easily photons can pass through a medium \citep{Kuruwita}. When something is optically thin, it has a lower optical depth, and light passes through easily \citep{Lin2022, Kuruwita}. At optically thick, high optical depths, grains encounter other grains more often and are absorbed, re-emitted and scattered \citep{Lin2022, Kuruwita}. 
+
+
+
+
+
+
+
+
+% The observed polarization maps of IRS 63 were presented in Chapter \ref{sec: c4_polarization_maps}, revealing a change in polarization morphology with wavelength. The morphology followed an azimuthal pattern at \bfourNS, uniform alignment with the disk minor axis at \bsevenNS, and intermediate patterns at \bfive and \bsixNS. \note{do i need to state this again?} 
+
+
+% These results indicate that the dominating polarization mechanism within the disk depends on wavelength. Specifically, this indicates that dust self-scattering contributes more to the polarization emission at shorter wavelengths. 
+
+
+% The polarization morphology was also found to change spatially across the disk at each given wavelength, with the uniform disk alignment pattern dominating at the central region, an azimuthal pattern at the outer edges. This indicates that while the dominating polarization mechanism varies with wavelength, at any observed wavelength the pattern cannot be explained by a single mechanism.
+
+
+
+% These morphologies, especially the intermediate cases, indicate that the morphology, caused by polarization mechanisms,s cannot be described by a single mechanism, and there must be multiple mechanisms contributing to the observed emission. 
+
+
+
+% Specifically, the dust self-scattering regions at the centre of the disk increase in size as wavelength decreases, indicating that it is acting at every wavelength but its contribution to the polarized emissions becomes increasingly more important as the wavelength decreases. 
+% --------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+% Even at \bfourNS, where the azimuthal pattern dominates the morphology, the vectors are still aligned with the disk minor axis at the very centre. Alternatively, at the lowest wavelength of \bsevenNS, where we see the most uniform alignment, there is still an azimuthal pattern at the outer edge of the disk. This trend is also seen at the intermediate wavelengths. This indicates that not only is the dominant mechanism changing with wavelength, but at a single observing wavelength, the dominant polarization mechanism varies across the disk as well. \note{at all wavelengths, centre and outer look different}
+% --------------------------------------------------------------------

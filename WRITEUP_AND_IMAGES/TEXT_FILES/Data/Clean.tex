@@ -18,13 +18,15 @@ The \SI images at each wavelength were interactively cleaned during the self-cal
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/BeforeAndAfterClean.png}
-  \caption{Images before (left) and after (right) self-calibration at \bfourNS. The images demonstrate how background noise is reduced during the self-calibration process, improving the peak \SNRns.}
+  \caption[Images before and after self-calibration.]{Images before (left) and after (right) self-calibration at \bfourNS. The images demonstrate how background noise is reduced during the self-calibration process, improving the peak \SNRns.}
   \label{fig: BeforeAndAfterClean}
 \end{figure}
 
 
 
-Additionally, the \SQ and \SU data were cleaned using \texttt{tclean}, using the final mask from the amplitude calibration at its respective wavelength. The same Briggs \texttt{robust} value used for \SI was used for \SQ and $U$, with \texttt{nterms = 1}.  \sudo{Checked this for Band 4 and 7. Can check 5 and 7 when I can access my data again. "Please do" - Sarah}
+Additionally, the \SQ and \SU data were cleaned using \texttt{tclean}, using the final mask from the amplitude calibration at its respective wavelength. The same Briggs \texttt{robust} value used for \SI was used for \SQ and $U$, with \texttt{nterms = 1}.  
+% Checked this for all bands
+% \sudo{Checked this for Band 4 and 7. Can check 5 and 7 when I can access my data again. "Please do" - Sarah}
 
 
 
@@ -40,7 +42,7 @@ Table \ref{tab: source_info} lists the resulting image resolution after self-cal
 
 \begin{table}[h!]
 \centering
-\caption{Summary of the properties of the cleaned images of IRS 63 at each wavelength. }
+\caption[Summary of the properties of the cleaned images of IRS 63.]{Summary of the properties of the cleaned images of IRS 63 at each wavelength. }
 \begin{tabular}{lcccc}
 \toprule
 \textbf{Property} & \textbf{\bandfourmm} & \textbf{\bandfivemm } & \textbf{\bandsixmm } & \textbf{\bandsevenmm} \\
@@ -97,19 +99,19 @@ Disk PA ($^\circ$)
 
 \SIerr  (\ujybeamNS)
 & 14
-& 42
+& 13 % 42
 & 71
 & 35 \\
 
 \SQerr (\ujybeamNS)
 & 9.7
-& 401
+& 41
 & 27
 & 26 \\
 
 \SUerr (\ujybeamNS)
 & 10
-& 41
+& 15 % 41
 & 27
 & 24 \\
 
@@ -120,7 +122,7 @@ Disk PA ($^\circ$)
 \end{tabular}
 \begin{tablenotes}
 \footnotesize
-\item \textbf{Note:} \SIerrNS, \SQerrNS, \SUerr are constant values for \bfourNS, \bfiveNS, and \bsevenNS. For \bsixNS, the uncertainties were provided as maps; the values reported in this table correspond to the pixel with the maximum \SI value. \sudo{"Are the Band 5 data that much worse in terms of sensitivity to Band 7?  It could be possible, but please check." - Sarah, note: I will check this when we sudo reboot}
+\item \textbf{Note:} \SIerrNS, \SQerrNS, \SUerr are constant values for \bfourNS, \bfiveNS, and \bsevenNS. For \bsixNS, the uncertainties were provided as maps; the values reported in this table correspond to the pixel with the maximum \SI value. \note{Stoes Q and U errors for Band 5 were previously listed at 41, not sure where I got those values from. Checked the files and they are updated property now. The Stokes I error did not change}
 \end{tablenotes}
 \label{tab: source_info}
 \end{table}
