@@ -720,7 +720,7 @@ def create_base_plot(band, StokesI_wcs, plotting_data, cbar_label, cmap,
     elif label == 'wavelength':
         ax.text(0.05, 0.90, f"{constants.lambda_mm[int(b)]} mm", transform=ax.transAxes, fontsize=text_fs, color = fontcolor)
 
-    elif labels is None:
+    elif label is None:
         pass  # No titles
 
     else:
