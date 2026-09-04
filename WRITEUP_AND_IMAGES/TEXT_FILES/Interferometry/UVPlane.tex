@@ -5,7 +5,9 @@
 
 
 
-The projected baseline between two antennas is decomposed into two coordinates $ (u, v) $ with units of the observing wavelength along the east and north directions, respectively, as projected in the direction of the target. Figure \ref{fig: UV-plane} illustrates the geometric relationship between the source direction and projected baseline coordinates. For ground-based observing (like ALMA), the object moves across the sky as the Earth rotates, so the $(u, v)$ coverage changes with time. This is beneficial since Earth's rotation increases the $(u,v)$ coverage without requiring additional telescopes \citep{Monnier}. Figure \ref{fig: UV-coverage} shows an example (u,v) coverage from the CHARA (Center for High Angular Resolution Astronomy) array. \later{might swap it out for uv coverage for my observations.}
+The projected baseline between two antennas is decomposed into two coordinates $ (u, v) $ with units of the observing wavelength along the east and north directions, respectively, as projected in the direction of the target. An additional coordinate is $w$, which is the component along the line of sight. Figure \ref{fig: UV-plane} illustrates the geometric relationship between the source direction and projected baseline coordinates. For ground-based observing (like ALMA), the object moves across the sky as the Earth rotates, so the $(u, v)$ coverage changes with time. This is beneficial since Earth's rotation increases the $(u,v)$ coverage without requiring additional telescopes \citep{Monnier}. Figure \ref{fig: UV-coverage} shows an example (u,v) coverage for the \bfour observations. 
+
+%from the CHARA (Center for High Angular Resolution Astronomy) array. \later{might swap it out for uv coverage for my observations.}
 
 
 
@@ -36,8 +38,8 @@ The projected baseline between two antennas is decomposed into two coordinates $
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.5\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Inter & Data/ThompsonUV.png}
-  \caption{Schematic showing the geometric relationship between a source with sky coordinates $(l, m)$ and the baseline vector of an interferometer, denoted by $D_\lambda$. The baseline is described by its components $(u, v, w)$. Image taken from \cite{Thompson} \note{just a screnshot, can get better quality} \permission{ask for permission}\SC{Should define w too. There may be a better image out there.}}
+  \includegraphics[width=0.5\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Inter & Data/Thompson.pdf}
+  \caption[\note{add short caption after plot is finalized}]{Schematic showing the geometric relationship between a source with sky coordinates $(l, m)$ and the baseline vector of an interferometer, denoted by $D_\lambda$. The baseline is described by its components $(u, v, w)$. Image taken from \cite{Thompson} \coded{just a screenshot, can get better quality} \permission{ask for permission}\SC{here may be a better image out there.}}
   \label{fig: UV-plane}
 \end{figure}
 
@@ -45,8 +47,8 @@ The projected baseline between two antennas is decomposed into two coordinates $
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.5\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Inter & Data/UV_coverage.png}
-  \caption{Schematic showing the \uv coverage.  Image taken from \cite{Monnier} \note{just a screnshot, can get better quality} \permission{ask for permission} \SC{the (u,v) coverage of what?  Something is missing here.  Perhaps mention that the tracks show the sky rotation from individual antenna pairs.} \later{show my own maybe}}
+  \includegraphics[width=0.5\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Inter & Data/UVcoverage_Band4.png}
+  \caption[\uv coverage for the \bfour observations.]{Schematic showing the \uv coverage for the \bfour observations.  Image taken from \cite{Monnier} \later{This is a screenshot, I tried exporting it but its not saving, I will revisit this to get a higher res image later. \coded{new Image}}}
   \label{fig: UV-coverage}
 \end{figure}
 
