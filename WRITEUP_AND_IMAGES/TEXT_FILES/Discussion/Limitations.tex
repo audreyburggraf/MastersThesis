@@ -1,34 +1,64 @@
 
-\subsection{Limitations}
-% 1. Model assumptions
-% DSHARP dust composition
-% grain-size distribution
-% spherical vs. irregular grain structure
-% filling factor/porosity
-% the scattering model itself
-
-% 2. Limited range of grain structures
-% - You tested a range of porosities for spherical grains, but Glitterin was used for compact irregular grains.
 
 
-% 3. Polarization mechanisms aren't uniquely identified
-% - morphology alone can't prove which mechanism is operating.
 
-% 4. Optical depth interpretation
-% You've been using optical depth as an explanation for the spatial change. But unless directly calculated a detailed optical-depth map, not certain
+\subsection{Model Assumptions}
+
+% Porosity
+The dust self-scattering models have many inherent assumptions that provide limitations on the constraints in the study, but also provide opportunities for future work. A limitation of the study is that the porosity cannot be varied for the irregular grains. This limits the constraints we can place on both the grain shape and porosity of the grains, as only compact grains can be compared using both shapes. This limitation is caused by the algorithm used by \texttt{glitterin} (Agglomerated Debris Particles) \citep{glitterin}, so it's not something that can easily be added. 
+
+% Composition
+However, one clear next step is also changing the composition of the grains, which can be done using \texttt{glitterin} and \texttt{DSHARP}. One could try various different potential compositions to determine how the scattering results change. 
 
 
-% 5. Observational limitations / uncertainties
-% finite angular resolution
-% sensitivity
-% polarization detection thresholds
-% limited number of wavelengths
-% uncertainties in polarization fraction
+% Flaring
+The intensity profiles suggested that IRS 63 is flared, which is not included in the models. 
 
-\subsection{Future Work}
-% More wavelengths, especially to better resolve transition.
-% Full radiative-transfer modelling with realistic disk structure/optical depth.
-% Broader grain composition/size distribution/shape/porosity parameter space.
-% More irregular/porous grain modelling with Glitterin.
-% Higher-resolution polarization observations.
-% Apply method to more Class I disks to determine whether early grain growth is common.
+
+% Grain size distribution
+Only a single grain size distribution and size bounds were tested; it would be easy to vary these to look for differences. 
+
+
+
+% Centre of the disk
+The model is also limited to the innermost region of the disk where we see dust self-scattering at each wavelength. Similarly, the polarized fraction value is limited to this. Meaning that, when we compare the polarized fraction to the scattering models, this is based on the polarization fraction at a single point. Add more to this
+
+
+
+\subsection{Observational Limitations}
+
+
+One clear limitation of the study is the number of wavelengths of data available. While four wavelengths of data is an improvement compared to single-wavelength polarization studies of IRS 63. A wider range of polarization observations would allow us to study the change in polarization morphology in greater detail, and see how it changes at higher and lower wavelengths. As the number of data points (wavelengths of data) increases, the uncertainties on the grain constraints decrease, meaning more wavelengths of data allow us to place better constraints on the grain size. 
+
+
+In addition to more wavelengths of data, higher resolution data is typically favoured. However, the higher resolution comes at the cost of lowered sensitivity, so a balance would need to be found. 
+
+
+Additionally, simultaneously using polarization emission with other types of data could be useful. For example, looking at IRS 63 in thermal emission to constrain the grain size would be useful to determine if it follows the trend of other disks by having a larger constrained grain size from this study compared to polarized emission. This would also provide the opportunity to model the disk better, for the geometric models to include some radiative transfer so we can have maps of optical depth and further study the spatial dependence of the polarization morphology across the disk. 
+
+
+
+
+\subsection{Clear Next Step}
+
+
+It would be beneficial to replicate this study for additional disks. This would allow us to compare the dust grain sizes among additional disks and see how their maximum dust grain sizes and compositions change, to potentially look for a dependence on evolutionary stage, inclination, disk size, etc. This is currently the goal of a current summer student. 
+
+
+An additional clear next step in this project is also to extend the analysis for the outer region of the disk, as the dust scattering models focus on the centre of the disk. \cite{Lin2024} has completed a similar analysis for HL Tau, and in the outer regions of the disk, the shape of the grains can also be explored, and determine if they are prolate or oblate in shape.
+
+
+
+
+
+\subsection{The Future of ALMA}
+
+
+
+Looking further into the future of ALMA, the future is bright for polarization. While many polarization studies have been done, it is still an emerging method, especially for constraining the grain size in disks. Similar studies are only going to get easier as ALMA develops. The thought experiment for ALMA 2040 in (cite) imagines ALMA has 255 dishes and simultaneous coverage across multiple wavelengths of data. These upgrades significantly reduce the collection time, making a large-scale polarization study possible. In addition to a few extra disks being studied, the grain size could be studied as a population study. As a thought experiment for myself, Schonberg in prep. is doing a population study of young disks looking for substructure, with Sullivan in prep. continuing this project using simulation-based inference. I imagine that in the future, with the ALMA polarization study capable, this can be compared to the database of these disks and their structure to look for any correlations.
+
+\note{This was just an idea based on your ALMA2040 white paper; I am not sure if (1) this is good to include, (2) something I am allowed to include since the paper is not out yet. I assume I could cite it as in prep?}
+
+
+
+
