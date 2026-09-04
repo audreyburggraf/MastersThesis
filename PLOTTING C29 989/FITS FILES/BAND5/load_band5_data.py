@@ -43,6 +43,8 @@ StokesI_mJy = convert_jy_to_mjy(StokesI_Jy)
 # Stretch the Stokes I data and get the cbar ticks
 StokesI_stretched_mJy, StokesI_unstretched_cbar_ticks = normalize_stokesI_for_cmap(StokesI_mJy)
 
+StokesI_stretched_mJy_grid, StokesI_unstretched_cbar_ticks_grid = normalize_stokesI_for_cmap(StokesI_mJy, ticks = constants.normalized_cbar_ticks_grid)
+
 nx, ny = StokesI_mJy.shape
 # -------------------------------------------------------------------------------------------------------
 # Stokes I error
@@ -139,12 +141,11 @@ POLF_err_debiased = calculate_polarized_fraction_err_debiased(POLI_debiased_mJy,
 
 BMAJ_deg, BMIN_deg, BMAJ_pix, BMIN_pix, BPA_deg_cartesian, reference_length_pix, RA_centre_pix, Dec_centre_pix, xmin, xmax, ymin, ymax = get_plotting_parameters(StokesI_header, StokesI_wcs, 'Band 5')
 
-delta = 100
+delta = -50
 xmin = xmin + delta
 xmax = xmax - delta
 ymin = ymin + delta
 ymax = ymax - delta
-
 
 # Remove stream
 # -------------------------------------------------------------------------------------------------------
