@@ -17,14 +17,33 @@ During grain-grain collisions, the grains do not always stick together to become
 
 
 \subsection{Dust Distribution and Disk Structure}
+\note{Working on this}
+
+As grains change in size, their interactions with the surrounding gas change, altering how they are transported both vertically and radially within the disk \citep{Andrews}. 
 
 
-As grains change in size, their interactions with the surrounding gas change, altering how they are transported both vertically and radially within the disk \citep{Andrews}. Because the dust grains do not respond to the gas pressure, they orbit faster than the gas and experience a drag force. Thus, the drag force decreases the angular momentum of the grains, causing them to drift radially inward toward the centre of the disk \citep{Krumholz}. 
+% This sentence is too long
+Small grains ($\sim$0.1 \micronNS) have a large surface-to-mass ratio, and are well coupled with the gas, and experience a strong drag force as their motion follows the gas \citep{Dullemond2004, Birnstiel2016}.
 
 
 
 
-Dust grains also tend to settle onto the disk midplane, depending on grain size. As the grains grow, their surface-to-mass ratio decreases, and the motion decouples from the gas, also creating a downward drag force \citep{Williams}. At distances further from the central star, the gravitational influence of the star is weaker, allowing grains to move off of the midplane. As a result, the disk's scale height increases with distance from the centre, causing a flared disk. As these collisions, gravitational effects and turbulent mixing all work together, larger grains typically reside near the midplane, while smaller grains are higher up. Figure \ref{fig: dust-grain-growth-schematic} illustrates these processes and the resulting dust distribution.
+% medium sized objects feel drag
+As the grains grow, their surface-to-mass ratio decreases, and their motion decouples from the gas, also creating a downward drag force \citep{Williams}. 
+
+
+Because the dust grains do not respond to the gas pressure, they orbit faster than the gas and experience a drag force. Thus, the drag force decreases the angular momentum of the grains, causing them to drift radially inward toward the centre of the disk \citep{Krumholz}. 
+
+
+%very large objects do not feel drag.This is the meter-size barrier problem, where meter-sized grains feel the most drag and spiral into the star faster than they can grow and decouple from the gas. 
+Dust grains that are very large (mm to cm) allows particles to decouple from the gas \citep{Birnstiel2016}. 
+
+
+
+
+
+
+At distances further from the central star, the gravitational influence of the star is weaker, allowing grains to move off of the midplane. As a result, the disk's scale height increases with distance from the centre, causing a flared disk. As these grain-grain collisions, gravitational effects and turbulent mixing all work together, larger grains typically reside near the midplane, while smaller grains are higher up. Figure \ref{fig: dust-grain-growth-schematic} illustrates these processes and the resulting dust distribution.
 
 
 
@@ -32,7 +51,7 @@ Dust grains also tend to settle onto the disk midplane, depending on grain size.
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.9\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/NOTMINE/Testi_short.png}
-  \caption[Schematic of the structure and grain evolution process.]{Schematic of the structure and grain evolution process for a protostellar disk. Numbers refer to grain transport and collision processes: (1) turbulent mixing (radial or vertical), (2) vertical settling, (3) radial drift, and (4) grain collision outcomes, including (a) sticking, (b) bouncing, (c) fragmentation with mass transfer, and d) fragmentation . Different arrow lengths show different velocities of the grains. Image from \cite{Testi}. \permission{ask for permission} }
+  \caption[Schematic of the structure and grain evolution process.]{Schematic of the structure and grain evolution process for a protostellar disk. Numbers refer to grain transport and collision processes: (1) turbulent mixing (radial or vertical), (2) vertical settling, (3) radial drift, and (4) grain collision outcomes, including (a) sticking, (b) bouncing, (c) fragmentation with mass transfer, and d) fragmentation . Different arrow lengths show different velocities of the grains. Image from \cite{Testi}, reproduced with permission. }
   \label{fig: dust-grain-growth-schematic}
 \end{figure}
 
@@ -50,46 +69,25 @@ Dust grains also tend to settle onto the disk midplane, depending on grain size.
 
 
 % Dust grains control how opaque or transparent (opacity) the disk is since gas doesn't as much. 
-Dust grains dominate the opacity in protostellar disks, controlling how radiation interacts with materials through absorption, scattering, and emission \citep{Williams}. 
-% The opacity is determined by composition, shape and size. 
-The opacity depends on several properties of the dust, including its composition, shape and size \citep{Kataoka_2015}. 
-% 
-At (sub)millimetre wavelengths, the continuum emission from disks is dominated by thermal emission from the dust. The efficiency with which the dust grains absorb and emit radiation depends on their size relative to the observing wavelength \citep{Testi}. In particular, dust self-scattering is most efficient when the maximum grain size is comparable with the wavelength by:
-\begin{equation}
-  a_{\text{max}} \sim \lambda / 2 \pi,
-  \label{eq: scattering_efficiency}
-\end{equation}
-\noindent where \amax is the maximum grain size and $\lambda$ is the observing wavelength \citep{Stephens_2017}. Therefore, observations at different wavelengths probe different grain sizes. Comparing observations across multiple wavelengths can provide a stronger constraint on the maximum grain size compared to observations at a single wavelength. Specifically, observations at (sub)millimetre wavelengths can be used to study dust grain growth in disks \citep{Testi}. 
+Dust grains dominate the opacity in protostellar disks, controlling how radiation interacts with the disk through absorption, scattering \citep{Williams}. At (sub)millimetre wavelengths, the continuum emission from disks is dominated by thermal emission from the dust. 
+
+
+The efficiency by which dust grains absorb and emit light depends on their absorption opacity. The opacity depends on several properties of the dust, including its composition, shape and size relative to the observing wavelength \citep{Testi, Kataoka_2015}.
+
+
+Figure \ref{fig: kappa_vs_lambda} shows the dependence of the absorption and scattering opacities on wavelength for two grain sizes:  1\micron and 100 \micronNS. For the smaller grains, absorption dominates over scattering at across majority of the wavelengths shown. For the larger grains, scattering becomes much more important, with the scattering and absorption opacities becoming comparable at shorter wavelengths and scattering dominating over a range of wavelengths.
 
 
 
 
 
-% Smaller grain sizes at (sub)millimetre wavelengths are less efficient at scattering light \citep{Kataoka_2015}. However, larger grain sizes that are close to the observing wavelength are much more efficient at scattering light \citep{Kataoka_2015}.
+% ----------------------------------------------
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.75\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/Kataoka2015Fig1.pdf}
+  \caption[Absorption and scattering mass opacities.]{Absorption and effective scattering mass opacities as a function of observing wavelength for grain sizes of 1\micron and 100 \micronNS. \coded{change to mm}. Replication based on Figure 1 from \cite{Kataoka_2015}.}
+  \label{fig: kappa_vs_lambda}
+\end{figure}
+% Recreation of Figure 1 from \cite{Kataoka_2015}. 
+% ----------------------------------------------
 
-
-
-
-
- 
-
-
-
-
-%-------------------------------------------
-
-
-
-
-
-% \quoted{Consequently, dust determines the observational appearance of the disk: on one hand through its thermal continuum emission and on the other hand by determining the temperature and density structure and therefore the excitation conditions for gas lines }\citep{Birnstiel2016}. 
-
-
-% \qupted{Understanding the evolution of solids is a key element in the puzzle of planet formation} \citep{Birnstiel2016}. 
-
-
-% Determining the grain sizes from observations of disks is important to understand this first stage of planet formation \citep{Kataoka_2015}.
-
-
-
-% \quoted{If the grains are sufficiently large, they have a large scattering opacity, and there is a significant amount of scattered light component in the dust continuum emission \cite{Kataoka_2015}.} 
