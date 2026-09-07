@@ -1454,3 +1454,300 @@ def plot_Pw_vs_grainsize(data, bands, lambda_bands_cm, bands_labels = ['B4', 'B5
 # -----------------------------------------------------------------------------------
 # -----------------------------------------------------------------------------------
 # -----------------------------------------------------------------------------------
+
+
+
+
+
+def scale_factor_plot_for_writeup_allf(bands,                  # These are the bands we are looking at
+                                        bands_labels, 
+                                        bands_included_in_fit, # These are the values that were fit
+                                        f_values_all,            # These are the porosity values we are testing
+                                        a_max_dist_micron_by_f,
+                                        P_times_omega_by_f,
+                                        sf_by_f,             # This is the values the data is being scaled by 
+                                        best_idx_by_f, 
+                                        best_a_max_by_f,     # These are the best a_max values for each f
+                                        POLF_markers,        # These are the values for each band we are plotting the marker
+                                        chi_sq_by_f, 
+                                        ymin = -0.1, 
+                                        ymax = 2, 
+                                        xmin = 15, xmax = 1e3 + 20, 
+                                        custom_lw = None,
+                                        custom_text_x = None,
+                                        chi_sq_precision = 2,
+                                        fig_x = 30, fig_y = 10,
+                                        f_fs = 45, 
+                                        f_x = 0.05, f_y = 0.86,
+                                        spine_width = 1,
+                                        included_lw = 5,
+                                        marker_border = False,
+                                        BandLegend_bbox_to_anchor=(0.5, 0.85),
+                                        BandLegend_handletextpad=0.5,
+                                        BandLegend_handlelength=1,
+                                        BandLegend_labelspacing=0.6,
+                                        plot_markers = True,
+                                        plot_band_legend = True,
+                                        bands_lw = 5, 
+                                        num_fs = 35,
+                                        xy_axis_fs = 40,
+                                        stats_fs = 35,
+                                        legend_marker_size = 20,
+                                        legend_loc = 3,
+                                        band_legend_fs = 32.5,
+                                        marker_size = 600,
+                                        plot_sf = False,
+                                        plot_chi_sq = False):
+    
+    
+    # Set the colors and marker size for each band 
+    band_colors = []
+    ms = []
+
+    for b in bands:
+        if b == "Band 5 robust -1":
+            band_colors.append(alma_band_colors["Band 5"])
+            ms.append(constants.alma_band_ms["Band 5"])
+        else:
+            band_colors.append(alma_band_colors[b])
+            ms.append(constants.alma_band_ms[b])
+    
+    
+    
+    # Make the figure
+    # Later I will make this so you can customize how many figures you need
+    fig, axes = plt.subplots(2, 4, figsize=(fig_x, fig_y * 2), sharex = True, sharey = True)
+    
+    ax = axes.flatten()
+    
+    
+    # Loop over the f values you want to plot
+    for i, f in enumerate(f_values_all): 
+        
+#         for spine in ax[i].spines.values():
+#             spine.set_linewidth(spine_width)
+        
+       
+
+#         if i == 0:
+#             ax[i].set_ylabel(r'$P\omega_{\mathrm{eff}}$', fontsize = xy_axis_fs)
+#         else:
+#             ax[i].set_yticklabels([])
+#             ax[i].set_ylabel('')
+#             ax[i].tick_params(left=False)
+
+        # Make the x-axis log scale 
+        ax[i].set_xscale("log")
+        ax[i].set_xlim(xmin, xmax)
+
+
+            
+        fig.supxlabel('Maximum grain size [$\mu$m]', fontsize = xy_axis_fs)
+        ax[i].set_title(f'$f$ = {f:.2f}', fontsize=45)
+
+            
+    
+        # Set ticks
+        ax[i].minorticks_on()
+        ax[i].tick_params(axis="x", which="minor", direction="in", left=True, right=True, length=4, width=spine_width)
+        ax[i].tick_params(axis="y", which="minor", direction="in", left=True, right=True, length=4, width=spine_width)
+        
+        
+        # Control the font size of the numbers on the axes
+        # ---------------------------------------------------------------------------------------
+            
+        ax[i].tick_params(axis="x", which="major", direction="in", bottom=True, top=True, length=7, labelsize = num_fs, width=spine_width)
+        ax[i].tick_params(axis="y", which="major", direction="in", left=True, right=True, length=7, labelsize = num_fs, width=spine_width)
+        # ---------------------------------------------------------------------------------------
+        
+        
+        # ---------------------------------------------------------------------------------------
+        # ---------------------------------------------------------------------------------------
+
+
+           
+
+            
+        
+#         if for_poster == True:
+#             ax[i].text(x_pos, 0.15,  f'$\chi^2$ = {chi_sq:.{chi_sq_precision}f}', transform=ax[i].transAxes, fontsize = 30)
+        # ---------------------------------------------------------------------------------------
+
+        ax[i].set_ylim(ymin, ymax)
+        # ------------------------------------------
+        
+        
+        marker_handles = []
+        # plot each band for this f
+        for j, b in enumerate(bands):
+
+            idx = bands.index(b)
+
+
+#             print(rf'At band {b}, the POLF_obs value is: {POLF_obs[f][idx]}')
+#             print(' ')
+
+            fc = band_colors[j]
+
+            if marker_border:
+                ec = 'black'
+                marker_lw = 1.5
+            else:
+                ec = band_colors[j]
+                marker_lw = 0
+            #ec = band_colors[j]
+#             marker_lw = 0 
+
+#             if for_poster and b == "Band 5 robust -1":
+#                 fc = alma_band_colors["Band 5"]
+#                 ec = alma_band_colors["Band 5"]
+
+            if b == "Band 5" and not for_poster:
+                fc = 'none'
+                marker_lw = 5
+
+            # Plot the POLF markers
+            plot_marker = True
+
+            if b == "Band 5":
+                plot_marker = False
+
+            if plot_markers:
+                ax[i].scatter(
+                    best_a_max_by_f[f],
+                    POLF_markers[b],
+                    marker=ms[j], 
+                    s=marker_size,
+                    facecolors=fc,
+                    edgecolors=ec,
+                    linewidths=marker_lw,
+                    zorder = 5
+                )
+        # ---------------------------------------------------------------------
+
+
+            marker_handles.append(
+            Line2D([0], [0],
+                   marker=ms[j],
+                   color='none',
+                   markerfacecolor=fc,
+                   markeredgecolor=ec,
+                   markeredgewidth=marker_lw,
+                   markersize=15,
+                   linestyle='None'))
+
+       # if b not in ["Band 5 robust -1", "Band 5 robust -2"]:
+            ax[i].plot(a_max_dist_micron_by_f[f],
+                           P_times_omega_by_f[f][:, idx] * sf_by_f[f],
+                           color=band_colors[j],
+                           label=b,
+                           lw=bands_lw,
+                           ls='-' if b in bands_included_in_fit else '--',
+                           zorder = 1)
+        
+                
+        x_pos = 0.05 
+        
+        if custom_text_x is not None:
+            x_pos = x_pos + custom_text_x[i]
+        
+        if plot_chi_sq:
+            ax[i].text(x_pos, 0.8,  f'$\chi^2$ = {chi_sq_by_f[f]:.{chi_sq_precision}f}', transform=ax[i].transAxes, fontsize = stats_fs)
+
+        if plot_sf:
+            ax[i].text(x_pos, 0.7, f'sf = {sf_by_f[f]:.2f}', transform=ax[i].transAxes, fontsize = stats_fs)
+
+
+        # Add the a_max to the text
+        ax[i].text(x_pos, 0.9, rf'$a_{{\mathrm{{max}}}}$ = {best_a_max_by_f[f]:.0f} $\mu$m', 
+                   transform=ax[i].transAxes, 
+                   fontsize = stats_fs)
+        
+        
+        
+    #plt.tight_layout()
+    
+    plt.subplots_adjust(
+        left=0.05,
+        right=0.98,
+        bottom=0.15,
+        top=0.95,
+        wspace=0.02
+    )
+    
+    
+    # Add coloured text for each Band in the far right plot
+    # ----------------------------------------------------
+    # ----------------------------------------------------
+    #start = start # This is the starting vertical position
+    c = 0
+    marker_legend_handles = []
+    
+    # Choose legend entries
+    legend_bands = ["Band 4", "Band 5 robust -1", "Band 6", "Band 7"]
+
+    for b_label in legend_bands:
+
+        if b_label == "Band 5 robust -1":
+            label = lambda_mm["Band 5"]
+            color = alma_band_colors["Band 5"]
+            marker = constants.alma_band_ms["Band 5"]
+        else:
+            label = lambda_mm[b_label]
+            color = alma_band_colors[b_label]
+            marker = constants.alma_band_ms[b_label]
+
+
+        handle = Line2D(
+            [0], [0],
+            marker=marker,
+            color='none',
+            markerfacecolor=color,
+            markeredgecolor=color,
+            markersize=legend_marker_size,
+            linestyle='None',
+            label=f"{label} mm"
+        )
+
+        marker_legend_handles.append(handle)
+        
+        
+        
+    legend_elements = [
+        Line2D([0], [0], color='black', linestyle='-', lw = 5, label='Included'),
+        Line2D([0], [0], color='black', linestyle='--', lw = 5, label='Excluded')
+    ]
+    # ----------------------------------------------------
+    # ----------------------------------------------------
+    #if plot_markers: 
+    if plot_band_legend:
+        legend = ax[legend_loc].legend(
+                handles=marker_legend_handles,
+                fontsize= band_legend_fs,
+                frameon=False,
+                loc='upper right',
+                bbox_to_anchor=BandLegend_bbox_to_anchor,
+                handletextpad=BandLegend_handletextpad, # Cotrols distance between marker and text 
+                handlelength=BandLegend_handlelength, # Cotrols distance between marker and text 
+                labelspacing=BandLegend_labelspacing # Controls vertical gap between the markers
+            )
+
+        legend_colors = [
+            alma_band_colors["Band 4"],
+            alma_band_colors["Band 5"],
+            alma_band_colors["Band 6"],
+            alma_band_colors["Band 7"]
+        ]
+
+        for text, color in zip(legend.get_texts(), legend_colors):
+            text.set_color(color)
+#     # ----------------------------------------------------
+#     # ----------------------------------------------------
+
+
+
+# 
+    fig.supxlabel('Maximum grain size [$\mu$m]', fontsize=xy_axis_fs, y = 0.08, x = 0.5)
+    fig.supylabel(r'$P\omega_{\mathrm{eff}}$', fontsize=xy_axis_fs, x = 0.0, y = 0.5)
+
+    return fig, axes
