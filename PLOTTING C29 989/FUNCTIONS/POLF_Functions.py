@@ -166,10 +166,18 @@ def find_POLF_at_max_StokesI(StokesI_mJy, POLI_mJy, POLF, POLF_err, print_statem
 
     
 # Find index of max Stokes I, ignoring NaNs
-    y_max, x_max = np.unravel_index(np.nanargmax(StokesI_mJy), StokesI_mJy.shape)
+
+    max_StokesI = np.nanmax(StokesI_mJy)
+    y, x = np.where(StokesI_mJy == max_StokesI)
+    y_max = y[0]
+    x_max = x[0]
+    print(y_max, x_max)
+
+
+    #y_max, x_max = np.unravel_index(np.nanargmax(StokesI_mJy), StokesI_mJy.shape)
 
     # Extract values at that index
-    max_StokesI = StokesI_mJy[y_max, x_max]
+    #max_StokesI = StokesI_mJy[y_max, x_max]
     corresponding_POLI = POLI_mJy[y_max, x_max]
     calc_avg_POLF = corresponding_POLI / max_StokesI
     POLF_maxStokesI = POLF[y_max, x_max]
@@ -177,6 +185,7 @@ def find_POLF_at_max_StokesI(StokesI_mJy, POLI_mJy, POLF, POLF_err, print_statem
 
     if print_statements:
         print(rf'The maximum Stokes I value is {max_StokesI:.3f}, at index ({y_max}, {x_max})')
+        print(rf'Confirm: StokesI_mJy[y_max, x_max] = {StokesI_mJy[y_max, x_max]})')
         print(rf'At that index, the POLI value is {corresponding_POLI:.3f}')
         print(rf'Calculated POLF = {calc_avg_POLF:.4f} or {calc_avg_POLF * 100:.2f}%')
         print(rf'Map POLF value = {POLF_maxStokesI:.4f}')

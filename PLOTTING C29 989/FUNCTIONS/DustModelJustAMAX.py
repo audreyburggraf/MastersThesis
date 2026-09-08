@@ -61,7 +61,8 @@ def calculate_chi_squared_for_sf(Pw,
                           best_sf,
                           POLF_obs_all,
                           POLF_err_obs_all,
-                          bands):
+                          bands,
+                                print_things = True):
     """
     Calculate the chi-squared value for the best-fitting model.
 
@@ -90,6 +91,9 @@ def calculate_chi_squared_for_sf(Pw,
 
         if band == "Band 5":
             continue
+            
+        if print_things:
+            print(rf'In calculate_chi_squared_for_sf band = {band}')
 
         POLF_obs     = POLF_obs_all[band_idx]
         POLF_obs_err = POLF_err_obs_all[band_idx]
