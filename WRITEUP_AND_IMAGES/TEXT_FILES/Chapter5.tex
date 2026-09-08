@@ -26,7 +26,7 @@ $\lambda$   & Observing wavelength & mm \\
 $\kappa_{\text{abs}}$, $\kappa_{\text{sca, eff}}$ & Mass absorption and effective scattering coefficients & cm$^2$/g\\
 $\Theta$ & Scattering Angle & degrees \\
 \weff & Effective single scattering albedo & -- \\
-$P$  & Polarization fraction predicted by the model at $\Theta$ = 90\degg & \% \\
+$P_{90}$  & Polarization fraction predicted by the model at $\Theta$ = 90\degg & \% \\
 \Pweff & Effective polarized scattering fraction & \% \\
 $f$  & Filling factor & -- \\
 \POLFsi & Polarization fraction at the pixel with maximum Stokes $I$ & \% \\
@@ -294,7 +294,7 @@ Figure \ref{fig: Kataoka2015Figure1Recreation} shows the absorption and effectiv
 
 
 
-The Mueller matrix, or scattering matrix, describes the polarization properties of light scattered by the dust grains \citep{Kataoka_2015} and is calculated using \texttt{DSHARP}. Two relevant matrix elements are \Zoo and \ZootNS, which represent linear polarized scattering and total scattering, respectively \citep{Zhang2023}. The polarization fraction is given by the ratio $-Z_{12}/Z_{11}$ \SCC{comment} averaged over the grain size distribution \citep{Kataoka_2015}. Figure \ref{fig: Kataoka2015Figure2Recreation} shows the dependence of polarization fraction on scattering angle for different maximum grain sizes. For smaller dust grains (10 \micron and 100 \micronNS), the polarization fraction peaks near a scattering angle of 90\deggNS. For larger dust grains (1 mm and 1 cm), the polarization fraction remains much closer to zero, indicating that polarization from scattering is not efficient for larger grains. In this analysis, the polarization fraction at 90\degg is denoted by $P$, and will be referred to as the polarization fraction. 
+The Mueller matrix, or scattering matrix, describes the polarization properties of light scattered by the dust grains \citep{Kataoka_2015} and is calculated using \texttt{DSHARP}. Two relevant matrix elements are \Zoo and \ZootNS, which represent linear polarized scattering and total scattering, respectively \citep{Zhang2023}. The polarization fraction is given by the ratio $-Z_{12}/Z_{11}$ averaged over the grain size distribution \citep{Kataoka_2015}. Figure \ref{fig: Kataoka2015Figure2Recreation} shows the dependence of polarization fraction on scattering angle for different maximum grain sizes. For smaller dust grains (10 \micron and 100 \micronNS), the polarization fraction peaks near a scattering angle of 90\deggNS. For larger dust grains (1 mm and 1 cm), the polarization fraction remains much closer to zero, indicating that polarization from scattering is not efficient for larger grains. In this analysis, the polarization fraction at 90\degg is denoted by $P_{90}$, and will be referred to as the polarization fraction. 
 
 
 
@@ -332,7 +332,12 @@ The Mueller matrix, or scattering matrix, describes the polarization properties 
 Figure \ref{fig: Kataoka2015Figure3Recreation} shows the polarization fraction and effective albedo as a function of maximum grain size for both compact and porous grains. For compact grains, it can be seen that the polarization fraction is larger for smaller grains and quickly decreases as the grain size increases above the observing wavelength. Conversely, the effective albedo increases with grain size, as larger grains have a larger surface area for the light to scatter off of. For grain sizes that are smaller than the observing wavelength, scattering enters the Rayleigh regieme, in which the scattering efficiency rapidly decreases with wavelength, $\sim\lambda^{-4}$ \citep{Moosmüller01092009}. 
 
 
-The multiplication of these curves (red and blue) produces the effective polarized scattering fraction, \PweffNS, which is shown as a black dashed line.  The \Pweff curve has a distinctive peak, showing where the balance between polarization is most efficient.
+The multiplication of these curves (red and blue) produces the effective polarized scattering fraction:
+\begin{equation}
+    \PweffEQ = P_{90} \times \weffEQ.
+\end{equation}
+
+\noindent Figure \ref{fig: Kataoka2015Figure3Recreation} shows this \Pweff curve is shown is as a black dashed line, which has a distinctive peak, showing where the balance between polarization is most efficient.
 
 
 
@@ -349,7 +354,7 @@ For porous grains (right panels of Figure \ref{fig: Kataoka2015Figure3Recreation
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/P_vs_w_eff_vs_grainsize_grid_smooth_porosities.pdf}
-  \caption[Polarization fraction $P$ and effective albedo as a function of grain size.]{Plot of polarization fraction $P$ in red and effective albedo in blue, and their produce, \PweffNS,  as a function of grain size for compact (left) and porous (right) dust grains. The characteristic grain size for each wavelength is over-plotted in grey, highlighting that it roughly corresponds to the local maxima of both curves. }
+  \caption[Polarization fraction $P_{90}$ and effective albedo as a function of grain size.]{Plot of polarization fraction $P$ in red and effective albedo in blue, and their produce, \PweffNS,  as a function of grain size for compact (left) and porous (right) dust grains. The characteristic grain size for each wavelength is over-plotted in grey, highlighting that it roughly corresponds to the local maxima of both curves. }
   \label{fig: Kataoka2015Figure3Recreation}
 \end{figure}
 
@@ -359,7 +364,7 @@ For porous grains (right panels of Figure \ref{fig: Kataoka2015Figure3Recreation
 
 
 
-Figure \ref{fig:Pweff_vs_grainsize} shows the \Pweff curves for compact spherical and irregular grains as a function of maximum grain size, with the characteristic grain size plotted as well for comparison. An additional plot for porous spherical grains can be seen in Figure \ref{fig: Pweff_vs_amax_porous}. While the behaviour of $P$ and \weff and their contributions to \Pweff are shown in Figure \ref{fig: Kataoka2015Figure3Recreation}, these plots highlight the importance of multi-wavelength data. The \Pweff curves generally peak near \acharNS, although as shown previously, the exact peak depends on porosity as well. More importantly, the peak \Pweff depends on grain size and observing wavelength, meaning that each wavelength is most sensitive to a different grain size. 
+Figure \ref{fig:Pweff_vs_grainsize} shows the \Pweff curves for compact spherical and irregular grains as a function of maximum grain size, with the characteristic grain size plotted as well for comparison. An additional plot for porous spherical grains can be seen in Figure \ref{fig: Pweff_vs_amax_porous}. While the behaviour of $P_{90}$ and \weff and their contributions to \Pweff are shown in Figure \ref{fig: Kataoka2015Figure3Recreation}, these plots highlight the importance of multi-wavelength data. The \Pweff curves generally peak near \acharNS, although as shown previously, the exact peak depends on porosity as well. More importantly, the peak \Pweff depends on grain size and observing wavelength, meaning that each wavelength is most sensitive to a different grain size. 
 
 Table \ref{tab: amax_peak_values} lists the grain sizes at which \Pweff reaches its maximum (\apeakNS), as well as the characteristic grain size at each wavelength. The \apeak values occur at grain sizes of approximately hundreds of microns, indicating that polarization scattering is most sensitive to grains in this range. By combining observations at multiple wavelengths, the grain size dependence can be utilized to provide a stronger constraint on the maximum grain size. The goal of this chapter is therefore to utilize the wavelength and grain size dependence of polarized scattering to determine the maximum grain size, shape, and porosity that best reproduces the observations. How the models are compared with the multi-wavelength observations is described in Chapter \ref{sec: ch5_determining_abest}.
 
@@ -475,16 +480,12 @@ $a_{\text{char}}$
 The polarization fraction was selected from the region showing evidence of self-scattering (uniform minor axis alignment). Three methods were tested to determine the most appropriate polarization fraction for this region:
 \begin{enumerate}
     \item \POLFsiNS: The polarization fraction at the pixel with maximum \SIns.
-    \item $\mathcal{P}_{\mathrm{F, max\,\POLIeq}}$: The polarization fraction at the pixel with maximum polarized intensity.
+    \item \POLFpoliNS: The polarization fraction at the pixel with maximum polarized intensity.
     \item  $\mathcal{P}_{\mathrm{F, Gaussian}}$: The mean polarization fraction within the uniform region of the Gaussian model, defined as the region where $W_{\text{uniform}}$ is within 1\% of the peak value of 1.
 \end{enumerate}
 \noindent 
 
-\noindent Table \ref{tab: polf_comparison} summaries the values from these three methods at each wavelength. $\mathcal{P}_{\mathrm{F, max\,\POLIeq}}$ has a slight bias due to the forward scattering bias observed in Chapter \ref{sec: ch4_intensity_profiles}. $\mathcal{P}_{\mathrm{F, Gaussian}}$ produces similar results at higher porosities, but the goodness-of-fit significantly drops at lower porosities, potentially because the polarized fraction does not follow the wavelength-dependent trend observed in the other two methods. Therefore, \POLFsi is the best representation of the polarization fraction per wavelength, and is used throughout the rest of the analysis. 
-
-% This selected value is referred to as the observed polarization fraction and is denoted by \POLFobsNS. Note that the polarization fractions used here are referred to as observed to distinguish them from the model, but they are debiased. 
-
-
+\noindent Table \ref{tab: polf_comparison} summaries the values from these three methods at each wavelength. 
 
 
 % ----------------------------------------------
@@ -498,20 +499,20 @@ The polarization fraction was selected from the region showing evidence of self-
 \textbf{Parameter} & \textbf{\bfour} & \textbf{\bfive} & \textbf{\bsix} & \textbf{\bseven} \\
 \midrule
 
-$\mathcal{P}_{\mathrm{F, max\,I}}$
+\POLFsi
 & 1.37
 & 1.40
 & 1.46
 & 1.04 \\
 
-$\mathcal{P}_{\mathrm{F, max\,POLI}}$
+\POLFpoli
 & 1.56
 & 1.51
 & 1.49
 & 1.08 \\
 
 
-$\mathcal{P}_{\mathrm{F, Gaussian}}$
+\POLFgauss
 & 1.16
 & 1.35
 & 1.41
@@ -523,6 +524,21 @@ $\mathcal{P}_{\mathrm{F, Gaussian}}$
 \end{table}
 % ----------------------------------------------
 % ----------------------------------------------
+
+
+
+
+Table \ref{tab: polf_comparison} shows that \POLFpoli has the highest values, which could be biased high due to the forward scattering bias observed in Chapter \ref{sec: ch4_intensity_profiles}. The Gaussian method, \POLFgaussNS, produces the lowest polarization fraction at each wavelength. This may indicate that it is biased low due to depolarization from unresolved polarization structure within the beam, as it averages the polarization over multiple pixels rather just measuring a single pixel. The \POLFsi method therefore provides the best representation of the observed polarized fraction, and is used throughout the main analysis.
+
+
+
+% $\mathcal{P}_{\mathrm{F, Gaussian}}$ produces similar results at higher porosities, but the goodness-of-fit significantly drops at lower porosities, potentially because the polarized fraction does not follow the wavelength-dependent trend observed in the other two methods. 
+
+
+
+% So, \POLFsi is used throughout the main analysis, while the results from the other two methods are presented in \ref{sec: appendix_maxPOLI} and \ref{sec: appendix_Gaussian} for $\mathcal{P}_{\mathrm{F, max\,\POLIeq}}$ and $\mathcal{P}_{\mathrm{F, Gaussian}}$, respectively, to explore the effect of the other polarization fraction methods on the fitting results. (note if things change with method)
+
+
 
 
 
