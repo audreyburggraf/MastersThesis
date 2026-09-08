@@ -1,0 +1,55 @@
+contvis='calibrated_final_irs63_c561.ms'
+imsize = [1024,1024]
+cell = '0.018arcsec'
+
+# Dirty Image
+tclean(
+    vis=contvis,
+    imagename='IRS63_Band4_dirty',
+    stokes = 'I',
+    outframe = 'LSRK',
+    specmode = 'mfs', 
+    nterms = 2,
+    imsize = imsize,
+    cell = cell,
+    deconvolver = 'mtmfs',
+    niter = 0,
+    weighting = 'briggs',
+    robust = 0.5,
+    gridder = 'standard',
+    usepointing=False,
+    pbcor=False,
+    pblimit = -0.2,
+    )
+
+
+# Clean Image
+tclean(
+    vis=contvis,
+    imagename='IRS63_Band4_clean',
+    stokes = 'I',
+    outframe = 'LSRK',
+    specmode = 'mfs', 
+    nterms = 2,
+    imsize = imsize,
+    cell = cell,
+    deconvolver = 'mtmfs',
+    niter = 10000,
+    interactive = True, 
+    weighting = 'briggs',
+    robust = 0.5,
+    gridder = 'standard',
+    usepointing=False,
+    pbcor=False,
+    pblimit = -0.2,
+    )
+
+
+# -----------------------------------------------------------------------------------------------------
+# Export data as fits files
+# -----------------------------------------------------------------------------------------------------
+exportfits(imagename='IRS63_Band4_dirty.image.tt0',fitsimage='IRS63_Band4_dirty.fits')
+exportfits(imagename='IRS63_Band4_clean.image.tt0',fitsimage='IRS63_Band4_clean.fits')
+# -----------------------------------------------------------------------------------------------------
+
+

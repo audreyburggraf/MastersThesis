@@ -787,7 +787,8 @@ def scale_factor_plot_for_writeup(bands,                  # These are the bands 
        
 
         if i == 0:
-            ax[i].set_ylabel(r'$P\omega_{\mathrm{eff}}$', fontsize = xy_axis_fs)
+            ax[i].set_ylabel(r'$P\omega_{\mathrm{eff,\,model}}, \mathcal{P}_{F,\,I_{\mathrm{max}}}$',fontsize=xy_axis_fs)
+            #ax[i].set_ylabel(r'$P\omega_{\mathrm{eff}}$', fontsize = xy_axis_fs)
         else:
             ax[i].set_yticklabels([])
             ax[i].set_ylabel('')
@@ -1089,7 +1090,8 @@ def scale_factor_plot_for_writeup_glitterin(bands,                  # These are 
         
         if albedo == 'w_eff':
             P_times_omega = res['Pw_eff']
-            y_label = '$P\omega_{\mathrm{eff}}$'
+            y_label = r'$P\omega_{\mathrm{eff,\,model}}, \mathcal{P}_{F,\,I_{\mathrm{max}}}$'
+            #y_label = '$P\omega_{\mathrm{eff}}$'
         elif albedo == 'w':
             P_times_omega = res['Pw']
             y_label = '$P\omega$'
@@ -1748,6 +1750,7 @@ def scale_factor_plot_for_writeup_allf(bands,                  # These are the b
 
 # 
     fig.supxlabel('Maximum grain size [$\mu$m]', fontsize=xy_axis_fs, y = 0.08, x = 0.5)
-    fig.supylabel(r'$P\omega_{\mathrm{eff}}$', fontsize=xy_axis_fs, x = 0.0, y = 0.5)
+    fig.supylabel(r'$P\omega_{\mathrm{eff,\,model}}, \mathcal{P}_{F,\,I_{\mathrm{max}}}$',
+                  fontsize=xy_axis_fs, x = 0.0, y = 0.5)
 
     return fig, axes
