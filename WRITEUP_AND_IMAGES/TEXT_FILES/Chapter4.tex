@@ -17,7 +17,7 @@ The polarization morphology of a disk is represented by polarization vectors cal
 
 \subsection{Polarization Vector Sampling}
 
-\later{Might not be needed but okay to include. Will decide later.}
+%\later{Might not be needed but okay to include. Will decide later.}
 
 The \SI maps produced using \texttt{tclean} have a pixel scale that oversamples the synthesized beam to improve image reconstruction \citep{Brogan}. Because of these small pixels, plotting a polarization vector at each pixel would oversample the polarization morphology. Instead, vectors are plotted with a spacing of approximately half of the synthesized beam size, following the Nyquist-Shannon sampling theorem \citep{Shannon}. 
 
@@ -104,7 +104,7 @@ To study the structure of IRS 63, intensity profiles were extracted along the mi
 
 
 
-The slices in \SI and polarized intensity for each wavelength are presented in Figure \ref{fig: slices_grid}. The synthesized beam for each wavelength is overplotted for comparison. The beam is plotted as a one-dimensional Gaussian, with a standard deviation calculated from the beam full width at half maximum (FWHM) along the minor axis using:
+The slices in \SI and polarized intensity for each wavelength are presented in Figure \ref{fig: slices_grid}. The synthesized beam for each wavelength is overplotted for comparison. The beam is plotted as a one-dimensional Gaussian, with a standard deviation calculated from the beam full width at half maximum (FWHM) along the minor axis using: 
 \begin{equation}
     \sigma = \frac{\text{FWHM}}{2\sqrt{2 \ln{2}}}.
     \label{eq: FWHM_to_sigma}

@@ -26,11 +26,12 @@ $\lambda$   & Observing wavelength & mm \\
 $\kappa_{\text{abs}}$, $\kappa_{\text{sca, eff}}$ & Mass absorption and effective scattering coefficients & cm$^2$/g\\
 $\Theta$ & Scattering Angle & degrees \\
 \weff & Effective single scattering albedo & -- \\
-$P$  & Polarization fraction predicted from model at $\Theta$ = 90\degg & \% \\
-\Pweff & Polarization from model & \% \\
+$P$  & Polarization fraction predicted by the model at $\Theta$ = 90\degg & \% \\
+\Pweff & Effective polarized scattering fraction & \% \\
 $f$  & Filling factor & -- \\
 \POLFsi & Polarization fraction at the pixel with maximum Stokes $I$ & \% \\
-SF  & Scale factor & -- \\
+\sfbest  & Best-fit scale factor & -- \\
+\Pwmodel & Scaled effective polarized scattering fraction, \PweffNS \sfbestNS & \% \\
 $\chi^2_{\mathrm{P}}$ & Chi-squared statistic for the polarization fraction fit & -- \\
 \bottomrule
 \end{tabular}
@@ -192,7 +193,7 @@ The size parameter controls the way the light interacts with the dust grains by 
     \item $x \sim 1$: Mie regime,
     \item $x \gg 1$: geometric regime.
 \end{enumerate}
-
+\noindent Geometric scattering applies when the grain is much larger than the observing wavelength. In this regime, the interaction can be approximated by geometrical optics, where the radiation is treated as rays that are either absorbed or deflected by reflection and refraction \citep{Bohren1983}.
 % ----------------------------------------------
 
 
@@ -220,6 +221,7 @@ Since irregular grains do not have a clear radius like spherical grains do, the 
 
 % ----------------------------------------------
 \subsection{Computing Optical Properties}
+\label{sec: ch5_opticalproperties}
 
 
 The complex refractive index ($m$) describes the optical properties of the dust and is given by:
@@ -292,7 +294,7 @@ Figure \ref{fig: Kataoka2015Figure1Recreation} shows the absorption and effectiv
 
 
 
-The Mueller matrix, or scattering matrix, describes the polarization properties of light scattered by the dust grains \citep{Kataoka_2015} and is calculated using \texttt{DSHARP}. Two relevant matrix elements are \Zoo and \ZootNS, which represent linear polarized scattering and total scattering, respectively \citep{Zhang2023}. The polarization fraction is given by the ratio $-Z_{12, \text{eff}}/Z_{11, \text{eff}}$ averaged over the grain size distribution \citep{Kataoka_2015}. Figure \ref{fig: Kataoka2015Figure2Recreation} shows the dependence of polarization fraction on scattering angle for different maximum grain sizes. For smaller dust grains (10 \micron and 100 \micronNS), the polarization fraction peaks near a scattering angle of 90\deggNS. For larger dust grains (1 mm and 1 cm), the polarization fraction remains much closer to zero, indicating that polarization from scattering is not efficient for larger grains. In this analysis, the polarization fraction at 90\degg is denoted by $P$, and will be referred to as the polarization fraction. 
+The Mueller matrix, or scattering matrix, describes the polarization properties of light scattered by the dust grains \citep{Kataoka_2015} and is calculated using \texttt{DSHARP}. Two relevant matrix elements are \Zoo and \ZootNS, which represent linear polarized scattering and total scattering, respectively \citep{Zhang2023}. The polarization fraction is given by the ratio $-Z_{12}/Z_{11}$ \SCC{comment} averaged over the grain size distribution \citep{Kataoka_2015}. Figure \ref{fig: Kataoka2015Figure2Recreation} shows the dependence of polarization fraction on scattering angle for different maximum grain sizes. For smaller dust grains (10 \micron and 100 \micronNS), the polarization fraction peaks near a scattering angle of 90\deggNS. For larger dust grains (1 mm and 1 cm), the polarization fraction remains much closer to zero, indicating that polarization from scattering is not efficient for larger grains. In this analysis, the polarization fraction at 90\degg is denoted by $P$, and will be referred to as the polarization fraction. 
 
 
 
@@ -327,11 +329,19 @@ The Mueller matrix, or scattering matrix, describes the polarization properties 
 
 
 % ----------------------------------------------
-Figure \ref{fig: Kataoka2015Figure3Recreation} shows the polarization fraction and effective albedo as a function of maximum grain size for both compact and porous grains. For compact grains, it can be seen that the polarization fraction is larger for smaller grains and quickly decreases as the grain size increases above the observing wavelength.  . Conversely, the effective albedo increases with grain size, as larger grains have a larger surface area for the light to scatter off of. These curves (red and blue) have a distinctive peak, showing where the balance between polarization and scattering is most efficient. This peak is highlighted by plotting the product of the polarization fraction and the effective single-scattering albedo, \PweffNS, as a black dashed line. 
+Figure \ref{fig: Kataoka2015Figure3Recreation} shows the polarization fraction and effective albedo as a function of maximum grain size for both compact and porous grains. For compact grains, it can be seen that the polarization fraction is larger for smaller grains and quickly decreases as the grain size increases above the observing wavelength. Conversely, the effective albedo increases with grain size, as larger grains have a larger surface area for the light to scatter off of. For grain sizes that are smaller than the observing wavelength, scattering enters the Rayleigh regieme, in which the scattering efficiency rapidly decreases with wavelength, $\sim\lambda^{-4}$ \citep{Moosmüller01092009}. 
 
-The \Pweff product provides a measure of the contribution of each grain size to the polarized scattered light at a specific observing wavelength, and can therefore be used to determine the grain sizes that contribute most strongly to the observed polarization \citep{Kataoka_2015, Tazaki}. As mentioned earlier, \achar is the grain size at which dust self-scattering is most efficient, so \Pweff is expected to peak near the characteristic grain size. This is shown as a grey line in each plot. For compact grains, the \Pweff peak occurs near \acharNS, as expected, highlighting the dependence of the polarization scattering efficiency on observing wavelength.
 
-For porous grains (right panels of Figure \ref{fig: Kataoka2015Figure3Recreation}), the overall wavelength-dependent behaviour of the polarization and effective albedo remains similar, but their dependence on grain size is wider. The grain size at which the polarization fraction decreases and effective albedo increases is shifted toward larger grain sizes, causing the \Pweff curve to peak at a larger grain size than \acharNS. Additionally, the \Pweff peak is wider than the sharp peaks for compact grains. Together, these differences indicate that porous grains can efficiently contribute to polarized scattering at larger grain sizes and over a wider range of grain sizes compared to compact grains. This behaviour is assumed to be related to different scattering properties of porous grains due to their lower density and more empty space within the grains. 
+The multiplication of these curves (red and blue) produces the effective polarized scattering fraction, \PweffNS, which is shown as a black dashed line.  The \Pweff curve has a distinctive peak, showing where the balance between polarization is most efficient.
+
+
+
+
+
+The \Pweff product provides a measure of the contribution of each grain size to the polarized scattered light at a specific observing wavelength, and can therefore be used to determine the grain sizes that contribute most strongly to the observed polarization \citep{Kataoka_2015, Tazaki}. As mentioned earlier, \achar is the grain size at which dust self-scattering is most efficient, so \Pweff is expected to peak near the characteristic grain size. 
+Figure \ref{fig: Kataoka2015Figure3Recreation} shows \achar for each wavelength as a vertical grey line. For compact grains, the \Pweff peak occurs near \acharNS, as expected, highlighting the dependence of the polarization scattering efficiency on observing wavelength.
+
+For porous grains (right panels of Figure \ref{fig: Kataoka2015Figure3Recreation}), the overall wavelength-dependent behaviour of the polarization and effective albedo remains similar, but their dependence on grain size is less sharp peaked, with both parameters remaining close the the maximum for a broader range of grain sizes. The grain size at which the polarization fraction decreases and effective albedo increases is shifted toward larger grain sizes, causing the \Pweff curve to peak at a larger grain size than \acharNS. Additionally, the \Pweff peak is wider than the sharp peaks for compact grains. Together, these differences indicate that porous grains can efficiently contribute to polarized scattering at larger grain sizes and over a wider range of grain sizes compared to compact grains. This behaviour is assumed to be related to different scattering properties of porous grains due to their lower density and more empty space within the grains. 
 
 
 
@@ -339,7 +349,7 @@ For porous grains (right panels of Figure \ref{fig: Kataoka2015Figure3Recreation
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/P_vs_w_eff_vs_grainsize_grid_smooth_porosities.pdf}
-  \caption[Polarization fraction $P$ and effective albedo as a function of grain size.]{Plot of polarization fraction $P$ in red and effective albedo in blue as a function of grain size for compact (left) and porous (right) dust grains. The characteristic grain size for each wavelength is over-plotted in grey, highlighting that it roughly corresponds to the local maxima of both curves. \question{Make this plot for irregular grains as well? If so, make it a separate plot or 3 columns?}}
+  \caption[Polarization fraction $P$ and effective albedo as a function of grain size.]{Plot of polarization fraction $P$ in red and effective albedo in blue, and their produce, \PweffNS,  as a function of grain size for compact (left) and porous (right) dust grains. The characteristic grain size for each wavelength is over-plotted in grey, highlighting that it roughly corresponds to the local maxima of both curves. }
   \label{fig: Kataoka2015Figure3Recreation}
 \end{figure}
 
@@ -349,7 +359,9 @@ For porous grains (right panels of Figure \ref{fig: Kataoka2015Figure3Recreation
 
 
 
-Figure \ref{fig:Pweff_vs_grainsize} shows the \Pweff curves for compact spherical and irregular grains as a function of maximum grain size, with the characteristic grain size plotted as well for comparison. An additional plot for porous spherical grains can be seen in Figure \ref{fig: Pweff_vs_amax_porous}. While the behaviour of $P$ and \weff and their contributions to \Pweff are shown in Figure \ref{fig: Kataoka2015Figure3Recreation}, these plots highlight the importance of multi-wavelength data. The \Pweff curves generally peak near \acharNS, although as shown previously, the exact peak depends on porosity as well. More importantly, the peak \Pweff depends on grain size and observing wavelength, meaning that each wavelength is most sensitive to a different grain size. For the wavelengths considered in this project, the peaks occur at grain sizes of approximately hundreds of microns (Table \ref{tab: amax_peak_values}), indicating that polarization observations are most sensitive to grains in this range. By combining observations at multiple wavelengths, the grain size dependence can be utilized to provide a stronger constraint on the maximum grain size. The goal of this chapter is therefore to utilize the wavelength and grain size dependence of polarized scattering to determine the maximum grain size, shape, and porosity that best reproduces the observations. How the models are compared with the multi-wavelength observations is described in Chapter \ref{sec: ch5_determining_abest}.
+Figure \ref{fig:Pweff_vs_grainsize} shows the \Pweff curves for compact spherical and irregular grains as a function of maximum grain size, with the characteristic grain size plotted as well for comparison. An additional plot for porous spherical grains can be seen in Figure \ref{fig: Pweff_vs_amax_porous}. While the behaviour of $P$ and \weff and their contributions to \Pweff are shown in Figure \ref{fig: Kataoka2015Figure3Recreation}, these plots highlight the importance of multi-wavelength data. The \Pweff curves generally peak near \acharNS, although as shown previously, the exact peak depends on porosity as well. More importantly, the peak \Pweff depends on grain size and observing wavelength, meaning that each wavelength is most sensitive to a different grain size. 
+
+Table \ref{tab: amax_peak_values} lists the grain sizes at which \Pweff reaches its maximum (\apeakNS), as well as the characteristic grain size at each wavelength. The \apeak values occur at grain sizes of approximately hundreds of microns, indicating that polarization scattering is most sensitive to grains in this range. By combining observations at multiple wavelengths, the grain size dependence can be utilized to provide a stronger constraint on the maximum grain size. The goal of this chapter is therefore to utilize the wavelength and grain size dependence of polarized scattering to determine the maximum grain size, shape, and porosity that best reproduces the observations. How the models are compared with the multi-wavelength observations is described in Chapter \ref{sec: ch5_determining_abest}.
 
 
 
@@ -372,21 +384,21 @@ $a_{\text{char}}$
 & 206.90
 & 138.46 \\
 
-$a_{\max}$ (spherical, compact)
+\apeak (spherical, compact) 
 & 307.88
 & 223.71
 & 196.46
 & 134.50 \\
 
 
-$a_{\max}$ (spherical, porous)
+\apeak(spherical, porous)
 & 464.55
 & 339.38
 & 298.04
 & 204.05 \\
 
 
-$a_{\max}$ (irregular)
+\apeak (irregular)
 & 330.59
 & 238.90
 & 211.60
@@ -468,7 +480,7 @@ The polarization fraction was selected from the region showing evidence of self-
 \end{enumerate}
 \noindent 
 
-\noindent Table \ref{tab: polf_comparison} summaries the values from these three methods at each wavelength. $\mathcal{P}_{\mathrm{F, max\,\POLIeq}}$ has a slight bias due to the forward scattering bias observed in Chapter \ref{sec: ch4_intensity_profiles}. $\mathcal{P}_{\mathrm{F, Gaussian}}$ produces similar results at higher porosities, but the goodness-of-fit significantly drops at lower porosities, potentially because the polarized fraction does not follow the wavelength-dependent trend observed in the other two methods. Therefore, \POLFsi is the best representation of the polarization fraction per wavelength, and is used throughout the rest of the analysis. 
+\noindent Table \ref{tab: polf_comparison} summaries the values from these three methods at each wavelength. $\mathcal{P}_{\mathrm{F, max\,\POLIeq}}$ has a slight bias due to the forward scattering bias observed in Chapter \ref{sec: ch4_intensity_profiles}. $\mathcal{P}_{\mathrm{F, Gaussian}}$ produces similar results at higher porosities, but the goodness-of-fit significantly drops at lower porosities, potentially because the polarized fraction does not follow the wavelength-dependent trend observed in the other two methods.  \SCC{comment} Therefore, \POLFsi is the best representation of the polarization fraction per wavelength, and is used throughout the rest of the analysis. 
 
 % This selected value is referred to as the observed polarization fraction and is denoted by \POLFobsNS. Note that the polarization fractions used here are referred to as observed to distinguish them from the model, but they are debiased. 
 
@@ -520,12 +532,11 @@ $\mathcal{P}_{\mathrm{F, Gaussian}}$
 % ----------------------------------------------
 \subsection{Determining the Best-Fit Scale Factor}
 % ----------------------------------------------
-The polarization fraction (\POLFsiNS) and the \Pw model values from spherical and irregular grains cannot be directly compared because they represent different quantities. The observed polarization fraction is a dimensionless ratio of polarized intensity to total intensity, while \Pw is the polarization scattering efficiency of the dust. A scale factor (SF) is therefore introduced to relate the model values to observations. 
-
+The polarization fraction (\POLFsiNS) and the \Pweff values from spherical and irregular grains cannot be directly compared because they represent different quantities. The observed polarization fraction is a dimensionless ratio of polarized intensity to total intensity, while \Pweff is the polarization scattering efficiency of the dust. A scale factor (SF) is therefore introduced to relate the model values to observations. This scaling is necessary because not all of the observed emission is due to scattering. Thermal emission also contributes to the observed emission.
 
 The scale factor is calculated at each \amax in the sample, given by:
 \begin{equation}
-\sfeq_i(\amaxEQ) = \frac{\POLFsiEQ(\amaxEQ)}{\PwEQ(\amaxEQ)},
+\sfeq_i(\amaxEQ) = \frac{\POLFsiEQ}{\PweffEQ(\amaxEQ)},
     \label{eq: sf}
 \end{equation}
 
@@ -533,15 +544,21 @@ The scale factor is calculated at each \amax in the sample, given by:
 \noindent where $i$ denotes each wavelength included in the fit. This provides a scale factor for each fitted wavelength at every value of \amaxNS. If a given grain size provides a good reproduction of the observations across all fitted wavelengths, the resulting scale factors should be similar between the wavelengths. For each value of \amaxNS, the standard deviation of the scale factors is calculated to determine the spread of the scale factors between wavelengths using \texttt{numpy.std}. 
 
 
+The best-fit grain size (\amaxbestNS) is defined as the value of \amax for which the standard deviation of the scale factors is minimized. The corresponding scale factor is the best-fit scale factor (\sfbestNS). The \Pweff values are then multiplied by the \sfbest to obtain the scaled model polarization (\PwmodelNS), allowing the model and observations to be directly compared:
+\begin{equation}
+    \PwmodelEQ = \PweffEQ \times \sfbestEQ. 
+    \label{eq: P_SF}
+\end{equation}
 
-The best-fit grain size (\amaxbestNS) is defined as the value of \amax where the standard deviation of the scale factors is minimized. The corresponding scale factor is the best-fit scale factor (\sfbestNS). The model \Pw values are multiplied by the \sfbestNS, allowing the model and observations to be directly compared.
+
 
 
 Multiple wavelength combinations were tested to determine the effect of each wavelength of data on the success of the fit. The fits were (1) all wavelengths, (2) no \bfiveNS, and (3) just \bfour and \bsevenNS. Case (2) was tested due to issues with the \bfive data, explored in Chapter \ref{sec: discussion_band5_data_issues}.  A chi-squared value was calculated at each fitting case to determine the agreement between the model and observations, given by: 
 \begin{equation}
-\chi_\mathcal{P}^2 = \sum_{all\text{ }wavelengths} \left(\frac{\POLFobsEQ- [\Pweq (\amaxbestEQ) \times \sfbestEQ]}{\POLFerrEQ}\right)^2.
+\chi_\mathcal{P}^2 = \sum_{\lambda = all\text{ }wavelengths} \left(\frac{\POLFsiEQ(\lambda) - \PwmodelEQ(\lambda, \amaxbestEQ)}{\POLFerrEQ (\lambda)} \right)^2.
     \label{eq: chi_squared_dust_model}
 \end{equation}
+
 \noindent The calculation is summed over all wavelengths as each wavelength was included in the $\chi_\mathcal{P}^2$ calculation, regardless of whether it was included in the fit for the scale factor value or not. The fitting combination (e.g., each porosity or irregular dust model) that produced the lowest $\chi_\mathcal{P}$ value were chosen to be the best-fit model.
 % ----------------------------------------------
 % ----------------------------------------------
@@ -559,7 +576,7 @@ Multiple wavelength combinations were tested to determine the effect of each wav
 \subsection{Spherical Dust Models}
 \label{sec: chapter5_spherical_dust_model_results}
 % ----------------------------------------------
-Table \ref{tab: dust_model_fits_spherical} reports the results of the spherical dust models. For each fitting case, the best-fit scale factor from Equation \ref{eq: sf}, the corresponding $\chi_\mathcal{P}^2$ value (Equation \ref{eq: chi_squared_dust_model}), and the best-fit grain size (\amax corresponding to the best SF) are reported. The best fit for each fitting case is shown in bold. Figure \ref{fig: Spherical_BEST} shows the best overall fitting case, which excludes \bfiveNS. Equivalent plots for the other fitting cases are provided in Appendix \ref{chap: Appendix_DustModels}. The observed polarization fraction, \POLFsiNS, is shown as a colour-matched marker for each wavelength. 
+Table \ref{tab: dust_model_fits_spherical} reports the results of the spherical dust models. For each fitting case, the best-fit scale factor from Equation \ref{eq: sf}, the corresponding $\chi_\mathcal{P}^2$ value (Equation \ref{eq: chi_squared_dust_model}), and the best-fit grain size (\amax corresponding to \sfbestNS) are reported. The best fit for each fitting case is shown in bold. Figure \ref{fig: Spherical_BEST} shows the best overall fitting case, which excludes \bfiveNS. Equivalent plots for the other fitting cases are provided in Appendix \ref{chap: Appendix_DustModels}. The observed polarization fraction, \POLFsiNS, is shown as a colour-matched marker for each wavelength. 
 
 
 These results show that, for all fitting cases, compact grains ($f = 1.0$) and very porous grains ($f = 0.01$) produced a significantly worse match to the models compared to the intermediate porosities. The goodness-of-fit improves at these intermediate filling factor values, reaching a minimum at $f = 0.5$, as shown in Figure \ref{fig: chi_vs_f}. 
@@ -569,10 +586,10 @@ These results show that, for all fitting cases, compact grains ($f = 1.0$) and v
 
 \begin{table}[h!]
 \centering
-\caption[Spherical dust grain model fitting results.]{Spherical dust grain model fitting results, including the scale factor $\chi_\mathcal{P}^2$, and best-fit grain size. The best fit for each fit case is shown in bold text. \reduced{update this after reduced chi squared}}
+\caption[Spherical dust grain model fitting results.]{Spherical dust grain model fitting results, including the scale factor $\chi_\mathcal{P}^2$, and best-fit grain size. }
 \begin{tabular}{lcccc}
 \toprule
-\textbf{Fit Case} & \textbf{Porosity ($\boldsymbol{f}$)} & \textbf{Scale Factor (SF)} & $\boldsymbol{\chi_\mathcal{P}^2}$ & \textbf{$\boldsymbol{\amaxEQ}$ ($\boldsymbol{\mu}$m)} \\
+\textbf{Fit Case} & \textbf{Porosity ($\boldsymbol{f}$)} & \textbf{Scale Factor (\sfbestNS)} & $\boldsymbol{\chi_\mathcal{P}^2}$ & \textbf{$\boldsymbol{\amaxEQ}$ ($\boldsymbol{\mu}$m)} \\
 \midrule
 
 All wavelengths
@@ -619,6 +636,10 @@ and \bseven & 0.75 & 2.21     & 13.29 & 202 \\
 
 \bottomrule
 \end{tabular}
+\begin{tablenotes}
+% \footnotesize
+\item \textbf{Note:} The best fit for each fit case is shown in bold text. 
+\end{tablenotes}
 \label{tab: dust_model_fits_spherical}
 \end{table}
 
@@ -630,7 +651,7 @@ and \bseven & 0.75 & 2.21     & 13.29 & 202 \\
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/DustModelPlot_Without5_ZhangMethod.pdf}
-  \caption[Curves of \Pweff multiplied by best-fit SF to compare to \POLFsiNS.]{Curves of \Pweff multiplied by best-fit SF (Equation \ref{eq: sf}) to compare to \POLFsiNS. Markers are \POLFsiNS, listed in Table \ref{tab: polf_comparison}. The best-fit (lowest $\chi^2$, Equation \ref{eq: chi_squared_dust_model}) is represented with a gold star. The specific results of the fit can be found in Table \ref{tab: dust_model_fits_spherical}. Wavelengths that are not included in the fit for the SF have a dashed line. \reduced{update this after reduced chi squared}}
+  \caption[Curves of \Pwmodel to compare to \POLFsiNS.]{Curves of \Pwmodel (Equation \ref{eq: P_SF}) to compare to \POLFsiNS. Markers are \POLFsiNS, listed in Table \ref{tab: polf_comparison}. The best-fit (lowest $\chi^2$, Equation \ref{eq: chi_squared_dust_model}) is represented with a gold star. The specific results of the fit can be found in Table \ref{tab: dust_model_fits_spherical}. Wavelengths that are not included in the fit for the SF have a dashed line. }
   \label{fig: Spherical_BEST}
 \end{figure}
 
@@ -643,7 +664,7 @@ and \bseven & 0.75 & 2.21     & 13.29 & 202 \\
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.75\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/chi_fs_f.pdf}
-  \caption[Plot of filling factor, $f$, versus the goodness-of-fit parameter, $\chi_\mathcal{P}^2$.]{Plot of filling factor, $f$, versus the goodness-of-fit parameter, $\chi_\mathcal{P}^2$, showing a local minimum at $f = 0.5$ for all fitting cases for spherical grains. \reduced{update this after reduced chi squared}} 
+  \caption[Plot of filling factor, $f$, versus the goodness-of-fit parameter, $\chi_\mathcal{P}^2$.]{Plot of filling factor, $f$, versus the goodness-of-fit parameter, $\chi_\mathcal{P}^2$, showing a local minimum at $f = 0.5$ for all fitting cases for spherical grains.  } 
   \label{fig: chi_vs_f}
 \end{figure}
 % ----------------------------------------------------------------
@@ -654,10 +675,10 @@ Table \ref{tab: dust_model_fits_irregular} reports the results of the irregular 
 % ------------------------------------------------------
 \begin{table}[h!]
 \centering
-\caption{Same as Table \ref{tab: dust_model_fits_spherical} but for irregular grains. \reduced{update this after reduced chi squared}}
+\caption{Same as Table \ref{tab: dust_model_fits_spherical} but for irregular grains. }
 \begin{tabular}{lccc}
 \toprule
-\textbf{Fit Case} &  \textbf{Scale Factor (SF)} & $\boldsymbol{\chi_\mathcal{P}^2}$ & \textbf{$\boldsymbol{\amaxEQ}$ ($\boldsymbol{\mu}$m)} \\
+\textbf{Fit Case} &  \textbf{Scale Factor (\sfbestNS)} & $\boldsymbol{\chi_\mathcal{P}^2}$ & \textbf{$\boldsymbol{\amaxEQ}$ ($\boldsymbol{\mu}$m)} \\
 \midrule
 
 All wavelengths  & \textbf{1.83} & \textbf{4.54} & \textbf{209} \\
@@ -665,6 +686,10 @@ No \bfive               & 1.88 & 5.93 & 211 \\
 Just \bfour and \bseven & 1.90 & 8.71 & 212 \\
 \bottomrule
 \end{tabular}
+\begin{tablenotes}
+% \footnotesize
+\item \textbf{Note:} The best fit is shown in bold text. 
+\end{tablenotes}
 \label{tab: dust_model_fits_irregular}
 \end{table}
 % ------------------------------------------------------
@@ -676,7 +701,7 @@ Just \bfour and \bseven & 1.90 & 8.71 & 212 \\
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/glitterin/DustModelPlot_GlitterinGrid_only3_omega_eff.pdf}
-  \caption[Same as Figure \ref{fig: Spherical_BEST} but for irregular dust grains.]{Same as Figure \ref{fig: Spherical_BEST} but for irregular dust grains. Porosity is fixed, and the grid shows the results for each fitting case. Corresponding results can be found in Table \ref{tab: dust_model_fits_irregular}.  \reduced{update this after reduced chi squared}} 
+  \caption[Same as Figure \ref{fig: Spherical_BEST} but for irregular dust grains.]{Same as Figure \ref{fig: Spherical_BEST} but for irregular dust grains. Porosity is fixed, and the grid shows the results for each fitting case. Corresponding results can be found in Table \ref{tab: dust_model_fits_irregular}.  } 
   \label{fig: irregular_fits}
 \end{figure}
 % ----------------------------------------------------------------
