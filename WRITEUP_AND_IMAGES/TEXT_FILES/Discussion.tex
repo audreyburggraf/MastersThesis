@@ -36,7 +36,7 @@ The spatial dependence of the two morphologies also suggests that the contributi
 The morphologies of IRS~63 (Figure \ref{fig: StokesI_POLI_grid}) and HL Tau (Figure \ref{fig: HLTauLin2024}) show a striking similarity between the morphologies in both of these disks. Both are azimuthally dominated at long wavelengths and uniformly dominated at shorter wavelengths. However, the morphologies are not exact. In IRS~63, even at the longest wavelength of \bfourNS, there is still a uniform component at the very centre of the disk, while HL Tau only shows azimuthal polarization at \bfourNS, which is depolarized at the centre. Similarly, at \bsevenNS, IRS~63 shows some azimuthal vectors on the outer edge of the disk, while the vectors for HL Tau are entirely uniform. 
 
 
-This similar trend in both HL Tau and IRS 63 suggests that this wavelength-dependent change in polarization morphology is not unique to either disk, and may be caused by the same changes in the contribution of the polarization mechanisms with wavelength. Additionally, the difference in the spatial dependence suggests that there is something else in these disks contributing to this difference. 
+The broad similarities in polarization morphology in both HL Tau and IRS 63 suggests that a wavelength-dependent change in polarization morphology is not unique to either disk, and may be caused by the same changes in the contribution of the polarization mechanisms with wavelength. Additionally, the difference in the spatial dependence suggests that there is something else in these disks contributing to this difference. In the following subsections, we discuss potential differences between the two disks.
 
 
 % --------------------------------------------------------------------
@@ -59,11 +59,14 @@ The differences in optical depth could be affecting the polarization morphology 
 % ----------------------------------------------
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/NOTMINE/IRS63_vs_HLTau_v0.png}
-  \caption[Comparison in structure for IRS 63 and HL Tau.]{Continuum emissions of HL Tau (left) and IRS 63 (right). Reproduced with permission from \cite{ALMAPartnership} (left) and \cite{Dom2020}(right) \cite{Dom2020}. }
+  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/NOTMINE/IRS63_vs_HLTau_scalebar.png}
+  \caption[Comparison in structure for IRS 63 and HL Tau.]{Continuum emission from HL Tau (left) and IRS 63 (right), both shown st a spatial resolution of 5 au. Scale bars represent 40 au. The HL Tau image is credited to ALMA (ESO/NAOJ/NRAO). The IRS 63 image is reproduced with permission from \cite{Dom2020}.} 
   \label{fig: HLTauIRS63}
-\end{figure}
-% Recreation of Figure 1 from \cite{Kataoka_2015}. 
+\end{figure}  
+  %\cite{ALMAPartnership} 
+% Image now from 
+% https://www.eso.org/public/images/eso1436a/
+% https://www.eso.org/public/images/eso1436a/
 % ----------------------------------------------
 % --------------------------------------------------------------------
 % --------------------------------------------------------------------
@@ -216,7 +219,7 @@ Nevertheless, Figure \ref{fig: Band5_robust05} shows that the central uniform re
 
 
 % \textbf{Imaging Differences.} 
-The \rob parameter was decreased from 0.5 (\RfNS) to -1 (\RoNS), shifting the Briggs weighting closer to uniform weighting (Chapter \ref{sec: inter_weighting}). Decreasing the \texttt{robust} parameter increased angular resolution, with the beam size decreasing from $0.33'' \times 0.27''$ to $0.23'' \times 0.18''$. The higher angular resolution comes with the trade-off of lower sensitivity, with the \SIerr increasing from 13.88 to  42.12 $\mu$Jy. Due to the lower sensitivity, fewer polarization vectors are detected, and the streamer is no longer detected (Chapter \ref{sec: streamer}). 
+The \rob parameter was decreased from 0.5 (\RfNS) to -1 (\RoNS), shifting the Briggs weighting closer to uniform weighting (Chapter \ref{sec: inter_weighting}). Decreasing the \texttt{robust} parameter increased angular resolution, with the beam size decreasing from $0.33'' \times 0.27''$ to $0.23'' \times 0.18''$. The higher angular resolution comes with the trade-off of lower sensitivity, with the \SIerr increasing from 14 to 42 $\mu$Jy. Due to the lower sensitivity, fewer polarization vectors are detected, and the streamer is no longer detected (Chapter \ref{sec: streamer}). 
 
 
 
@@ -253,7 +256,7 @@ Streamers are long, dense structures of gas acting as pathways for material to m
 
 
 
-The observed polarization emission in the region of the streamer is unlikely to be a result of dust self-scattering. The streamer is located outside of the dense regions of the disk, and as such, dust grains are expected to be smaller and therefore less efficient at scattering. Other polarization mechanisms cannot be ruled out. However, polarization from magnetically aligned grains is a possible explanation for the emission. If the polarization is caused by magnetic alignment, the orientation of the magnetic field can be determined since the long axes of grains tend to align perpendicular to the magnetic field \citep{Lazarian}. The $90^\circ$ rotation allows the inferred magnetic field orientation to be determined. We note that the inferred magnetic field is aligned with the direction of the streamer, suggesting that gas flows could occur unhindered toward the disk.
+The observed polarization emission in the region of the streamer is unlikely to be a result of dust self-scattering. The streamer is located outside of the dense regions of the disk, and as such, dust grains are expected to be smaller and therefore less efficient at scattering. Other polarization mechanisms cannot be ruled out. However, polarization from magnetically aligned grains is a possible explanation for the emission. If the polarization is caused by magnetic alignment, the orientation of the magnetic field can be determined since the long axes of grains tend to align perpendicular to the magnetic field \citep{Lazarian}. We note that the inferred magnetic field is aligned with the direction of the streamer, suggesting that gas flows could occur unhindered toward the disk.
 
 
 Observational studies on the relationship between streamers and magnetic fields are uncommon, but some examples include SVS 13A \citep{Cort} and HOPS-182 \citep{Huang_2026}. This observation in IRS 63 may indicate a connection between the streamer and the magnetic field, providing an additional opportunity to study this relationship. However, only a few polarization vectors were detected in the streamer, and further investigation is beyond the scope of this thesis.
@@ -319,7 +322,7 @@ To account for the changes in sensitivity across the field of view, three detect
 
 
 
-The probability of detecting a background galaxy was calculated at concentric annuli with a radius of 0.25 arcsec. For each detection threshold, $dN/dS$ was integrated to determine the expected number of galaxies per unit area. This value was multiplied by the area of each annulus to determine the expected number of galaxies above the given threshold in each annulus, to get $N_\text{expected}$. We then converted the number of galaxies to a probability using Poisson statistics:
+The probability of detecting a background galaxy was calculated at concentric annuli with a radius of 0.25 arcsec. For each detection threshold, $dN/dS$ was integrated to determine the expected number of galaxies per unit area. This value was multiplied by the area of each annulus to determine the expected number of galaxies above the given threshold in each annulus, to get $N_\text{expected}$. We then converted the number of galaxies to a probability using Poisson statistics: \SCC{comment}
 \begin{equation}
     \text{Probability} = 100*(1 - \exp(-N_\text{expected})).
 \end{equation}

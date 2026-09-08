@@ -5,7 +5,7 @@
 % ------------------------------------------------
 \section{Star and Planet Formation}
 % ------------------------------------------------
-The interstellar medium (ISM) is the material within a galaxy between the stars \citep{mckee_dynamical_1999}. The cold, dense regions of the ISM, mostly composed of molecular hydrogen, are known as molecular clouds. Figure \ref{fig: molecular_cloud} shows the structure of a molecular cloud, which have sub-regions of higher densities.  Within clumps and filaments of material are dense cores (brown ovals in Figure \ref{fig: molecular_cloud}), which are typically < 0.1 pc in size.  When these cores become gravitationally unstable, they collapse under their own gravity, marking the beginning of the star formation process \citep{Kuruwita}. 
+The interstellar medium (ISM) is the material within a galaxy between the stars \citep{mckee_dynamical_1999}. The cold, dense regions of the ISM, mostly composed of molecular hydrogen, are known as molecular clouds. Figure \ref{fig: molecular_cloud} shows the structure of a molecular cloud, which has sub-regions of higher densities.  Within clumps and filaments of material are dense cores (brown ovals in Figure \ref{fig: molecular_cloud}), which are typically $<$ 0.1 pc in size.  When these cores become gravitationally unstable, they collapse under their own gravity, marking the beginning of the star formation process \citep{Kuruwita}. 
 
 
 
@@ -17,32 +17,38 @@ The interstellar medium (ISM) is the material within a galaxy between the stars 
   \label{fig: molecular_cloud}
 \end{figure}
 % ------------------------------------------------
-As a core collapses and forms a protostar at its center, a circumstellar disk can form around the young star as a result of conservation of angular momentum \citep{Williams}. Figure \ref{fig: YSO} gives a broad overview of young stellar object (YSO) evolution. 
+As a core collapses and forms a protostar at its centre, a circumstellar disk can form around the young star as a result of conservation of angular momentum \citep{Williams}. Figure \ref{fig: star-formation-schematic} provides a broad overview of young stellar object (YSO) evolution, illustrating the various evolutionary stages from a prestellar core to a Class III disk. Overall, the evolutionary Classes generally correspond to a sequence in which more evolved systems have less material in the surrounding envelope and disks.  
+
+During the Class 0 stage, the young protostar and disk are deeply embedded within a surrounding envelope of gas and dust, which contains most of the system's mass \citep{Williams, Kuruwita}. As material from the envelope is accreted onto the disk and protostar, the envelope begins to dissipate, and the system evolves into the Class I stage. During this stage, the disk is still embedded in the envelope, but the envelope's mass is comparable to, or lower than, the disk mass \citep{Evans2009}. By the Class II stage, most of the system's mass is in the central star and the envelope is mostly dispersed. A gaseous disk remains, but its mass is much lower compared to the mass of the central star. In the Class III stage, the envelope has dispersed, the disk has negligible mass, and the central star is a pre-main sequence object \citep{Kuruwita}. 
 
 
-% ------------------------------------------------
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.5\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/NOTMINE/YSO_Schematic_v0.png}
-  \caption[Evolutionary stages of YSOs]{Evolutionary stages of YSOs with timescales. \coded{added image} Reproduced with permission from \cite{Pokhrel}. }
-  \label{fig: YSO}
-\end{figure}
-% ------------------------------------------------
 
-
-Overall, the evolutionary Classes of disks generally correspond to an evolutionary sequence where more evolved systems have less material in the surrounding envelope and disks.  Figure \ref{fig: star-formation-schematic} illustrates the various evolutionary stages from a prestellar core to a Class III disk. During the Class 0 stage, the young protostar and disk are deeply embedded within a surrounding envelope of gas and dust, which contains most of the system's mass \citep{Williams, Kuruwita}. As material from the envelope is accreted onto the disk and protostar, the envelope begins to dissipate and the system evolves into the Class I stage. During this stage, the disk is still embedded in the envelope, but the envelope's mass is comparable to, or lower than, the disk mass \citep{Evans2009}. By the Class II stage, most of the system's mass is in the central star and the envelope is mostly dispersed. A gaseous disk remains, but its mass is much lower compared to the mass of the central star. In the Class III stage, the envelope has dispersed, the disk has negligible mass, and the central star is a pre-main sequence object \citep{Kuruwita}. 
-
-
+% % ------------------------------------------------
+% \begin{figure}[htbp]
+%   \centering
+%   \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/NOTMINE/YSO_Schematic_v0.png}
+%   \caption[Evolutionary stages of YSOs]{Evolutionary stages of YSOs with timescales. Reproduced with permission from \cite{Pokhrel}. }
+%   \label{fig: YSO}
+% \end{figure}
+% % ------------------------------------------------
 
 
 %------------------------------------------------
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/NOTMINE/classes_v2.jpeg}
-  \caption[Overview of disk evolutionary Classes.]{Overview of disk evolutionary Classes, with the Class 0/I stage representing the protostellar phase and the Class II/III stages representing the is pre-main-sequence stage. Image reproduced with permission from \cite{Kuruwita}. }
+  \caption[Overview of disk evolutionary Classes.]{Overview of disk evolutionary Classes, with the Class 0/I stage representing the protostellar phase and the Class II/III stages representing is pre-main-sequence stage. Image reproduced with permission from \cite{Kuruwita}. }
   \label{fig: star-formation-schematic}
 \end{figure}
 % ------------------------------------------------
+
+
+
+
+
+
+
+
 
 
 
@@ -64,7 +70,112 @@ Overall, the evolutionary Classes of disks generally correspond to an evolutiona
 % ------------------------------------------------
 \section{Polarization in Protostellar Disks}
 % ------------------------------------------------
-\input{TEXT_FILES/Introduction/PolarizationInDisks}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Polarization and Stokes Parameters}
+
+
+Polarized light is light in which the electric field has a preferred orientation. For linearly polarized light, the electric field oscillates along a fixed direction perpendicular to the direction in which the light propagates \citep{RybickiLightman}. Polarization information from interferometers (such as ALMA) is represented by the Stokes visibilities from cross-correlations between antennas in the array \citep{HullDebias}. The Stokes parameter $I$ is the total intensity of the emission. \SQ measures the difference in intensity between the North-South and East-West components. \SU measures the difference between the components at 45$^\circ$ and 135$^\circ$ relative to the North-South axis. Figure \ref{fig: LinearPol} shows the coordinate system for \SQ and $U$. The \SQ and $U$ parameters together provide information about the strength and orientation of the linear polarization. 
+
+%Circular polarization adds another Stokes parameter ($V$), however, ALMA is not well calibrated to observe circular polarization. \question{cite something for this?}
+
+
+
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.5\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Intro/StokesQU.png}
+  \caption{Coordinate system for the Stokes parameters $Q$ and $U$.}
+  \label{fig: LinearPol}
+\end{figure}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Polarization Mechanisms}
+\label{sec: intro_polarization_mechanisms}
+% \note{In Chapter \ref{sec: c4_polarization_maps} I refer to this section for a reasoning on why a circular pattern can be from radiative alignment, or some other unknown reason} "This is consistent with the pattern expected from radiative alignment (or some other mechanism, Chapter \ref{sec: intro_polarization_mechanisms}), shown in Figure \ref{fig: kataoka_polarization_morphologies}(b). "
+
+
+The polarization angle from the emission is used to construct polarization vectors (Chapter \ref{sec: chap4_polarization_vectors}), revealing the polarization morphology. Different polarization mechanisms produce different morphologies, and each can help constrain different physical properties of the disk \citep{Stephens_2019}. Multiple mechanisms can produce polarized emission at (sub)millimetre wavelengths, making it a challenge to disentangle and identify the dominant polarization mechanism \citep{Kataoka_2017}. The following paragraphs explore several potential mechanisms and their morphologies, but this is not a complete list. Figure \ref{fig: kataoka_polarization_morphologies} shows three examples of potential polarization morphologies. 
+
+
+% Polarization observations of polarized emission from dust grains in disks at (sub)millimetre wavelengths provide insight into dust grain growth in protostellar disks \citep{Harrison2024}.  
+
+
+
+% ------------------------------------------------
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=1.0\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/NOTMINE/apjlaa7e33f3_hr.jpg}
+  \caption[Schematic of three polarization morphologies.]{Schematic of three polarization morphologies and a potential mechanism causing them. Image reproduced with permission from \cite{Kataoka_2017}.}
+  \label{fig: kataoka_polarization_morphologies}
+\end{figure}
+% ------------------------------------------------
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ 
+
+%\textbf{Magnetic Grain Alignment.} 
+Magnetic grain alignment is produced when the short axis of non-spherical dust grains aligns parallel to the magnetic field direction via radiative torques  \citep{Andersson2015}. The polarization morphology produced by magnetic grain alignment is expected to be toroidal \citep{Stephens_2017}. This can be seen in Figure \ref{fig: kataoka_polarization_morphologies}(a). Polarized dust emission is known to trace the magnetic field direction in the ISM, molecular clouds and potentially in the outer regions of disks \citep{HullZhang2019}. Despite magnetic grain alignment being the expected mechanism for producing polarization in disks, it is often not observed \citep{sadavoy_dust_2019}. Instead, the pattern observed in most disks is generally better explained by other mechanisms  \citep{Lin2024}. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\textbf{Radiative Grain Alignment.} 
+Radiative alignment occurs when non-spherical grains align with the radiation field, with the long axis of the grains being perpendicular to the radiation field (k-RAT alignment) \citep{Tazaki2017}. This produces a polarization morphology that is azimuthal, meaning the polarization vectors follow a circular pattern about the centre of the disk. This is shown in Figure \ref{fig: kataoka_polarization_morphologies}(b). However, an azimuthal polarization morphology can also be produced by other mechanisms. For example, mechanical alignment can occur when grains align with their long axis in the streaming direction \citep{WurmBlum2000, Lin2024}, or aerodynamic alignment can occur when gas and dust orbit the central star at different speeds. Therefore, the exact mechanism responsible for this morphology cannot be determined based only on the morphology, and is not a main goal of the project. In this thesis, the azimuthal morphology is a description of the pattern indicative of polarization from thermal emission of aligned grains, even if the mechanism for alignment is unknown.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%\textbf{Dust Self-Scattering.} 
+Dust self-scattering occurs when thermal emission from dust grains is scattered by other dust grains in the disk, producing polarized emission. This pattern depends on the radiation field anisotropy of the disk. For an inclined disk such as IRS 63, this mechanism is expected to produce a polarization morphology that is roughly parallel to the disk minor axis  for an inclined disk \citep[e.g.][]{Kataoka_2015, Yang2016, Lin2021}. This is shown in Figure \ref{fig: kataoka_polarization_morphologies}(c).  The efficiency of dust self-scattering polarization is highly dependent on the maximum grain size, making it a useful tool for constraining the maximum dust grain size in this project \citep{Harrison2024}.
+
+% The resulting polarization morphology can also be affected by substructure in the disk, such as rings and gaps \citep[e.g.][]{Yang2016, Pohl2016}.
+
+
+%For a face-on disk, the morphology is expected to be more circular \citep{Kataoka_2015, Yang2016}.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 % ------------------------------------------------
 
 % ------------------------------------------------
@@ -116,10 +227,7 @@ Additionally, multi-wavelength observations are essential to place a reliable co
   a_{\text{max}} \sim \lambda / 2 \pi,
   \label{eq: scattering_efficiency}
 \end{equation}
-\noindent where \amax is the maximum grain size and $\lambda$ is the observing wavelength \citep{Stephens_2017}. 
-
-
-Therefore, observations at different wavelengths probe different grain sizes. Comparing observations across multiple wavelengths can provide a stronger constraint on the maximum grain size compared to observations at a single wavelength. Specifically, observations at (sub)millimetre wavelengths can be used to study dust grain growth in disks \citep{Testi}. 
+\noindent where \amax is the maximum grain size and $\lambda$ is the observing wavelength \citep{Kataoka_2015}. Therefore, polarization observations of dust self-scattering at different wavelengths probe different grain sizes. Comparing observations across multiple wavelengths can provide a stronger constraint on the maximum grain size compared to observations at a single wavelength. Specifically, self-scattering observations at (sub)millimetre wavelengths can be used to study dust grain growth in disks \citep{Kataoka_2015, Yang2016, Lin2021, Zhang2023}. This is discussed more in Chapter \ref{sec: ch5_DustScatteringModels}. 
 
 
 
@@ -133,13 +241,13 @@ Therefore, observations at different wavelengths probe different grain sizes. Co
 
 HL Tau is one of the brightest Class I/II disks at (sub)millimetre wavelengths \citep{Stephens_2017}. It has been the focus of many studies using ALMA polarization observations to study its morphology, including observations at 3.1 mm in \cite{Kataoka_2017}, \bsix in \cite{Stephens_2017}, \bseven originally presented in \cite{Stephens_2017} with higher-resolution data in \cite{Stephens2023}. More recently, in \cite{Lin2024}, data at \bfour and \bfive were presented and studied in combination with previous observations.
 
-Figure \ref{fig: HLTauLin2024} presents the polarization morphologies for HL Tau at the same   wavelengths as studied in this project. The polarization morphology changes with wavelength, indicating that the dominant polarization mechanism changes with wavelength. At higher wavelengths, the morphology is azimuthal, similar to Figure \ref{fig: kataoka_polarization_morphologies}b. As wavelength decreases, the vectors become more aligned with the minor axis of the disk, similar to Figure \ref{fig: kataoka_polarization_morphologies}c. This highlights the importance of multi-wavelength data, as observing HL Tau at one wavelength would only show one morphology, rather than showing the change with wavelength.
+Figure \ref{fig: HLTauLin2024} presents the polarization morphologies for HL Tau at the same wavelengths as studied in this project. The polarization morphology changes with wavelength, indicating that the dominant polarization mechanism changes with wavelength. At higher wavelengths, the morphology is azimuthal, similar to Figure \ref{fig: kataoka_polarization_morphologies}b. As wavelength decreases, the vectors become more aligned with the minor axis of the disk, similar to Figure \ref{fig: kataoka_polarization_morphologies}c. This highlights the importance of multi-wavelength data, as observing HL Tau at one wavelength would only show one morphology, rather than showing the change with wavelength.
 
 % ------------------------------------------------
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.9\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/NOTMINE/Lin2024HLTauGrid_HighRes_Numbered.png}
-  \caption[Polarization images for HL Tau at four observing wavelengths.]{Polarization images for HL Tau at four observing wavelengths. Black vectors show the polarization morphology.  Image is from \cite{Lin2024}, reproduced with permission.}
+  \caption[Polarization images for HL Tau at four observing wavelengths.]{Polarization images for HL Tau at four observing wavelengths. Black vectors show the polarization morphology.  The image is from \cite{Lin2024}, reproduced with permission.}
   \label{fig: HLTauLin2024}
 \end{figure}
 % ------------------------------------------------
@@ -152,12 +260,12 @@ Figure \ref{fig: HLTauLin2024} presents the polarization morphologies for HL Tau
 % ------------------------------------------------
 IRS~63 is a Class I protostar embedded in the L1709 region of the Ophiuchus molecular cloud at a distance of approximately 144 pc \citep{sadavoy_dust_2019, Dom2020}. It is one of the brightest Class I protostars at (sub)millimetre wavelengths, and is surrounded by a relatively large circumstellar disk with a radius greater than 50 au \citep{Dom2020}. The brightness and proximity of IRS~63 make it an ideal target for polarization observations. Additionally, its large disk allows the polarization morphology to be studied across the inner and outer disk. Lastly, since IRS~63 is a Class I protostar, it also provides the opportunity to investigate dust grain growth during the early stages of planet formation \citep{Dom2020}. 
 
-Figure \ref{fig: IRS63_Dom_Sadavoy}(left) shows dust continuum with 5 au resolution for IRS~63, presented by \cite{Dom2020}. Figure \ref{fig: IRS63_Dom_Sadavoy}(right) shows polarization observations at the same observing wavelength with 35 au resolution from \cite{sadavoy_dust_2019}. These observations show that IRS~63 has disk substructure and detectable polarization emission. Specifically, the polarization morphology shows an azimuthal pattern in the outer region of the disk, with uniform alignment at the disk centre. This central uniform alignment at \bsix in IRS~63 differs from the morphology of HL Tau observed at this wavelength (Figure \ref{fig: HLTauLin2024}(c)). 
+Figure \ref{fig: IRS63_Dom_Sadavoy}(left) shows dust continuum with 5 au resolution for IRS~63, presented by \cite{Dom2020}. Figure \ref{fig: IRS63_Dom_Sadavoy} (right) shows polarization observations at the same observing wavelength with 35 au resolution from \cite{sadavoy_dust_2019}. These observations show that IRS~63 has disk substructure and detectable polarization emission. Specifically, the polarization morphology shows an azimuthal pattern in the outer region of the disk, with uniform alignment at the disk centre. This central uniform alignment at \bsix in IRS~63 differs from the morphology of HL Tau observed at this wavelength (Figure \ref{fig: HLTauLin2024}(c)). 
 % ------------------------------------------------
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.9\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/NOTMINE/Lin2024HLTauGrid_HighRes_Numbered.png}
-  \caption[Image of IRS 63 at \bsix for continuum and polarization emission.]{Images of IRS 63 at \bsixNS. Dust continuum observations (left) reveal the substructure in the disk. \SI emission (left) with polarization vectors show the polarization morphology. Images reproduced with permission from \cite{Dom2020} (left) and \cite{sadavoy_dust_2019}(right). \coded{Add single image, check resolution}}
+  \includegraphics[width=0.9\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/NOTMINE/Dom_Sadavoy_v0.png}
+  \caption[Image of IRS 63 at \bsix for continuum and polarization emission.]{Images of IRS 63 at \bsixNS. Dust continuum observations (left) reveal the substructure in the disk. \SI emission (left) with polarization vectors showing the polarization morphology. Images reproduced with permission from \cite{Dom2020} (left) and \cite{sadavoy_dust_2019}(right). }
   \label{fig: IRS63_Dom_Sadavoy}
 \end{figure}
 % ------------------------------------------------
@@ -169,7 +277,7 @@ Figure \ref{fig: IRS63_Dom_Sadavoy}(left) shows dust continuum with 5 au resolut
 % % ------------------------------------------------
 \section{Motivation and Objectives}
 % % ------------------------------------------------
-Although previous studies of IRS~63 have revealed a structured disk and detected polarized emission at \bsixNS, the disk has not been explored using multi-wavelength polarization observations. These data are essential to disentangle the polarization morphologies with wavelength and determine the mechanisms polarizing the light. It can also provide a constraint on the dust grain sizes, providing an insight into the early stages of planet formation. 
+Although previous studies of IRS~63 have revealed a structured disk and detected polarized emission at \bsixNS, the disk has not been explored using multi-wavelength polarization observations. These data are essential to disentangle the polarization morphologies with wavelength and determine the mechanisms polarizing the light. It can also provide a constraint on the dust grain sizes, providing insight into the early stages of planet formation. 
 
 
 The main goal of this thesis is to use multi-wavelength polarization observations of IRS~63 to constrain the dust grain size in the disk. To achieve this main goal, this thesis has the following objectives:
