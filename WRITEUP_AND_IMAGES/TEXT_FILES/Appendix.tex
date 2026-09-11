@@ -9,7 +9,7 @@
 
 \section{Porous Spherical Grain Model}
 
-Here, I have included an additional plot showing \Pweff versus maximum grain size as in Figure \ref{fig:Pweff_vs_grainsize} (left), but for a porous spherical grain. 
+Here, I have included an additional plot showing \Pweff versus maximum grain size, as in Figure \ref{fig:Pweff_vs_grainsize} (left), but for a porous spherical grain. 
 
 
 % ----------------------------------------------------------------
@@ -23,70 +23,327 @@ Here, I have included an additional plot showing \Pweff versus maximum grain siz
 
 
 
-\section{Additional Spherical Grain Models with \POLFsi}
+\section{Additional Spherical Grain Models \POLFsi}
 \label{sec: appendix_maxStokesI}
 
 
-Additional plots with results comparing \Pwmodel curves and \POLFsi are presented below. Figure \ref{fig: Spherical_BEST}, presented in Chapter \ref{sec: chapter5_spherical_dust_model_results}, shows the best-fit results when \bfive is excluded for filling factors of $f = 1.0, 0.5, 0.3$ and $0.1$. Figure \ref{fig: appendix_nob5_extra_porosities} presents the same fitting case for the remaining porosities. Figure \ref{fig: appendix_all_band} shows the results when all wavelengths are included in the fit, while Figure \ref{fig: appendix_just_47} shows the results when only \bfour and \bseven are included. Figures \ref{fig: appendix_all_band} and \ref{fig: appendix_just_47} include results for all filling factors. 
+Additional plots with results comparing \Pwmodel curves and \POLFsi are presented below. Figure \ref{fig: Spherical_BEST}, presented in Chapter \ref{sec: chapter5_spherical_dust_model_results}, shows the best-fit results for the all wavelengths fitting case for filling factors of $f = 1.0, 0.5, 0.3$ and $0.1$. Figure \ref{fig: appendix_AllBands_extra_porosities} presents the same fitting case for the remaining porosities. Figure \ref{fig: appendix_without_b5_ALL} shows the results when \bfive is excluded from the fit, while Figure \ref{fig: appendix_just_47_ALL} shows the results when only \bfour and \bseven are included. Figures \ref{fig: appendix_without_b5_ALL} and \ref{fig: appendix_just_47_ALL} include results for all filling factors. 
 
 
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/DustModelPlot_Without5_ZhangMethod_Extraf}
+  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/DustModelPlot_AllBands_ZhangMethod_Extraf.pdf}
   \caption{Same as Figure \ref{fig: Spherical_BEST}, but for the remaining porosities.}
-  \label{fig: appendix_nob5_extra_porosities}
+  \label{fig: appendix_AllBands_extra_porosities}
 \end{figure}
 
 
-
-
+%\newpage
+\subsection{Without 1.5 mm}
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/DustModelPlot_AllBands_ZhangMethod_ALL.pdf}
-  \vspace{0.5cm}
-  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/DustModelPlot_AllBands_ZhangMethod.pdf}
-  \caption{Same as Figure \ref{fig: Spherical_BEST}, but for the all wavelengths fit case and all tested porosities.}
-  \label{fig: appendix_all_band}
+  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/DustModelPlot_WithoutBand5_ZhangMethod_all.pdf}
+  \caption{Same as Figure \ref{fig: Spherical_BEST}, but for the without \bfive fit case and all tested porosities.}
+  \label{fig: appendix_without_b5_ALL}
 \end{figure}
 
 
 
-% \begin{figure}[htbp]
-%   \centering
-%   \includegraphics[width=1.1\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/DustModelPlot_Without6_ZhangMethod.pdf}
-%   \caption{Same as Figure \ref{fig: Spherical_BEST}, but for the no \bsix fit case.}
-%   \label{fig: appendix_no6}
-% \end{figure}
 
-
+%\newpage
+\subsection{Just 2.1 mm and 0.87 mm}
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/DustModelPlot_Just47_ZhangMethod_ALL.pdf}
   \caption{Same as Figure \ref{fig: Spherical_BEST}, but for the just \bfour and \bseven fit case and all porosities. }
-  \label{fig: appendix_just_47}
+  \label{fig: appendix_just_47_ALL}
 \end{figure}
 
 
 
 
 
+
+% ----------------------------------------------------
+\section{Additional Spherical Grain Models with $\mathcal{P}_{\mathrm{F, max\,\POLIeq}}$}
+\label{sec: appendix_maxPOLI}
+% ----------------------------------------------------
+\add{blurb}
+% ----------------------------------------------------
+% \add{figures}
+
+\subsection{Spherical}
+
+\begin{table}[h!]
+\centering
+\caption[Spherical dust grain model fitting results with \POLFpoliNS.]{Same as Table \ref{tab: dust_model_fits_spherical} but using \POLFpoli and not \POLFsiNS}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Fit Case} & \textbf{Porosity ($\boldsymbol{f}$)} & \textbf{Scale Factor (\sfbestNS)} & $\boldsymbol{\chi_\mathcal{P}^2}$ & \textbf{$\boldsymbol{\amaxEQ}$ ($\boldsymbol{\mu}$m)} \\
+\midrule
+
+All wavelengths
+& 1.00 & 2.41 & 76.27 & 163 \\
+& 0.75 & 2.26 & 38.11 & 204 \\
+& 0.60 & 2.24 & 23.35 & 231 \\
+& 0.50 & 2.26 & 16.24 & 252 \\
+& 0.30 & 2.43 & 4.83 & 301 \\
+& 0.25 & 2.52 & 3.23 & 318 \\
+& \textbf{0.10} & \textbf{3.20} & \textbf{0.68}& \textbf{386} \\
+& 0.01 & 9.89 & 20.26 & 561 \\
+
+\midrule
+
+No \bfive 
+& 1.00 & 2.59 & 51.37 & 164 \\
+& 0.75 & 2.40 & 25.72 & 205 \\
+& 0.60 & 2.35 & 14.55 & 232 \\
+& 0.50 & 2.37 & 10.22 & 253 \\
+& 0.30 & 2.50 & 3.24 & 305 \\
+& 0.25 & 2.57 & 2.07 & 320 \\
+& \textbf{0.10} & \textbf{3.21} & \textbf{0.36} & \textbf{389} \\
+& 0.01 & 9.70 & 8.60 & 564 \\
+
+% \midrule
+
+% No \bsix
+% & 1.00 & 2.38 & 34.03 & 163 \\
+% & \textbf{0.50} & \textbf{2.13} & \textbf{1.35}  & \textbf{244} \\
+% & 0.30 & 2.26 & 2.57  & 289 \\
+% & 0.10 & 2.94 & 6.70 & 364 \\
+
+\midrule
+
+Just \bfour 
+& 1.00      & 2.79 & 214.34  & 167 \\
+and \bseven & 0.75 & 2.48     & 81.16 & 207 \\
+& 0.60 & 2.41 & 43.52 & 235 \\
+& 0.50      & 2.39 & 25.87   & 255 \\
+& 0.30      & 2.50 & 6.92   & 305 \\
+& 0.25      & 2.57 & 4.43   & 320 \\
+& \textbf{0.10}      & \textbf{3.21} & \textbf{0.70}   & \textbf{389} \\
+& 0.01      & 9.51 & 21.04  & 580 \\
+
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+% \footnotesize
+\item \textbf{Note:} The best fit for each fit case is shown in bold text. 
+\end{tablenotes}
+\label{tab: dust_model_fits_spherical_POLI}
+\end{table}
+
+
+%\newpage
+\subsubsection{All Wavelengths}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/POLF_maxPOLI/DustModelPlot_AllBands_ZhangMethod_ALL_maxPOLI.pdf}
+  \caption{Same as Figure \ref{fig: Spherical_BEST}, but for the without \bfive fit case and all tested porosities with \POLFpoliNS.}
+  \label{fig: appendix_without_all_wavelengths_ALL_maxPOLI}
+\end{figure}
+
+
+%\newpage
+\subsubsection{Without 1.5 mm}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/POLF_maxPOLI/DustModelPlot_WithoutBand5_ZhangMethod_all_maxPOLI.pdf}
+  \caption{Same as Figure \ref{fig: Spherical_BEST}, but for the without \bfive fit case and all tested porosities with \POLFpoliNS.}
+  \label{fig: appendix_without_b5_ALL_maxPOLI}
+\end{figure}
+
+
+
+
+%\newpage
+\subsubsection{Just 2.1 mm and 0.87 mm}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/POLF_maxPOLI/DustModelPlot_Just47_ZhangMethod_ALL_maxPOLI.pdf}
+  \caption{Same as Figure \ref{fig: Spherical_BEST}, but for the just \bfour and \bseven fit case and all porosities with \POLFpoliNS. }
+  \label{fig: appendix_just_47_ALL_maxPOLI}
+\end{figure}
+
+
+
+\subsection{Irregular}
+
+\begin{table}[h!]
+\centering
+\caption{Same as Table \ref{tab: dust_model_fits_spherical} but for irregular grains and \POLFpoliNS. }
+\begin{tabular}{lccc}
+\toprule
+\textbf{Fit Case} &  \textbf{Scale Factor (\sfbestNS)} & $\boldsymbol{\chi_\mathcal{P}^2}$ & \textbf{$\boldsymbol{\amaxEQ}$ ($\boldsymbol{\mu}$m)} \\
+\midrule
+
+All wavelengths  & \textbf{1.94} & \textbf{10.46} & \textbf{216} \\
+No \bfive               & 2.07 & 21.07 & 218 \\
+Just \bfour and \bseven & 2.11 & 55.91 & 221 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+% \footnotesize
+\item \textbf{Note:} The best fit is shown in bold text. 
+\end{tablenotes}
+\label{tab: dust_model_fits_irregular_POLI}
+\end{table}
+
+
+% ----------------------------------------------------------------
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/POLF_maxPOLI/DustModelPlot_GlitterinGrid_only3_omega_eff_maxPOLI.pdf}
+  \caption[Same as Figure \ref{fig: irregular_fits} but fitting with \POLFpoliNS.]{Same as Figure \ref{fig: irregular_fits} but fitting with \POLFpoliNS.Corresponding results can be found in Table \ref{tab: dust_model_fits_irregular_POLI}.  } 
+  \label{fig: irregular_fits_POLI}
+\end{figure}
+% ----------------------------------------------------------------
+
+
 % % ----------------------------------------------------
-% \section{Additional Spherical Grain Models with $\mathcal{P}_{\mathrm{F, max\,\POLIeq}}$}
-% \label{sec: appendix_maxPOLI}
+
+
+% % ----------------------------------------------------
+\section{Additional Spherical Grain Models with $\mathcal{P}_{\mathrm{F, Gaussian}}$}
+\label{sec: appendix_Gaussian}
+% % ----------------------------------------------------
+\add{blurb}
 % % ----------------------------------------------------
 % \add{figures}
 
-% \add{table}
-% % ----------------------------------------------------
 
-% % ----------------------------------------------------
-% \section{Additional Spherical Grain Models with $\mathcal{P}_{\mathrm{F, Gaussian}}$}
-% \label{sec: appendix_Gaussian}
-% % ----------------------------------------------------
-% \add{figures}
+\subsection{Spherical}
 
-% \add{table}
+\begin{table}[h!]
+\centering
+\caption[Spherical dust grain model fitting results with \POLFgaussNS.]{Same as Table \ref{tab: dust_model_fits_spherical} but using \POLFgauss and not \POLFsiNS.}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Fit Case} & \textbf{Porosity ($\boldsymbol{f}$)} & \textbf{Scale Factor (\sfbestNS)} & $\boldsymbol{\chi_\mathcal{P}^2}$ & \textbf{$\boldsymbol{\amaxEQ}$ ($\boldsymbol{\mu}$m)} \\
+\midrule
+
+All wavelengths
+& \textbf{1.00} & \textbf{2.09} & \textbf{0.19} & \textbf{163} \\
+& 0.75 & 1.92 & 1.38 & 203 \\
+& 0.60 & 1.90 & 3.33 & 229 \\
+& 0.50 & 1.92 & 4.84 & 248 \\
+& 0.30 & 2.02 & 9.01 & 289 \\
+& 0.25 & 2.09 & 10.08 & 300 \\
+& 0.10 & 2.67 & 12.96 & 354 \\
+& 0.01 & 8.83 & 35.07 & 488 \\
+
+\midrule
+
+No \bfive 
+& \textbf{1.00} & \textbf{2.09} & \textbf{0.29} & \textbf{163} \\
+& 0.75 & 1.92 & 2.06 & 203 \\
+& 0.60 & 1.88 & 6.05 & 229 \\
+& 0.50 & 1.87 & 10.28 & 247 \\
+& 0.30 & 1.94 & 19.98 & 287 \\
+& 0.25 & 2.00 & 20.98 & 300 \\
+& 0.10 & 2.58 & 21.54 & 354 \\
+& 0.01 & 8.41 & 44.62 & 488 \\
+
+% \midrule
+
+% No \bsix
+% & 1.00 & 2.38 & 34.03 & 163 \\
+% & \textbf{0.50} & \textbf{2.13} & \textbf{1.35}  & \textbf{244} \\
+% & 0.30 & 2.26 & 2.57  & 289 \\
+% & 0.10 & 2.94 & 6.70 & 364 \\
+
+\midrule
+
+Just \bfour 
+& \textbf{1.00}      & \textbf{2.11} & \textbf{1.16}  & \textbf{163} \\
+and \bseven & 0.75 & 1.89     & 700 & 202 \\
+& 0.60 & 1.84 & 18.22 & 226 \\
+& 0.30      & 1.84 & 25.38 & 245 \\
+& 0.50      & 1.94 & 40.65   & 287 \\
+& 0.25      & 2.00 & 43.56   & 300 \\
+& 0.10      & 2.53 & 52.37   & 362 \\
+& 0.01      & 7.69 & 116.36  & 529 \\
+
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+% \footnotesize
+\item \textbf{Note:} The best fit for each fit case is shown in bold text. 
+\end{tablenotes}
+\label{tab: dust_model_fits_spherical_Gaussian}
+\end{table}
+
+
+
+
+%\newpage
+\subsubsection{All Wavelengths}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/POLF_Gaussian/DustModelPlot_AllBands_ZhangMethod_ALL_POLFGaussian.pdf}
+  \caption{Same as Figure \ref{fig: Spherical_BEST}, but for the without \bfive fit case and all tested porosities with \POLFgaussNS.}
+  \label{fig: appendix_without_all_wavelengths_ALL_Gauss}
+\end{figure}
+
+
+%\newpage
+\subsubsection{Without 1.5 mm}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/POLF_Gaussian/DustModelPlot_WithoutBand5_ZhangMethod_all_POLFGaussian.pdf}
+  \caption{Same as Figure \ref{fig: Spherical_BEST}, but for the without \bfive fit case and all tested porosities with \POLFgaussNS.}
+  \label{fig: appendix_without_b5_ALL_Gauss}
+\end{figure}
+
+
+
+
+%\newpage
+\subsubsection{Just 2.1 mm and 0.87 mm}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/POLF_Gaussian/DustModelPlot_Just47_ZhangMethod_ALL_POLFGaussian.pdf}
+  \caption{Same as Figure \ref{fig: Spherical_BEST}, but for the just \bfour and \bseven fit case and all porosities with \POLFgaussNS. }
+  \label{fig: appendix_just_47_ALL_Gauss}
+\end{figure}
+
+
+
+
+\subsection{Irregular}
+
+% ------------------------------------------------------
+\begin{table}[h!]
+\centering
+\caption{Same as Table \ref{tab: dust_model_fits_spherical} but for irregular grains and \POLFgaussNS. }
+\begin{tabular}{lccc}
+\toprule
+\textbf{Fit Case} &  \textbf{Scale Factor (\sfbestNS)} & $\boldsymbol{\chi_\mathcal{P}^2}$ & \textbf{$\boldsymbol{\amaxEQ}$ ($\boldsymbol{\mu}$m)} \\
+\midrule
+
+All wavelengths  & \textbf{1.64} & \textbf{2.86} & \textbf{212} \\
+No \bfive               & 1.64 & 4.65 & 212 \\
+Just \bfour and \bseven & 1.62 & 12.55 & 211 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+% \footnotesize
+\item \textbf{Note:} The best fit is shown in bold text. 
+\end{tablenotes}
+\label{tab: dust_model_fits_irregular_GAUSS}
+\end{table}
+
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/DustModels/POLF_Gaussian/DustModelPlot_GlitterinGrid_only3_omega_eff_Gaussian.pdf}
+  \caption[Same as Figure \ref{fig: irregular_fits} but fitting with \POLFpoliNS.]{Same as Figure \ref{fig: irregular_fits} but fitting with \POLFpoliNS. Corresponding results can be found in Table \ref{tab: dust_model_fits_irregular_POLI}.  } 
+  \label{fig: dust_model_fits_irregular_GAUSS}
+\end{figure}
+
+
+% ----------------------------------------------------
 % % ----------------------------------------------------
 
 
