@@ -62,7 +62,7 @@ def calculate_chi_squared_for_sf(Pw,
                           POLF_obs_all,
                           POLF_err_obs_all,
                           bands,
-                                print_things = True):
+                                print_things = False):
     """
     Calculate the chi-squared value for the best-fitting model.
 
@@ -352,7 +352,7 @@ def find_sf_v5(bands,
     }
     
     polf_err_columns = {
-    'gaussian': 'POLF_err_maxStokesI',
+    'gaussian': 'POLF_err_Gaussian',
     'max Stokes I': 'POLF_err_maxStokesI',
     'POLI': 'POLF_err_maxPOLI',
     #'mean': 'POLF_err_mean'   # if you have this column
@@ -382,6 +382,7 @@ def find_sf_v5(bands,
     best_sf_by_f = {}
     best_idx_by_f = {}
     chi_sq_by_f = {}
+    chi_sq_by_f_reduced = {}
 
 
 
@@ -470,6 +471,11 @@ def find_sf_v5(bands,
             POLF_err_obs_all,
             bands,
         )
+        
+        chi_sq_reduced = (1/(len(bands_included_in_fit) - 1)) * chi_sq
+        print(' ')
+        print(rf'In find_sf_v5, bands_included_in_fit = {bands_included_in_fit}, len(bands_included_in_fit) = {len(bands_included_in_fit)}, chi^2 is scaled by 1 / {len(bands_included_in_fit) - 1}')
+        print(' ')
         # ---------------------------------------------
         # ---------------------------------------------
         # ----------------------------------------
@@ -484,6 +490,7 @@ def find_sf_v5(bands,
         best_idx_by_f[f] = best_idx
         POLF_obs_by_f[f] = np.array([POLF_obs_all[band_to_index[b]] for b in bands])
         chi_sq_by_f[f] = chi_sq
+        chi_sq_by_f_reduced[f] = chi_sq_reduced
     # ------------------------------------------------------------------------
     # ------------------------------------------------------------------------
     # End of looping over all f values
@@ -494,17 +501,19 @@ def find_sf_v5(bands,
         'Best idx': list(best_idx_by_f.values()),
         'Best a_max': list(a_max_best_by_f.values()),
         'Best SF': list(best_sf_by_f.values()),
-        'Best chi^2': list(chi_sq_by_f.values())
+        'Best chi^2': list(chi_sq_by_f.values()),
+        'Best chi^2 red': list(chi_sq_by_f_reduced.values())
     })
 
     df_best['Best a_max'] = df_best['Best a_max'].round(0)
     df_best['Best SF'] = df_best['Best SF'].round(2)
     df_best['Best chi^2'] = df_best['Best chi^2'].round(2)
+    df_best['Best chi^2 red'] = df_best['Best chi^2 red'].round(2)
 
 #         df_best
 
     # return values
-    return a_max_dist_micron_by_f, P_times_omega_by_f, a_max_best_by_f, POLF_obs_by_f, best_sf_by_f, best_idx_by_f, chi_sq_by_f, df_best
+    return a_max_dist_micron_by_f, P_times_omega_by_f, a_max_best_by_f, POLF_obs_by_f, best_sf_by_f, best_idx_by_f, chi_sq_by_f, chi_sq_by_f_reduced, df_best
 # --------------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------------
 
