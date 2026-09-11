@@ -38,7 +38,7 @@ In addition to the sampling spacing described above, a polarization vector was o
     \item $\POLIeq/\POLIerrEQ >$ 4 (\bfourNS, \bsevenNS) or $\POLIeq/\POLIerrEQ >$ 3 (\bfiveNS, \bsixNS),
     \item $\PAerrEQ < 10^\circ$.
 \end{enumerate}
-\noindent These criteria were adapted from the selection criteria in \cite{sadavoy_dust_2019}. The threshold of $\POLIeq/\POLIerrEQ >3$ was used for \bfive and \bsix because they had less sensitivity and going to a threshold of 4 would limit the coverage of polarization vectors.
+\noindent These criteria were adapted from the selection criteria in \cite{sadavoy_dust_2019}. The threshold of $\POLIeq/\POLIerrEQ >3$ was used for \bfive and \bsix because they had less sensitivity, and going to a threshold of 4 would limit the coverage of polarization vectors.
 
 
 % ------------------------------------------------------------------
@@ -54,6 +54,10 @@ In addition to the sampling spacing described above, a polarization vector was o
 \section{Observed Polarization Maps}
 \label{sec: c4_polarization_maps}
 % ------------------------------------------------------------------
+
+In Figure \ref{fig: StokesI_POLI_grid}, we present the cleaned \SI and debiased polarized intensity images of IRS 63 at \bfourNS, \bfiveNS, \bsixNS, and \bsevenNS, overlaid with the polarization vectors that show the observed polarization morphology. At each wavelength, all vectors are normalized to the same length to focus on the polarization angle rather than magnitude. 
+
+
 \begin{figure}[htbp]
     \centering
 
@@ -73,7 +77,7 @@ In addition to the sampling spacing described above, a polarization vector was o
 
 
 
-In Figure \ref{fig: StokesI_POLI_grid}, we present the cleaned \SI and debiased polarized intensity images of IRS 63 at \bfourNS, \bfiveNS, \bsixNS, and \bsevenNS, overlaid with the polarization vectors that show the observed polarization morphology. At each wavelength, all vectors are normalized to the same length to focus on the polarization angle rather than magnitude. 
+
 
 
 
@@ -104,7 +108,7 @@ To study the structure of IRS 63, intensity profiles were extracted along the mi
 
 
 
-The slices in \SI and polarized intensity for each wavelength are presented in Figure \ref{fig: slices_grid}. The synthesized beam for each wavelength is overplotted for comparison. The beam is plotted as a one-dimensional Gaussian, with a standard deviation calculated from the beam full width at half maximum (FWHM) along the minor axis using: 
+Figure \ref{fig: slices_grid} presents the slices in \SI and polarized intensity for each wavelength. The synthesized beam for each wavelength is overplotted for comparison. The beam is plotted as a one-dimensional Gaussian, with a standard deviation calculated from the beam full width at half maximum (FWHM) along the minor axis using: 
 \begin{equation}
     \sigma = \frac{\text{FWHM}}{2\sqrt{2 \ln{2}}}.
     \label{eq: FWHM_to_sigma}
@@ -190,7 +194,7 @@ The value of $\chi^2$ was then converted to reduced chi-squared by:
 The first geometric model tested is the \emph{ratio model}, which is more similar to the approach used in \cite{Stephens_2017}. The main idea behind this model is to reproduce the observed polarization morphologies, ranging from purely aligned with the minor axis of the disk to purely azimuthal, along with intermediate cases. This was achieved by creating a grid of models weighted between these two extreme cases. 
 
 
-The first extreme case, 100\% uniform pattern, we modelled the disk where every vector is aligned with the minor axis of the disk (90\degg from the disk position angle, Table \ref{tab: source_info}). For the second extreme case, 100\% azimuthal pattern, we modelled the polarization vectors to follow a circular pattern around the centre of the disk. The centre point of the disk at each wavelength can be found in Table \ref{tab: source_info}. For each pixel $(x, y)$, we calculated the azimuthal polarization angle relative to the disk centre using \texttt{numpy.arctan2}.
+For the first extreme case, a 100\% uniform pattern, we modelled the disk where every vector is aligned with the minor axis of the disk (90\degg from the disk position angle, Table \ref{tab: source_info}). For the second extreme case, a 100\% azimuthal pattern, we modelled the polarization vectors to follow a circular pattern around the centre of the disk. The centre point of the disk at each wavelength can be found in Table \ref{tab: source_info}. For each pixel $(x, y)$, we calculated the azimuthal polarization angle relative to the disk centre using \texttt{numpy.arctan2}.
 
 
 Figure \ref{fig: RatioExamples} shows examples of the models created using the ratio method.  The left-most and right-most panels show the two extreme cases of 100\% uniform polarization and 100\% azimuthal polarization, respectively.  The middle panel shows an intermediate case that is 50\% uniform and 50\% azimuthal.  To create the intermediate cases, models were generated in steps of 10\% and are denoted as $N \uni + (100 - N) \azi$, where $N = 0, 10 \ldots, 100$. Here, Uni and Azi represent the pure uniform and pure azimuthal cases, respectively, and $N$ gives the percentage contribution of the uniform case. 
@@ -214,7 +218,7 @@ Q_{\text{Uni}} &= \rho I \cos(2\theta_{\text{Uni}}) \text{ and }
 Q_\text{Azi} = \rho I \cos(2\theta_\text{Azi}),
      \\
 U_{\text{Uni}} &=  \rho I \sin(2\theta_{\text{Uni}}) \text{ and }
-U_\text{Azi} =  \rho I \sin(2\theta_\text{Azi}) 
+U_\text{Azi} =  \rho I \sin(2\theta_\text{Azi}),
 \end{aligned}
 % \label{eq:50U50A}
 \end{equation}
@@ -255,7 +259,7 @@ U_{N}
 
 
 
-For the ratio models, Table \ref{tab:ratio_model_chi2} presents the \chired values calculated for each test with the best-fit value shown in bold.  Figure \ref{fig: RatioBestGrid} shows the best-fit model with the observed vectors in black and the model vectors in red.
+For the ratio models, Table \ref{tab:ratio_model_chi2} presents the \chired values calculated for each test, with the best-fit value shown in bold.  Figure \ref{fig: RatioBestGrid} shows the best-fit model with the observed vectors in black and the model vectors in red.
 
 
 Taking \bfive as an outlier (see Chapter \ref{sec: discussion_band5_data_issues}), the best-fit ratio models show that, as wavelength decreases, the observations are better matched with a higher uniform contribution. This result is consistent with the observations discussed in Chapter \ref{sec: c4_polarization_maps}, which show a greater uniform contribution with decreasing wavelength. 
@@ -493,7 +497,7 @@ For the Gaussian model, Table \ref{tab:gaussian_top5} presents the five best-fit
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/Best_grid_Delta.pdf}
-  \caption[Same as Figure \ref{fig: RatioBestGrid}, but for the best-fit Gaussian models.]{Same as Figure \ref{fig: RatioBestGrid}, but for the best-fit Gaussian models. The corresponding best-fit Gaussian models are listed Table \ref{tab:gaussian_top5}. }
+  \caption[Same as Figure \ref{fig: RatioBestGrid}, but for the best-fit Gaussian models.]{Same as Figure \ref{fig: RatioBestGrid}, but for the best-fit Gaussian models. The corresponding best-fit Gaussian models are listed in Table \ref{tab:gaussian_top5}. }
   \label{fig: GaussianBestGrid}
 \end{figure}
 
@@ -566,13 +570,13 @@ From the results in Table \ref{tab:gaussian_top5}, the values of $a$ and $b$ are
 A = a \cdot b.
     \label{eq: GaussianArea}
 \end{equation}
-\noindent A larger value of $A$ corresponds to a larger area of uniform morphology. For \bfourNS, \bfiveNS, \bsixNS, and \bseven the corresponding areas are 200, 600, 900, 1200 pixels$^2$, respectively. The increase in area as wavelength decreases indicates the uniform morphology contributes over a larger region of the disk at shorter wavelengths. This can be seen in Figure \ref{fig: gaussian_best_map_w_uniform}, showing the Gaussian shape ($W_{\text{Uniform}}$) for the best-fit model at each wavelength.
+\noindent A larger value of $A$ corresponds to a larger area of uniform morphology. For \bfourNS, \bfiveNS, \bsixNS, and \bseven the corresponding areas are 200, 600, 900, and 1200 pixels$^2$, respectively. The increase in area as wavelength decreases indicates that the uniform morphology contributes over a larger region of the disk at shorter wavelengths. This can be seen in Figure \ref{fig: gaussian_best_map_w_uniform}, showing the Gaussian shape ($W_{\text{Uniform}}$) for the best-fit model at each wavelength.
 
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Gaussian/Best_grid_Delta_map.pdf}
-  \caption[Maps of the Gaussian uniform weights for the best-fit Gaussian model.]{Maps of the Gaussian uniform weights $W_{\text{uniform}}$ (Equation \ref{eq: gaussian_eq}) for the best-fit Gaussian model for each wavelength, corresponding vector pattern shown in Figure \ref{fig: GaussianBestGrid}. }
+  \caption[Maps of the Gaussian uniform weights for the best-fit Gaussian model.]{Maps of the Gaussian uniform weights $W_{\text{uniform}}$ (Equation \ref{eq: gaussian_eq}) for the best-fit Gaussian model for each wavelength, with the corresponding vector pattern shown in Figure \ref{fig: GaussianBestGrid}. }
   \label{fig: gaussian_best_map_w_uniform}
 \end{figure}
 
@@ -581,7 +585,7 @@ A = a \cdot b.
 The increasing area of the uniform polarization region at shorter wavelengths indicates that the uniform alignment contributes more strongly at shorter wavelengths. This is consistent with what the polarization morphologies shown in Chapter \ref{sec: c4_polarization_maps} and the results from the ratio model suggest. 
 
 
-The parameter $\Phi$ controls the flatness of the Gaussian, the higher the $\Phi$ value the flatter the Gaussian, transitioning from uniform to azimuthal morphology faster (see Figure \ref{fig: Methods/GaussianExamples}). In the best-fit model at each wavelength, $\Phi$ is greater than 2, producing a flat-topped Gaussian rather than a standard Gaussian. The flattened profiles are also visible in Figure \ref{fig: gaussian_best_map_w_uniform}, since the profile for the uniform weighting shows sharp edges and is more square-shape than round.
+The parameter $\Phi$ controls the flatness of the Gaussian, the higher the $\Phi$ value, the flatter the Gaussian, transitioning from uniform to azimuthal morphology faster (see Figure \ref{fig: Methods/GaussianExamples}). In the best-fit model at each wavelength, $\Phi$ is greater than 2, producing a flat-topped Gaussian rather than a standard Gaussian. The flattened profiles are also visible in Figure \ref{fig: gaussian_best_map_w_uniform}, since the profile for the uniform weighting shows sharp edges and is more square-shaped than round.
 
 
 
