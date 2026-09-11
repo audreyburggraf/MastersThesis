@@ -1,7 +1,7 @@
 \chapter{Interferometry}
 \label{ch_interferometry}
 
-% In this chapter, I introduce the basic principles of radio interferometry that are relevant to this project. The basic principles include \add{}. I also describe the calibration and imaging steps that are used to process the data. These steps provide the outline for the ALMA data methods described in in Chapter \ref{ch_data}. 
+% In this chapter, I introduce the basic principles of radio interferometry that are relevant to this project. The basic principles include \add{}. I also describe the calibration and imaging steps that are used to process the data. These steps provide the outline for the ALMA data methods described in Chapter \ref{ch_data}. 
 
 
 % ------------------------------------------------
@@ -11,7 +11,7 @@ Studying protostellar disks at millimetre wavelengths requires high-angular-reso
 \begin{equation}
     \theta_{\text{res}}\sim \lambda/D,
 \end{equation}
-\noindent where $D$ is the diameter of the dish \citep{Monnier}. Achieving the angular resolution required to study a protostellar disk with a single-dish telescope would therefore require an impractically large dish. For example, IRS~63 is located $\sim$ 144 parsecs away, and to resolve its structure on scales $< 50$ au requires an angular resolution of $<$ 0.5 arcsec. At millimetre wavelengths, achieving this resolution would require a telescope around a kilometre in diameter. 
+\noindent where $D$ is the diameter of the dish \citep{Monnier}. Achieving the angular resolution required to study a protostellar disk with a single-dish telescope would therefore require an impractically large dish. For example, IRS~63 is located $\sim$~144 parsecs away, and to resolve its structure on scales $< 50$ au requires an angular resolution of $<$ 0.5 arcsec. At millimetre wavelengths, achieving this resolution would require a telescope around a kilometre in diameter. 
 
 
 To overcome this limitation, radio astronomers use interferometers, which combine observations from multiple widely separated dishes to synthesize a large dish, improving angular resolution  \citep{Ludovici2026}. The angular resolution of an interferometer is:
@@ -33,11 +33,11 @@ To overcome this limitation, radio astronomers use interferometers, which combin
 % ------------------------------------------------
 % The simplest interferometer consists of two telescopes that observe the same astronomical object.
 
-When the signals from a pair of antenna arrive at the correlator to be combined, they either have constructive or destructive interference, producing a larger or smaller wave, respectively \citep{Monnier}. Because the antennas are separated by some distance, radio waves from the astronomical source reach the antennas at different times, producing a geometric delay between the signals, as shown in Figure \ref{fig: path-delay}. The signals collected by the two antennas are combined to create an interference pattern, known as a fringe. Longer baselines make finer fringes and provide higher angular resolution information, making the interferometer sensitive to smaller-scale structures. Alternatively, shorter baselines make larger fringes, which are lower in angular resolution but are more sensitive to larger-scale structure \citep {Perley2026}. 
+When the signals from a pair of antennas arrive at the correlator to be combined, they either have constructive or destructive interference, producing a larger or smaller wave, respectively \citep{Monnier}. Because the antennas are separated by some distance, radio waves from the astronomical source reach the antennas at different times, producing a geometric delay between the signals, as shown in Figure~\ref{fig: path-delay}. The signals collected by the two antennas are combined to create an interference pattern, known as a fringe. Longer baselines make finer fringes and provide higher angular resolution information, making the interferometer sensitive to smaller-scale structures. Alternatively, shorter baselines make larger fringes, which are lower in angular resolution but are more sensitive to larger-scale structure \citep {Perley2026}. 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.7\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Inter & Data/Schematic_v1.png}
-    \caption[Schematic of a two-antenna radio interferometer.]{Schematic of a two-antenna ratio interferometer highlighting the time delay between signals received at the two antenna. $B$ is baseline between the two antennas, and the corresponding time delay is $B\cos(\phi)$, where $\phi$ is the angle between the baseline and the direction to the science target.}
+    \caption[Schematic of a two-antenna radio interferometer.]{Schematic of a two-antenna radio interferometer highlighting the time delay between signals received at the two antennas. $B$ is the baseline between the two antennas, and the corresponding time delay is $B\cos(\phi)$, where $\phi$ is the angle between the baseline and the direction to the science target.}
     \label{fig: path-delay}
 \end{figure}
 % ------------------------------------------------
@@ -51,7 +51,7 @@ When the signals from a pair of antenna arrive at the correlator to be combined,
 
 The projected baseline between two antennas is decomposed into two coordinates $ (u, v) $ with units of length along the east and north directions, respectively, as projected in the direction of the target. An additional coordinate is $w$, which is the component along the line of sight. Figure \ref{fig: UV-plane} illustrates the geometric relationship between the source direction and projected baseline coordinates. 
 
-For ground-based observing (like ALMA), the object moves across the sky as the Earth rotates, so the $(u, v)$ coverage changes with time. This is beneficial since Earth's rotation increases the $(u,v)$ coverage without requiring additional telescopes \citep{Monnier}. Figure \ref{fig: UV-coverage} shows an example (u,v) coverage for one of the \bfour observations in this study. 
+For ground-based observing (like ALMA), the object moves across the sky as the Earth rotates, so the $(u, v)$ coverage changes with time. This is beneficial since Earth's rotation increases the $(u,v)$ coverage without requiring additional telescopes \citep{Monnier}. Figure \ref{fig: UV-coverage} shows an example $ (u, v) $ coverage for one of the \bfour observations in this study. 
 
 
 
@@ -68,7 +68,7 @@ For ground-based observing (like ALMA), the object moves across the sky as the E
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.5\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Inter & Data/UVcoverage_Band4.png}
-  \caption[\uv coverage for the \bfour observations.]{\uv coverage for the \bfour observations. The arcs result from the rotation of the Earth, with each arc corresponding to to a different antenna baseline pair.}
+  \caption[\uv coverage for the \bfour observations.]{\uv coverage for the \bfour observations. The arcs result from the rotation of the Earth, with each arc corresponding to a different antenna baseline pair.}
   %\later{I don't love how this saved, I can add my own axes so its an all white background.} \code{work on this} \SCC{comment}}
   \label{fig: UV-coverage}
 \end{figure}
@@ -120,7 +120,7 @@ Since the data presented in this thesis require full polarization, the observati
 % ------------------------------------------------
 \subsection{Image Reconstruction}
 % ------------------------------------------------
-To covert the visibilities into an image, we must apply an inverse Fourier transform of the complex visibilities given in Equation \ref{eq: V(u,v)}.  This inverse Fourier transform is \citep{Thompson}:
+To convert the visibilities into an image, we must apply an inverse Fourier transform of the complex visibilities given in Equation \ref{eq: V(u,v)}.  This inverse Fourier transform is \citep{Thompson}:
 \begin{equation}
     I(l,m) = \int_{-\infty}^\infty V(u,v) e^{2\pi i(ul+vm)}dudv.
     \label{eq: I(l, m)}
@@ -139,8 +139,10 @@ Deconvolution is the process of reducing the effects of the dirty beam in the di
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/BeforeAndAfterClean_NOTSELFCAL.png}
-  \caption[Dirty vs cleaned image of IRS 63]{\note{THIS IS NOT THE REAL IMAGE! Just a placeholder for formatting purposes.}\question{Do I have access to a pre-clean image of IRS 63 or is this something I will need to get from a different source? (I will add a caption too).} \code{work on this}}
+  \includegraphics[width=0.75\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/BeforeAndAfterClean_NOTSELFCAL.png}
+  \caption[Dirty vs cleaned image of IRS 63]{Comparison of the dirty (left) and \texttt{clean} \SI images of IRS 63. The dirty image is convolved with the dirty beam, while the \texttt{clean} image is deconvolved with the synthesized beam. Both images have the same intensity scaling. }
+
+  %\question{Do I have access to a pre-clean image of IRS 63 or is this something I will need to get from a different source? (I will add a caption too).} 
   \label{fig: Dirty_vs_clean}
 \end{figure}
 
@@ -163,5 +165,5 @@ A `robust' parameter was introduced in \cite{briggs} for a weighting scheme call
 Self-calibration is an additional calibration step that can be performed after standard calibration. In standard calibration, calibration sources such as quasars are used to determine instrumental and atmospheric effects. In self-calibration, the science target itself is used as the calibrator to further correct both the phase and amplitude of the data. Because of this, the target needs to be bright, with a \SNR $\gtrsim$ 100. 
 
 
-The signal received by each antenna can be affected by time-dependent atmospheric variations, which can introduce additional calibration errors. Self-calibration can reduce the artifacts caused by these errors by correcting for direction-independence phase and amplitude errors. Similar to gain calibration, self-calibration only corrects the phase and amplitude of the data, and does not correct for bandpass or flux calibration errors \citep{Marvil2}. The specific details on the self-calibration process used in this project are described in Chapter \ref{ch_data}. 
+The signal received by each antenna can be affected by time-dependent atmospheric variations, which can introduce additional calibration errors. Self-calibration can reduce the artifacts caused by these errors by correcting for direction-independent phase and amplitude errors. Similar to gain calibration, self-calibration only corrects the phase and amplitude of the data, and does not correct for bandpass or flux calibration errors \citep{Marvil2}. The specific details on the self-calibration process used in this project are described in Chapter \ref{ch_data}. 
 % ------------------------------------------------
