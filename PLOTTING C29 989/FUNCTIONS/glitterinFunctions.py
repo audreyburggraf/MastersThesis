@@ -824,7 +824,7 @@ def find_sf_glitterin(results, AllBands, BandsInFit, df_POLF, POLF_index,
     
         
     POLF_err_columns = {
-    #'gaussian': 'POLF_err_Gaussian',
+   'gaussian': 'POLF_err_Gaussian',
     'max Stokes I': 'POLF_err_maxStokesI',
     'POLI': 'POLF_err_maxPOLI',
     #'mean': 'POLF_err_mean'   # if you have this column
@@ -869,7 +869,8 @@ def find_sf_glitterin(results, AllBands, BandsInFit, df_POLF, POLF_index,
         for band in AllBands
     )
 
-    print("\n All rvol_max_cm are the same:", all_same)
+    if not all_same:
+        print("\n All rvol_max_cm are NOT the same")
     # --------------------------------------------------------------------------    
 
     
@@ -981,6 +982,11 @@ def find_sf_glitterin(results, AllBands, BandsInFit, df_POLF, POLF_index,
             AllBands,
         )
     
+    chi_sq_reduced = (1/(len(BandsInFit) - 1)) * chi_sq
+    print(' ')
+    print(rf'In find_sf_glitterin, BandsInFit = {BandsInFit}, len(BandsInFit) = {len(BandsInFit)}, chi^2 is scaled by 1 / {len(BandsInFit) - 1}')
+    print(' ')
+    
     POLF_obs = np.array([
         POLF_obs_all[band_to_index[b]] for b in AllBands
     ])
@@ -1003,7 +1009,8 @@ def find_sf_glitterin(results, AllBands, BandsInFit, df_POLF, POLF_index,
         'best_idx_arr': best_idx,
         'sf_medians': sf_medians,
         'sf_stds': sf_stds,
-        'chi_sq': chi_sq
+        'chi_sq': chi_sq,
+        'chi_sq_reduced': chi_sq_reduced
     }
 
     return sf_results

@@ -728,6 +728,7 @@ def scale_factor_plot_for_writeup(bands,                  # These are the bands 
                                         best_a_max_by_f,     # These are the best a_max values for each f
                                         POLF_markers,        # These are the values for each band we are plotting the marker
                                         chi_sq_by_f, 
+                                        chi_sq_by_f_reduced, 
                                         ymin = -0.1, 
                                         ymax = 2, 
                                         xmin = 15, xmax = 1e3 + 20, 
@@ -754,7 +755,9 @@ def scale_factor_plot_for_writeup(bands,                  # These are the bands 
                                         band_legend_fs = 32.5,
                                         marker_size = 600,
                                         plot_sf = False,
-                                        plot_chi_sq = False):
+                                        plot_chi_sq = False,
+                                        plot_chi_sq_reduced = False,
+                                        labelpad = 10):
     
     
     # Set the colors and marker size for each band 
@@ -785,9 +788,10 @@ def scale_factor_plot_for_writeup(bands,                  # These are the bands 
             spine.set_linewidth(spine_width)
         
        
-
+        print('not sup x label')
         if i == 0:
-            ax[i].set_ylabel(r'$P\omega_{\mathrm{eff,\,model}}, \mathcal{P}_{F,\,I_{\mathrm{max}}}$',fontsize=xy_axis_fs)
+            ax[i].set_ylabel(r'$P\omega_{\mathrm{eff,\,model}}, \mathcal{P}_{F,\,I_{\mathrm{max}}}$',fontsize=xy_axis_fs,
+                            labelpad=labelpad)
             #ax[i].set_ylabel(r'$P\omega_{\mathrm{eff}}$', fontsize = xy_axis_fs)
         else:
             ax[i].set_yticklabels([])
@@ -910,7 +914,10 @@ def scale_factor_plot_for_writeup(bands,                  # These are the bands 
             x_pos = x_pos + custom_text_x[i]
         
         if plot_chi_sq:
-            ax[i].text(x_pos, 0.8,  f'$\chi^2$ = {chi_sq_by_f[f]:.{chi_sq_precision}f}', transform=ax[i].transAxes, fontsize = stats_fs)
+            ax[i].text(x_pos, 0.6,  f'$\chi^2$ = {chi_sq_by_f[f]:.{chi_sq_precision}f}', transform=ax[i].transAxes, fontsize = stats_fs)
+            
+        if plot_chi_sq_reduced:
+            ax[i].text(x_pos, 0.8,  f'$\chi^2 red$ = {chi_sq_by_f_reduced[f]:.{chi_sq_precision}f}', transform=ax[i].transAxes, fontsize = stats_fs)
 
         if plot_sf:
             ax[i].text(x_pos, 0.7, f'sf = {sf_by_f[f]:.2f}', transform=ax[i].transAxes, fontsize = stats_fs)
@@ -1019,6 +1026,7 @@ def scale_factor_plot_for_writeup_glitterin(bands,                  # These are 
                                             results_array, 
                                         bands_included_in_fit_arr, # These are the values that were fit
                                         df_POLF,        # These are the values for each band we are plotting the marker
+                                        POLF_index,
                                         albedo = 'w',
                                         #chi_sq_by_f, 
                                         ymin = -0.1, 
@@ -1048,9 +1056,11 @@ def scale_factor_plot_for_writeup_glitterin(bands,                  # These are 
                                         marker_size = 600,
                                         plot_sf = False,
                                         plot_chi_sq = False,
+                                            plot_chi_sq_reduced = False,
                                            legend_loc = 3,
                                            titles = ['All wavelengths', 'No 1.5 mm', 'No 1.3 mm', 'Just 2.1 mm and 0.87 mm'],
-                                           x_axis_pad = 10):
+                                           x_axis_pad = 10,
+                                           labelpad = 20):
     
     POLF_markers = dict(zip(df_POLF["Band"], df_POLF["POLF_maxStokesI"]))
     
@@ -1088,9 +1098,18 @@ def scale_factor_plot_for_writeup_glitterin(bands,                  # These are 
         res = results_array[i]
         a_max_dist_micron = cm_to_micron(res['rvol_max_cm'])
         
+        if POLF_index == 'max Stokes I':
+            POLF_label = r'\mathcal{P}_{F,\,I_{\mathrm{max}}}'
+
+        elif POLF_index == 'gaussian':
+            POLF_label = r'\mathcal{P}_{F,\,\mathrm{Gaussian}}'
+
+        elif POLF_index == 'POLI':
+            POLF_label = r'\mathcal{P}_{F,\,\mathrm{\mathcal{P}_I}_{\mathrm{max}}}'
+            
         if albedo == 'w_eff':
             P_times_omega = res['Pw_eff']
-            y_label = r'$P\omega_{\mathrm{eff,\,model}}, \mathcal{P}_{F,\,I_{\mathrm{max}}}$'
+            y_label = rf'$P\omega_{{\mathrm{{eff,\,model}}}}, {POLF_label}$'
             #y_label = '$P\omega_{\mathrm{eff}}$'
         elif albedo == 'w':
             P_times_omega = res['Pw']
@@ -1103,6 +1122,7 @@ def scale_factor_plot_for_writeup_glitterin(bands,                  # These are 
         best_a_max = res['best_rvol_max_micron']
         best_idx = res['best_idx_arr']
         chi_sq = res['chi_sq']
+        chi_sq_reduced = res['chi_sq_reduced']
         
         for spine in ax[i].spines.values():
             spine.set_linewidth(spine_width)
@@ -1110,7 +1130,7 @@ def scale_factor_plot_for_writeup_glitterin(bands,                  # These are 
        
 
         if i == 0:
-            ax[i].set_ylabel(y_label, fontsize = xy_axis_fs)
+            ax[i].set_ylabel(y_label, fontsize = xy_axis_fs, labelpad = labelpad)
         else:
             ax[i].set_yticklabels([])
             ax[i].set_ylabel('')
@@ -1121,7 +1141,7 @@ def scale_factor_plot_for_writeup_glitterin(bands,                  # These are 
         ax[i].set_xlim(xmin, xmax)
 
 
-            
+        print('not supx label')
         fig.supxlabel('Maximum grain size [$\mu$m]', fontsize = xy_axis_fs)
         ax[i].set_title(f'{titles[i]}', fontsize=40, pad = 15)
 
@@ -1240,7 +1260,11 @@ def scale_factor_plot_for_writeup_glitterin(bands,                  # These are 
             x_pos = x_pos + custom_text_x[i]
         
         if plot_chi_sq:
-            ax[i].text(x_pos, 0.8,  f'$\chi^2$ = {chi_sq:.{chi_sq_precision}f}', transform=ax[i].transAxes, fontsize = stats_fs)
+            ax[i].text(x_pos, 0.6,  f'$\chi^2$ = {chi_sq:.{chi_sq_precision}f}', transform=ax[i].transAxes, fontsize = stats_fs)
+            
+            
+        if plot_chi_sq_reduced:
+            ax[i].text(x_pos, 0.8,  f'$\chi^2 red$ = {chi_sq_reduced:.{chi_sq_precision}f}', transform=ax[i].transAxes, fontsize = stats_fs)
 
         if plot_sf:
             ax[i].text(x_pos, 0.7, f'sf = {sf:.2f}', transform=ax[i].transAxes, fontsize = stats_fs)
@@ -1472,6 +1496,8 @@ def scale_factor_plot_for_writeup_allf(bands,                  # These are the b
                                         best_a_max_by_f,     # These are the best a_max values for each f
                                         POLF_markers,        # These are the values for each band we are plotting the marker
                                         chi_sq_by_f, 
+                                        chi_sq_reduced_by_f, 
+                                        POLF_index,
                                         ymin = -0.1, 
                                         ymax = 2, 
                                         xmin = 15, xmax = 1e3 + 20, 
@@ -1499,7 +1525,9 @@ def scale_factor_plot_for_writeup_allf(bands,                  # These are the b
                                         band_legend_fs = 32.5,
                                         marker_size = 600,
                                         plot_sf = False,
-                                        plot_chi_sq = False):
+                                        plot_chi_sq = False,
+                                        plot_chi_sq_reduced = False,
+                                        x_label_pos = -0.02):
     
     
     # Set the colors and marker size for each band 
@@ -1574,7 +1602,7 @@ def scale_factor_plot_for_writeup_allf(bands,                  # These are the b
 #         if for_poster == True:
 #             ax[i].text(x_pos, 0.15,  f'$\chi^2$ = {chi_sq:.{chi_sq_precision}f}', transform=ax[i].transAxes, fontsize = 30)
         # ---------------------------------------------------------------------------------------
-
+#         print(rf'ymin = {ymin} and ymax = {ymax}')
         ax[i].set_ylim(ymin, ymax)
         # ------------------------------------------
         
@@ -1654,7 +1682,9 @@ def scale_factor_plot_for_writeup_allf(bands,                  # These are the b
             x_pos = x_pos + custom_text_x[i]
         
         if plot_chi_sq:
-            ax[i].text(x_pos, 0.8,  f'$\chi^2$ = {chi_sq_by_f[f]:.{chi_sq_precision}f}', transform=ax[i].transAxes, fontsize = stats_fs)
+            ax[i].text(x_pos, 0.6,  f'$\chi^2$ = {chi_sq_by_f[f]:.{chi_sq_precision}f}', transform=ax[i].transAxes, fontsize = stats_fs)
+        if plot_chi_sq_reduced:
+            ax[i].text(x_pos, 0.8,  f'$\chi^2$ = {chi_sq_reduced_by_f[f]:.{chi_sq_precision}f}', transform=ax[i].transAxes, fontsize = stats_fs)
 
         if plot_sf:
             ax[i].text(x_pos, 0.7, f'sf = {sf_by_f[f]:.2f}', transform=ax[i].transAxes, fontsize = stats_fs)
@@ -1748,9 +1778,17 @@ def scale_factor_plot_for_writeup_allf(bands,                  # These are the b
 
 
 
+    if POLF_index == 'max Stokes I':
+        POLF_label = r'\mathcal{P}_{F,\,I_{\mathrm{max}}}'
+
+    elif POLF_index == 'gaussian':
+        POLF_label = r'\mathcal{P}_{F,\,\mathrm{Gaussian}}'
+
+    elif POLF_index == 'POLI':
+        POLF_label = r'\mathcal{P}_{F,\,\mathrm{\mathcal{P}_I}_{\mathrm{max}}}'
 # 
     fig.supxlabel('Maximum grain size [$\mu$m]', fontsize=xy_axis_fs, y = 0.08, x = 0.5)
-    fig.supylabel(r'$P\omega_{\mathrm{eff,\,model}}, \mathcal{P}_{F,\,I_{\mathrm{max}}}$',
-                  fontsize=xy_axis_fs, x = 0.0, y = 0.5)
+    fig.supylabel(rf'$P\omega_{{\mathrm{{eff,\,model}}}}, {POLF_label}$',
+                  fontsize=xy_axis_fs, x = x_label_pos, y = 0.5)
 
     return fig, axes
