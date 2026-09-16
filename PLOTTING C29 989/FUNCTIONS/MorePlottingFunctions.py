@@ -367,7 +367,8 @@ def MakeAllBandGridDelta(bands,
                     for_writeup = False, 
                    ps = 1,
                    cbar_shrink = 1,
-                    show_vectors = True):
+                    show_vectors = True,
+                        half_size_pix_top = 0.9 ):
     
     
     # Change sizes of things if for_poster or not
@@ -564,7 +565,7 @@ def MakeAllBandGridDelta(bands,
 
         #centre_pix_x, centre_pix_y = ax.world_to_pixel(centre)
 
-        half_size_pix = 0.9 / 0.018
+        half_size_pix = half_size_pix_top / 0.018
 
         xmin = b['RA_centre_pix'] - half_size_pix
         xmax = b['RA_centre_pix'] + half_size_pix
