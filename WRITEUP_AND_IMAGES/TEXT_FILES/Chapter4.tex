@@ -61,11 +61,11 @@ In Figure \ref{fig: StokesI_POLI_grid}, we present the cleaned \SI and debiased 
 \begin{figure}[htbp]
     \centering
 
-    \includegraphics[width=\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/StokesI_POLI/StokesI_grid_robust_minus1_Delta_stretched.pdf}
+    \includegraphics[width=0.925\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/StokesI_POLI/StokesI_grid_robust_minus1_Delta_stretched.pdf}
 
     \vspace{0.5cm}
 
-    \includegraphics[width=\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/StokesI_POLI/POLI_grid_robust_minus1_Delta.pdf}
+    \includegraphics[width=0.925\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/StokesI_POLI/POLI_grid_robust_minus1_Delta.pdf}
     \caption[\SI and polarized intensity images with polarization vectors.]{Grid of images at each wavelength showing (top) \SI emission and (bottom) debiased polarized intensity. Polarization vectors are overlaid as black lines of equal length, showing the change in morphology with wavelength. Vectors are shown only for pixels that satisfy the criteria described in Chapter \ref{sec: methods_vector_criteria}. The beam is shown in the lower left corner, and a reference scale of 100 au is shown in the top right corner.  }% \later{scale vectors by POLF. make a separate 2 X 2 panel plot so that the polarization segment lengths are easier to see.} }
     \label{fig: StokesI_POLI_grid}
 \end{figure}
@@ -121,6 +121,15 @@ Figure \ref{fig: slices_grid} presents the slices in \SI and polarized intensity
 % \noindent which was then normalized to 1 and scaled by the maximum value of the slice. 
 
 
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Slices/MW_slices_GRID.pdf}
+  \caption[\SI and debiased polarized intensity profiles.]{Plot of (top) \SI and (bottom) debiased polarized intensity offset as a function of the offset from the centre position of the disk, both in units of mJy beam$^{-1}$. The centre position is shown as a solid black line, with the corresponding values found in Table \ref{tab: source_info}. The slices used for these profiles are shown in Figure \ref{fig: slice-along-minor}. }
+  \label{fig: slices_grid}
+\end{figure}
+
+
+
 
 
 The \SI profiles (top row of Figure \ref{fig: slices_grid}) show a single peak at the centre of the disk at all four wavelengths. This is expected, as the density of the disk increases towards the central star, resulting in stronger emission from the inner disk. The angular resolution of these data is not sufficient to resolve the rings seen in \cite{Dom2020} (Figure \ref{fig: IRS63_Dom_Sadavoy}, left panel). However, in the debiased polarized intensity profiles (bottom row of Figure \ref{fig: slices_grid}), we do not see the same trend. The profiles are consistently offset from the centre position at all four wavelengths. Relative to the synthesized beam, the offset is not well resolved.  Nevertheless, having the offset is consistent across all four wavelengths indicates it is a real feature.
@@ -139,12 +148,6 @@ An offset in polarized intensity relative to total intensity could be a geometri
 
 
 
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.99\textwidth]{WRITEUP_AND_IMAGES/IMAGES/WRITEUP/Slices/MW_slices_GRID.pdf}
-  \caption[\SI and debiased polarized intensity profiles.]{Plot of (top) \SI and (bottom) debiased polarized intensity offset as a function of the offset from the centre position of the disk, both in units of mJy beam$^{-1}$. The centre position is shown as a solid black line, with the corresponding values found in Table \ref{tab: source_info}. The slices used for these profiles are shown in Figure \ref{fig: slice-along-minor}. }
-  \label{fig: slices_grid}
-\end{figure}
 
 
 
@@ -172,19 +175,21 @@ To determine how well a geometric model reproduced the polarization observations
     \label{eq: minimum_separation}
 \end{equation}
 
-\noindent where $\theta_{\text{obs}}$ is the observed polarization angle and $\theta_{\text{model}}$ is the polarization angle predicted by either the ratio or Gaussian model. The angular differences were then used to calculate the chi-squared value:
-\begin{equation}
-    \chi^2 = \sum \left(\frac{\Delta \theta_i}{\sigma_\theta}\right)^2,
-    \label{eq: chi_sq}
-\end{equation}
-\noindent where the angular distance is summed over all sampled polarization vectors, and \PAerr is the uncertainty in the observed polarization angle.  
+\noindent where $\theta_{\text{obs}}$ is the observed polarization angle and $\theta_{\text{model}}$ is the polarization angle predicted by either the ratio or Gaussian model. 
 
-The value of $\chi^2$ was then converted to reduced chi-squared by:
+The angular differences were then used to calculate the reduced chi-squared value:
 \begin{equation}
-    \chi^2_{reduced} = \frac{1}{n-k} \times \chi^2,
+    \chi^2_{reduced} = \frac{1}{n-k} \times \sum \left(\frac{\Delta \theta_i}{\sigma_\theta}\right)^2,
     \label{eq: chi_sq_reduced}
 \end{equation}
-\noindent where $n$ is the number of sampled polarization vectors and $k$ is the degrees of freedom. For the ratio model (Chapter \ref{sec: ch4_ratio_model}), there is one degree of freedom, and for the Gaussian method (Chapter \ref{sec: ch4_gaussian_model}), there are three ($\phi$, $b$, and $a$). 
+\noindent where the angular distance is summed over all sampled polarization vectors, and \PAerr is the uncertainty in the observed polarization angle. Additionally, $n$ is the number of sampled polarization vectors and $k$ is the degrees of freedom. For the ratio model (Chapter \ref{sec: ch4_ratio_model}), there is one degree of freedom, and for the Gaussian method (Chapter \ref{sec: ch4_gaussian_model}), there are three ($\phi$, $b$, and $a$).  
+
+% The value of $\chi^2$ was then converted to reduced chi-squared by:
+% \begin{equation}
+%     \chi^2_{reduced} = \frac{1}{n-k} \times \chi^2,
+%     \label{eq: chi_sq_reduced}
+% \end{equation}
+
 % ----------------------------------------------------------
 
 % ----------------------------------------------------------
