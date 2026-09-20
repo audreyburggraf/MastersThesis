@@ -758,6 +758,7 @@ def scale_factor_plot_for_writeup(bands,                  # These are the bands 
                                         plot_sf = False,
                                         plot_chi_sq = False,
                                         plot_chi_sq_reduced = False,
+                                        x_axis_pad = 15,
                                         labelpad = 10):
     
     
@@ -791,7 +792,8 @@ def scale_factor_plot_for_writeup(bands,                  # These are the bands 
        
         print('not sup x label')
         if i == 0:
-            ax[i].set_ylabel(r'$P\omega_{\mathrm{eff,\,model}}, \mathcal{P}_{F,\,I_{\mathrm{max}}}$',fontsize=xy_axis_fs,
+            ax[i].set_ylabel(r'$P\omega_{\mathrm{eff,\,model}}$',  #, {POLF_label}$',, \mathcal{P}_{F,\,I_{\mathrm{max}}}$',
+                             fontsize=xy_axis_fs,
                             labelpad=labelpad)
             #ax[i].set_ylabel(r'$P\omega_{\mathrm{eff}}$', fontsize = xy_axis_fs)
         else:
@@ -819,7 +821,7 @@ def scale_factor_plot_for_writeup(bands,                  # These are the bands 
         # Control the font size of the numbers on the axes
         # ---------------------------------------------------------------------------------------
             
-        ax[i].tick_params(axis="x", which="major", direction="in", bottom=True, top=True, length=7, labelsize = num_fs, width=spine_width)
+        ax[i].tick_params(axis="x", which="major", direction="in", bottom=True, top=True, length=7, labelsize = num_fs, width=spine_width, pad=x_axis_pad)
         ax[i].tick_params(axis="y", which="major", direction="in", left=True, right=True, length=7, labelsize = num_fs, width=spine_width)
         # ---------------------------------------------------------------------------------------
         
@@ -1110,7 +1112,7 @@ def scale_factor_plot_for_writeup_glitterin(bands,                  # These are 
             
         if albedo == 'w_eff':
             P_times_omega = res['Pw_eff']
-            y_label = rf'$P\omega_{{\mathrm{{eff,\,model}}}}, {POLF_label}$'
+            y_label = r'$P\omega_{\mathrm{eff,\,model}}$'  #, {POLF_label}$',
             #y_label = '$P\omega_{\mathrm{eff}}$'
         elif albedo == 'w':
             P_times_omega = res['Pw']
@@ -1528,7 +1530,8 @@ def scale_factor_plot_for_writeup_allf(bands,                  # These are the b
                                         plot_sf = False,
                                         plot_chi_sq = False,
                                         plot_chi_sq_reduced = False,
-                                        x_label_pos = -0.02):
+                                        x_label_pos = -0.02,
+                                        x_axis_pad = 15,):
     
     
     # Set the colors and marker size for each band 
@@ -1587,7 +1590,7 @@ def scale_factor_plot_for_writeup_allf(bands,                  # These are the b
         # Control the font size of the numbers on the axes
         # ---------------------------------------------------------------------------------------
             
-        ax[i].tick_params(axis="x", which="major", direction="in", bottom=True, top=True, length=7, labelsize = num_fs, width=spine_width)
+        ax[i].tick_params(axis="x", which="major", direction="in", bottom=True, top=True, length=7, labelsize = num_fs, width=spine_width, pad=x_axis_pad)
         ax[i].tick_params(axis="y", which="major", direction="in", left=True, right=True, length=7, labelsize = num_fs, width=spine_width)
         # ---------------------------------------------------------------------------------------
         
@@ -1789,7 +1792,7 @@ def scale_factor_plot_for_writeup_allf(bands,                  # These are the b
         POLF_label = r'\mathcal{P}_{F,\,\mathrm{\mathcal{P}_I}_{\mathrm{max}}}'
 # 
     fig.supxlabel('Maximum grain size [$\mu$m]', fontsize=xy_axis_fs, y = 0.08, x = 0.5)
-    fig.supylabel(rf'$P\omega_{{\mathrm{{eff,\,model}}}}, {POLF_label}$',
+    fig.supylabel(rf'$P\omega_{{\mathrm{{eff,\,model}}}}$',  #, {POLF_label}$',
                   fontsize=xy_axis_fs, x = x_label_pos, y = 0.5)
 
     return fig, axes

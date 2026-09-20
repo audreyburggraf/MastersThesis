@@ -109,3 +109,41 @@ rgb_colors_10 = [
 
 # Create the colormap using the 10 selected colors
 soft_colormap_10 = LinearSegmentedColormap.from_list("SoftColorMap10", rgb_colors_10, N=10)
+
+# ------------------------------------------------------------------------------------------------
+
+
+# Hex codes for the colors
+hex_colors = [
+    "#e8b2ff",
+    "#e8b2ff",  # White
+    "#f65eff",  # Very Light Pink
+    "#ff00b3",  # Light Pink
+    "#ff007a",  # Light Lavender
+    "#ff002e",  # Light Purple
+    "#ff1600",  # Light Lilac
+    "#ff6d01",  # Soft Purple
+    "#ffa503",  # Soft Blue
+    "#fff700",  # Light Blue
+    "#c6ff00",  # Sky Blue
+    "#82ff00",  # Pastel Cyan
+    "#21ff00",  # Light Turquoise
+    "#03ff13",  # Lime Green
+    "#03ff44",  # Light Green
+    "#03ffb5",  # Bright Green
+    "#03ffe8",  # Lime Yellow
+    "#07baff",  # Bright Lime Yellow
+    "#008aff",  # Soft Yellow
+    "#012aeb",  # Soft Orange
+    "#0a0097",  # Bright Orange
+    "#0d0026",  # Red
+]
+
+hex_colors = hex_colors[::-1]
+# Convert hex codes to RGB values (normalized to 0-1)
+rgb_colors = [
+    tuple(int(color[i:i+2], 16) / 255 for i in (1, 3, 5)) for color in hex_colors
+]
+
+# Create the colormap using the pastel colors
+streamer_cmap = LinearSegmentedColormap.from_list("StreamerCMAP", rgb_colors, N=1000)
