@@ -297,7 +297,10 @@ An additional quantity that can be calculated for spherical and irregular grains
 
 The Mueller matrix, or scattering matrix, describes the polarization properties of light scattered by the dust grains \citep{Kataoka_2015} and is calculated using \texttt{DSHARP}. Two relevant matrix elements are \Zoo and \ZootNS, which represent linear polarized scattering and total scattering, respectively \citep{Zhang2023}. The polarization fraction is given by the ratio $-Z_{12}/Z_{11}$ averaged over the grain size distribution \citep{Kataoka_2015}. 
 
-Figure \ref{fig: Kataoka2015Figure2Recreation} shows the dependence of polarization fraction on scattering angle for different maximum grain sizes. For smaller dust grains (10 \micron and 100 \micronNS), the polarization fraction peaks near a scattering angle of 90\deggNS. For larger dust grains (1 mm and 1 cm), the polarization fraction remains much closer to zero, indicating that polarization from scattering is not efficient for larger grains. In this analysis, the polarization fraction at 90\degg is denoted by $P_{90}$ and will be referred to as the polarization fraction. 
+Figure \ref{fig: Kataoka2015Figure2Recreation} shows the dependence of polarization fraction on scattering angle for different maximum grain sizes. For smaller dust grains (10 \micron and 100 \micronNS), the polarization fraction peaks near a scattering angle of 90\deggNS. For larger dust grains (1 mm and 1 cm), the polarization fraction remains much closer to zero, indicating that polarization from scattering is not efficient for larger grains. Since the polarization fraction peaks near 90\degg for smaller grains, the polarization fraction at this scattering angle is used as the polarization fraction. This quantity is denoted by $P_{90}$ and is given by:
+\begin{equation}
+    P_{90} = -\frac{Z_{12}(\Theta = 90^\circ)}{Z_{11}(\Theta = 90^\circ)}.
+\end{equation}
 
 
 
@@ -566,12 +569,12 @@ The polarization fraction (\POLFsiNS) and the \Pweff values from spherical and i
 
 The scale factor is calculated at each \amax in the sample, given by:
 \begin{equation}
-\sfeq_i(\amaxEQ) = \frac{\POLFsiEQ}{\PweffEQ(\amaxEQ)},
+\sfeq(\amaxEQ) = \frac{\POLFsiEQ}{\PweffEQ(\amaxEQ)}.
     \label{eq: sf}
 \end{equation}
 
 
-\noindent where $i$ denotes each wavelength included in the fit. This provides a scale factor for each fitted wavelength at every value of \amaxNS. If a given grain size provides a good reproduction of the observations across all fitted wavelengths, the resulting scale factors should be similar between the wavelengths. For each value of \amaxNS, the standard deviation of the scale factors is calculated to determine the spread of the scale factors between wavelengths using \texttt{numpy.std}. 
+\noindent This provides a scale factor for each wavelength included in the fit at every value of \amaxNS. If a given grain size provides a good reproduction of the observations across all fitted wavelengths, the resulting scale factors should be similar between the wavelengths. For each value of \amaxNS, the standard deviation of the scale factors is calculated to determine the spread of the scale factors between wavelengths using \texttt{numpy.std}. 
 
 
 The best-fit grain size (\amaxbestNS) is defined as the value of \amax for which the standard deviation of the scale factors is minimized. The corresponding scale factor is the best-fit scale factor (\sfbestNS). The \Pweff values are then multiplied by the \sfbest to obtain the scaled model polarization (\PwmodelNS), allowing the model and observations to be directly compared:
